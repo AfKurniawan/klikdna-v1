@@ -1,6 +1,6 @@
 # new_klikdna
 
-A new Flutter application.
+Klik DNA dengan perubahan API baru.
 
 ## Getting Started
 
