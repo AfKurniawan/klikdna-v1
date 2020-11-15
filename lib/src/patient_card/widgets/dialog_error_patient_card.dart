@@ -13,7 +13,7 @@ class DialogErrorKartuPasien extends StatelessWidget {
     @required this.title,
     this.description,
     @required this.filledButtonText,
-    @required this.outlineButtonText,
+    this.outlineButtonText,
     this.filledButtonaction,
     this.outlineButtonAction,
     this.outlineTextColor

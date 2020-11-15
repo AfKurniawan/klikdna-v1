@@ -192,31 +192,30 @@ class AsuransiProvider extends ChangeNotifier {
 
   }
 
-  Flushbar flushbar = Flushbar(
-    margin: EdgeInsets.all(8),
-    duration: Duration(seconds: 4),
-    borderRadius: 8,
-    backgroundGradient: LinearGradient(
-      colors: [MyColors.dnaGreen, Colors.lightBlueAccent],
-      stops: [0.3, 1],
-    ),
-    boxShadows: [
-      BoxShadow(
-        color: Colors.grey,
-        offset: Offset(3, 3),
-        blurRadius: 3,
+
+
+  showDialog(BuildContext ctx){
+    Flushbar(
+      margin: EdgeInsets.all(8),
+      duration: Duration(seconds: 4),
+      borderRadius: 8,
+      backgroundGradient: LinearGradient(
+        colors: [MyColors.dnaGreen, Colors.lightBlueAccent],
+        stops: [0.3, 1],
       ),
-    ],
-    flushbarPosition: FlushbarPosition.BOTTOM,
-    dismissDirection: FlushbarDismissDirection.HORIZONTAL,
-    forwardAnimationCurve: Curves.fastLinearToSlowEaseIn,
-    title: 'Sukses...',
-    message: 'Kartu Asuransi berhasil di simpan',
-  );
-
-
-  Future<Flushbar> showDialog(BuildContext ctx){
-    flushbar
+      boxShadows: [
+        BoxShadow(
+          color: Colors.grey,
+          offset: Offset(3, 3),
+          blurRadius: 3,
+        ),
+      ],
+      flushbarPosition: FlushbarPosition.BOTTOM,
+      dismissDirection: FlushbarDismissDirection.HORIZONTAL,
+      forwardAnimationCurve: Curves.fastLinearToSlowEaseIn,
+      title: 'Sukses...',
+      message: 'Kartu Asuransi berhasil di simpan',
+    )
       ..onStatusChanged = (FlushbarStatus status) {
         switch (status) {
           case FlushbarStatus.SHOWING:

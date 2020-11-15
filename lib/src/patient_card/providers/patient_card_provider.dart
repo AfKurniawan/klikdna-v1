@@ -31,7 +31,7 @@ class PatientCardProvider with ChangeNotifier {
   String createdAt;
   String updatedAt;
   String deletedAt;
-  String photo ;
+  String photo = "" ;
   bool sukses;
 
 
@@ -43,12 +43,11 @@ class PatientCardProvider with ChangeNotifier {
   String patienCardId = "";
   Future<PatientCardModel>getPatientCard(BuildContext context) async {
     isLoading = true;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
     final prov = Provider.of<TokenProvider>(context, listen: false);
     final getId = Provider.of<AccountProvider>(context, listen: false);
     getId.getUserAccount(context);
     patienCardId = getId.lastID;
-    notifyListeners();
+
 
     print("LAST ID : $patienCardId");
 
@@ -81,8 +80,6 @@ class PatientCardProvider with ChangeNotifier {
       photo = response.data.photo;
 
 
-
-
       print("FOTO PATIENT CARD: $photo");
 
 
@@ -97,8 +94,6 @@ class PatientCardProvider with ChangeNotifier {
 
       notifyListeners();
 
-
-
       setParams();
 
     } else {
@@ -107,6 +102,7 @@ class PatientCardProvider with ChangeNotifier {
 
     }
 
+    notifyListeners();
     return null;
 
   }
@@ -142,8 +138,8 @@ class PatientCardProvider with ChangeNotifier {
 
 
   Uint8List photoView ;
-  setParams(){
 
+  setParams(){
     namaController.text = nama;
     noKtpController.text = noKtp;
     insuranceCardController.text = inssuranceCode;
@@ -152,7 +148,7 @@ class PatientCardProvider with ChangeNotifier {
     emergencyContactController.text = emergencyContact;
     comorbidityController.text = comorbidity;
     dobController.text = dob;
-    //photoView = Base64Decoder().convert(photo);
+    photoView = Base64Decoder().convert(photo);
 
     print("FOTO FROM JSON: $photo");
 
@@ -191,7 +187,6 @@ class PatientCardProvider with ChangeNotifier {
     notifyListeners();
 
     print("PHOTO: $gambar");
-    String personId = prefs.getString("personId");
     int accountid = prefs.getInt("userid");
     var url = AppConstants.UPDATE_PATIENT_CARD_URL + patienCardId ;
 
@@ -234,31 +229,29 @@ class PatientCardProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Flushbar flushbar = Flushbar(
-    margin: EdgeInsets.all(8),
-    duration: Duration(seconds: 4),
-    borderRadius: 8,
-    backgroundGradient: LinearGradient(
-      colors: [MyColors.dnaGreen, Colors.lightBlueAccent],
-      stops: [0.3, 1],
-    ),
-    boxShadows: [
-      BoxShadow(
-        color: Colors.grey,
-        offset: Offset(3, 3),
-        blurRadius: 3,
+
+  showDialogSukses(BuildContext ctx){
+    Flushbar(
+      margin: EdgeInsets.all(8),
+      duration: Duration(seconds: 4),
+      borderRadius: 8,
+      backgroundGradient: LinearGradient(
+        colors: [MyColors.dnaGreen, Colors.lightBlueAccent],
+        stops: [0.3, 1],
       ),
-    ],
-    flushbarPosition: FlushbarPosition.BOTTOM,
-    dismissDirection: FlushbarDismissDirection.HORIZONTAL,
-    forwardAnimationCurve: Curves.fastLinearToSlowEaseIn,
-    title: 'Sukses...',
-    message: 'Kartu Pasien berhasil di simpan',
-  );
-
-
-  Future<Flushbar> showDialogSukses(BuildContext ctx){
-    flushbar
+      boxShadows: [
+        BoxShadow(
+          color: Colors.grey,
+          offset: Offset(3, 3),
+          blurRadius: 3,
+        ),
+      ],
+      flushbarPosition: FlushbarPosition.BOTTOM,
+      dismissDirection: FlushbarDismissDirection.HORIZONTAL,
+      forwardAnimationCurve: Curves.fastLinearToSlowEaseIn,
+      title: 'Sukses...',
+      message: 'Kartu Pasien berhasil di simpan',
+    )
       ..onStatusChanged = (FlushbarStatus status) {
         switch (status) {
           case FlushbarStatus.SHOWING:

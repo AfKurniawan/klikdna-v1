@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:new_klikdna/src/account/providers/account_provider.dart';
 import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
 import 'package:new_klikdna/src/patient_card/widgets/asuransi_item.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
@@ -85,7 +84,7 @@ class _PatientCardPageState extends State<PatientCardPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          Consumer<AccountProvider>(
+                          Consumer<PatientCardProvider>(
                             builder: (context, model, _) {
                               return ClipRRect(
                                   borderRadius: BorderRadius.circular(50),
@@ -144,35 +143,6 @@ class _PatientCardPageState extends State<PatientCardPage> {
                               Text("-", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                             ],
                           )
-                          // Column(
-                          //   mainAxisAlignment: MainAxisAlignment.start,
-                          //   crossAxisAlignment: CrossAxisAlignment.start,
-                          //   children: [
-                          //     SizedBox(height: 20),
-                          //     Row(
-                          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          //       children: [
-                          //         Text("Kartu Asuransi"),
-                          //         GestureDetector(
-                          //           child: Text("Ubah", style: TextStyle(color: MyColors.dnaGreen)),
-                          //           onTap: (){
-                          //             print("Go to page ");
-                          //           },
-                          //         )
-                          //       ],
-                          //     ),
-                          //     SizedBox(height: 10),
-                          //     ListView.builder(
-                          //         scrollDirection: Axis.vertical,
-                          //         itemCount: 1,
-                          //         shrinkWrap: true,
-                          //         physics: NeverScrollableScrollPhysics(),
-                          //         itemBuilder: (context, index) {
-                          //           return AsuransiItemWidget(
-                          //               model: prov.listAsuransi[index]);
-                          //         }),
-                          //   ],
-                          // ),
                               : Theme(
                             data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
                             child: Container(

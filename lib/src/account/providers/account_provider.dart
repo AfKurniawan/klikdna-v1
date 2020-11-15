@@ -15,7 +15,7 @@ class AccountProvider with ChangeNotifier {
 
 
   bool isLoading ;
-  Uint8List photoView ;
+
 
   String lastID ;
 
@@ -31,6 +31,8 @@ class AccountProvider with ChangeNotifier {
 
   TextEditingController nameController = new TextEditingController();
   TextEditingController rhesusController = new TextEditingController();
+
+
 
   Future<AccountModel> getUserAccount(BuildContext context) async {
     print("START GET ACCOUNT");
