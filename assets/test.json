@@ -1,0 +1,175 @@
+{
+  "kdm_account_id": 2,
+  "user_id": "USER-4QVQ1PX",
+  "name": "Klikdna Satu",
+  "username": "klikdna001",
+  "phone": "0818250200",
+  "gender": "male",
+  "dob": "January 17, 1973.",
+  "detail_person": [
+    {
+      "user_id": "USER-4QVQ1PX",
+      "user_person": "USER-4QVQ1PX",
+      "voucher_detail_id": null,
+      "name": "Klikdna Satu",
+      "dob": "1973-01-17",
+      "gender": "male",
+      "kit_barcode": [
+        {
+          "person_id": "USER-AJ1UEW7",
+          "package": "KIT DRUGS RESPON",
+          "barcode": "123123123123123",
+          "sample_id": "123123123123123",
+          "time_of_registration": "2020-09-14 14:17:22",
+          "status_lacak": 3,
+          "kit_services": [
+            {
+              "kits_id": 566,
+              "service_name": "DRUGS RESPONSE"
+            }
+          ],
+          "report_detail": [
+            {
+              "user_id": "USER-4QVQ1PX",
+              "service_name": "DRUGS RESPONSE",
+              "person_id": "USER-AJ1UEW7",
+              "report_id": "CANCER-FCWHHWC3L",
+              "kit_status": 1,
+              "registered_at": [],
+              "status_report": "WAITING_FOR_SAMPLE",
+              "url": "coming_soon"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user_id": "USER-4QVQ1PX",
+      "user_person": "USER-M3GB9Z7",
+      "voucher_detail_id": 1,
+      "name": "Klik dna Test",
+      "dob": "2020-02-02",
+      "gender": "male",
+      "kit_barcode": [
+        {
+          "person_id": "USER-M3GB9Z7",
+          "package": "KIT LIFE STYLE",
+          "barcode": null,
+          "sample_id": null,
+          "time_of_registration": null,
+          "status_lacak": 0,
+          "kit_services": [
+            {
+              "kits_id": 565,
+              "service_name": "SPORT"
+            },
+            {
+              "kits_id": 565,
+              "service_name": "SKIN"
+            },
+            {
+              "kits_id": 565,
+              "service_name": "HEALTH"
+            },
+            {
+              "kits_id": 565,
+              "service_name": "DIET"
+            }
+          ],
+          "report_detail": [
+            {
+              "user_id": "USER-4QVQ1PX",
+              "service_name": "DRUGS RESPONSE",
+              "person_id": "USER-AJ1UEW7",
+              "report_id": "CANCER-FCWHHWC3L",
+              "kit_status": 1,
+              "registered_at": [],
+              "status_report": "WAITING_FOR_SAMPLE",
+              "url": "coming_soon"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user_id": "USER-4QVQ1PX",
+      "user_person": "USER-AJ1UEW7",
+      "voucher_detail_id": 3,
+      "name": "Drug",
+      "dob": "2020-02-02",
+      "gender": "male",
+      "kit_barcode": [
+        {
+          "person_id": "USER-AJ1UEW7",
+          "package": "KIT DRUGS RESPON",
+          "barcode": "123123123123123",
+          "sample_id": "123123123123123",
+          "time_of_registration": "2020-09-14 14:17:22",
+          "status_lacak": 3,
+          "kit_services": [
+            {
+              "kits_id": 566,
+              "service_name": "DRUGS RESPONSE"
+            }
+          ],
+          "report_detail": [
+            {
+              "user_id": "USER-4QVQ1PX",
+              "service_name": "DRUGS RESPONSE",
+              "person_id": "USER-AJ1UEW7",
+              "report_id": "CANCER-FCWHHWC3L",
+              "kit_status": 1,
+              "registered_at": [
+                {
+                  "Test": "null"
+                }
+              ],
+              "status_report": "WAITING_FOR_SAMPLE",
+              "url": "coming_soon"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user_id": "USER-4QVQ1PX",
+      "user_person": "USER-GWPN289",
+      "voucher_detail_id": 4,
+      "name": "cancer",
+      "dob": "2020-02-02",
+      "gender": "male",
+      "kit_barcode": [
+        {
+          "person_id": "USER-GWPN289",
+          "package": "KIT CANCER MARKER",
+          "barcode": "null",
+          "sample_id": "null",
+          "time_of_registration": "null",
+          "status_lacak": 0,
+          "kit_services": [
+            {
+              "kits_id": 567,
+              "service_name": "CANCER MARKER"
+            }
+          ],
+          "report_detail": [
+            {
+              "user_id": "USER-4QVQ1PX",
+              "service_name": "DRUGS RESPONSE",
+              "person_id": "USER-AJ1UEW7",
+              "report_id": "CANCER-FCWHHWC3L",
+              "kit_status": 1,
+              "registered_at": [
+                {
+                  "Test": "null"
+                }
+              ],
+              "status_report": "WAITING_FOR_SAMPLE",
+              "url": "coming_soon"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

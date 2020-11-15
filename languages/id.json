@@ -1,0 +1,15 @@
+{
+  "app_name": "Klik DNA",
+
+  "onboarding_title1": "Pertama Dengan Microarray",
+  "onboarding_title2": "Didukung Mitra Terpercaya",
+  "onboarding_title3": "Data Anda Dijamin Aman",
+
+  "onboarding_desc1": "DNAku menggunakan teknologi sequencing DNA terkini dari Amerika. Bekerjasama hanya dengan para ahli dibidangnya, DNAku selalu memberikan hasil yang terbaik.",
+  "onboarding_desc2": "DNAku secara aktif bekerjasama dengan badan riset untuk menghasilkan terobosan ilmiah, dengan visi untuk memajukan kesadaran dan kesehatan rakyat Indonesia. ",
+  "onboarding_desc3": "DNAku menggunakan perangkat lunak yang telah disertifikasi oleh ISO serta patuh pada regulasi keamanan data Eropa. Sampel Anda juga diolah secara anonim.",
+
+  "title_dialog_login_error": "Email belum terdaftar",
+  "desc_dialog_login_error": "Email yang anda masukkan belum terdaftar, silahkan cek kembali email Anda",
+  "button_dialog_login_error": "Oke"
+}
