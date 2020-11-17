@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:new_klikdna/src/account/models/account_model.dart';
 import 'package:new_klikdna/src/account/providers/account_provider.dart';
+import 'package:new_klikdna/src/login/providers/login_provider.dart';
 import 'package:new_klikdna/src/profile/providers/profile_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:provider/provider.dart';
@@ -27,6 +28,7 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
   Widget build(BuildContext context) {
     final prov = Provider.of<AccountProvider>(context);
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: true,
 //      title: Consumer<ProfileProvider>(
@@ -35,7 +37,7 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
 //        },
         title: Text(
           "Detil Profil",
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.grey, fontSize: 16),
         ),
 
         elevation: 0,
@@ -50,24 +52,6 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
               Navigator.pushReplacementNamed(context, "main_page",
                   arguments: 0);
             }),
-        // actions: <Widget>[
-        //   FadeAnimation(
-        //     1,
-        //     IconButton(
-        //       icon: IconBagdeWidget(
-        //         imageicon: "assets/icons/notif_icon.png",
-        //         color: MyColors.dnaGreen,
-        //         width: 20,
-        //         height: 28,
-        //         count: "0",
-        //       ),
-        //       color: MyColors.grey,
-        //       onPressed: () {
-        //         Navigator.pushNamed(context, "cart_page");
-        //       },
-        //     ),
-        //   ),
-        // ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -78,13 +62,14 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Container(
+                  color: Colors.white,
                   child: Row(
                     children: [
                       Container(
                         child: AnimatedContainer(
                           duration: Duration(milliseconds: 1000),
                           padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: Consumer<AccountProvider>(
+                          child: Consumer<LoginProvider>(
                             builder: (context, model, _) {
                               return ClipRRect(
                                   borderRadius: BorderRadius.circular(50),
@@ -100,25 +85,22 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 20),
-                      Consumer<AccountProvider>(
+                      Consumer<LoginProvider>(
                         builder: (context, model, _) {
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                prov.name == null ? "" : prov.name,
+                          return Container(
+                            height: 80,
+                            width: MediaQuery.of(context).size.width / 2,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Center(
+                              child: Text("${model.vfirstname} ${model.vlastname}",
                                 style: TextStyle(
-                                    color: MyColors.dnaGreen,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20),
+                                    fontSize: 16,
+                                  fontWeight: FontWeight.w500
+                                ),
                               ),
-                              // Text(
-                              //   prov.mobile,
-                              //   style: TextStyle(
-                              //       color: MyColors.dnaGreen, fontSize: 16),
-                              // ),
-                            ],
+                            ),
                           );
                         },
                       )
@@ -126,46 +108,7 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
                   ),
                 ),
                 SizedBox(height: 20),
-                // Row(
-                //   children: <Widget>[
-                //     Expanded(
-                //       child: OutlineButtonAndIconWidget(
-                //         btnText: "Kode QR",
-                //         color: Colors.transparent,
-                //         height: 50,
-                //         textColor: MyColors.dnaGreen,
-                //         myIcon: ImageIcon(
-                //             AssetImage("assets/icons/qr_icon.png"),
-                //             color: MyColors.dnaGreen),
-                //         btnAction: () {},
-                //       ),
-                //     ),
-                //     SizedBox(
-                //       width: 16,
-                //     ),
-                //     Expanded(
-                //       child: ButtonAndIconWidget(
-                //         btnText: "Pindai",
-                //         myIcon: ImageIcon(
-                //             AssetImage("assets/icons/scan_icon.png"),
-                //             color: Colors.white),
-                //         color: MyColors.dnaGreen,
-                //         btnAction: () {
-                //           Provider.of<ProfileProvider>(context, listen: false)
-                //               .scanBarcode(context);
-                //           //prov.scanBarcode(context);
-                //         },
-                //       ),
-                //     ),
-                //   ],
-                // ),
-                SizedBox(
-                  height: 20,
-                ),
                 Divider(),
-                SizedBox(
-                  height: 10,
-                ),
                 Text(
                   "Akun",
                   style: TextStyle(
@@ -193,7 +136,7 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
                 ),
                 Divider(),
                 SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 Text(
                   "Tentang",

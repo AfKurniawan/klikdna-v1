@@ -23,7 +23,7 @@ class _LihatProfilePageState extends State<LihatProfilePage> {
             appBar: AppBar(
               centerTitle: false,
               title: Text(
-                "Profile",
+                "Profil",
                 style: TextStyle(color: Colors.grey, fontSize: 16),
               ),
               elevation: 0,
@@ -62,7 +62,7 @@ class _LihatProfilePageState extends State<LihatProfilePage> {
                                 "assets/images/header_background.png"))),
                     child: Padding(
                       padding: const EdgeInsets.only(
-                          left: 18.0, right: 18, bottom: 10),
+                          left: 18.0, right: 18),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -81,7 +81,10 @@ class _LihatProfilePageState extends State<LihatProfilePage> {
                           // )
                           ClipRRect(
                               borderRadius: BorderRadius.circular(50),
-                              child: Image.asset("assets/images/no_image.png", height: 100, width: 100, fit: BoxFit.cover))
+                              child: Image.asset("assets/images/no_image.png",
+                                  height: 100,
+                                  width: 100,
+                                  fit: BoxFit.cover))
 
                         ],
                       ),
@@ -99,11 +102,11 @@ class _LihatProfilePageState extends State<LihatProfilePage> {
                         children: [
                           Text("Nama"),
                           SizedBox(height: 10),
-                          Text(prov.firstname == null ? "-" : prov.firstname, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                          Text(prov.vfirstname == null ? "-" : "${prov.vfirstname} ${prov.vlastname}", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                           SizedBox(height: 20),
                           Text("Tanggal Lahir"),
                           SizedBox(height: 10),
-                          Text(prov.birthdate == null ? "-" : prov.birthdate, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                          Text(prov.vbirthdate == null ? "-" : "${prov.vbirthdate}", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                           SizedBox(height: 20),
                           Text("Jenis Kelamin"),
                           SizedBox(height: 10),

@@ -72,17 +72,12 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                           ),
 
-                          Consumer<AccountProvider>(
-                            builder: (context, model, _){
-                              return Text(
-                                model.name == null ? "" : model.name,
-                                style: TextStyle(
-                                    color: MyColors.dnaGreen,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20),
-                              );
-                            },
-
+                          Text(
+                            prov.vfirstname == null ? "" : "${prov.firstname} ${prov.lastname}",
+                            style: TextStyle(
+                                color: MyColors.dnaGreen,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
                           ),
                           Spacer(),
                           IconButton(

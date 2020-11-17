@@ -137,10 +137,9 @@ class _MitraPageState extends State<MitraPage> {
                             print("CALL TREE WEBSITE");
                           },
                           child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(0),
                             child: Image.asset(
                               "assets/images/tree_image.png",
-                              width: MediaQuery.of(context).size.width - 40,
                               fit: BoxFit.cover,
                               height: MediaQuery.of(context).size.width < 600 ? MediaQuery.of(context).size.height / 4 : MediaQuery.of(context).size.height / 3,
                               // height: 150,
@@ -164,7 +163,7 @@ class _MitraPageState extends State<MitraPage> {
                           margin: EdgeInsets.only(top: 10),
                           decoration: BoxDecoration(
                             color: Color(0xff50A1D3),
-                            borderRadius: BorderRadius.circular(5),
+                            borderRadius: BorderRadius.circular(10),
                             boxShadow: [
                               BoxShadow(
                                 offset: Offset(0, 4),

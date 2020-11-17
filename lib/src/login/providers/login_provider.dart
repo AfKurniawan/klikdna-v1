@@ -127,7 +127,7 @@ class LoginProvider with ChangeNotifier{
             prefs.setString("lastname", responseJson.user.member.lastname.toUpperCase());
 
             birthdate = responseJson.user.member.birthdate;
-            prefs.setString("birthdate", responseJson.user.member.birthdate);
+            prefs.setString("birthdate", responseJson.user.member.birthdate.substring(0, 10));
 
             gender = responseJson.user.member.gender;
             prefs.setString("gender", responseJson.user.member.gender);
