@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:new_klikdna/src/home/pages/home_page.dart';
-import 'package:new_klikdna/src/home/providers/artikel_provider.dart';
 import 'package:new_klikdna/src/main/providers/main_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:new_klikdna/token/providers/token_provider.dart';

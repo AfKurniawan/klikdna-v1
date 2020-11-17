@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
@@ -82,6 +81,7 @@ class AccountProvider with ChangeNotifier {
       print("ERROR GET ACCCOUNT");
       isLoading = false ;
     }
+     return null;
 
   }
 }

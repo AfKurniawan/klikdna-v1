@@ -63,6 +63,8 @@ class AsuransiProvider extends ChangeNotifier {
 
     notifyListeners();
 
+    return null;
+
   }
 
   TextEditingController namaAsuransiController = new TextEditingController();
@@ -296,6 +298,8 @@ class AsuransiProvider extends ChangeNotifier {
         }
       }
       ..show(ctx);
+
+    return null;
   }
 
 

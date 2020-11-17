@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:new_klikdna/src/home/models/artikel_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:new_klikdna/token/providers/token_provider.dart';
 import 'dart:convert';
 
-import 'package:provider/provider.dart';
 
 class ArtikelProvider with ChangeNotifier {
   

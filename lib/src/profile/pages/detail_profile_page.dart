@@ -26,7 +26,6 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
   }
   @override
   Widget build(BuildContext context) {
-    final prov = Provider.of<AccountProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

@@ -24,7 +24,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     Provider.of<ArtikelProvider>(context, listen: false).getArtikel(context, context.watch<TokenProvider>().accessToken);
-    var mediaQuery = MediaQuery.of(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: const SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.light,

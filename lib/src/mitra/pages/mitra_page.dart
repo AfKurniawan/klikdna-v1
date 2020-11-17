@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:new_klikdna/src/home/widgets/dashboard_slider.dart';
 import 'package:new_klikdna/src/login/providers/login_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:new_klikdna/styles/my_theme.dart';

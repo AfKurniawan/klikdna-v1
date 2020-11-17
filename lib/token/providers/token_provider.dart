@@ -1,11 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
-import 'package:new_klikdna/src/home/providers/artikel_provider.dart';
 import 'package:new_klikdna/token/models/token_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:provider/provider.dart';
 
 class TokenProvider with ChangeNotifier {
 
