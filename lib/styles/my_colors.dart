@@ -39,7 +39,7 @@ class MyColors {
   static const Color dnaGreen = Color(0xff3FCCCC);
   static const Color dnaGreenFocus = Color(0xff82fafa);
   static const Color dnaGrey = Color(0xff666666);
-  static const Color dnaBlack = Color(0xff231E2E);
+  static const Color dnaBlack = Color(0xff433F3F);
   static const Color primaryBlack = Color(0xff433F3F);
   static const Color dnaGreen2 = Color(0xff59CD90);
   static const Color dnaBadge = Color(0xffF47373);
@@ -51,6 +51,14 @@ class MyColors {
   static const Color healthGreen = Color(0xff17A2AC);
   static const Color dietGreen = Color(0xff80C792);
   static const Color skinPink = Color(0xffF8BAB8);
+
+  static const mitraProColor = [Color(0xff848FA5), Color(0xff848FA5)];
+  static const imperialLeaderColor = [Color(0xff000000), Color(0xff434343)];
+  static const executiveBuilderColor = [Color(0xff1D3557), Color(0xff1C53A0)];
+  static const producerColor = [Color(0xff0B7A75), Color(0xff28A7A1)];
+  static const mitraColor = [Color(0xff7A542E), Color(0xffA38363)];
+  static const eliteAndPro = [Color(0xff1D3557), Color(0xff1D3557)];
+  static const presidentAndDirectorColor = [Color(0xff05090F), Color(0xff05090F)];
 
 
 }

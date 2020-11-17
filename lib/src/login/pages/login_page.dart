@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               onPressed: (){
                 print("Back");
-                Navigator.of(context).pop();
+               Navigator.pushReplacementNamed(context, "onboarding_page");
               },
             ),
           ),

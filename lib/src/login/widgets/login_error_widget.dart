@@ -11,9 +11,9 @@ class LoginErrorWidget extends StatelessWidget {
 
   LoginErrorWidget({
     @required this.title,
-    @required this.description,
+    this.description,
     @required this.filledButtonText,
-    @required this.outlineButtonText,
+    this.outlineButtonText,
     this.filledButtonaction,
     this.outlineButtonAction,
     this.outlineTextColor

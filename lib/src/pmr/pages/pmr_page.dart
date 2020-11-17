@@ -55,7 +55,7 @@ class _PMRPageState extends State<PMRPage> {
                           ),
 
                           Text(
-                              "${prov.firstname } ${prov.lastname}" == null ? "" : "${prov.firstname } ${prov.lastname}", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)
+                              prov.firstname == null || prov.lastname == null ? "" : "${prov.firstname} ${prov.lastname}", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)
                           )
                         ],
                       ),
