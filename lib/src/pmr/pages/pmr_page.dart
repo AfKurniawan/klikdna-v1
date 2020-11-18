@@ -54,8 +54,20 @@ class _PMRPageState extends State<PMRPage> {
                               "Hai", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w300)
                           ),
 
-                          Text(
-                              prov.firstname == null || prov.lastname == null ? "" : "${prov.firstname} ${prov.lastname}", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)
+                          Container(
+                            height: 20,
+                            width: MediaQuery.of(context).size.width / 2,
+                            child: Center(
+                              child: Text("${prov.firstname} ${prov.lastname}",
+                                overflow: TextOverflow.clip,
+                                maxLines: 1,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500
+                                ),
+                              ),
+                            ),
                           )
                         ],
                       ),

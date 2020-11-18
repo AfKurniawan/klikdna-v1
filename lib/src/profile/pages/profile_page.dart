@@ -71,7 +71,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
 
                           Text(
-                            prov.vfirstname == null ? "" : "${prov.firstname} ${prov.lastname}",
+                            prov.vfirstname == null ? "" : "${prov.vfirstname} ${prov.vlastname}",
                             style: TextStyle(
                                 color: MyColors.dnaGreen,
                                 fontWeight: FontWeight.bold,

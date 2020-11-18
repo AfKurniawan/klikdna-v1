@@ -87,16 +87,16 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
                       Consumer<LoginProvider>(
                         builder: (context, model, _) {
                           return Container(
-                            height: 80,
+                            height: 20,
                             width: MediaQuery.of(context).size.width / 2,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10)),
                             child: Center(
                               child: Text("${model.vfirstname} ${model.vlastname}",
+                                overflow: TextOverflow.clip,
+                                maxLines: 1,
                                 style: TextStyle(
-                                    fontSize: 16,
-                                  fontWeight: FontWeight.w500
+                                    color: MyColors.dnaBlack,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500
                                 ),
                               ),
                             ),

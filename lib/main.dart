@@ -6,6 +6,7 @@ import 'package:new_klikdna/src/home/providers/artikel_provider.dart';
 import 'package:new_klikdna/src/login/providers/login_provider.dart';
 import 'package:new_klikdna/src/main/providers/main_provider.dart';
 import 'package:new_klikdna/src/account/providers/account_provider.dart';
+import 'package:new_klikdna/src/mitra/providers/mitra_provider.dart';
 import 'package:new_klikdna/src/patient_card/providers/asuransi_provider.dart';
 import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
 import 'package:new_klikdna/src/pmr/providers/pmr_provider.dart';
@@ -35,7 +36,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AccountProvider()),
         ChangeNotifierProvider(create: (_) => PMRProvider()),
         ChangeNotifierProvider(create: (_) => AsuransiProvider()),
-        ChangeNotifierProvider(create: (_) => PatientCardProvider())
+        ChangeNotifierProvider(create: (_) => PatientCardProvider()),
+        ChangeNotifierProvider(create: (_) => MitraProvider())
 
       ],
       child: MaterialApp(

@@ -61,4 +61,24 @@ class MyColors {
   static const presidentAndDirectorColor = [Color(0xff05090F), Color(0xff05090F)];
 
 
+  /// REDESIGN
+  static const leaderCardColor = [Color(0xff303036), Color(0xff38383E)];
+
+  static const builderCardColor = [Color(0xff0477BF), Color(0xff2885BE)];
+
+  static const producerCardColor = [Color(0xff77ACA2), Color(0xff97C8BF)];
+
+  static const startCardColor = [Color(0xffEE964B), Color(0xffF8A55E)];
+
+  static const mitraCardColor = [Color(0xff848FA5), Color(0xff9EA9BD)];
+
+  static const cvTileColor = Color(0xffFF7D67);
+
+  static const pointRewardTileColor = Color(0xff006971);
+
+  static const teamTileColor = Color(0xff555555);
+
+  static const totalSaldoTileColor = Color(0xffB5CCD5);
+
+
 }
