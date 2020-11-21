@@ -3,20 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:new_klikdna/src/home/models/artikel_model.dart';
 
-class ArtikelItem extends StatelessWidget {
-  Artikel model;
+class ArtikelItem extends StatefulWidget {
+  final Artikel model;
 
-  ArtikelItem(Artikel model) {
-    this.model = model;
-  }
+  const ArtikelItem({
+    Key key, this.model
+  }) : super(key: key);
 
+  @override
+  _ArtikelItemState createState() => _ArtikelItemState();
+}
+
+class _ArtikelItemState extends State<ArtikelItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height / 1,
       child: InkWell(
         onTap: (){
-          Navigator.of(context).pushNamed("detail_artikel_page", arguments: model);
+          Navigator.of(context).pushNamed("detail_artikel_page", arguments: widget.model);
         },
         child: Container(
           child: Column(
@@ -27,7 +32,7 @@ class ArtikelItem extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: new BorderRadius.circular(12.0),
                   child: CachedNetworkImage(
-                    imageUrl: AppConstants.IMAGE_ARTIKEL_URL+ model.image,
+                    imageUrl: AppConstants.IMAGE_ARTIKEL_URL+ widget.model.image,
                     fit: BoxFit.cover,
                     height: MediaQuery.of(context).size.height / 7,
                     width: MediaQuery.of(context).size.width,
@@ -42,7 +47,7 @@ class ArtikelItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Flexible(
-                        child: Text(model.title,
+                        child: Text(widget.model.title,
                           maxLines: 2,
                           overflow: TextOverflow.clip,
                         ),
@@ -55,7 +60,7 @@ class ArtikelItem extends StatelessWidget {
               Row(
                 children: [
                   Flexible(
-                      child: Text(model.description, overflow: TextOverflow.ellipsis,
+                      child: Text(widget.model.description, overflow: TextOverflow.ellipsis,
                           maxLines: 2,
                           style: TextStyle(color: Colors.grey, fontSize: 14))),
                 ],

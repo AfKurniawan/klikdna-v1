@@ -44,7 +44,7 @@ class _BannerSliderState extends State<BannerSlider> {
     ]);
   }
 
-  Padding buildIndicatorSlider() {
+  Widget buildIndicatorSlider() {
     return Padding(
       padding: const EdgeInsets.only(left: 10.0, right: 10.0),
       child: Container(

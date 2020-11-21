@@ -170,7 +170,7 @@ class _HomePageState extends State<HomePage> {
                                     crossAxisSpacing: 20,
                                     mainAxisSpacing: 20,
                                     childAspectRatio: 1),
-                                itemBuilder: (context, index) => ArtikelItem(artikel.listArtikel[index]),
+                                itemBuilder: (context, index) => ArtikelItem(model: artikel.listArtikel[index]),
                               )
                           );
                         }

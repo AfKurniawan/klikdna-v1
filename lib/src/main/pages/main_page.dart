@@ -2,25 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:new_klikdna/src/home/pages/home_page.dart';
+import 'package:new_klikdna/src/login/providers/login_provider.dart';
 import 'package:new_klikdna/src/main/providers/main_provider.dart';
+import 'package:new_klikdna/src/member/providers/member_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:new_klikdna/token/providers/token_provider.dart';
 import 'package:provider/provider.dart';
 
 class MainPage extends StatefulWidget {
-
-  int currentTab;
-  Widget currenPage = new HomePage();
-  String currentTitle;
-  BuildContext context;
-  String token ;
-
-  MainPage({Key key, this.currentTab, this.context, this.token}){
-    currentTab = currentTab != null ? currentTab : 0 ;
-
-
-  }
-
 
   @override
   _MainPageState createState() => _MainPageState();
@@ -28,18 +17,24 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
 
+  int currentTab;
+  Widget currenPage = new HomePage();
+  String currentTitle;
+  String token ;
 
   @override
   void initState() {
+    currentTab = currentTab != null ? currentTab : 0 ;
     Provider.of<TokenProvider>(context, listen: false).getApiToken();
-    context.read<MainProvider>().selectTab(context, widget.currentTab);
+    Provider.of<LoginProvider>(context, listen: false).getMitraData();
+    context.read<MainProvider>().selectTab(context, currentTab);
     super.initState();
 
   }
 
   @override
   void didUpdateWidget(MainPage oldWidget){
-    Provider.of<MainProvider>(context, listen: false).selectTab(context, oldWidget.currentTab);
+    Provider.of<MainProvider>(context, listen: false).selectTab(context, currentTab);
     super.didUpdateWidget(oldWidget);
   }
 

@@ -13,5 +13,11 @@ class AppConstants {
   static const String SAVE_ASURANSI_URL = "https://apiku.dnaku.id/api/v1/userPatientCardAssurances";
   static const String DELETE_ASURANSI_URL = "https://apiku.dnaku.id/api/v1/userPatientCardAssurances/";
   static const String UPDATE_ASURANSI_URL = "https://apiku.dnaku.id/api/v1/userPatientCardAssurances/";
+  static const String GET_FOOD_METER_URL = "https://apiku.dnaku.id/api/v1/pageFoodProducts";
+  static const String GET_DETAIL_FOOD_METER_URL = "https://apiku.dnaku.id/api/v1/pageFoodProducts/";
+  static const String GET_SAMPLE_URL = "https://apiku.dnaku.id/api/v1/sampels/";
+  static const String GET_REPORT_DETAIL_URL = "https://apiku.dnaku.id/api/v1/userOrderReports";
+  static const String GET_MEMBER_URL = "https://apiku.dnaku.id/api/v1/userPeople/";
+  static const String NEW_GET_ACCOUNT_URL = "https://apiku.dnaku.id/api/v1/userAccounts/";
 
 }

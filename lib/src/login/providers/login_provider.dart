@@ -170,7 +170,9 @@ class LoginProvider with ChangeNotifier{
 
             prefs.setString("expired", responseJson.user.member.expired);
 
-            prefs.setString("highestrank", responseJson.user.member.highestrank);
+            prefs.setString("highestrank", responseJson.user.member.highestrank.toString());
+
+            print("${responseJson.user.member.highestrank.toString()}");
 
             prefs.setInt("timone", responseJson.user.member.timone);
 
@@ -298,7 +300,7 @@ class LoginProvider with ChangeNotifier{
         vcommission = prefs.getString("commission");
         vrank = prefs.getString("rank");
         vpar = prefs.getString("par");
-        vexpired = prefs.getString("expired").substring(0, 10);
+        vexpired = prefs.getString("expired");
         vhighestrank = prefs.getString("highestrank");
         vtimone = prefs.getInt("timone");
         vtimtwo = prefs.getInt("timtwo");

@@ -17,7 +17,7 @@ class EditPatientCardPage extends StatefulWidget {
 
 class _EditPatientCardPageState extends State<EditPatientCardPage> {
   String _radioValue;
-  String _result;
+  String result;
   final format = DateFormat("yyyy-MM-dd");
 
   void _handleRadioValueChange(String value) {
@@ -26,10 +26,10 @@ class _EditPatientCardPageState extends State<EditPatientCardPage> {
       _radioValue = value;
       switch (_radioValue) {
         case "Male":
-          _result = "L";
+          result = "L";
           break;
         case "Female":
-          _result = "W";
+          result = "W";
           break;
       }
     });

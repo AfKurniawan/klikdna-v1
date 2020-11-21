@@ -4,7 +4,7 @@ import 'package:new_klikdna/src/home/pages/home_page.dart';
 import 'package:new_klikdna/src/mitra/pages/mitra_page.dart';
 import 'package:new_klikdna/src/pmr/pages/pmr_page.dart';
 import 'package:new_klikdna/src/profile/pages/detail_profile_page.dart';
-import 'package:new_klikdna/src/report/pages/report_page.dart';
+import 'package:new_klikdna/src/report/pages/main_report_page.dart';
 import 'package:new_klikdna/token/providers/token_provider.dart';
 import 'package:provider/provider.dart';
 

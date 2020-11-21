@@ -57,15 +57,13 @@ class _PMRPageState extends State<PMRPage> {
                           Container(
                             height: 20,
                             width: MediaQuery.of(context).size.width / 2,
-                            child: Center(
-                              child: Text("${prov.firstname} ${prov.lastname}",
-                                overflow: TextOverflow.clip,
-                                maxLines: 1,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w500
-                                ),
+                            child: Text("${prov.firstname} ${prov.lastname}",
+                              overflow: TextOverflow.clip,
+                              maxLines: 1,
+                              style: TextStyle(
+                                color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500
                               ),
                             ),
                           )

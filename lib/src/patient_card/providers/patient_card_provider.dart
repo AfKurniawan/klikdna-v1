@@ -49,7 +49,7 @@ class PatientCardProvider with ChangeNotifier {
     patienCardId = getId.lastID;
 
 
-    print("LAST ID : $patienCardId");
+    print("LAST ID ___: $patienCardId");
 
     String accessToken = prov.accessToken;
     Map<String, String> ndas = {
@@ -62,9 +62,11 @@ class PatientCardProvider with ChangeNotifier {
     final request = await http.get(url, headers: ndas);
     final response = PatientCardModel.fromJson(json.decode(request.body));
 
+    print("RESPONSE BODY_______: ${request.body}");
+
 
     if(request.statusCode == 200){
-      //print("RESPONSE BODY: ${request.body}");
+
       isLoading = false;
       id = response.data.id;
       nama = response.data.nama;
@@ -89,8 +91,6 @@ class PatientCardProvider with ChangeNotifier {
 
       var detailArray = data['data']['detail'] as List;
       listAsuransi = detailArray.map<Asuransi>((j) => Asuransi.fromJson(j)).toList();
-
-      print("PATIEN CARD ID PAGE PATIENT CARD: $id");
 
       notifyListeners();
 
@@ -148,7 +148,7 @@ class PatientCardProvider with ChangeNotifier {
     emergencyContactController.text = emergencyContact;
     comorbidityController.text = comorbidity;
     dobController.text = dob;
-    photoView = Base64Decoder().convert(photo);
+    //photoView = Base64Decoder().convert(photo);
 
     print("FOTO FROM JSON: $photo");
 

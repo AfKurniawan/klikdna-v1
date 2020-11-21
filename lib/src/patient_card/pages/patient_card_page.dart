@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:new_klikdna/src/account/providers/account_provider.dart';
 import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
 import 'package:new_klikdna/src/patient_card/widgets/asuransi_item.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
@@ -24,7 +25,7 @@ class _PatientCardPageState extends State<PatientCardPage> {
 
   @override
   Widget build(BuildContext context) {
-
+  final account = Provider.of<AccountProvider>(context, listen: false);
     return Consumer<PatientCardProvider>(
       builder: (context, prov, _){
         return Scaffold(
@@ -56,11 +57,12 @@ class _PatientCardPageState extends State<PatientCardPage> {
                 )
               ],
             ),
-            body: prov.isLoading == true
-                ? Center(
+            body: prov.isLoading == true ?
+            Center(
                 child: Platform.isIOS
                     ? CupertinoActivityIndicator()
                     : CircularProgressIndicator(strokeWidth: 2))
+               : account.isError == true || account.listPatentCard.length == 0 ? Center(child: Text("Anda tidak memiliki Kartu Pasien"))
                 : SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
