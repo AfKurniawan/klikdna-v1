@@ -14,7 +14,7 @@ class TreeWebViewWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width - 20,
+      width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.only(top: 10, bottom: 20),
       decoration: BoxDecoration(
         color: Colors.transparent,
@@ -36,9 +36,9 @@ class TreeWebViewWidget extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: Image.asset(
-              "assets/images/tree_image.png",
+              "assets/images/new_trees.png",
               fit: BoxFit.cover,
-              height: MediaQuery.of(context).size.width < 400 ? 168 : 186,
+              height: MediaQuery.of(context).size.width < 400 ? 130 : 166,
               width: MediaQuery.of(context).size.width,
               // height: 150,
             ),

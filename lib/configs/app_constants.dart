@@ -19,5 +19,7 @@ class AppConstants {
   static const String GET_REPORT_DETAIL_URL = "https://apiku.dnaku.id/api/v1/userOrderReports";
   static const String GET_MEMBER_URL = "https://apiku.dnaku.id/api/v1/userPeople/";
   static const String NEW_GET_ACCOUNT_URL = "https://apiku.dnaku.id/api/v1/userAccounts/";
+  static const String GET_WALLET_URL = "https://staging.klikdna.com/wallets/apilist.json";
+  static const String GET_REFERRAL_URL = "https://staging.klikdna.com/referrals/apilist.json";
 
 }

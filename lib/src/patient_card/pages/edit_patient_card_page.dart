@@ -340,33 +340,7 @@ class _EditPatientCardPageState extends State<EditPatientCardPage> {
     );
   }
 
-  InputDecoration buildInputDecoration(String labelText) {
-    return InputDecoration(
-        labelText: labelText,
-        alignLabelWithHint: true,
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: MyColors.dnaGreen, width: 1.5),
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey[400], width: 1.5),
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.red[300], width: 1.5),
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.red[300], width: 1.5),
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-        ),
-        disabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey[300], width: 1.5),
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-        ),
-        focusColor: MyColors.dnaGreen,
-        hintStyle: TextStyle(color: Colors.grey[400], fontSize: 12));
-  }
+
 
   List<String> golonganDarah = [
     "O(I)Rh+",

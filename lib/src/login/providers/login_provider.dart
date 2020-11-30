@@ -222,6 +222,8 @@ class LoginProvider with ChangeNotifier{
 
             ///WALLETS
             prefs.setString("method", responseJson.user.jsondata.wallets.method);
+            
+            prefs.setString("accesskey", responseJson.user.jsondata.wallets.params.accesskey);
 
             prefs.setString("walleturl", responseJson.user.jsondata.wallets.url);
 

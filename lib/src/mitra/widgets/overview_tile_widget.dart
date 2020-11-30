@@ -144,7 +144,7 @@ class OverViewTileWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Team",
+                        Text("TIM",
                           overflow: TextOverflow.clip,
                           maxLines: 1,
                           style: TextStyle(
@@ -161,7 +161,7 @@ class OverViewTileWidget extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text("1",
+                                Text("Satu",
                                   overflow: TextOverflow.clip,
                                   maxLines: 1,
                                   style: TextStyle(
@@ -185,7 +185,7 @@ class OverViewTileWidget extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text("2",
+                                Text("Dua",
                                   overflow: TextOverflow.clip,
                                   maxLines: 1,
                                   style: TextStyle(
@@ -239,7 +239,7 @@ class OverViewTileWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Point Reward",
+                        Text("POINT REWARD",
                           overflow: TextOverflow.clip,
                           maxLines: 1,
                           style: TextStyle(
@@ -333,7 +333,7 @@ class OverViewTileWidget extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Saldo",
+                            Text("CYCLE",
                               overflow: TextOverflow.clip,
                               maxLines: 1,
                               style: TextStyle(
@@ -342,12 +342,6 @@ class OverViewTileWidget extends StatelessWidget {
                                   fontWeight: FontWeight.w500
                               ),
                             ),
-                            Icon(Icons.arrow_forward_ios,
-                              color: Colors.white,
-                              size: 14,
-                            ),
-
-                            SizedBox(width: 20),
                             Align(
                                 alignment: Alignment.topRight,
                                 child: Image.asset("assets/images/lingkaran.png")),
@@ -355,7 +349,7 @@ class OverViewTileWidget extends StatelessWidget {
                         ),
 
                         //SizedBox(height: 21),
-                        Text(prov.vtotalcommission == null ? "" : "RP. ${prov.vtotalcommission.split(".")[0]}",
+                        Text(prov.vtotalcommission == null ? "" : "RP. ${prov.vtotalcommission.split(".")[0].replaceAll(",", ".")}",
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,

@@ -32,7 +32,7 @@ class HeaderWidget extends StatelessWidget {
           child: Row(
             children: [
               Container(
-                margin: EdgeInsets.only(left: 20, right: 10),
+                margin: EdgeInsets.only(left: 16, right: 10),
                 height: 80,
                 width: 80,
                 child: ClipRRect(
@@ -49,6 +49,7 @@ class HeaderWidget extends StatelessWidget {
                     "Total Komisi",
                     style: TextStyle(
                         color: MyColors.dnaBlack,
+                        fontWeight: FontWeight.bold,
                         fontSize: 13),
                   ),
 
@@ -64,11 +65,21 @@ class HeaderWidget extends StatelessWidget {
                 ],
               ),
               Spacer(),
-              IconButton(
-                icon: Icon(Icons.arrow_forward_ios, size: 16),
-                onPressed: () {
-                  Navigator.pushNamed(context, "wallet_referral_page");
-                },
+              Container(
+                margin: EdgeInsets.only(right: 16),
+                decoration: BoxDecoration(
+                  color: Color(0xffEDF0F4),
+                  borderRadius: BorderRadius.circular(5)
+                ),
+                child: InkWell(
+                  onTap: (){
+                    Navigator.of(context).pushNamed("wallet_referral_page");
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Icon(Icons.arrow_forward_ios, size: 16),
+                  ),
+                ),
               ),
             ],
           ),
