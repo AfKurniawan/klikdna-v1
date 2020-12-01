@@ -100,6 +100,10 @@ class WalletReferralProvider with ChangeNotifier {
       listWalletData = dataArray.map<Wallet>((j) => Wallet.fromJson(j)).toList();
       isTai = false ;
       isError = false ;
+      sum = listWalletData.map((e) => e.saldo).reduce((value, element) => value + element);
+
+      print("Sum : $sum");
+      totalsum = totalFormattedCommision.format(sum);
       notifyListeners();
 
 
@@ -161,7 +165,7 @@ class WalletReferralProvider with ChangeNotifier {
   TextEditingController datetoController = new TextEditingController();
   String searchDialogSource;
   var currentSelectedValue;
-  List<String> deviceTypes = ["Mac", "Windows", "Mobile"];
+
 
 
   showBottomSheetFilter(BuildContext context) {
@@ -348,14 +352,14 @@ class WalletReferralProvider with ChangeNotifier {
                                     borderRadius: BorderRadius.circular(10))),
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton<String>(
-                                hint: Text('Pilih Jenis'),
+                                hint: Text('Semua Data'),
                                 value: tipeValue,
                                 underline: Container(),
                                 items: deviceTypes.map((String value) {
                                   return new DropdownMenuItem<String>(
                                     value: value,
                                     child: new Text(value,
-                                      style: TextStyle(fontWeight: FontWeight.w500),
+                                      style: TextStyle(fontWeight: FontWeight.normal),
                                     ),
                                   );
                                 }).toList(),
@@ -371,7 +375,7 @@ class WalletReferralProvider with ChangeNotifier {
                       ),
                     ),
 
-                    SizedBox(height: MediaQuery.of(context).size.height / 7),
+                    SizedBox(height: MediaQuery.of(context).size.height > 780 ? MediaQuery.of(context).size.height / 4 : MediaQuery.of(context).size.height / 7),
 
                     Padding(
                       padding: const EdgeInsets.all(16.0),
@@ -418,19 +422,33 @@ class WalletReferralProvider with ChangeNotifier {
   String tipeValue;
   String result;
 
+  List<String> deviceTypes = ["Semua Data", "Komisi Referral", "Komisi Tim", "Komisi Royalti", "National Sharing", "Withdraw"];
+
   void _handleRadioValueChange(String value) {
       tipeValue = value;
       switch (tipeValue) {
-        case "Mac":
+        case "Semua Data":
+          result = "";
+          print("RESULT $result");
+          break;
+        case "Komisi Referral":
           result = "1";
           print("RESULT $result");
           break;
-        case "Windows":
+        case "Komisi Tim":
           result = "2";
           print("RESULT $result");
           break;
-        case "Mobile":
+        case "Komisi Royalti":
           result = "3";
+          print("RESULT $result");
+          break;
+        case "National Sharing":
+          result = "4";
+          print("RESULT $result");
+          break;
+        case "Withdraw":
+          result = "5";
           print("RESULT $result");
           break;
       }

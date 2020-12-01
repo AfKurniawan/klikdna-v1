@@ -19,32 +19,21 @@ class _RefferalTabViewPageState extends State<RefferalTabViewPage> {
           children: [
             Padding(
               padding: const EdgeInsets.only(left:18.0, right: 18, top: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                          child: Text("Referral Anda")),
-                      SizedBox(height: 5),
-                      Consumer<WalletReferralProvider>(
-                        builder: (child, ref, _){
-                          return Container(
-                              child: Text(ref.listReferralData.length == 0 ? "Total 0 Referral" : "Total ${ref.listReferralData.length} Referral",
-                                  style: TextStyle(
-                                      fontSize: 16, fontWeight: FontWeight.bold)));
-                        },
-                      ),
-                    ],
-                  ),
                   Container(
-                    child: Image.asset("assets/icons/sorting_wallet_referral.png",
-                      height: 20,
-                    ),
-                  )
+                      child: Text("Referral Anda")),
+                  SizedBox(height: 5),
+                  Consumer<WalletReferralProvider>(
+                    builder: (child, ref, _){
+                      return Container(
+                          child: Text(ref.listReferralData.length == 0 ? "Total 0 Referral" : "Total ${ref.listReferralData.length} Referral",
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold)));
+                    },
+                  ),
                 ],
               ),
             ),

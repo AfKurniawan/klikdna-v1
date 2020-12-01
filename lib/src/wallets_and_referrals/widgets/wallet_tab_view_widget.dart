@@ -40,7 +40,7 @@ class WalletTabViewWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                              child: Text("Saldo Anda")),
+                              child: Text(wallet.tipeValue == null ? "Saldo Anda" : "${wallet.tipeValue}")),
                           SizedBox(height: 5),
                           Consumer<WalletReferralProvider>(
                             builder: (child, prov, _){
