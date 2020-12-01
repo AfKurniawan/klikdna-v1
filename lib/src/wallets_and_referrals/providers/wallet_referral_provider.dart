@@ -17,7 +17,7 @@ class WalletReferralProvider with ChangeNotifier {
   bool isTai ;
   bool isError ;
   List<Wallet> listWalletData = [];
-  int sum ;
+  int sum = 0;
   var totalFormattedCommision = new NumberFormat.currency(name: "", locale: "en_US");
   var totalsum ;
 
@@ -100,9 +100,13 @@ class WalletReferralProvider with ChangeNotifier {
       listWalletData = dataArray.map<Wallet>((j) => Wallet.fromJson(j)).toList();
       isTai = false ;
       isError = false ;
-      sum = listWalletData.map((e) => e.saldo).reduce((value, element) => value + element);
+      if(listWalletData.length == 0) {
+        listWalletData.map((e) => e.saldo);
+        print("MBUHHHH ${listWalletData.map((e) => e.saldo)}");
+      } else {
+        sum = listWalletData.map((e) => e.saldo).reduce((value, element) => value + element);
+      }
 
-      print("Sum : $sum");
       totalsum = totalFormattedCommision.format(sum);
       notifyListeners();
 

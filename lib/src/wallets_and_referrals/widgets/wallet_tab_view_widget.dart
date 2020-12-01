@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:new_klikdna/src/login/providers/login_provider.dart';
 import 'package:new_klikdna/src/wallets_and_referrals/providers/wallet_referral_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -20,14 +19,7 @@ class WalletTabViewWidget extends StatelessWidget {
     return Consumer<WalletReferralProvider>(
       builder: (child, wallet, _){
         return SingleChildScrollView(
-            child: wallet.isTai == true
-                ? Container(
-                height: MediaQuery.of(context).size.height /1.3,
-                child: Center(child: Platform.isIOS ? CupertinoActivityIndicator(radius: 12) : CircularProgressIndicator(strokeWidth: 2)))
-                : wallet.listWalletData.length == 0 ?  Container(
-            height: MediaQuery.of(context).size.height /1.3,
-            child: Center(child: Text("Tidak Ada Data")))
-            : Column(
+            child: Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left:18.0, right: 18, top: 20),
@@ -35,11 +27,12 @@ class WalletTabViewWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Column(
+                      wallet.listWalletData.length == 0 ? Container()
+                          : Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
+                           Container(
                               child: Text(wallet.tipeValue == null ? "Saldo Anda" : "${wallet.tipeValue}")),
                           SizedBox(height: 5),
                           Consumer<WalletReferralProvider>(
@@ -70,7 +63,14 @@ class WalletTabViewWidget extends StatelessWidget {
                     ],
                   ),
                 ),
-                Consumer<WalletReferralProvider>(
+                  wallet.isTai == true
+                  ? Container(
+                  height: MediaQuery.of(context).size.height /1.3,
+                  child: Center(child: Platform.isIOS ? CupertinoActivityIndicator(radius: 12) : CircularProgressIndicator(strokeWidth: 2)))
+                  : wallet.listWalletData.length == 0 ?  Container(
+                  height: MediaQuery.of(context).size.height /1.3,
+                  child: Center(child: Text("Tidak Ada Data")))
+                : Consumer<WalletReferralProvider>(
                   builder: (child, wallet, _){
                     return FutureBuilder(
                       future: future,
