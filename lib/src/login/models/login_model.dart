@@ -29,7 +29,7 @@ class User {
   Sponsor sponsor;
   String accesskey;
   Webviews webviews;
-  JsonData jsondata;
+  JsonData jsonData;
   String referralUrl;
   int code;
   String message;
@@ -48,7 +48,7 @@ class User {
         this.sponsor,
         this.accesskey,
         this.webviews,
-        this.jsondata,
+        this.jsonData,
         this.referralUrl,
         this.code,
         this.message,
@@ -71,7 +71,7 @@ class User {
     webviews = json['webviews'] != null
         ? new Webviews.fromJson(json['webviews'])
         : null;
-    jsondata = json['json'] != null ? new JsonData.fromJson(json['json']) : null;
+    jsonData = json['json'] != null ? new JsonData.fromJson(json['json']) : null;
     referralUrl = json['referral_url'];
     code = json['code'];
     message = json['message'];
@@ -100,8 +100,8 @@ class User {
     if (this.webviews != null) {
       data['webviews'] = this.webviews.toJson();
     }
-    if (this.jsondata != null) {
-      data['json'] = this.jsondata.toJson();
+    if (this.jsonData != null) {
+      data['json'] = this.jsonData.toJson();
     }
     data['referral_url'] = this.referralUrl;
     data['code'] = this.code;
@@ -178,9 +178,13 @@ class Member {
   String par;
   String expired;
   var highestrank;
+  String timoneposition;
+  String timtwoposition;
   int timone;
   int timtwo;
   int totalcommission;
+  int monthlycycle;
+  int dailycycle;
   String type;
 
   Member(
@@ -205,9 +209,13 @@ class Member {
         this.par,
         this.expired,
         this.highestrank,
+        this.timoneposition,
+        this.timtwoposition,
         this.timone,
         this.timtwo,
         this.totalcommission,
+        this.monthlycycle,
+        this.dailycycle,
         this.type});
 
   Member.fromJson(Map<String, dynamic> json) {
@@ -232,9 +240,13 @@ class Member {
     par = json['par'];
     expired = json['expired'];
     highestrank = json['highestrank'];
+    timoneposition = json['timoneposition'];
+    timtwoposition = json['timtwoposition'];
     timone = json['timone'];
     timtwo = json['timtwo'];
     totalcommission = json['totalcommission'];
+    monthlycycle = json['monthlycycle'];
+    dailycycle = json['dailycycle'];
     type = json['type'];
   }
 
@@ -261,13 +273,16 @@ class Member {
     data['par'] = this.par;
     data['expired'] = this.expired;
     data['highestrank'] = this.highestrank;
+    data['timoneposition'] = this.timoneposition;
+    data['timtwoposition'] = this.timtwoposition;
     data['timone'] = this.timone;
     data['timtwo'] = this.timtwo;
     data['totalcommission'] = this.totalcommission;
+    data['monthlycycle'] = this.monthlycycle;
+    data['dailycycle'] = this.dailycycle;
     data['type'] = this.type;
     return data;
   }
-
 }
 
 class Sponsor {
@@ -367,14 +382,18 @@ class Webviews {
 class JsonData {
   Wallets wallets;
   Wallets referrals;
+  Wallets referralsmap;
 
-  JsonData({this.wallets, this.referrals});
+  JsonData({this.wallets, this.referrals, this.referralsmap});
 
   JsonData.fromJson(Map<String, dynamic> json) {
     wallets =
     json['wallets'] != null ? new Wallets.fromJson(json['wallets']) : null;
     referrals = json['referrals'] != null
         ? new Wallets.fromJson(json['referrals'])
+        : null;
+    referralsmap = json['referralsmap'] != null
+        ? new Wallets.fromJson(json['referralsmap'])
         : null;
   }
 
@@ -385,6 +404,9 @@ class JsonData {
     }
     if (this.referrals != null) {
       data['referrals'] = this.referrals.toJson();
+    }
+    if (this.referralsmap != null) {
+      data['referralsmap'] = this.referralsmap.toJson();
     }
     return data;
   }

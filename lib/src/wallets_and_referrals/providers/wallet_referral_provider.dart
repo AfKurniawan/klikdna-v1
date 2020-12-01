@@ -8,8 +8,6 @@ import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:new_klikdna/src/wallets_and_referrals/models/referral_model.dart';
 import 'package:new_klikdna/src/wallets_and_referrals/models/wallet_model.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
-import 'package:new_klikdna/widgets/button_widget.dart';
-import 'package:new_klikdna/widgets/form_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http ;
 
@@ -19,6 +17,9 @@ class WalletReferralProvider with ChangeNotifier {
   bool isTai ;
   bool isError ;
   List<Wallet> listWalletData = [];
+  int sum ;
+  var totalFormattedCommision = new NumberFormat.currency(name: "", locale: "en_US");
+  var totalsum ;
 
   Future<WalletModel> getWalletData(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -48,7 +49,14 @@ class WalletReferralProvider with ChangeNotifier {
       listWalletData = dataArray.map<Wallet>((j) => Wallet.fromJson(j)).toList();
       isTai = false ;
       isError = false ;
+      sum = listWalletData.map((e) => e.saldo).reduce((value, element) => value + element);
+
+      print("Sum : $sum");
+      totalsum = totalFormattedCommision.format(sum);
+
       notifyListeners();
+      print("SUM $totalsum");
+
 
     } else {
       isError = true ;
@@ -59,6 +67,7 @@ class WalletReferralProvider with ChangeNotifier {
 
     return responseJson;
   }
+
 
   Future<WalletModel> filterWalletData(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

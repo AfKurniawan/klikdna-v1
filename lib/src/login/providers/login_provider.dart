@@ -29,72 +29,7 @@ class LoginProvider with ChangeNotifier{
 
 
 
-    var formattedCommission = new NumberFormat.currency(name: "", locale: "en_US");
 
-    var totalFormattedCommision = new NumberFormat.currency(name: "", locale: "en_US");
-
-    /// USER ID
-    int vuserid;
-    String vprofilEmail;
-    String vreferralUrl;
-
-    ///MEMBER
-    String vnumber;
-    String vfirstname;
-    String vlastname;
-    String vbirthdate;
-    String vgender;
-    String vaddress;
-    String vkelurahan;
-    String vsubdistrict;
-    String vcity;
-    String vprovince;
-    String vzipcode;
-    String vphone;
-    int vleftcv;
-    int vrightcv;
-    int vleftpointreward;
-    int vrightpointreward;
-    var vcommission = ".00";
-    String vrank;
-    String vpar;
-    String vexpired;
-    var vhighestrank;
-    int vtimone;
-    int vtimtwo;
-    var vtotalcommission;
-    String vtype;
-
-    ///SPONSOR
-    String vsponsorfirstname;
-    String vsponsorlastname;
-    String vsponsorgender;
-    String vsponsoraddress;
-    String vsponsorkelurahan;
-    String vsponsorsubdistrict;
-    String vsponsorcity;
-    String vsponsorprovince;
-    String vsponsorphone;
-
-    /// WEBVIEWS
-    String vdashboard;
-    String vtree;
-    String vgenerasi;
-    String vreferral;
-    String vcv;
-    String vpointreward;
-    String vkebijakanPrivacy;
-    String vketentuanPengguna;
-
-    /// WALLETS
-    String vmethod;
-    String vwalleturl;
-
-    ///PARAMS
-    String vaccesskey;
-    String vtypeId;
-    String vdatefrom;
-    String vdateto;
 
 
 
@@ -129,6 +64,8 @@ class LoginProvider with ChangeNotifier{
             prefs.setString("number", responseJson.user.member.number);
 
             prefs.setInt("userid", responseJson.user.id);
+
+
             ///MEMBER
             prefs.setString("number", responseJson.user.member.number);
 
@@ -174,6 +111,10 @@ class LoginProvider with ChangeNotifier{
 
             print("${responseJson.user.member.highestrank.toString()}");
 
+            prefs.setString("timoneposition", responseJson.user.member.timoneposition);
+
+            prefs.setString("timtwoposition", responseJson.user.member.timtwoposition);
+
             prefs.setInt("timone", responseJson.user.member.timone);
 
             prefs.setInt("timtwo", responseJson.user.member.timtwo);
@@ -185,6 +126,10 @@ class LoginProvider with ChangeNotifier{
             prefs.setString("profilemail", responseJson.user.email);
 
             prefs.setString("referralurl", responseJson.user.referralUrl);
+
+            prefs.setString("monthlycycle", responseJson.user.member.monthlycycle.toString());
+
+            prefs.setString("dailycycle", responseJson.user.member.dailycycle.toString());
 
             ///SPONSOR
             prefs.setString("sponsorfirstname", responseJson.user.sponsor.firstname);
@@ -221,20 +166,20 @@ class LoginProvider with ChangeNotifier{
             prefs.setString("ketentuanPengguna", responseJson.user.webviews.ketentuanPengguna);
 
             ///WALLETS
-            prefs.setString("method", responseJson.user.jsondata.wallets.method);
+            prefs.setString("method", responseJson.user.jsonData.wallets.method);
             
-            prefs.setString("accesskey", responseJson.user.jsondata.wallets.params.accesskey);
+            prefs.setString("accesskey", responseJson.user.jsonData.wallets.params.accesskey);
 
-            prefs.setString("walleturl", responseJson.user.jsondata.wallets.url);
+            prefs.setString("walleturl", responseJson.user.jsonData.wallets.url);
 
             ///PARAMS OPTIONAL
-            prefs.setString("accesskey", responseJson.user.jsondata.referrals.params.accesskey);
+            prefs.setString("accesskey", responseJson.user.jsonData.referrals.params.accesskey);
 
-            prefs.setString("typeId", responseJson.user.jsondata.referrals.params.typeId);
+            prefs.setString("typeId", responseJson.user.jsonData.referrals.params.typeId);
 
-            prefs.setString("datefrom", responseJson.user.jsondata.referrals.params.datefrom);
+            prefs.setString("datefrom", responseJson.user.jsonData.referrals.params.datefrom);
 
-            prefs.setString("dateto", responseJson.user.jsondata.referrals.params.dateto);
+            prefs.setString("dateto", responseJson.user.jsonData.referrals.params.dateto);
 
             notifyListeners();
 
@@ -276,6 +221,76 @@ class LoginProvider with ChangeNotifier{
 
 
 
+    var formattedCommission = new NumberFormat.currency(name: "", locale: "en_US");
+
+    var totalFormattedCommision = new NumberFormat.currency(name: "", locale: "en_US");
+
+    /// USER ID
+    int vuserid;
+    String vprofilEmail;
+    String vreferralUrl;
+
+    ///MEMBER
+    String vnumber;
+    String vfirstname;
+    String vlastname;
+    String vbirthdate;
+    String vgender;
+    String vaddress;
+    String vkelurahan;
+    String vsubdistrict;
+    String vcity;
+    String vprovince;
+    String vzipcode;
+    String vphone;
+    int vleftcv;
+    int vrightcv;
+    int vleftpointreward;
+    int vrightpointreward;
+    var vcommission = ".00";
+    String vrank;
+    String vpar;
+    String vexpired;
+    var vhighestrank;
+    String vtimoneposition;
+    String vtimtwoposition;
+    int vtimone;
+    int vtimtwo;
+    var vtotalcommission;
+    String vtype;
+    String vmonthlycycle;
+    String vdailycycle;
+
+    ///SPONSOR
+    String vsponsorfirstname;
+    String vsponsorlastname;
+    String vsponsorgender;
+    String vsponsoraddress;
+    String vsponsorkelurahan;
+    String vsponsorsubdistrict;
+    String vsponsorcity;
+    String vsponsorprovince;
+    String vsponsorphone;
+
+    /// WEBVIEWS
+    String vdashboard;
+    String vtree;
+    String vgenerasi;
+    String vreferral;
+    String vcv;
+    String vpointreward;
+    String vkebijakanPrivacy;
+    String vketentuanPengguna;
+
+    /// WALLETS
+    String vmethod;
+    String vwalleturl;
+
+    ///PARAMS
+    String vaccesskey;
+    String vtypeId;
+    String vdatefrom;
+    String vdateto;
 
     getMitraData() async {
         SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -310,6 +325,11 @@ class LoginProvider with ChangeNotifier{
         vtype = prefs.getString("type");
         vprofilEmail = prefs.getString("profilemail");
         vreferralUrl = prefs.getString("referralurl");
+        vtimoneposition = prefs.getString("timoneposition");
+        vtimtwoposition = prefs.getString("timtwoposition");
+        vdailycycle = prefs.getString("dailycycle");
+        vmonthlycycle = prefs.getString("monthlycycle");
+
 
         ///SPONSOR
         vsponsorfirstname = prefs.getString("sponsorfirstname");
@@ -342,6 +362,8 @@ class LoginProvider with ChangeNotifier{
         vdateto = prefs.getString("dateto");
 
         notifyListeners();
+
+        print("TIM 1 POS : $vtimoneposition && TIM 2 POS : $vtimtwoposition");
 
 
     }

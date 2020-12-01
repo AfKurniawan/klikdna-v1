@@ -445,7 +445,7 @@ class MemberItemWidget extends StatelessWidget {
 }
 
 class KitServiceItemWidget extends StatefulWidget {
-  ReportDetail model;
+  final ReportDetail model;
 
   KitServiceItemWidget({Key key, this.model}) : super(key: key);
 

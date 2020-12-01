@@ -46,7 +46,7 @@ class HeaderWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Total Komisi",
+                    "Saldo Anda",
                     style: TextStyle(
                         color: MyColors.dnaBlack,
                         fontWeight: FontWeight.bold,
@@ -56,7 +56,7 @@ class HeaderWidget extends StatelessWidget {
                   SizedBox(height: 2),
 
                   Text(
-                    prov.vcommission == null ? "" : "IDR ${prov.vcommission.split(".")[0]}",
+                    prov.vcommission == null ? "" : "IDR ${prov.vcommission.split(".")[0].replaceAll(",", ".")}",
                     style: TextStyle(
                         color: MyColors.dnaBlack,
                         fontWeight: FontWeight.bold,

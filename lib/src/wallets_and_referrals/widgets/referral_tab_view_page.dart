@@ -30,10 +30,10 @@ class _RefferalTabViewPageState extends State<RefferalTabViewPage> {
                       Container(
                           child: Text("Referral Anda")),
                       SizedBox(height: 5),
-                      Consumer<LoginProvider>(
-                        builder: (child, login, _){
+                      Consumer<WalletReferralProvider>(
+                        builder: (child, ref, _){
                           return Container(
-                              child: Text("Total 10 Referral",
+                              child: Text(ref.listReferralData.length == 0 ? "Total 0 Referral" : "Total ${ref.listReferralData.length} Referral",
                                   style: TextStyle(
                                       fontSize: 16, fontWeight: FontWeight.bold)));
                         },

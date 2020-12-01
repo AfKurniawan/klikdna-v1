@@ -155,6 +155,7 @@ class OverViewTileWidget extends StatelessWidget {
                         ),
 
                         SizedBox(height: 21),
+                        prov.vtimoneposition == "left" ?
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -196,6 +197,59 @@ class OverViewTileWidget extends StatelessWidget {
                                 ),
                                 SizedBox(height: 5),
                                 Text(prov.vtimtwo == null ? "" : "${prov.vtimtwo}",
+                                  overflow: TextOverflow.clip,
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        )
+                            : Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text("Dua",
+                                  overflow: TextOverflow.clip,
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w300
+                                  ),
+                                ),
+                                SizedBox(height: 5),
+                                Text(prov.vtimtwo == null ? "" : "${prov.vtimtwo}",
+                                  overflow: TextOverflow.clip,
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text("Satu",
+                                  overflow: TextOverflow.clip,
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w300
+                                  ),
+                                ),
+                                SizedBox(height: 5),
+                                Text(prov.vtimone == null ? "" : "${prov.vtimone}",
                                   overflow: TextOverflow.clip,
                                   maxLines: 1,
                                   style: TextStyle(
@@ -349,13 +403,64 @@ class OverViewTileWidget extends StatelessWidget {
                         ),
 
                         //SizedBox(height: 21),
-                        Text(prov.vtotalcommission == null ? "" : "RP. ${prov.vtotalcommission.split(".")[0].replaceAll(",", ".")}",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold
+
+                        Padding(
+                          padding: const EdgeInsets.only(right: 18.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text("Hari Ini",
+                                    overflow: TextOverflow.clip,
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w300
+                                    ),
+                                  ),
+                                  SizedBox(height: 5),
+                                  Text(prov.vdailycycle == null ? "" : "${prov.vdailycycle}",
+                                    overflow: TextOverflow.clip,
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text("Bulan Ini",
+                                    overflow: TextOverflow.clip,
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w300
+                                    ),
+                                  ),
+                                  SizedBox(height: 5),
+                                  Text(prov.vmonthlycycle == null ? "" : "${prov.vmonthlycycle}",
+                                    overflow: TextOverflow.clip,
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                        ),
+                        )
+
 
                       ],
                     ),

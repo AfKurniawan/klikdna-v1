@@ -1,16 +1,10 @@
-import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:new_klikdna/src/login/providers/login_provider.dart';
-import 'package:new_klikdna/src/report/pages/detail_report_page.dart';
-import 'package:new_klikdna/src/report/pages/hasil_report_page.dart';
 import 'package:new_klikdna/src/wallets_and_referrals/providers/wallet_referral_provider.dart';
 import 'package:new_klikdna/src/wallets_and_referrals/widgets/referral_tab_view_page.dart';
 import 'package:new_klikdna/src/wallets_and_referrals/widgets/wallet_tab_view_widget.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
-import 'package:new_klikdna/widgets/loading_dialog_widget.dart';
 import 'package:provider/provider.dart';
 
 class WalletsAndReferralPage extends StatefulWidget {
