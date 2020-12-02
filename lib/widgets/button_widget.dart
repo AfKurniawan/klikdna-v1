@@ -24,7 +24,7 @@ class ButtonWidget extends StatelessWidget {
       onTap: btnAction,
       splashColor: Colors.white,
       child: Ink(
-        height: 50,
+        height: height,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(6),
             color: color
