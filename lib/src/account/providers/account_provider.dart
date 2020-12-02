@@ -36,10 +36,10 @@ class AccountProvider with ChangeNotifier {
     final prov = Provider.of<TokenProvider>(context, listen: false);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     isLoading = true;
+    notifyListeners();
 
     int userid = prefs.getInt("userid");
 
-    print("USER_ID __________ $userid");
 
     String token = prov.accessToken;
     var url = AppConstants.GET_ACCOUNT_URL + userid.toString();
@@ -54,19 +54,21 @@ class AccountProvider with ChangeNotifier {
     print("ACCOUNT RESPONSE: ${request.body}");
 
     if(accountResponse.success == true){
+      isLoading = false ;
+      isError = false ;
       var data = json.decode(request.body);
       var detailArray = data['data']['patient_card'] as List;
        listPatentCard = detailArray.map<PatientCard>((j) => PatientCard.fromJson(j)).toList();
 
       for(int i = 0 ; i < listPatentCard.length ; i++) {
-        lastID = listPatentCard.last.id.toString();
-        print("LAST ID_______ $lastID");
+        lastID = listPatentCard[i].id.toString();
+        print("ID_______ $lastID");
         notifyListeners();
       }
 
+      print("PANJANG LIST PATIENT CARD: ${listPatentCard.length}");
 
-      isLoading = false ;
-      isError = false ;
+
       name = accountResponse.data.name;
       phone = accountResponse.data.phone;
       accountdob = accountResponse.data.dob;
@@ -76,9 +78,10 @@ class AccountProvider with ChangeNotifier {
       prefs.setString("personId", accountResponse.data.userId);
       print("PERSON ACOUNT___: ${accountResponse.data.userId}");
       nameController.text = accountResponse.data.name;
-      notifyListeners();
+//      notifyListeners();
 
     } else {
+
       print("ERROR GET ACCCOUNT");
       isLoading = false ;
       isError = true ;

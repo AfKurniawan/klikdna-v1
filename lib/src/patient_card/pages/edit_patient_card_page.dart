@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
 import 'package:new_klikdna/src/patient_card/widgets/asuransi_item.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
+import 'package:new_klikdna/token/providers/token_provider.dart';
 import 'package:new_klikdna/widgets/button_widget.dart';
 import 'package:new_klikdna/widgets/form_widget.dart';
 import 'package:provider/provider.dart';
@@ -37,12 +38,10 @@ class _EditPatientCardPageState extends State<EditPatientCardPage> {
 
   @override
   void initState() {
-    _radioValue = Provider
-        .of<PatientCardProvider>(context, listen: false)
-        .gender;
+    _radioValue = Provider.of<PatientCardProvider>(context, listen: false).gender;
     print("RADIO VALUE: $_radioValue");
-    Provider.of<PatientCardProvider>(context, listen: false).getPatientCard(
-        context);
+    Provider.of<TokenProvider>(context, listen: false).getApiToken();
+    Provider.of<PatientCardProvider>(context, listen: false).getPatientCard(context);
     super.initState();
   }
 
@@ -74,7 +73,7 @@ class _EditPatientCardPageState extends State<EditPatientCardPage> {
         actions: [
         ],
       ),
-      body: prov.isLoading == true
+      body: prov.isMuter == true
           ? Center(
           child: Platform.isIOS
               ? CupertinoActivityIndicator()

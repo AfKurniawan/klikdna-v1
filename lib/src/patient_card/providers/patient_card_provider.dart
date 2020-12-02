@@ -36,20 +36,22 @@ class PatientCardProvider with ChangeNotifier {
 
 
 
-  bool isLoading ;
+  bool isMuter ;
   List<Asuransi> listAsuransi = [];
 
 
   String patienCardId = "";
   Future<PatientCardModel>getPatientCard(BuildContext context) async {
-    isLoading = true;
+
+    isMuter = true;
     final prov = Provider.of<TokenProvider>(context, listen: false);
+
     final getId = Provider.of<AccountProvider>(context, listen: false);
     getId.getUserAccount(context);
     patienCardId = getId.lastID;
 
 
-    print("LAST ID ___: $patienCardId");
+    print("PATIEN CARD PROV LAST ID ___: $patienCardId");
 
     String accessToken = prov.accessToken;
     Map<String, String> ndas = {
@@ -57,17 +59,18 @@ class PatientCardProvider with ChangeNotifier {
       "Authorization": "Bearer $accessToken"
     };
 
-    var url = AppConstants.GET_PATIENT_CARD_URL + patienCardId ;
+    var url = AppConstants.GET_PATIENT_CARD_URL + '$patienCardId' ;
 
     final request = await http.get(url, headers: ndas);
-    final response = PatientCardModel.fromJson(json.decode(request.body));
 
     print("RESPONSE BODY_______: ${request.body}");
 
 
     if(request.statusCode == 200){
 
-      isLoading = false;
+      final response = PatientCardModel.fromJson(json.decode(request.body));
+
+      isMuter = false;
       id = response.data.id;
       nama = response.data.nama;
       accountId = response.data.accountId;
@@ -97,7 +100,7 @@ class PatientCardProvider with ChangeNotifier {
       setParams();
 
     } else {
-      isLoading = false;
+      isMuter = false;
       showDialogError(context);
 
     }

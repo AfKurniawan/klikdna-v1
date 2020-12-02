@@ -18,6 +18,7 @@ class _PatientCardPageState extends State<PatientCardPage> {
 
   @override
   void initState() {
+    Provider.of<AccountProvider>(context, listen: false).getUserAccount(context);
     Provider.of<PatientCardProvider>(context, listen: false).getPatientCard(context);
     super.initState();
   }
@@ -25,7 +26,6 @@ class _PatientCardPageState extends State<PatientCardPage> {
 
   @override
   Widget build(BuildContext context) {
-  final account = Provider.of<AccountProvider>(context, listen: false);
     return Consumer<PatientCardProvider>(
       builder: (context, prov, _){
         return Scaffold(
@@ -57,13 +57,11 @@ class _PatientCardPageState extends State<PatientCardPage> {
                 )
               ],
             ),
-            body: prov.isLoading == true ?
-            Center(
-                child: Platform.isIOS
-                    ? CupertinoActivityIndicator()
-                    : CircularProgressIndicator(strokeWidth: 2))
-               : account.isError == true || account.listPatentCard.length == 0 ? Center(child: Text("Anda tidak memiliki Kartu Pasien"))
-                : SingleChildScrollView(
+            body: prov.isMuter == true
+                ? Center(child: Platform.isIOS ? CupertinoActivityIndicator() : CircularProgressIndicator(strokeWidth: 2))
+                : Provider.of<AccountProvider>(context, listen: false).listPatentCard.length == 0
+                ? Center(child: Text("Anda belum memiliki Kartu Pasien"))
+                : SingleChildScrollView (
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
