@@ -38,7 +38,7 @@ class Routing {
         break;
 
       case "main_page" :
-        return PageTransition(child: MainPage(), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
+        return PageTransition(child: MainPage(currentTab: settings.arguments), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
         break;
 
       case "patient_card_page" :

@@ -10,30 +10,35 @@ import 'package:provider/provider.dart';
 
 class MainPage extends StatefulWidget {
 
+  int currentTab;
+  Widget currenPage = new HomePage();
+  String currentTitle;
+  String token ;
+
+  MainPage({Key key, this.currentTab}){
+    currentTab = currentTab != null ? currentTab : 0 ;
+  }
+
   @override
   _MainPageState createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
 
-  int currentTab;
-  Widget currenPage = new HomePage();
-  String currentTitle;
-  String token ;
+
 
   @override
   void initState() {
-    currentTab = currentTab != null ? currentTab : 0 ;
     Provider.of<TokenProvider>(context, listen: false).getApiToken();
     Provider.of<LoginProvider>(context, listen: false).getMitraData();
-    context.read<MainProvider>().selectTab(context, currentTab);
+    context.read<MainProvider>().selectTab(context, widget.currentTab);
     super.initState();
 
   }
 
   @override
   void didUpdateWidget(MainPage oldWidget){
-    Provider.of<MainProvider>(context, listen: false).selectTab(context, currentTab);
+    Provider.of<MainProvider>(context, listen: false).selectTab(context, widget.currentTab);
     super.didUpdateWidget(oldWidget);
   }
 

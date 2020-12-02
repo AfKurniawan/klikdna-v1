@@ -32,6 +32,8 @@ class CardTypeSatuWidget extends StatelessWidget {
                   ? MyColors.mitraCardColor
                   : model.vhighestrank == "1 Star"
                   ? MyColors.startCardColor
+                  : model.vhighestrank == "Executive Builder" || model.vhighestrank == "Elite Builder" || model.vhighestrank == "Pro Builder"
+                  ? MyColors.builderCardColor
                   : MyColors.mitraCardColor,
               stops: [0.1, 1],
             ),
@@ -70,7 +72,7 @@ class CardTypeSatuWidget extends StatelessWidget {
                                 maxLines: 1,
                                 style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 18,
+                                    fontSize: 14,
                                     fontWeight: FontWeight.w500
                                 ),
                               ),
@@ -86,7 +88,7 @@ class CardTypeSatuWidget extends StatelessWidget {
                                   maxLines: 1,
                                   style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 10,
+                                      fontSize: 9,
                                       fontWeight: FontWeight.w300
                                   ),
                                 ),
@@ -96,8 +98,8 @@ class CardTypeSatuWidget extends StatelessWidget {
                                   maxLines: 1,
                                   style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w300
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold
                                   ),
                                 ),
                               ],

@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:new_klikdna/src/wallets_and_referrals/providers/wallet_referral_provider.dart';
 import 'package:provider/provider.dart';
 
-class WalletTabViewWidget extends StatelessWidget {
+class WalletTabViewWidget extends StatefulWidget {
   const WalletTabViewWidget({
     Key key,
     @required this.future,
@@ -14,6 +14,18 @@ class WalletTabViewWidget extends StatelessWidget {
 
   final Future future;
 
+  @override
+  _WalletTabViewWidgetState createState() => _WalletTabViewWidgetState();
+}
+
+class _WalletTabViewWidgetState extends State<WalletTabViewWidget> {
+
+  @override
+  void dispose() {
+    Provider.of<WalletReferralProvider>(context, listen: false).datefromController.dispose();
+    Provider.of<WalletReferralProvider>(context, listen: false).datetoController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Consumer<WalletReferralProvider>(
@@ -73,7 +85,7 @@ class WalletTabViewWidget extends StatelessWidget {
                 : Consumer<WalletReferralProvider>(
                   builder: (child, wallet, _){
                     return FutureBuilder(
-                      future: future,
+                      future: widget.future,
                       builder: (context, snapshot){
                           return ListView.builder(
                             shrinkWrap: true,

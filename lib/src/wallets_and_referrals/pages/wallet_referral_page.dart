@@ -49,8 +49,8 @@ class _WalletsAndReferralPageState extends State<WalletsAndReferralPage> with Si
               size: 20,
             ),
             onPressed: () {
-              //Navigator.pushReplacementNamed(context, "detail_report_page");
-              Navigator.of(context).pop();
+              Navigator.pushReplacementNamed(context, "main_page", arguments: 2);
+              //Navigator.of(context).pop();
             }),
         bottom: TabBar(
           controller: controller,

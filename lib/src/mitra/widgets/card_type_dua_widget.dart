@@ -25,14 +25,21 @@ class CardTypeDuaWidget extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
-              colors: model.vhighestrank == "Imperial Leader"
+              colors:
+                    model.vhighestrank.contains("Leader")
                   ? MyColors.imperialLeaderColor
-                  : model.vpar == "Presidential Leader"
+                  : model.vpar.contains("Presidential")
                   ? MyColors.presidentAndDirectorColor
-                  : model.vhighestrank == "0" && model.vtype == "Mitra" && model.vtype == "Mitra Pro"
+                  : model.vpar.contains("Producer")
+                  ? MyColors.producerCardColor
+                  : model.vhighestrank == "0" && model.vtype.contains('Mitra') || model.vhighestrank.contains('Mitra')
                   ? MyColors.mitraCardColor
-                  : model.vhighestrank == "1 Star"
+                  : model.vhighestrank.contains('Producer')
+                  ? MyColors.producerCardColor
+                  : model.vhighestrank.contains('Star')
                   ? MyColors.startCardColor
+                  : model.vhighestrank.contains('Builder')
+                  ? MyColors.builderCardColor
                   : MyColors.mitraCardColor,
               stops: [0.1, 1],
             ),
@@ -46,22 +53,30 @@ class CardTypeDuaWidget extends StatelessWidget {
                   child: Image.asset("assets/images/card_logo.png", height: 200),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 16.0, top: 16, right: 16, bottom: 20),
+                  padding: const EdgeInsets.only(left: 16.0, top: 16, right: 16, bottom: 16),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(model.vhighestrank == "0" || model.vpar == "" ? "${model.vtype}" : "${model.vpar}",
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: 18,
+                              fontSize: 20,
                               fontWeight: FontWeight.bold)),
+                      SizedBox(height: 5),
+                      Text(model.vhighestrank == "0" || model.vpar == "" ? "Kualifikasi Peringkat: ${model.vrank}" : "Kualifikasi Peringkat: ${model.vrank}",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500)),
+
 
                       Container(
+                        margin: EdgeInsets.only(top: 100),
                         width: MediaQuery.of(context).size.width / 1,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Container(
                               height: 20,
@@ -71,7 +86,7 @@ class CardTypeDuaWidget extends StatelessWidget {
                                 maxLines: 1,
                                 style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 18,
+                                    fontSize: 14,
                                     fontWeight: FontWeight.w500
                                 ),
                               ),
@@ -80,14 +95,14 @@ class CardTypeDuaWidget extends StatelessWidget {
                             SizedBox(width: 30),
 
                             Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text("MASA BERLAKU",
                                   overflow: TextOverflow.clip,
                                   maxLines: 1,
                                   style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 10,
+                                      fontSize: 9,
                                       fontWeight: FontWeight.w300
                                   ),
                                 ),
@@ -97,8 +112,8 @@ class CardTypeDuaWidget extends StatelessWidget {
                                   maxLines: 1,
                                   style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w300
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold
                                   ),
                                 ),
                               ],

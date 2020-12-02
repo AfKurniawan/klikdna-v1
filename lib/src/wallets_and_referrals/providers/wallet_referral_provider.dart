@@ -20,6 +20,7 @@ class WalletReferralProvider with ChangeNotifier {
   int sum = 0;
   var totalFormattedCommision = new NumberFormat.currency(name: "", locale: "en_US");
   var totalsum ;
+  String  dropdownValueFirst="One";
 
   Future<WalletModel> getWalletData(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -168,8 +169,6 @@ class WalletReferralProvider with ChangeNotifier {
   TextEditingController datefromController = new TextEditingController();
   TextEditingController datetoController = new TextEditingController();
   String searchDialogSource;
-  var currentSelectedValue;
-
 
 
   showBottomSheetFilter(BuildContext context) {
@@ -369,6 +368,7 @@ class WalletReferralProvider with ChangeNotifier {
                                 }).toList(),
                                 onChanged: (String value) {
                                   setState(() {
+                                    dropdownValueFirst ="Semua Data";
                                     _handleRadioValueChange(value);
                                   });
                                 },
@@ -423,7 +423,7 @@ class WalletReferralProvider with ChangeNotifier {
   }
 
 
-  String tipeValue;
+  String tipeValue = "Semua Data";
   String result;
 
   List<String> deviceTypes = ["Semua Data", "Komisi Referral", "Komisi Tim", "Komisi Royalti", "National Sharing", "Withdraw"];

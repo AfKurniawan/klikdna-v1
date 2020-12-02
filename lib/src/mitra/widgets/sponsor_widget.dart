@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:new_klikdna/src/login/providers/login_provider.dart';
+import 'package:new_klikdna/src/mitra/providers/mitra_provider.dart';
+import 'package:provider/provider.dart';
 
-class SponsorWidget extends StatelessWidget {
+class SponsorWidget extends StatefulWidget {
   const SponsorWidget({
     Key key,
-    @required this.prov,
+    @required this.prov, @required this.mitraProvider
   }) : super(key: key);
 
   final LoginProvider prov;
+  final MitraProvider mitraProvider;
 
+  @override
+  _SponsorWidgetState createState() => _SponsorWidgetState();
+}
+
+class _SponsorWidgetState extends State<SponsorWidget> {
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -35,7 +43,7 @@ class SponsorWidget extends StatelessWidget {
                 margin: EdgeInsets.only(left: 15),
                 height: 20,
                 width: MediaQuery.of(context).size.width / 2,
-                child: Text("${prov.vsponsorfirstname} ${prov.vsponsorlastname}",
+                child: Text("${widget.prov.vsponsorfirstname} ${widget.prov.vsponsorlastname}",
                   overflow: TextOverflow.clip,
                   maxLines: 1,
                   style: TextStyle(
@@ -63,7 +71,8 @@ class SponsorWidget extends StatelessWidget {
                   color: Colors.transparent,
                   child: InkWell(
                     onTap: (){
-                      print("WHATSAPP");
+                      print("WHATSSAPPP ${widget.prov.vsponsorphone}");
+                      Provider.of<MitraProvider>(context, listen: false).makePhoneCall(context, widget.prov.vsponsorphone, widget.prov.vsponsorfirstname);
                     },
                     child: Image.asset("assets/icons/phone_icon.png"),
                   ),
@@ -80,7 +89,8 @@ class SponsorWidget extends StatelessWidget {
                   color: Colors.transparent,
                   child: InkWell(
                     onTap: (){
-                      print("WHATSAPP");
+                      print("WHATSSAPPP ${widget.prov.vsponsorphone}");
+                      Provider.of<MitraProvider>(context, listen: false).openWhatsapp(context, widget.prov.vsponsorphone, widget.prov.vsponsorfirstname);
                     },
                     child: Image.asset("assets/icons/whatsapp_icon.png"),
                   ),
