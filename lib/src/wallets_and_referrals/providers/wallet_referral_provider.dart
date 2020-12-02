@@ -20,6 +20,7 @@ class WalletReferralProvider with ChangeNotifier {
   int sum = 0;
   var totalFormattedCommision = new NumberFormat.currency(name: "", locale: "en_US");
   var totalsum ;
+  var komisi = "";
   String  dropdownValueFirst="One";
 
   Future<WalletModel> getWalletData(BuildContext context) async {
@@ -54,6 +55,8 @@ class WalletReferralProvider with ChangeNotifier {
 
       print("Sum : $sum");
       totalsum = totalFormattedCommision.format(sum);
+
+      komisi = prefs.getString("commission");
 
       notifyListeners();
       print("SUM $totalsum");
@@ -102,10 +105,10 @@ class WalletReferralProvider with ChangeNotifier {
       isTai = false ;
       isError = false ;
       if(listWalletData.length == 0) {
-        listWalletData.map((e) => e.saldo);
-        print("MBUHHHH ${listWalletData.map((e) => e.saldo)}");
+        listWalletData.map((e) => e.nominal);
+        print("MBUHHHH ${listWalletData.map((e) => e.nominal)}");
       } else {
-        sum = listWalletData.map((e) => e.saldo).reduce((value, element) => value + element);
+        sum = listWalletData.map((e) => e.nominal).reduce((value, element) => value + element);
       }
 
       totalsum = totalFormattedCommision.format(sum);
@@ -423,7 +426,7 @@ class WalletReferralProvider with ChangeNotifier {
   }
 
 
-  String tipeValue = "Semua Data";
+  String tipeValue = "Saldo Anda";
   String result;
 
   List<String> deviceTypes = ["Semua Data", "Komisi Referral", "Komisi Tim", "Komisi Royalti", "National Sharing", "Withdraw"];

@@ -44,17 +44,31 @@ class _WalletTabViewWidgetState extends State<WalletTabViewWidget> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+
                            Container(
-                              child: Text(wallet.tipeValue == null ? "Saldo Anda" : "${wallet.tipeValue}")),
-                          SizedBox(height: 5),
-                          Consumer<WalletReferralProvider>(
-                            builder: (child, prov, _){
-                              return Container(
-                                  child: Text(prov.totalsum == null ? "" : "IDR ${prov.totalsum.split(".")[0].replaceAll(",", ".")}",
-                                      style: TextStyle(
-                                          fontSize: 16, fontWeight: FontWeight.bold)));
-                            },
-                          ),
+                              child: Text(
+                                  wallet.tipeValue == null
+                                      ? "Saldo Anda"
+                                      :  wallet.tipeValue.contains("Semua")
+                                      ?  "Saldo Anda"
+                                      : "${wallet.tipeValue}")
+                           ),
+                              SizedBox(height: 5),
+                              Consumer<WalletReferralProvider>(
+                                builder: (child, prov, _){
+                                 return  wallet.tipeValue.contains("Semua") ?
+                                 Container(
+                                      child: Text("IDR ${prov.komisi.split(".")[0].replaceAll(",", ".")}",
+                                          style: TextStyle(
+                                              fontSize: 16, fontWeight: FontWeight.bold))
+                                  )
+                                  :  Container(
+                                     child: Text(prov.totalsum == null ? "" : "IDR ${prov.totalsum.split(".")[0].replaceAll(",", ".")}",
+                                         style: TextStyle(
+                                             fontSize: 16, fontWeight: FontWeight.bold))
+                                 );
+                                },
+                              ),
                         ],
                       ),
                       InkWell(
@@ -158,7 +172,7 @@ class _WalletTabViewWidgetState extends State<WalletTabViewWidget> {
                                       Container(
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
-                                          child: Text('${wallet.listWalletData[index].type}'),
+                                          child: Text('Jenis'),
                                         ),
                                         height: 35,
                                       ),
@@ -166,7 +180,7 @@ class _WalletTabViewWidgetState extends State<WalletTabViewWidget> {
                                         color: Color(0xffF5FFFF),
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
-                                          child: Text('$fsaldo'),
+                                          child: Text('${wallet.listWalletData[index].type}') ,
                                         ),
                                         height: 35,
                                       ),
