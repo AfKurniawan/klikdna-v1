@@ -47,16 +47,14 @@ class _WalletTabViewWidgetState extends State<WalletTabViewWidget> {
 
                            Container(
                               child: Text(
-                                  wallet.tipeValue == null
-                                      ? "Saldo Anda"
-                                      :  wallet.tipeValue.contains("Semua")
+                                  wallet.tipeValue == "Semua Data"
                                       ?  "Saldo Anda"
                                       : "${wallet.tipeValue}")
                            ),
                               SizedBox(height: 5),
                               Consumer<WalletReferralProvider>(
                                 builder: (child, prov, _){
-                                 return  wallet.tipeValue.contains("Semua") ?
+                                 return  wallet.tipeValue == "Semua Data" ?
                                  Container(
                                       child: Text("IDR ${prov.komisi.split(".")[0].replaceAll(",", ".")}",
                                           style: TextStyle(

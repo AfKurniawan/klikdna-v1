@@ -51,15 +51,21 @@ class WalletReferralProvider with ChangeNotifier {
       listWalletData = dataArray.map<Wallet>((j) => Wallet.fromJson(j)).toList();
       isTai = false ;
       isError = false ;
-      sum = listWalletData.map((e) => e.saldo).reduce((value, element) => value + element);
+
+
+      sum = listWalletData.map((e) => e.nominal).reduce((value, element) => value + element);
 
       print("Sum : $sum");
+
       totalsum = totalFormattedCommision.format(sum);
 
       komisi = prefs.getString("commission");
 
+
+
       notifyListeners();
       print("SUM $totalsum");
+      print("JUMLAH KOMISI $komisi");
 
 
     } else {
@@ -371,7 +377,7 @@ class WalletReferralProvider with ChangeNotifier {
                                 }).toList(),
                                 onChanged: (String value) {
                                   setState(() {
-                                    dropdownValueFirst ="Semua Data";
+
                                     _handleRadioValueChange(value);
                                   });
                                 },
@@ -426,7 +432,7 @@ class WalletReferralProvider with ChangeNotifier {
   }
 
 
-  String tipeValue = "Saldo Anda";
+  String tipeValue ;
   String result;
 
   List<String> deviceTypes = ["Semua Data", "Komisi Referral", "Komisi Tim", "Komisi Royalti", "National Sharing", "Withdraw"];

@@ -45,7 +45,9 @@ class _MitraPageState extends State<MitraPage> {
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+
               HeaderWidget(prov: prov),
+
               SizedBox(height: 20),
               prov.vtype == "Mitra Pro" ?
               Column(
