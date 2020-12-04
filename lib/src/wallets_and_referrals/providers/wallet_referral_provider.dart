@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
-import 'package:new_klikdna/src/patient_card/widgets/dialog_error_patient_card.dart';
 import 'package:new_klikdna/src/wallets_and_referrals/models/referral_model.dart';
 import 'package:new_klikdna/src/wallets_and_referrals/models/wallet_model.dart';
 import 'package:new_klikdna/styles/my_colors.dart';

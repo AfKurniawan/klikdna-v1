@@ -261,6 +261,9 @@ class LoginProvider with ChangeNotifier{
     String vmonthlycycle;
     String vdailycycle;
 
+    var formatTgl = DateFormat('dd MMMM yyyy');
+    var expParsedDate ;
+
     ///SPONSOR
     String vsponsorfirstname;
     String vsponsorlastname;
@@ -292,11 +295,18 @@ class LoginProvider with ChangeNotifier{
     String vdatefrom;
     String vdateto;
 
+
+    String parsedTanggalExpired ;
+
     getMitraData() async {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         vnumber = prefs.getString("number");
 
         vuserid = prefs.getInt("userid");
+
+        expParsedDate = DateTime.parse(prefs.getString("expired"));
+
+        parsedTanggalExpired = ('${formatTgl.format(expParsedDate)}');
 
         ///MEMBER
         vfirstname = prefs.getString("firstname");

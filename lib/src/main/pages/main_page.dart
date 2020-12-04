@@ -81,7 +81,7 @@ class _MainPageState extends State<MainPage> {
                         ),
                         title: Padding(
                           padding: const EdgeInsets.only(top: 5.0),
-                          child: Text("Home"),
+                          child: Text("Beranda"),
                         )
                     ),
 

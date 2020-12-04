@@ -131,6 +131,7 @@ class _LoginPageState extends State<LoginPage> {
               child: ButtonWidget(
                 btnText: "MASUK",
                 color: MyColors.dnaGreen,
+                height: 50,
                 btnAction: (){
                   if (_formKey.currentState.validate()) {
                     context.read<LoginProvider>().loginAction(context);

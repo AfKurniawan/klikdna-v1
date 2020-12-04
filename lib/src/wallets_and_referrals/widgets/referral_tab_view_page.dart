@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:new_klikdna/src/login/providers/login_provider.dart';
 import 'package:new_klikdna/src/wallets_and_referrals/providers/wallet_referral_provider.dart';
 import 'package:provider/provider.dart';
 

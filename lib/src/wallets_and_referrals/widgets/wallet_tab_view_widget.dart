@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:new_klikdna/src/wallets_and_referrals/providers/wallet_referral_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
-import 'package:new_klikdna/widgets/button_widget.dart';
 import 'package:provider/provider.dart';
 
 class WalletTabViewWidget extends StatefulWidget {

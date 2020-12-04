@@ -6,11 +6,11 @@ import 'package:provider/provider.dart';
 class SponsorWidget extends StatefulWidget {
   const SponsorWidget({
     Key key,
-    @required this.prov, @required this.mitraProvider
+    @required this.prov
   }) : super(key: key);
 
   final LoginProvider prov;
-  final MitraProvider mitraProvider;
+
 
   @override
   _SponsorWidgetState createState() => _SponsorWidgetState();

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:new_klikdna/src/login/providers/login_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:new_klikdna/styles/my_theme.dart';
@@ -11,6 +12,7 @@ class CardTypeSatuWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Consumer<LoginProvider>(
       builder: (child, model, _){
         return Container(
@@ -93,7 +95,7 @@ class CardTypeSatuWidget extends StatelessWidget {
                                   ),
                                 ),
 
-                                Text(model.vexpired == null ? "-" : "${model.vexpired.substring(0, 10)}",
+                                Text(model.parsedTanggalExpired == null ? "-" : "${model.parsedTanggalExpired.substring(0, 10)}",
                                   overflow: TextOverflow.clip,
                                   maxLines: 1,
                                   style: TextStyle(
