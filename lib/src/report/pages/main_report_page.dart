@@ -137,7 +137,7 @@ class _ReportPageState extends State<ReportPage> {
                 SingleChildScrollView(
                   padding: EdgeInsets.only(top: 170),
                   child: Container(
-                    padding: EdgeInsets.only(top: 10),
+                    padding: EdgeInsets.only(top: 20),
                     alignment: Alignment.topLeft,
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -159,7 +159,7 @@ class _ReportPageState extends State<ReportPage> {
                                 const EdgeInsets.only(left: 20, bottom: 30),
                             child: Text("Pilih Pengguna",
                                 style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                     color: MyColors.dnaGrey))),
                         buildListMember(width, prov),
@@ -182,7 +182,7 @@ class _ReportPageState extends State<ReportPage> {
                             padding: const EdgeInsets.only(left: 20, top: 10),
                             child: Text("Report Kamu",
                                 style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                     color: MyColors.dnaGrey))),
                         Consumer<ReportProvider>(
@@ -194,36 +194,39 @@ class _ReportPageState extends State<ReportPage> {
                                     child: Text("Belum Ada Report",
                                         style: TextStyle(color: Colors.grey)),
                                   ) :
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ListView.builder(
-                                        scrollDirection: Axis.vertical,
-                                        itemCount: sample.listDetail.length,
-                                        shrinkWrap: true,
-                                        physics: NeverScrollableScrollPhysics(),
-                                        itemBuilder: (context, index) {
-                                          return KitServiceItemWidget(
-                                              model: sample.listDetail
-                                                  .elementAt(index));
-                                        }),
-                                ListView.builder(
+                            ListView.builder(
                                     scrollDirection: Axis.vertical,
-                                    itemCount: sample.listDetail2.length,
+                                    itemCount: sample.listDetail.length,
                                     shrinkWrap: true,
                                     physics: NeverScrollableScrollPhysics(),
                                     itemBuilder: (context, index) {
-                                      return KitService2ItemWidget(
-                                          model: sample.listDetail2
+                                      return KitServiceItemWidget(
+                                          model: sample.listDetail
                                               .elementAt(index));
-                                    }),
-                              ],
-                            );
+                                    });
                           },
                         ),
-                        SizedBox(
-                          height: 16,
-                        )
+                        Consumer<ReportProvider>(
+                          builder: (context, sample, _) {
+                            return sample.listDetail.length == 0
+                                ? Container(
+                              height: MediaQuery.of(context).size.height / 6,
+                              child: Text("Belum Ada Report",
+                                  style: TextStyle(color: Colors.grey)),
+                            ) :
+                            ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                itemCount: sample.listDetail2.length,
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  return KitService2ItemWidget(
+                                      model: sample.listDetail2
+                                          .elementAt(index));
+                                });
+                          },
+                        ),
+
                       ],
                     ),
                   ),
