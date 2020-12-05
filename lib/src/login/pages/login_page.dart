@@ -4,6 +4,7 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:new_klikdna/src/login/providers/login_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:new_klikdna/widgets/button_widget.dart';
+import 'package:new_klikdna/widgets/disable_button_widget.dart';
 import 'package:new_klikdna/widgets/form_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +17,7 @@ class _LoginPageState extends State<LoginPage> {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
+  bool buttonDisabled = true ;
 
 
   @override
@@ -34,22 +36,13 @@ class _LoginPageState extends State<LoginPage> {
             backgroundColor: MyColors.background,
             elevation: 0,
             centerTitle: true,
-            leading: IconButton(
-              color: MyColors.grey,
-              icon: Icon(Icons.arrow_back_ios,
-                size: 20,
-              ),
-              onPressed: (){
-                print("Back");
-               Navigator.pushReplacementNamed(context, "onboarding_page");
-              },
-            ),
+            automaticallyImplyLeading: false,
           ),
           body: login.isLoading == true ? Center(child: CupertinoActivityIndicator())
               : ListView(
             children: [
               Container(
-                margin: EdgeInsets.only(top: MediaQuery.of(context).size.height /7),
+                //margin: EdgeInsets.only(top: MediaQuery.of(context).size.height /7),
                 color: Colors.transparent,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -63,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
                         children: [
                           Text("Masuk ke",
                             style: TextStyle(
-                                fontSize: 28,
+                                fontSize: 25,
                                 fontWeight: FontWeight.bold
                             ),
                           ),
@@ -77,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
 
                       SizedBox(
-                        height: 50,
+                        height: 160,
                       ),
 
                       Padding(
@@ -88,6 +81,17 @@ class _LoginPageState extends State<LoginPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               FormWidget(
+                                onchange: (text) {
+                                  setState(() {
+                                    if(text.length > 1){
+                                      buttonDisabled = false ;
+                                    } else {
+                                      buttonDisabled = true ;
+                                    }
+
+                                  });
+
+                                },
                                 validator: emailValidator,
                                 labelText: "Email",
                                 textEditingController: prov.emailController,
@@ -107,6 +111,17 @@ class _LoginPageState extends State<LoginPage> {
                                       child: Icon(model.obscureText ? Icons.visibility : Icons
                                           .visibility_off, color: MyColors.dnaGreen),
                                     ),
+                                    onchange: (text) {
+                                      setState(() {
+                                        if(text.length > 1){
+                                          buttonDisabled = false ;
+                                        } else {
+                                          buttonDisabled = true ;
+                                        }
+
+                                      });
+
+                                    },
                                     labelText: "Password",
                                     validator: passwordValidator,
                                     textEditingController: prov.passwordController,
@@ -126,10 +141,19 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ],
           ),
-          bottomNavigationBar: Padding(
+          bottomNavigationBar: buttonDisabled == true ? Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: DisableButtonWidget(
+                btnText: "LANJUTKAN",
+                color: MyColors.grey,
+                height: 50,
+                btnAction: (){},
+              )
+          )
+              :  Padding(
               padding: const EdgeInsets.all(18.0),
               child: ButtonWidget(
-                btnText: "MASUK",
+                btnText: "LANJUTKAN",
                 color: MyColors.dnaGreen,
                 height: 50,
                 btnAction: (){
@@ -138,7 +162,7 @@ class _LoginPageState extends State<LoginPage> {
                   }
                 },
               )
-          ),
+          )
         );
       },
     );

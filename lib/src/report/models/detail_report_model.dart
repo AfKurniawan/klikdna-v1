@@ -1,14 +1,13 @@
-
-class DetailReportResponseModel {
+class DetailReportModel {
   bool success;
-  DetailData data;
+  ReportData data;
   String message;
 
-  DetailReportResponseModel({this.success, this.data, this.message});
+  DetailReportModel({this.success, this.data, this.message});
 
-  DetailReportResponseModel.fromJson(Map<String, dynamic> json) {
+  DetailReportModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
-    data = json['data'] != null ? new DetailData.fromJson(json['data']) : null;
+    data = json['data'] != null ? new ReportData.fromJson(json['data']) : null;
     message = json['message'];
   }
 
@@ -23,7 +22,7 @@ class DetailReportResponseModel {
   }
 }
 
-class DetailData {
+class ReportData {
   String userId;
   String serviceName;
   String personId;
@@ -32,7 +31,7 @@ class DetailData {
   String linkPdf;
   List<ReportDetail> reportDetail;
 
-  DetailData(
+  ReportData(
       {this.userId,
         this.serviceName,
         this.personId,
@@ -41,7 +40,7 @@ class DetailData {
         this.linkPdf,
         this.reportDetail});
 
-  DetailData.fromJson(Map<String, dynamic> json) {
+  ReportData.fromJson(Map<String, dynamic> json) {
     userId = json['user_id'];
     serviceName = json['service_name'];
     personId = json['person_id'];
@@ -172,7 +171,7 @@ class PenjelasanIlmiah {
   int noUrut;
   String judulPenjelasan;
   String keterangan;
-  List<PenjelasanDetail> penjelasanDetail;
+  PenjelasanDetail penjelasanDetail;
   String gambarPenjelasan;
   String keteranganGambar;
 
@@ -188,10 +187,9 @@ class PenjelasanIlmiah {
     noUrut = json['no_urut'];
     judulPenjelasan = json['judul_penjelasan'];
     keterangan = json['keterangan'];
-    //penjelasanDetail = json['penjelasan_detail'];
-    // penjelasanDetail = json['penjelasan_detail'] != null
-    //     ? new PenjelasanDetail.fromMap(json['penjelasan_detail'])
-    //     : null;
+    penjelasanDetail = json['penjelasan_detail'] != null
+        ? new PenjelasanDetail.fromJson(json['penjelasan_detail'])
+        : null;
     gambarPenjelasan = json['gambar_penjelasan'];
     keteranganGambar = json['keterangan_gambar'];
   }
@@ -201,10 +199,9 @@ class PenjelasanIlmiah {
     data['no_urut'] = this.noUrut;
     data['judul_penjelasan'] = this.judulPenjelasan;
     data['keterangan'] = this.keterangan;
-    // if (this.penjelasanDetail != null) {
-    //   data['penjelasan_detail'] = this.penjelasanDetail.toJson();
-    // }
-
+    if (this.penjelasanDetail != null) {
+      data['penjelasan_detail'] = this.penjelasanDetail.toJson();
+    }
     data['gambar_penjelasan'] = this.gambarPenjelasan;
     data['keterangan_gambar'] = this.keteranganGambar;
     return data;
@@ -214,19 +211,50 @@ class PenjelasanIlmiah {
 class PenjelasanDetail {
   String tipeInisial;
   String tipeDetail;
+  List<DataDetail> dataDetail;
 
-  PenjelasanDetail({this.tipeInisial, this.tipeDetail});
+  PenjelasanDetail({this.tipeInisial, this.tipeDetail, this.dataDetail});
 
-  PenjelasanDetail.fromMap(Map<String, dynamic> json) {
+  PenjelasanDetail.fromJson(Map<String, dynamic> json) {
     tipeInisial = json['tipe_inisial'];
     tipeDetail = json['tipe_detail'];
+    if (json['data_detail'] != null) {
+      dataDetail = new List<DataDetail>();
+      json['data_detail'].forEach((v) {
+        dataDetail.add(new DataDetail.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['tipe_inisial'] = this.tipeInisial;
     data['tipe_detail'] = this.tipeDetail;
+    if (this.dataDetail != null) {
+      data['data_detail'] = this.dataDetail.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }
 
+class DataDetail {
+  int noUrut;
+  String judul;
+  String keterangan;
+
+  DataDetail({this.noUrut, this.judul, this.keterangan});
+
+  DataDetail.fromJson(Map<String, dynamic> json) {
+    noUrut = json['no_urut'];
+    judul = json['judul'];
+    keterangan = json['keterangan'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['no_urut'] = this.noUrut;
+    data['judul'] = this.judul;
+    data['keterangan'] = this.keterangan;
+    return data;
+  }
+}

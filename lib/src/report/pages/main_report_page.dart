@@ -1,14 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:fluttericon/linearicons_free_icons.dart';
 import 'package:new_klikdna/src/account/providers/account_provider.dart';
 import 'package:new_klikdna/src/login/providers/login_provider.dart';
 import 'package:new_klikdna/src/member/models/member_model.dart';
 import 'package:new_klikdna/src/member/providers/member_provider.dart';
+import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
 import 'package:new_klikdna/src/report/models/report_model.dart';
 import 'package:new_klikdna/src/report/providers/report_provider.dart';
 import 'package:new_klikdna/src/report/widgets/button_icon_widget.dart';
 import 'package:new_klikdna/src/report/widgets/grid_icon_menu_widget.dart';
+import 'package:new_klikdna/src/report/widgets/kit_list_service2_widget.dart';
+import 'package:new_klikdna/src/report/widgets/kit_list_service_widget.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:provider/provider.dart';
 import 'dart:io' show Platform;
@@ -70,59 +74,61 @@ class _ReportPageState extends State<ReportPage> {
                     padding: const EdgeInsets.only(left: 18.0, right: 18),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Row(
-                              children: [
-                                Text("Hello",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w300)),
-                                SizedBox(width: 5),
-                                Consumer<LoginProvider>(
-                                  builder: (context, prov, _) {
-                                    return Container(
-                                      height: 20,
-                                      width: MediaQuery.of(context).size.width / 2,
-                                      child: Text("${prov.vfirstname} ${prov.vlastname}",
-                                        overflow: TextOverflow.clip,
-                                        maxLines: 1,
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w500
-                                        ),
+                            Consumer<LoginProvider>(
+                              builder: (context, prov, _) {
+                                return Container(
+                                  height: 80,
+                                  //color: Colors.blue,
+                                  width: MediaQuery.of(context).size.width -100,
+                                  child: Center(
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text("Hello",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w300)),
+                                          Text("${prov.vallName}",
+                                            maxLines: 2,
+                                            overflow: TextOverflow.clip,
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w500
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    );
-                                  },
-                                ),
-                              ],
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
-
+                            Consumer<PatientCardProvider>(
+                              builder: (context, model, _) {
+                                return ClipRRect(
+                                    borderRadius: BorderRadius.circular(50),
+                                    child: model.photoView == null ?
+                                    Image.asset("assets/images/no_image.png", height: 62, width: 62, fit: BoxFit.cover)
+                                        : Image.memory(
+                                      model.photoView,
+                                      width: 62,
+                                      fit: BoxFit.cover,
+                                      height: 62,
+                                      // height: 150,
+                                    ));
+                              },
+                            )
                           ],
-                        ),
-                        Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            onTap: () {
-                              print("DABADla");
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                      color: Colors.white, width: 4)),
-                              child: CircleAvatar(
-                                backgroundImage:
-                                    AssetImage('assets/images/no_image.png'),
-                                radius: 35,
-                              ),
-                            ),
-                          ),
                         ),
                       ],
                     ),
@@ -131,7 +137,7 @@ class _ReportPageState extends State<ReportPage> {
                 SingleChildScrollView(
                   padding: EdgeInsets.only(top: 170),
                   child: Container(
-                    padding: EdgeInsets.only(top: 20),
+                    padding: EdgeInsets.only(top: 10),
                     alignment: Alignment.topLeft,
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -157,7 +163,7 @@ class _ReportPageState extends State<ReportPage> {
                                     fontWeight: FontWeight.bold,
                                     color: MyColors.dnaGrey))),
                         buildListMember(width, prov),
-                         Padding(
+                        Padding(
                           padding: const EdgeInsets.only(left: 20.0, right: 20),
                           child: ButtonIconWidget(
                             myIcon: Icon(LineariconsFree.download, color: Colors.white),
@@ -183,23 +189,36 @@ class _ReportPageState extends State<ReportPage> {
                           builder: (context, sample, _) {
                             return sample.listDetail.length == 0
                                 ? Container(
-                                    height:
-                                        MediaQuery.of(context).size.height / 3,
-                                    child: Center(
-                                      child: Text("Belum Ada Report",
-                                          style: TextStyle(color: Colors.grey)),
-                                    ),
+                              color: Colors.blue,
+                                    height: MediaQuery.of(context).size.height / 6,
+                                    child: Text("Belum Ada Report",
+                                        style: TextStyle(color: Colors.grey)),
                                   ) :
-                            ListView.builder(
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ListView.builder(
+                                        scrollDirection: Axis.vertical,
+                                        itemCount: sample.listDetail.length,
+                                        shrinkWrap: true,
+                                        physics: NeverScrollableScrollPhysics(),
+                                        itemBuilder: (context, index) {
+                                          return KitServiceItemWidget(
+                                              model: sample.listDetail
+                                                  .elementAt(index));
+                                        }),
+                                ListView.builder(
                                     scrollDirection: Axis.vertical,
-                                    itemCount: sample.listDetail.length,
+                                    itemCount: sample.listDetail2.length,
                                     shrinkWrap: true,
                                     physics: NeverScrollableScrollPhysics(),
                                     itemBuilder: (context, index) {
-                                      return KitServiceItemWidget(
-                                          model: sample.listDetail
+                                      return KitService2ItemWidget(
+                                          model: sample.listDetail2
                                               .elementAt(index));
-                                    });
+                                    }),
+                              ],
+                            );
                           },
                         ),
                         SizedBox(
@@ -318,233 +337,4 @@ class MemberItemWidget extends StatelessWidget {
   }
 }
 
-class KitServiceItemWidget extends StatefulWidget {
-  final Detail model;
-  final Member member;
 
-  KitServiceItemWidget({Key key, this.model, this.member}) : super(key: key);
-
-  @override
-  _KitServiceItemWidgetState createState() => _KitServiceItemWidgetState();
-}
-
-class _KitServiceItemWidgetState extends State<KitServiceItemWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 18.0, right: 18, bottom: 30),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              offset: Offset(1, 4),
-              blurRadius: 10,
-              color: Color(0xFFB0CCE1).withOpacity(0.62),
-            ),
-          ],
-        ),
-        child: InkWell(
-          splashColor: Colors.blue,
-          onTap: () {
-            Navigator.of(context)
-                .pushNamed('detail_report_page', arguments: widget.model);
-          },
-          child: Stack(
-            children: [
-              Container(
-                child: Positioned(
-                    right: 0,
-                    child: Container(
-                      height: 90,
-                      width: 80,
-                      decoration: BoxDecoration(
-                        color: widget.model.serviceName == "SPORT"
-                            ? MyColors.sportBlue
-                            : widget.model.serviceName == "HEALTH"
-                                ? MyColors.healthGreen
-                                : widget.model.serviceName == "DIET"
-                                    ? MyColors.dietGreen
-                                    : widget.model.serviceName == "SKIN"
-                                        ? MyColors.skinPink
-                                        : widget.model.serviceName ==
-                                                "CANCER MARKER"
-                                            ? Colors.deepOrange
-                                            : widget.model.serviceName ==
-                                                    "DRUGS RESPONSE"
-                                                ? Colors.green
-                                                : Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(50),
-                            bottomLeft: Radius.circular(50),
-                            topRight: Radius.circular(10),
-                            bottomRight: Radius.circular(10)),
-                      ),
-                    )),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    right: 30.0, top: 8, bottom: 8, left: 30),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                            widget.model.serviceName == "SPORT"
-                                ? "Sport"
-                                : widget.model.serviceName == "HEALTH"
-                                    ? "Health"
-                                    : widget.model.serviceName == "DIET"
-                                        ? "Diet"
-                                        : widget.model.serviceName == "SKIN"
-                                            ? "Skin"
-                                            : widget.model.serviceName ==
-                                                    "CANCER MARKER"
-                                                ? "Cancer Marker"
-                                                : widget.model.serviceName ==
-                                                        "DRUGS RESPONSE"
-                                                    ? "Drug Response"
-                                                    : widget.model.serviceName,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                color: widget.model.serviceName == "HEALTH" ? MyColors.healthGreen
-                                    : widget.model.serviceName == "SPORT" ? MyColors.sportBlue
-                                    : widget.model.serviceName == "DIET" ? MyColors.dietGreen
-                                    : widget.model.serviceName == "SKIN" ? MyColors.skinPink
-                                    : MyColors.dnaGreen
-                            )),
-                      ],
-                    ),
-                    Spacer(),
-                    widget.model.serviceName == "SPORT"
-                        ? Container(
-                            height: 70,
-                            width: 70,
-                            decoration: BoxDecoration(
-                              color: Color(0xff2F74C6),
-                              borderRadius: BorderRadius.circular(50),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black45.withOpacity(0.1),
-                                  spreadRadius: 0.1,
-                                  blurRadius: 5,
-                                  offset: Offset(
-                                      0, 3), // changes position of shadow
-                                ),
-                              ],
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Image(
-                                color: Colors.white,
-                                image: AssetImage("assets/images/sport.png"),
-                              ),
-                            ),
-                          )
-                        : widget.model.serviceName == "HEALTH"
-                            ? Container(
-                                height: 70,
-                                width: 70,
-                                decoration: BoxDecoration(
-                                  color: Color(0xff19B4BF),
-                                  borderRadius: BorderRadius.circular(50),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black45.withOpacity(0.1),
-                                      spreadRadius: 0.1,
-                                      blurRadius: 5,
-                                      offset: Offset(
-                                          0, 3), // changes position of shadow
-                                    ),
-                                  ],
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Image(
-                                    color: Colors.white,
-                                    image:
-                                        AssetImage("assets/images/health.png"),
-                                  ),
-                                ),
-                              )
-                            : widget.model.serviceName == "DIET"
-                                ? Container(
-                                    height: 70,
-                                    width: 70,
-                                    decoration: BoxDecoration(
-                                      color: Color(0xff87D39A),
-                                      borderRadius: BorderRadius.circular(50),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color:
-                                              Colors.black45.withOpacity(0.1),
-                                          spreadRadius: 0.1,
-                                          blurRadius: 5,
-                                          offset: Offset(0,
-                                              3), // changes position of shadow
-                                        ),
-                                      ],
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(16.0),
-                                      child: Image(
-                                        color: Colors.white,
-                                        image: AssetImage(
-                                            "assets/images/diet.png"),
-                                      ),
-                                    ),
-                                  )
-                                : widget.model.serviceName == "SKIN"
-                                    ? Container(
-                                        height: 70,
-                                        width: 70,
-                                        decoration: BoxDecoration(
-                                          color: Color(0xffF8C6C4),
-                                          borderRadius:
-                                              BorderRadius.circular(50),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.black45
-                                                  .withOpacity(0.1),
-                                              spreadRadius: 0.1,
-                                              blurRadius: 5,
-                                              offset: Offset(0,
-                                                  3), // changes position of shadow
-                                            ),
-                                          ],
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(16.0),
-                                          child: Image(
-                                            color: Colors.white,
-                                            image: AssetImage(
-                                                "assets/images/skin.png"),
-                                          ),
-                                        ),
-                                      )
-                                    : widget.model.serviceName ==
-                                            "CANCER MARKER"
-                                        ? GridIconMenuWidget(
-                                            image: "assets/images/cancer.png",
-                                          )
-                                        : widget.model.serviceName ==
-                                                "DRUGS RESPONSE"
-                                            ? GridIconMenuWidget(
-                                                image:
-                                                    "assets/images/drugs.png",
-                                              )
-                                            : Container()
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}

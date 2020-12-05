@@ -11,13 +11,18 @@ import 'package:http/http.dart' as http;
 class DetailReportProvider extends ChangeNotifier {
   bool isLoading;
 
-  List<ReportDetail> reportDetail = List<ReportDetail>();
-  List<ReportDetail> searchResult = List<ReportDetail>();
-  List<Rekomendasi> listRecomendasi = List<Rekomendasi>();
-  List<PenjelasanIlmiah> penjelasanIlmiah = List<PenjelasanIlmiah>();
-  List<PenjelasanDetail> penjelasanDetail = List<PenjelasanDetail>();
+  List<ReportDetail> reportDetail = [];
+  List<ReportDetail> searchResult = [];
+  List<Rekomendasi> listRecomendasi = [];
+  List<PenjelasanIlmiah> penjelasanIlmiah = [];
+  List<PenjelasanDetail> penjelasanDetail = [];
 
   String link ;
+
+  var reportdetailArray = [];
+  var rekomendasiArray = [] ;
+  var penjelasanIlmiahArray = [];
+  var penjelasanDetailArray = [];
 
   Future<List<ReportDetail>> getDetailReport(BuildContext context, String reportId) async {
     isLoading = true;
@@ -30,7 +35,7 @@ class DetailReportProvider extends ChangeNotifier {
 
     String accessToken = prov.accessToken;
     print("AKSES TOKEN: $accessToken");
-    print("REPORT ID: $reportId");
+    print("REPORT ID====: $reportId");
     Map<String, String> ndas = {
       "Accept": "application/json",
       "Authorization": "Bearer $accessToken"
@@ -47,31 +52,39 @@ class DetailReportProvider extends ChangeNotifier {
     if (request.statusCode == 200) {
       isLoading = false;
 
-      final reportResponse = DetailReportResponseModel.fromJson(json.decode(request.body));
+      final reportResponse = DetailReportModel.fromJson(json.decode(request.body));
 
       var responseJson = json.decode(request.body);
 
       var dataArray = responseJson['data'];
 
-      var reportdetailArray = dataArray['report_detail'] as List;
 
-      var rekomendasiArray = reportdetailArray[0]['rekomendasi'] as List;
 
-      var penjelasanIlmiahArray =
-      reportdetailArray[0]['penjelasan_ilmiah'] as List;
+      reportdetailArray = dataArray['report_detail'] as List;
 
-      // var penjelasanDetailArray = penjelasanIlmiahArray[0]['penjelasan_detail'];
 
-      reportDetail =
-          reportdetailArray.map((p) => ReportDetail.fromJson(p)).toList();
-      listRecomendasi =
-          rekomendasiArray.map((p) => Rekomendasi.fromJson(p)).toList();
-      penjelasanIlmiah = penjelasanIlmiahArray
-          .map((p) => PenjelasanIlmiah.fromJson(p))
-          .toList();
-      //penjelasanDetail = penjelasanDetailArray.map((p) => PenjelasanDetail.fromMap(p)).toList();
+      if(reportdetailArray.length == 0){
 
-      print("Array: $reportDetail");
+        reportDetail =  [] ;
+        listRecomendasi = [];
+        penjelasanIlmiah = [] ;
+
+
+      } else {
+
+        rekomendasiArray = reportdetailArray[0]['rekomendasi'] as List;
+        penjelasanIlmiahArray = reportdetailArray[1]['penjelasan_ilmiah'] as List;
+        penjelasanDetailArray = penjelasanIlmiahArray[1]['penjelasan_detail'];
+
+        reportDetail = reportdetailArray.map((p) => ReportDetail.fromJson(p)).toList();
+        listRecomendasi = rekomendasiArray.map((p) => Rekomendasi.fromJson(p)).toList();
+        penjelasanIlmiah = penjelasanIlmiahArray.map((p) => PenjelasanIlmiah.fromJson(p)).toList();
+        //penjelasanDetail = penjelasanDetailArray.map((p) => PenjelasanDetail.fromJson(p)).toList();
+      }
+
+
+
+      print("PANJANG REPORT DETAIL ------------- ${reportDetail.length}");
 
       link = reportResponse.data.linkPdf;
       print("LINK PDF: $link");
@@ -83,6 +96,8 @@ class DetailReportProvider extends ChangeNotifier {
       notifyListeners();
     } else if (request.statusCode == 500) {
       print("REPORT ERROR 500");
+    } else if (reportDetail == []) {
+
     }
 
     return reportDetail;

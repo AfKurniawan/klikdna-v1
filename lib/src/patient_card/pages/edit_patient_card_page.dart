@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:new_klikdna/src/login/providers/login_provider.dart';
 import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
 import 'package:new_klikdna/src/patient_card/widgets/asuransi_item.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
@@ -55,8 +56,8 @@ class _EditPatientCardPageState extends State<EditPatientCardPage> {
       appBar: AppBar(
         centerTitle: false,
         title: Text(
-          "Data Diri",
-          style: TextStyle(color: Colors.grey, fontSize: 16),
+          "Kartu Pasien",
+          style: TextStyle(color: Colors.grey, fontSize: 14),
         ),
         elevation: 0,
         backgroundColor: Colors.white,
@@ -71,6 +72,12 @@ class _EditPatientCardPageState extends State<EditPatientCardPage> {
               Navigator.of(context).pop();
             }),
         actions: [
+          FlatButton(
+            child: Text("Simpan Perubahan", style: TextStyle(color: MyColors.dnaGreen, fontSize: 12)),
+            onPressed: (){
+              prov.updatePatientCard(context, _radioValue);
+            },
+          )
         ],
       ),
       body: prov.isMuter == true
@@ -83,10 +90,7 @@ class _EditPatientCardPageState extends State<EditPatientCardPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
-              height: MediaQuery
-                  .of(context)
-                  .size
-                  .height / 4,
+              height: 94,
               decoration: BoxDecoration(
                   color: MyColors.dnaGreen,
                   image: DecorationImage(
@@ -96,241 +100,206 @@ class _EditPatientCardPageState extends State<EditPatientCardPage> {
                           BlendMode.dstATop),
                       image: AssetImage(
                           "assets/images/header_background.png"))),
-              child: Padding(
-                padding: const EdgeInsets.only(
-                    left: 18.0, right: 18, bottom: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Stack(children: [
-                      // Container(
-                      //   decoration: BoxDecoration(
-                      //       shape: BoxShape.circle,
-                      //       border: Border.all(
-                      //           color: Colors.white, width: 2)),
-                      //   child: CircleAvatar(
-                      //     backgroundImage: _image == null
-                      //         ? AssetImage('assets/images/no_image.png')
-                      //         : (_image),
-                      //     radius: 40,
-                      //   ),
-                      // ),
-                      Consumer<PatientCardProvider>(
-                        builder: (context, model, _) {
-                          return ClipRRect(
-                              borderRadius: BorderRadius.circular(50),
-                              child: model.image64Decode != null ?
-                              Image.memory(
-                                model.image64Decode,
-                                width: 100,
-                                fit: BoxFit.cover,
-                                height: 100,
-                                // height: 150,
-                              ) :
-                              Image.asset(
-                                  "assets/images/no_image.png", height: 100,
-                                  width: 100,
-                                  fit: BoxFit.cover)
-
-
-                          );
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Stack(children: [
+                    Consumer<PatientCardProvider>(
+                      builder: (context, model, _) {
+                        return ClipRRect(
+                            borderRadius: BorderRadius.circular(50),
+                            child: model.image64Decode != null ?
+                            Image.memory(
+                              model.image64Decode,
+                              width: 62,
+                              fit: BoxFit.cover,
+                              height: 62,
+                              // height: 150,
+                            ) :
+                            Image.asset(
+                                "assets/images/no_image.png",
+                                height: 62,
+                                width: 62,
+                                fit: BoxFit.cover)
+                        );
+                      },
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: InkWell(
+                        onTap: () {
+                          context.read<PatientCardProvider>().getImageV2(
+                              context);
+                          print("TAKE PHOTO");
                         },
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: InkWell(
-                          onTap: () {
-                            context.read<PatientCardProvider>().getImageV2(
-                                context);
-                            print("TAKE PHOTO");
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(30)),
-                            child: Padding(
-                              padding: const EdgeInsets.all(3.0),
-                              child: Icon(Icons.edit, size: 20),
-                            ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(30)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(3.0),
+                            child: Icon(Icons.edit, size: 20),
                           ),
                         ),
-                      )
-                    ]),
-                  ],
-                ),
+                      ),
+                    )
+                  ]),
+                ],
               ),
             ),
             SizedBox(height: 20),
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  FormWidget(
-                    hint: "",
-                    obscure: false,
-                    labelText: "Nama",
-                    textEditingController: prov.namaController,
-                    labelStyle: TextStyle(fontSize: 16),
-                  ),
-
-                  SizedBox(height: 15),
-                  FormWidget(
-                    hint: "",
-                    obscure: false,
-                    labelText: "Nomor KTP",
-                    textEditingController: prov.noKtpController,
-                    labelStyle: TextStyle(fontSize: 16),
-                  ),
-                  SizedBox(height: 15),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Kartu Asuransi"),
-                      GestureDetector(
-                        child: Text(
-                            "Lihat Semua", style: TextStyle(color: MyColors
-                            .dnaGreen)),
-                        onTap: () {
-                          Navigator.of(context).pushNamed("asuransi_page");
-                        },
-                      )
-                    ],
-                  ),
-                  prov.listAsuransi.length == 0 ?
-                  Column(
+              padding: const EdgeInsets.only(left: 16.0, right: 16),
+              child: Consumer<LoginProvider>(
+                builder: (child, login, _){
+                  return Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Text("Nama"),
                       SizedBox(height: 10),
-                      Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text("-", style: TextStyle(fontSize: 18,
-                              fontWeight: FontWeight.bold))),
-                    ],
-                  )
-                      : Theme(
-                    data: Theme.of(context).copyWith(
-                        dividerColor: Colors.transparent),
-                    child: Container(
-                      margin: EdgeInsets.only(top: 10),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                              width: 1,
-                              color: MyColors.grey
-                          )
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 8.0, right: 8),
-                        child: ExpansionTile(
-                          title: Text(prov.listAsuransi[0].nomorAsuransi,
-                              style: TextStyle(
-                                  color: isExpanded ? MyColors.dnaGreen : Colors
-                                      .black, fontSize: 14
-                              )),
-                          onExpansionChanged: (bool expanding) =>
-                              setState(() => this.isExpanded = expanding),
-                          tilePadding: EdgeInsets.only(left: 0, top: 0),
-                          children: [
-                            ListView.builder(
-                                scrollDirection: Axis.vertical,
-                                itemCount: prov.listAsuransi.length,
-                                shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
-                                itemBuilder: (context, index) {
-                                  return AsuransiItemWidget(
-                                      model: prov.listAsuransi[index]);
-                                }),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  // FormWidget(
-                  //   hint: "",
-                  //   obscure: false,
-                  //   labelText: "Kartu Asuransi",
-                  //   textEditingController: prov.insuranceCardController,
-                  //   labelStyle: TextStyle(fontSize: 16),
-                  // ),
-                  SizedBox(height: 15),
-                  GestureDetector(
-                    onTap: () {
-                      showModalGolonganDarah(context);
-                    },
-                    child: AbsorbPointer(
-                      child: FormWidget(
-                        obscure: false,
-                        labelText: "Golongan Darah",
-                        textEditingController: prov.bloodTypeController,
-                        labelStyle: TextStyle(fontSize: 16),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 15),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Jenis Kelamin"),
+                      Text(login.vallName == null ? "-" : "${login.vallName}",
+                          style: TextStyle(fontSize: 14)),
+                      SizedBox(height: 20),
+                      Text("Nomor KTP"),
+                      SizedBox(height: 10),
+                      Text(prov.noKtp == null ? "-" : prov.noKtp,
+                          style: TextStyle(fontSize: 14)),
+                      SizedBox(height: 15),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Radio(
-                            value: "male",
-                            groupValue: _radioValue,
-                            onChanged: _handleRadioValueChange,
-                            focusColor: MyColors.dnaGreen,
-                            activeColor: MyColors.dnaGreen,
-                          ),
-                          Text("Pria"),
-                          SizedBox(width: 20),
-                          Radio(
-                            value: "female",
-                            groupValue: _radioValue,
-                            onChanged: _handleRadioValueChange,
-                            focusColor: MyColors.dnaGreen,
-                            activeColor: MyColors.dnaGreen,
-                          ),
-                          Text("Wanita")
+                          Text("Kartu Asuransi"),
+                          GestureDetector(
+                            child: Icon(Icons.add, size: 15, color: MyColors.dnaGreen,),
+                            onTap: () {
+                              Navigator.of(context).pushNamed("asuransi_page");
+                            },
+                          )
                         ],
                       ),
-                      SizedBox(height: 15),
-                      FormWidget(
-                        hint: "",
-                        obscure: false,
-                        labelText: "Medical Professional",
-                        textEditingController: prov.medicalProfController,
-                        labelStyle: TextStyle(fontSize: 16),
+                      prov.listAsuransi.length == 0 ?
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 10),
+                          Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text("-", style: TextStyle(fontSize: 18,
+                                  fontWeight: FontWeight.bold))),
+                        ],
+                      )
+                          : Theme(
+                        data: Theme.of(context).copyWith(
+                            dividerColor: Colors.transparent),
+                        child: Container(
+                          margin: EdgeInsets.only(top: 10),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                  width: 1,
+                                  color: MyColors.grey
+                              )
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 8.0, right: 8),
+                            child: ExpansionTile(
+                              title: Text(prov.listAsuransi[0].nomorAsuransi,
+                                  style: TextStyle(
+                                      color: isExpanded ? MyColors.dnaGreen : Colors
+                                          .black, fontSize: 14
+                                  )),
+                              onExpansionChanged: (bool expanding) =>
+                                  setState(() => this.isExpanded = expanding),
+                              tilePadding: EdgeInsets.only(left: 0, top: 0),
+                              children: [
+                                ListView.builder(
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: prov.listAsuransi.length,
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemBuilder: (context, index) {
+                                      return AsuransiItemWidget(
+                                          model: prov.listAsuransi[index]);
+                                    }),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
                       SizedBox(height: 15),
-                      FormWidget(
-                        hint: "",
-                        obscure: false,
-                        labelText: "Emergency Contact",
-                        textEditingController: prov.emergencyContactController,
-                        labelStyle: TextStyle(fontSize: 16),
-                      ),
-                      SizedBox(height: 15),
-                      FormWidget(
-                        hint: "",
-                        obscure: false,
-                        labelText: "Comorbidity",
-                        textEditingController: prov.comorbidityController,
-                        labelStyle: TextStyle(fontSize: 16),
-                      ),
-                      SizedBox(height: 15),
-                      ButtonWidget(
-                        btnAction: () {
-                          prov.updatePatientCard(context, _radioValue);
+                      GestureDetector(
+                        onTap: () {
+                          showModalGolonganDarah(context);
                         },
-                        btnText: "Lanjutkan",
-                        height: 50,
-                        color: MyColors.dnaGreen,
+                        child: AbsorbPointer(
+                          child: FormWidget(
+                            obscure: false,
+                            labelText: "Golongan Darah",
+                            textEditingController: prov.bloodTypeController,
+                            labelStyle: TextStyle(fontSize: 16),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 15),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Jenis Kelamin"),
+                          Row(
+                            children: [
+                              Radio(
+                                value: "male",
+                                groupValue: _radioValue,
+                                onChanged: _handleRadioValueChange,
+                                focusColor: MyColors.dnaGreen,
+                                activeColor: MyColors.dnaGreen,
+                              ),
+                              Text("Pria"),
+                              SizedBox(width: 20),
+                              Radio(
+                                value: "female",
+                                groupValue: _radioValue,
+                                onChanged: _handleRadioValueChange,
+                                focusColor: MyColors.dnaGreen,
+                                activeColor: MyColors.dnaGreen,
+                              ),
+                              Text("Wanita")
+                            ],
+                          ),
+                          SizedBox(height: 15),
+                          FormWidget(
+                            hint: "",
+                            obscure: false,
+                            labelText: "Medical Professional",
+                            textEditingController: prov.medicalProfController,
+                            labelStyle: TextStyle(fontSize: 16),
+                          ),
+                          SizedBox(height: 15),
+                          FormWidget(
+                            hint: "",
+                            obscure: false,
+                            labelText: "Emergency Contact",
+                            textEditingController: prov.emergencyContactController,
+                            labelStyle: TextStyle(fontSize: 16),
+                          ),
+                          SizedBox(height: 15),
+                          FormWidget(
+                            hint: "",
+                            obscure: false,
+                            labelText: "Comorbidity",
+                            textEditingController: prov.comorbidityController,
+                            labelStyle: TextStyle(fontSize: 16),
+                          ),
+                          SizedBox(height: 15),
+                        ],
                       ),
                     ],
-                  ),
-                ],
+                  );
+                },
               ),
             ),
           ],

@@ -1,19 +1,15 @@
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:new_klikdna/src/account/models/account_model.dart';
 import 'package:new_klikdna/src/account/providers/account_provider.dart';
 import 'package:new_klikdna/src/login/providers/login_provider.dart';
-import 'package:new_klikdna/src/profile/providers/profile_provider.dart';
+import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:provider/provider.dart';
 
+
 class DetailProfilePage extends StatefulWidget {
-  final AccountModel model;
-
-  DetailProfilePage({Key key, this.model}) : super(key: key);
-
   @override
   _DetailProfilePageState createState() => _DetailProfilePageState();
 }
@@ -22,218 +18,122 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
   @override
   void initState() {
     Provider.of<AccountProvider>(context, listen: false).getUserAccount(context);
+    Provider.of<PatientCardProvider>(context, listen: false).getPatientCard(context);
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        centerTitle: true,
-//      title: Consumer<ProfileProvider>(
-//        builder: (context, model, _){
-//          return Text("${model.name}");
-//        },
-        title: Text(
-          "Detil Profil",
-          style: TextStyle(color: Colors.grey, fontSize: 16),
-        ),
-
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios,
-              color: MyColors.grey,
-              size: 20,
+    return Consumer<LoginProvider>(
+      builder: (context, prov, _){
+        return Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            title: Text(
+              "Detail Profil",
             ),
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, "main_page",
-                  arguments: 0);
-            }),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 18.0),
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 14),
+            elevation: 0,
+            backgroundColor: Colors.white,
+            leading: IconButton(
+                icon: Icon(
+                  Icons.arrow_back_ios,
+                  color: MyColors.grey,
+                ),
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, "main_page",
+                      arguments: 0);
+                }),
+          ),
+          body: prov.isLoading == true ?
+          Center(
+              child: Platform.isIOS ? CupertinoActivityIndicator() : CircularProgressIndicator(strokeWidth: 2)
+          ) :
+          SingleChildScrollView(
             child: Column(
+              mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  color: Colors.white,
-                  child: Row(
-                    children: [
-                      Container(
-                        child: AnimatedContainer(
-                          duration: Duration(milliseconds: 1000),
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: Consumer<LoginProvider>(
-                            builder: (context, model, _) {
-                              return ClipRRect(
-                                  borderRadius: BorderRadius.circular(50),
-                                  child:  Image.asset(
-                                    "assets/images/no_image.png",
-                                    width: 80,
-                                    fit: BoxFit.cover,
-                                    height: 80,
-                                    // height: 150,
-                                  )
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                      Consumer<LoginProvider>(
-                        builder: (context, model, _) {
-                          return Container(
-                            height: 20,
-                            width: MediaQuery.of(context).size.width / 2,
-                            child: Center(
-                              child: Text("${model.vfirstname} ${model.vlastname}",
-                                overflow: TextOverflow.clip,
-                                maxLines: 1,
-                                style: TextStyle(
-                                    color: MyColors.dnaBlack,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w500
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(height: 20),
-                Divider(),
-                Text(
-                  "Akun",
-                  style: TextStyle(
-                      color: Color(0xff242424),
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
+              children: [
                 InkWell(
-                  onTap: (){
-                    Navigator.of(context).pushNamed("lihat_profile_page", arguments: widget.model);
+                  onTap: () {
+                    Navigator.pushNamed(context, "detail_profile_page");
                   },
                   child: Container(
-                    height: 50,
-                    child: Row(
-                      children: [
-                        ImageIcon(AssetImage("assets/icons/person_icon.png"), size: 25, color: Colors.grey[500]),
-                        SizedBox(width: 30),
-                        Text("Lihat Profil", style: TextStyle(fontSize: 16)),
-                      ],
+                    height: MediaQuery.of(context).size.height / 6,
+                    color: Colors.white,
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            child: AnimatedContainer(
+                              duration: Duration(milliseconds: 1000),
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.white, width: 5),
+                                  shape: BoxShape.circle),
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(50),
+                                  child: Image.asset("assets/images/no_image.png",
+                                      height: 64, width: 64)),
+                            ),
+                          ),
+
+                          Text(
+                            prov.vfirstname == null ? "" : "${prov.vfirstname} ${prov.vlastname}",
+                            style: TextStyle(
+                                color: MyColors.dnaGreen,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
+                          ),
+                          Spacer(),
+                          IconButton(
+                            icon: Icon(Icons.arrow_forward_ios),
+                            onPressed: () {
+                              Navigator.pushNamed(context, "detail_profile_page");
+                            },
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
-                Divider(),
-                SizedBox(
-                  height: 10,
+                Container(
+                  height: 5,
+                  color: Colors.grey[100],
                 ),
-                Text(
-                  "Tentang",
-                  style: TextStyle(
-                      color: Color(0xff242424),
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                ListTile(
-                  leading: Icon(FontAwesomeIcons.alignLeft),
-                  title: Text("Syarat dan Ketentuan"), // ke halaman lorem ipsum
-                  contentPadding: EdgeInsets.only(top: 0),
-                  onTap: () {
-                    //Provider.of<DetailProfileProvider>(context, listen: false).syaratKetentuan();
-                    Navigator.of(context).pushNamed("lorem_ipsum_page");
-                  },
-                ),
-                ListTile(
-                  leading: Icon(FontAwesomeIcons.shieldAlt),
-                  title: Text("Kebijakan Privasi"), // ke halaman lorem ipsum
-                  contentPadding: EdgeInsets.only(top: 0),
-                  onTap: (){
-                    Navigator.of(context).pushNamed("lorem_ipsum_page");
-                    //Provider.of<ProfileProvider>(context, listen: false).kebijakanPrivasi();
-                  },
-                ),
-                // ListTile(
-                //   leading: Icon(FontAwesomeIcons.newspaper),
-                //   title: Text("Lembar Persetujuan"),
-                //   contentPadding: EdgeInsets.only(top: 0),
-                //   onTap: (){
-                //     Provider.of<DetailProfileProvider>(context, listen: false).lembarPersetujuan();
-                //   },
+                // Container(
+                //   color: Colors.white,
+                //   width: MediaQuery.of(context).size.width,
+                //   child: Padding(
+                //     padding: const EdgeInsets.only(left: 20.0, top: 20, bottom: 20),
+                //     child: Text("ANGGOTA KELUARGAMU",
+                //         style: TextStyle(
+                //             color: MyColors.dnaGrey, fontWeight: FontWeight.bold)),
+                //   ),
                 // ),
-                ListTile(
-                  leading: Icon(FontAwesomeIcons.lightbulb),
-                  title: Text("Cara Menggunakan"),
-                  contentPadding: EdgeInsets.only(top: 0),
-                  onTap: (){
-                    Navigator.of(context).pushNamed("lorem_ipsum_page");
-                  },
+                Container(
+                  height: 5,
+                  color: Colors.grey[100],
                 ),
-                ExpansionTile(
-                  tilePadding: EdgeInsets.only(left: 2),
-                  leading:
-                  ImageIcon(AssetImage("assets/images/logo.png"), size: 30),
-                  title: Text("Kontak KlikDNA"),
-                  childrenPadding: EdgeInsets.only(left: 40),
-                  children: [
-                    ListTile(
-                      leading: Icon(FontAwesomeIcons.phone, size: 18),
-                      title: Text("Telepon"),
-                      onTap: () {
-                        Provider.of<ProfileProvider>(context, listen: false).makeCallPhone(context);
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(FontAwesomeIcons.whatsapp, size: 18),
-                      title: Text("Whatsapp"),
-                      onTap: () {
-                        Provider.of<ProfileProvider>(context, listen: false).openWhatsapp(context);
-                      },
-                    ),
-                    // ListTile(
-                    //   leading: Icon(FontAwesomeIcons.telegramPlane, size: 20),
-                    //   title: Text("Telegram"),
-                    //   onTap: () {
-                    //     Provider.of<DetailProfileProvider>(context, listen: false).openTelegram(context);
-                    //   },
-                    // ),
-                    ListTile(
-                      leading: Icon(FontAwesomeIcons.envelopeOpen, size: 18),
-                      title: Text("Email"),
-                      onTap: () {
-                        Provider.of<ProfileProvider>(context, listen: false).sendEmail(context);
-                      },
-                    ),
-                  ],
-                ),
-                ListTile(
-                  leading:
-                  Icon(FontAwesomeIcons.powerOff, color: Colors.grey[400]),
-                  title:
-                  Text("Keluar", style: TextStyle(color: Colors.grey[400])),
-                  contentPadding: EdgeInsets.only(top: 0),
-                  onTap: () {
-                    Provider.of<ProfileProvider>(context, listen: false).logout(context);
-                    //context.read()<ProfileProvider>().logout(context);
-                  },
-                ),
+                //listLinkedAccountWidget(context, prov),
               ],
             ),
           ),
-        ),
-      ),
+          // bottomNavigationBar: Padding(
+          //   padding: EdgeInsets.only(left: 20.0, right: 20, top: 5, bottom: 10),
+          //   child: OutlineButtonWidget(
+          //     btnText: "Logout",
+          //     height: 45,
+          //     outlineTextColor: MyColors.dnaGreen,
+          //     btnAction: () async {
+          //       //Navigator.pushNamed(context, "add_linked_account_page");
+          //       SharedPreferences prefs = await SharedPreferences.getInstance();
+          //       prefs.clear();
+          //       Navigator.pushReplacementNamed(context, "login_page");
+          //     },
+          //   ),
+          // ),
+        );
+      },
     );
   }
 }

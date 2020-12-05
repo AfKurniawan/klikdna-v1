@@ -38,7 +38,6 @@ class TreeWebViewWidget extends StatelessWidget {
             child: Image.asset(
               "assets/images/new_trees.png",
               fit: BoxFit.cover,
-              height: MediaQuery.of(context).size.width < 400 ? 130 : 145,
               width: MediaQuery.of(context).size.width,
               // height: 150,
             ),

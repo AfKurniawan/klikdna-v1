@@ -49,7 +49,7 @@ class CardTypeSatuWidget extends StatelessWidget {
                   child: Image.asset("assets/images/card_logo.png", height: 200),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 16.0, top: 16, right: 16, bottom: 20),
+                  padding: const EdgeInsets.only(left: 16.0, top: 16, right: 16, bottom: 16),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,54 +57,57 @@ class CardTypeSatuWidget extends StatelessWidget {
                       Text(model.vhighestrank == "0" || model.vpar == "" ? "${model.vtype}" : "${model.vhighestrank}",
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: 18,
+                              fontSize: 20,
                               fontWeight: FontWeight.bold)),
 
                       Container(
+                        margin: EdgeInsets.only(top: 80),
                         width: MediaQuery.of(context).size.width / 1,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Container(
-                              height: 20,
                               width: MediaQuery.of(context).size.width / 2,
-                              child: Text("${model.vfirstname} ${model.vlastname}",
+                              child: Text(model.vallName.length > 20 ? "${model.vallName.substring(0, 20)}" : "${model.vallName}",
                                 overflow: TextOverflow.clip,
                                 maxLines: 1,
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 14,
-                                    fontWeight: FontWeight.w500
+                                    fontWeight: FontWeight.w400
                                 ),
                               ),
                             ),
 
-                            SizedBox(width: 30),
+                            SizedBox(width: MediaQuery.of(context).size.width /10),
 
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text("MASA BERLAKU",
-                                  overflow: TextOverflow.clip,
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 9,
-                                      fontWeight: FontWeight.w300
+                            Container(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text("MASA BERLAKU",
+                                    overflow: TextOverflow.clip,
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 9,
+                                        fontWeight: FontWeight.w300
+                                    ),
                                   ),
-                                ),
 
-                                Text(model.parsedTanggalExpired == null ? "-" : "${model.parsedTanggalExpired.substring(0, 10)}",
-                                  overflow: TextOverflow.clip,
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold
+                                  Text(model.parsedTanggalExpired == null ? "-" : "${model.parsedTanggalExpired.substring(0, 11)}",
+                                    overflow: TextOverflow.clip,
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ],
                         ),

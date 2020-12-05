@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
 import 'package:new_klikdna/src/pmr/providers/pmr_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:provider/provider.dart';
@@ -29,45 +30,53 @@ class _PMRPageState extends State<PMRPage> {
           body: Column(
             children: <Widget>[
               Container(
-                color: MyColors.dnaGreen,
-                height: 180,
+                height: 116,
+                decoration: BoxDecoration(
+                    color: MyColors.dnaGreen,
+                    image: DecorationImage(
+                        fit: BoxFit.fill,
+                        colorFilter: new ColorFilter.mode(
+                            MyColors.dnaGreen.withOpacity(0.2),
+                            BlendMode.dstATop),
+                        image: AssetImage(
+                            "assets/images/header_background.png"))),
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 18.0, right: 18, top: 30),
+                  padding: const EdgeInsets.only(left: 16.0, right: 18, top: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Container(
                         margin: EdgeInsets.only(right: 20),
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(color: Colors.white, width: 2)),
-                        child: CircleAvatar(
-                          backgroundImage: AssetImage('assets/images/no_image.png'),
-                          radius: 35,
+                        child: Center(
+                          child: Consumer<PatientCardProvider>(
+                            builder: (context, model, _) {
+                              return ClipRRect(
+                                  borderRadius: BorderRadius.circular(50),
+                                  child: model.photoView == null ?
+                                  Image.asset("assets/images/no_image.png", height: 62, width: 62, fit: BoxFit.cover)
+                                      : Image.memory(
+                                    model.photoView,
+                                    width: 62,
+                                    fit: BoxFit.cover,
+                                    height: 62,
+                                    // height: 150,
+                                  ));
+                            },
+                          ),
                         ),
                       ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                              "Hai", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w300)
+                      Container(
+                        child: Text("${prov.firstname} ${prov.lastname}",
+                          style: TextStyle(
+                            color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500
                           ),
-
-                          Container(
-                            height: 20,
-                            width: MediaQuery.of(context).size.width / 2,
-                            child: Text("${prov.firstname} ${prov.lastname}",
-                              overflow: TextOverflow.clip,
-                              maxLines: 1,
-                              style: TextStyle(
-                                color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500
-                              ),
-                            ),
-                          )
-                        ],
+                        ),
                       ),
                     ],
                   ),
@@ -83,13 +92,18 @@ class _PMRPageState extends State<PMRPage> {
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(0),
                           topRight: Radius.circular(0))),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 16.0, right: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text("Personal Medical Report",
+                            style: TextStyle(
+                              fontSize: 14
+                            )),
+                        SizedBox(height: 24),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Column(
                               children: [
@@ -98,8 +112,8 @@ class _PMRPageState extends State<PMRPage> {
                                     Navigator.of(context).pushNamed("patient_card_page");
                                   },
                                   child: Container(
-                                    height: 80,
-                                    width: 80,
+                                    height: 86,
+                                    width: 86,
                                     decoration: BoxDecoration(
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(50),
@@ -120,10 +134,14 @@ class _PMRPageState extends State<PMRPage> {
                                   ),
                                 ),
                                 SizedBox(height: 20),
-                                Text("Kartu Pasien")
+                                Text("Kartu Pasien",
+                                  style: TextStyle(
+                                      fontSize: 12
+                                  ),
+                                )
                               ],
                             ),
-
+                            SizedBox(width: 24),
                             Column(
                               children: [
                                 InkWell(
@@ -131,8 +149,8 @@ class _PMRPageState extends State<PMRPage> {
                                     Navigator.of(context).pushNamed("food_meter_page");
                                   },
                                   child: Container(
-                                    height: 80,
-                                    width: 80,
+                                    height: 86,
+                                    width: 86,
                                     decoration: BoxDecoration(
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(50),
@@ -153,16 +171,20 @@ class _PMRPageState extends State<PMRPage> {
                                   ),
                                 ),
                                 SizedBox(height: 20),
-                                Text("Food Meter")
+                                Text("Food Meter",
+                                  style: TextStyle(
+                                    fontSize: 12
+                                  ),
+                                )
                               ],
                             ),
                           ],
                         ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                    ],
+                        SizedBox(
+                          height: 20,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               )

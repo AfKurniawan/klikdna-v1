@@ -95,7 +95,7 @@ class _RefferalTabViewPageState extends State<RefferalTabViewPage> {
                               color: Color(0xffF5FFFF),
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Text('${ref.listReferralData[index].par}'),
+                                child: Text('${ref.listReferralData[index].rank}'),
                               ),
                               height: 35,
                             ),
@@ -112,7 +112,7 @@ class _RefferalTabViewPageState extends State<RefferalTabViewPage> {
                               color: Color(0xffF5FFFF),
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Text('${ref.listReferralData[index].rank}'),
+                                child: Text('${ref.listReferralData[index].par}'),
                               ),
                               height: 35,
                             ),

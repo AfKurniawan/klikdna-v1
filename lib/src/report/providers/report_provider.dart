@@ -18,8 +18,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class ReportProvider extends ChangeNotifier {
-  List<Sample> listSample = [];
+  List<ReportData> listSample = [];
   List<Detail> listDetail = [];
+  List<Detail> listDetail2 = [];
   bool isLoading;
 
 
@@ -45,10 +46,17 @@ class ReportProvider extends ChangeNotifier {
       var allArray = json.decode(request.body);
 
       var dataArray = allArray['data'] as List;
-      listSample = dataArray.map<Sample>((j) => Sample.fromJson(j)).toList();
+      listSample = dataArray.map<ReportData>((j) => ReportData.fromJson(j)).toList();
 
       var detailArray = dataArray[0]['detail'] as List;
       listDetail = detailArray.map<Detail>((j) => Detail.fromJson(j)).toList();
+
+      var detail2Array = allArray['data'][1]['detail'] as List;
+      listDetail2 = detail2Array.map<Detail>((j) => Detail.fromJson(j)).toList();
+
+      print("LST DETAAIL @___$listDetail2");
+
+
 
       prefs.remove('tempPersonId');
 
@@ -72,7 +80,7 @@ class ReportProvider extends ChangeNotifier {
 
   String linkPdf ;
   String filename ;
-  Future<DetailData> getLinkPdf(BuildContext context, String reportId) async {
+  Future<ReportData> getLinkPdf(BuildContext context, String reportId) async {
 
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -98,7 +106,7 @@ class ReportProvider extends ChangeNotifier {
     print("DETAIL REPORT RESPONSE CODE: ${request.statusCode}");
 
     if(request.statusCode == 200) {
-      final reportResponse = DetailReportResponseModel.fromJson(json.decode(request.body));
+      final reportResponse = DetailReportModel.fromJson(json.decode(request.body));
       linkPdf = reportResponse.data.linkPdf;
       filename = reportResponse.data.reportId + reportResponse.data.reportId;
       notifyListeners();

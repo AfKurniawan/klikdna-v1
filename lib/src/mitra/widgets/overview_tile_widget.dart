@@ -53,7 +53,7 @@ class OverViewTileWidget extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text("Kiri",
                                     overflow: TextOverflow.clip,
@@ -77,7 +77,7 @@ class OverViewTileWidget extends StatelessWidget {
                                 ],
                               ),
                               Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text("Kanan",
                                     overflow: TextOverflow.clip,
@@ -160,7 +160,7 @@ class OverViewTileWidget extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text("Satu",
                                   overflow: TextOverflow.clip,
@@ -184,7 +184,7 @@ class OverViewTileWidget extends StatelessWidget {
                               ],
                             ),
                             Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text("Dua",
                                   overflow: TextOverflow.clip,
@@ -237,7 +237,7 @@ class OverViewTileWidget extends StatelessWidget {
                               ],
                             ),
                             Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text("Satu",
                                   overflow: TextOverflow.clip,
@@ -308,7 +308,7 @@ class OverViewTileWidget extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text("Kiri",
                                   overflow: TextOverflow.clip,
@@ -332,7 +332,8 @@ class OverViewTileWidget extends StatelessWidget {
                               ],
                             ),
                             Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text("Kanan",
                                   overflow: TextOverflow.clip,
@@ -367,103 +368,97 @@ class OverViewTileWidget extends StatelessWidget {
             SizedBox(height: 15),
 
             Material(
-              child: InkWell(
-                splashColor: Colors.white,
-                onTap: (){
-                  print("SALDO CLICKED");
-                },
-                child: Ink(
-                  height: 120,
-                  decoration: BoxDecoration(
-                      color: MyColors.totalSaldoTileColor,
-                      borderRadius: BorderRadius.circular(20)),
-                  width: MediaQuery.of(context).size.width / 2.2,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 18, bottom: 18),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
+              child: Ink(
+                height: 120,
+                decoration: BoxDecoration(
+                    color: MyColors.totalSaldoTileColor,
+                    borderRadius: BorderRadius.circular(20)),
+                width: MediaQuery.of(context).size.width / 2.2,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 18, bottom: 18),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("CYCLE",
+                            overflow: TextOverflow.clip,
+                            maxLines: 1,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500
+                            ),
+                          ),
+                          Align(
+                              alignment: Alignment.topRight,
+                              child: Image.asset("assets/images/lingkaran.png")),
+                        ],
+                      ),
+
+                      //SizedBox(height: 21),
+
+                      Padding(
+                        padding: const EdgeInsets.only(right: 18.0),
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("CYCLE",
-                              overflow: TextOverflow.clip,
-                              maxLines: 1,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500
-                              ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Hari Ini",
+                                  overflow: TextOverflow.clip,
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w300
+                                  ),
+                                ),
+                                SizedBox(height: 5),
+                                Text(prov.vdailycycle == null ? "" : "${prov.vdailycycle}",
+                                  overflow: TextOverflow.clip,
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold
+                                  ),
+                                ),
+                              ],
                             ),
-                            Align(
-                                alignment: Alignment.topRight,
-                                child: Image.asset("assets/images/lingkaran.png")),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Bulan Ini",
+                                  overflow: TextOverflow.clip,
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w300
+                                  ),
+                                ),
+                                SizedBox(height: 5),
+                                Text(prov.vmonthlycycle == null ? "" : "${prov.vmonthlycycle}",
+                                  overflow: TextOverflow.clip,
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
-
-                        //SizedBox(height: 21),
-
-                        Padding(
-                          padding: const EdgeInsets.only(right: 18.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text("Hari Ini",
-                                    overflow: TextOverflow.clip,
-                                    maxLines: 1,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w300
-                                    ),
-                                  ),
-                                  SizedBox(height: 5),
-                                  Text(prov.vdailycycle == null ? "" : "${prov.vdailycycle}",
-                                    overflow: TextOverflow.clip,
-                                    maxLines: 1,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text("Bulan Ini",
-                                    overflow: TextOverflow.clip,
-                                    maxLines: 1,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w300
-                                    ),
-                                  ),
-                                  SizedBox(height: 5),
-                                  Text(prov.vmonthlycycle == null ? "" : "${prov.vmonthlycycle}",
-                                    overflow: TextOverflow.clip,
-                                    maxLines: 1,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        )
+                      )
 
 
-                      ],
-                    ),
+                    ],
                   ),
                 ),
               ),

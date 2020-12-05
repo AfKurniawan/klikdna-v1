@@ -69,9 +69,9 @@ class LoginProvider with ChangeNotifier{
             ///MEMBER
             prefs.setString("number", responseJson.user.member.number);
 
-            prefs.setString("firstname", responseJson.user.member.firstname.toUpperCase());
+            prefs.setString("firstname", responseJson.user.member.firstname);
 
-            prefs.setString("lastname", responseJson.user.member.lastname.toUpperCase());
+            prefs.setString("lastname", responseJson.user.member.lastname);
 
             prefs.setString("birthdate", responseJson.user.member.birthdate.substring(0, 10));
 
@@ -97,7 +97,7 @@ class LoginProvider with ChangeNotifier{
 
             prefs.setInt("leftpointreward", responseJson.user.member.leftpointreward);
 
-            prefs.setInt("rightpointreward", responseJson.user.member.leftpointreward);
+            prefs.setInt("rightpointreward", responseJson.user.member.rightpointreward);
 
             prefs.setString("commission", formattedCommission.format(responseJson.user.member.commission));
 
@@ -234,6 +234,7 @@ class LoginProvider with ChangeNotifier{
     String vnumber;
     String vfirstname;
     String vlastname;
+    String vallName ;
     String vbirthdate;
     String vgender;
     String vaddress;
@@ -261,8 +262,7 @@ class LoginProvider with ChangeNotifier{
     String vmonthlycycle;
     String vdailycycle;
 
-    var formatTgl = DateFormat('dd MMMM yyyy');
-    var expParsedDate ;
+
 
     ///SPONSOR
     String vsponsorfirstname;
@@ -297,6 +297,13 @@ class LoginProvider with ChangeNotifier{
 
 
     String parsedTanggalExpired ;
+    var tglLahir ;
+
+    var formatTgl = DateFormat('dd MMM yyyy');
+    var formatTglLahir = DateFormat('dd MMMM yyyy');
+    var expParsedDate ;
+    String vtglLahir ;
+    String vallAddress ;
 
     getMitraData() async {
         SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -304,21 +311,30 @@ class LoginProvider with ChangeNotifier{
 
         vuserid = prefs.getInt("userid");
 
-        expParsedDate = DateTime.parse(prefs.getString("expired"));
+        expParsedDate = DateTime.parse(prefs.getString("expired")).toLocal();
 
         parsedTanggalExpired = ('${formatTgl.format(expParsedDate)}');
 
         ///MEMBER
         vfirstname = prefs.getString("firstname");
         vlastname = prefs.getString("lastname");
-        vbirthdate = prefs.getString("birthdate");
+        vallName = prefs.getString('firstname') + " " + prefs.getString('lastname') ;
+        print("LEDGH VALLNAME__: ${vallName.length}");
+        //vbirthdate = prefs.getString("birthdate");
+
+        tglLahir = DateTime.parse(prefs.getString('birthdate')).toLocal();
+
+        vbirthdate = ('${formatTglLahir.format(tglLahir)}');
+
         vgender = prefs.getString("gender");
+
         vaddress = prefs.getString("address");
         vkelurahan = prefs.getString("kelurahan");
         vsubdistrict = prefs.getString("subdistrict");
         vcity = prefs.get("city");
         vprovince = prefs.getString("province");
         vzipcode = prefs.getString("zipcode");
+        vallAddress = "$vaddress, " + "$vkelurahan, " + "$vsubdistrict, " + "$vcity, " + "$vzipcode" ;
         vphone = prefs.getString("vphone");
         vleftcv = prefs.getInt("leftcv");
         vrightcv = prefs.getInt("rightcv");
@@ -370,6 +386,9 @@ class LoginProvider with ChangeNotifier{
         vtypeId = prefs.getString("typeId");
         vdatefrom = prefs.getString("datefrom");
         vdateto = prefs.getString("dateto");
+
+
+
 
         notifyListeners();
 

@@ -53,7 +53,7 @@ class _MitraPageState extends State<MitraPage> {
               Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
+                    padding: const EdgeInsets.only(left: 10.0, right: 2),
                     child: Container(
                       child: CarouselSlider(
                         items: slideCard,
@@ -114,7 +114,7 @@ class _MitraPageState extends State<MitraPage> {
               ),
 
               Padding(
-                padding: const EdgeInsets.only(left: 10.0, right: 10),
+                padding: const EdgeInsets.only(left:10, right: 10),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,

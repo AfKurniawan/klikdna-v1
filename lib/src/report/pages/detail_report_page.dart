@@ -7,6 +7,7 @@ import 'package:new_klikdna/src/account/providers/account_provider.dart';
 import 'package:new_klikdna/src/login/providers/login_provider.dart';
 import 'package:new_klikdna/src/member/models/member_model.dart';
 import 'package:new_klikdna/src/member/providers/member_provider.dart';
+import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
 import 'package:new_klikdna/src/report/models/detail_report_model.dart';
 import 'package:new_klikdna/src/report/models/report_model.dart';
 import 'package:new_klikdna/src/report/providers/detail_report_provider.dart';
@@ -16,7 +17,7 @@ import 'package:provider/provider.dart';
 
 class DetailReportPage extends StatefulWidget {
   final Detail model;
-  final Sample sample;
+  final ReportData sample;
 
   DetailReportPage({Key key, this.model, this.sample}) : super(key: key);
 
@@ -123,16 +124,25 @@ class _DetailReportPageState extends State<DetailReportPage> {
                           height: 10,
                         ),
                         Container(
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border:
-                                  Border.all(color: Colors.white, width: 2)),
-                          child: CircleAvatar(
-                            backgroundImage:
-                                AssetImage('assets/images/no_image.png'),
-                            radius: 40,
+                          height: 94,
+                          child: Center(
+                            child: Consumer<PatientCardProvider>(
+                              builder: (context, model, _) {
+                                return ClipRRect(
+                                    borderRadius: BorderRadius.circular(50),
+                                    child: model.photoView == null ?
+                                    Image.asset("assets/images/no_image.png", height: 62, width: 62, fit: BoxFit.cover)
+                                        : Image.memory(
+                                      model.photoView,
+                                      width: 62,
+                                      fit: BoxFit.cover,
+                                      height: 62,
+                                      // height: 150,
+                                    ));
+                              },
+                            ),
                           ),
-                        ),
+                        )
                       ],
                     ),
                   ),
