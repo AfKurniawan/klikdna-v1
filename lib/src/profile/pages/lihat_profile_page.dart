@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:clipboard_manager/clipboard_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:new_klikdna/src/login/providers/login_provider.dart';
 import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
@@ -193,7 +193,7 @@ class _LihatProfilePageState extends State<LihatProfilePage> {
                               IconButton(
                                 icon: Icon(Icons.content_copy, size: 15, color: Colors.grey),
                                 onPressed: () {
-                                  ClipboardManager.copyToClipBoard("${prov.vreferralUrl}")
+                                  Clipboard.setData(new ClipboardData(text: "${prov.vreferralUrl}"))
                                       .then((result) {
                                     _scaffoldKey.currentState.showSnackBar(
                                         SnackBar(
