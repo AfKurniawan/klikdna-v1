@@ -58,6 +58,7 @@ class _DetailReportPageState extends State<DetailReportPage> {
             onPressed: () {
               //Navigator.pushReplacementNamed(context, "detail_report_page");
               Navigator.of(context).pop();
+              clearSelectedFilter();
             }),
       ),
       body: prov.isLoading == true
@@ -162,25 +163,27 @@ class _DetailReportPageState extends State<DetailReportPage> {
                       children: <Widget>[
                         Padding(
                             padding: const EdgeInsets.only(
-                                left: 20, bottom: 10, right: 20, top: 20),
+                                left: 20, bottom: 10, right: 20),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text("Hasil Kamu",
                                     style: TextStyle(
-                                        fontSize: 20,
+                                        fontSize: 18,
                                         fontWeight: FontWeight.bold,
                                         color: MyColors.dnaGrey)),
                                 Row(
                                   children: [
                                     Text("Urutkan",
                                         style: TextStyle(
-                                            fontSize: 16,
+                                            fontSize: 14,
                                             fontWeight: FontWeight.bold,
                                             color: MyColors.dnaGrey)),
                                     SizedBox(width: 10),
                                     Container(
+                                      height: 40,
+                                      width: 40,
                                       decoration: BoxDecoration(
                                         color: Colors.white,
                                         borderRadius: BorderRadius.circular(10),
@@ -199,7 +202,7 @@ class _DetailReportPageState extends State<DetailReportPage> {
                                         onPressed: () {
                                           showFilterBottomSheet(context);
                                         },
-                                        icon: Icon(Icons.sort),
+                                        icon: Icon(Icons.sort, size: 20),
                                       ),
                                     )
                                   ],
@@ -294,15 +297,19 @@ class _DetailReportPageState extends State<DetailReportPage> {
       setState(() {
         sample.reportDetail.sort((b, a) => a.namaModul.compareTo(b.namaModul));
       });
-    } else if(text == "2") {
+    } else if(text == "2" && checked == true) {
       setState(() {
         sample.reportDetail.forEach((item) {
-          if (item.hasilKamu.contains('Tinggi')){
-            sample.searchResult.add(item);
+          if (item.hasilKamu.contains('Rendah') && item.hasilKamu.contains('Sedang')) {
+            setState(() {
+              sample.searchResult.add(item);
+              sample.searchResult.sort((a, b) => item.namaModul.compareTo(item.namaModul));
+            });
           }
         });
       });
     }
+
 
 
 
@@ -314,6 +321,10 @@ class _DetailReportPageState extends State<DetailReportPage> {
     new CheckBoxData(id: '1', displayId: 'Alphabet', checked: false),
     new CheckBoxData(id: '2', displayId: 'Resiko Rendah - Resiko Tinggi', checked: false),
   ];
+
+  clearSelectedFilter(){
+    checkboxDataList.clear();
+  }
 
   void showFilterBottomSheet(context) {
     showModalBottomSheet<void>(
@@ -513,7 +524,7 @@ class _KitServiceItemWidgetState extends State<KitServiceItemWidget> {
                             maxLines: 2,
                             style: TextStyle(
                                 fontWeight: FontWeight.w700,
-                                fontSize: 16,
+                                fontSize: 14,
                                 color: MyColors.dnaGrey)),
                         Text("Beresiko ${widget.model.hasilKamu}",
                             style: TextStyle(

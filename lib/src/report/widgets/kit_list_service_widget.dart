@@ -18,7 +18,7 @@ class _KitServiceItemWidgetState extends State<KitServiceItemWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 18.0, right: 18, bottom: 20),
+      padding: const EdgeInsets.only(left: 18.0, right: 18, top: 20),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -54,12 +54,6 @@ class _KitServiceItemWidgetState extends State<KitServiceItemWidget> {
                             ? MyColors.dietGreen
                             : widget.model.serviceName == "SKIN"
                             ? MyColors.skinPink
-                            : widget.model.serviceName ==
-                            "CANCER MARKER"
-                            ? Colors.deepOrange
-                            : widget.model.serviceName ==
-                            "DRUGS RESPONSE"
-                            ? Colors.green
                             : Colors.white,
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(50),
@@ -71,7 +65,7 @@ class _KitServiceItemWidgetState extends State<KitServiceItemWidget> {
               ),
               Padding(
                 padding: const EdgeInsets.only(
-                    right: 30.0, top: 8, bottom: 8, left: 30),
+                    right: 30.0, top: 8, bottom: 8, left: 20),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[

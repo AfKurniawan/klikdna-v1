@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_klikdna/src/wallets_and_referrals/providers/wallet_referral_provider.dart';
+import 'package:new_klikdna/src/mitra/wallets_and_referrals/providers/wallet_referral_provider.dart';
 import 'package:provider/provider.dart';
 
 class RefferalTabViewPage extends StatefulWidget {
@@ -12,6 +12,7 @@ class _RefferalTabViewPageState extends State<RefferalTabViewPage> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
+        color: Colors.white,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,

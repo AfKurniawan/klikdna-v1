@@ -79,7 +79,7 @@ class _ReportPageState extends State<ReportPage> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Consumer<LoginProvider>(
+                            Consumer<AccountProvider>(
                               builder: (context, prov, _) {
                                 return Container(
                                   height: 80,
@@ -95,17 +95,22 @@ class _ReportPageState extends State<ReportPage> {
                                           Text("Hello",
                                               style: TextStyle(
                                                   color: Colors.white,
-                                                  fontSize: 16,
+                                                  fontSize: 12,
                                                   fontWeight: FontWeight.w300)),
-                                          Text("${prov.vallName}",
+                                          Text("${prov.name}",
                                             maxLines: 2,
                                             overflow: TextOverflow.clip,
                                             style: TextStyle(
                                                 color: Colors.white,
-                                                fontSize: 16,
+                                                fontSize: 24,
                                                 fontWeight: FontWeight.w500
                                             ),
                                           ),
+                                          Text("ini dashboard report DNA kamu",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w300)),
                                         ],
                                       ),
                                     ),
@@ -190,7 +195,7 @@ class _ReportPageState extends State<ReportPage> {
                             return sample.listDetail.length == 0
                                 ? Container(
                               color: Colors.blue,
-                                    height: MediaQuery.of(context).size.height / 6,
+                                    height: MediaQuery.of(context).size.height / 5,
                                     child: Text("Belum Ada Report",
                                         style: TextStyle(color: Colors.grey)),
                                   ) :

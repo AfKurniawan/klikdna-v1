@@ -5,8 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
-import 'package:new_klikdna/src/wallets_and_referrals/models/referral_model.dart';
-import 'package:new_klikdna/src/wallets_and_referrals/models/wallet_model.dart';
+import 'package:new_klikdna/src/mitra/wallets_and_referrals/models/referral_model.dart';
+import 'package:new_klikdna/src/mitra/wallets_and_referrals/models/wallet_model.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http ;
@@ -103,21 +103,24 @@ class WalletReferralProvider with ChangeNotifier {
 
     if(response.statusCode == 200){
 
+
       print("RESPONSE BODY GET WALLET: ${response.body}");
 
       var allArray = json.decode(response.body);
       var dataArray = allArray['data'] as List;
+
       listWalletData = dataArray.map<Wallet>((j) => Wallet.fromJson(j)).toList();
       isTai = false ;
       isError = false ;
-      if(listWalletData.length == 0) {
-        listWalletData.map((e) => e.nominal);
-        print("MBUHHHH ${listWalletData.map((e) => e.nominal)}");
-      } else {
-        sum = listWalletData.map((e) => e.nominal).reduce((value, element) => value + element);
-      }
 
-      totalsum = totalFormattedCommision.format(sum);
+      var myStatus = listWalletData.map((e) => e.status);
+
+      myStatus.forEach((w){
+        if(w.contains("Selesai"))
+          sum = listWalletData.map((e) => e.nominal).reduce((value, element) => value + element);
+          totalsum = totalFormattedCommision.format(sum);
+      });
+
       notifyListeners();
 
 
@@ -128,51 +131,26 @@ class WalletReferralProvider with ChangeNotifier {
 
     }
 
+
     return responseJson;
   }
 
-
-
-  List<Referral> listReferralData = [];
-  bool isReferralError ;
-  Future<ReferralModel> getReferralData(BuildContext context) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+  clearFilter(){
+    datefromController.clear();
+    datetoController.clear();
+    tipeValue = "Semua Data" ;
     notifyListeners();
-
-    var url = AppConstants.GET_REFERRAL_URL;
-    var body = json.encode({
-      "accesskey" : prefs.getString("accesskey"),
-      "type_id": result,
-      "datefrom": datefromController.text,
-      "dateto" : datetoController.text
-    });
-
-    Map<String, String> headers = {
-      'Content-type': 'application/json',
-      'Accept': 'application/json',
-    };
-
-    final response = await http.post(url, body: body, headers: headers);
-    final responseReferral = ReferralModel.fromJson(json.decode(response.body));
-
-    if(response.statusCode == 200){
-
-      //print("RESPONSE BODY GET REFERRAL: ${response.body}");
-      var allArray = json.decode(response.body);
-      var dataArray = allArray['data'] as List;
-      listReferralData = dataArray.map<Referral>((j) => Referral.fromJson(j)).toList();
-      isReferralError = false ;
-      notifyListeners();
-
-
-    } else {
-      isReferralError = true ;
-      notifyListeners();
-
-    }
-
-    return responseReferral;
   }
+
+  clearDateFilter(){
+    datefromController.clear();
+    datetoController.clear();
+    notifyListeners();
+  }
+
+
+
+
 
   TextEditingController datefromController = new TextEditingController();
   TextEditingController datetoController = new TextEditingController();
@@ -214,6 +192,7 @@ class WalletReferralProvider with ChangeNotifier {
                             IconButton(
                               onPressed: () {
                                 Navigator.of(context).pop();
+                                clearDateFilter();
                               },
                               icon: Icon(Icons.clear),
                             )
@@ -376,7 +355,6 @@ class WalletReferralProvider with ChangeNotifier {
                                 }).toList(),
                                 onChanged: (String value) {
                                   setState(() {
-
                                     _handleRadioValueChange(value);
                                   });
                                 },
@@ -397,6 +375,7 @@ class WalletReferralProvider with ChangeNotifier {
                         child: InkWell(
                           onTap: (){
                             filterWalletData(context);
+                            clearDateFilter();
                             Navigator.of(context).pop();
                           },
                           splashColor: Colors.white,
@@ -431,7 +410,7 @@ class WalletReferralProvider with ChangeNotifier {
   }
 
 
-  String tipeValue ;
+  String tipeValue = "Semua Data" ;
   String result;
 
   List<String> deviceTypes = ["Semua Data", "Komisi Referral", "Komisi Tim", "Komisi Royalti", "National Sharing", "Withdraw"];
@@ -465,6 +444,47 @@ class WalletReferralProvider with ChangeNotifier {
           break;
       }
       notifyListeners();
+  }
+
+  List<Referral> listReferralData = [];
+  bool isReferralError ;
+  Future<ReferralModel> getReferralData(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    notifyListeners();
+
+    var url = AppConstants.GET_REFERRAL_URL;
+    var body = json.encode({
+      "accesskey" : prefs.getString("accesskey"),
+      "type_id": result,
+      "datefrom": datefromController.text,
+      "dateto" : datetoController.text
+    });
+
+    Map<String, String> headers = {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+    };
+
+    final response = await http.post(url, body: body, headers: headers);
+    final responseReferral = ReferralModel.fromJson(json.decode(response.body));
+
+    if(response.statusCode == 200){
+
+      //print("RESPONSE BODY GET REFERRAL: ${response.body}");
+      var allArray = json.decode(response.body);
+      var dataArray = allArray['data'] as List;
+      listReferralData = dataArray.map<Referral>((j) => Referral.fromJson(j)).toList();
+      isReferralError = false ;
+      notifyListeners();
+
+
+    } else {
+      isReferralError = true ;
+      notifyListeners();
+
+    }
+
+    return responseReferral;
   }
 
 

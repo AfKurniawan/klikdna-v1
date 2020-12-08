@@ -141,7 +141,7 @@ class _PatientCardPageState extends State<PatientCardPage> {
                                 children: [
                                   Text("Kartu Asuransi"),
                                   GestureDetector(
-                                    child: Text("Lihat Semua", style: TextStyle(color: MyColors.dnaGreen)),
+                                    child: Text( prov.listAsuransi.length == 0 ? "" : "Lihat Semua", style: TextStyle(color: MyColors.dnaGreen)),
                                     onTap: (){
                                       Navigator.of(context).pushNamed("asuransi_page");
                                     },
