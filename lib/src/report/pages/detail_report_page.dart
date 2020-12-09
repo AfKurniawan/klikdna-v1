@@ -250,7 +250,7 @@ class _DetailReportPageState extends State<DetailReportPage> {
   }
 
 
-
+  /// NOTE BESAR: DETAIL BELUM SESUAI DENGAN LIST
 
   ListView buildListView(DetailReportProvider sample) {
     return ListView.builder(
@@ -310,7 +310,7 @@ class _DetailReportPageState extends State<DetailReportPage> {
         });
       });
     } else if (text == "2" && checked == false){
-      sample.searchResult.sort((b, a) => b.hasilKamu.compareTo(a.hasilKamu));
+      sample.reportDetail.sort((b, a) => b.hasilKamu.compareTo(a.hasilKamu));
       print("FILTER @ NOT CHECKED");
     }
 
@@ -323,12 +323,14 @@ class _DetailReportPageState extends State<DetailReportPage> {
 
   List<CheckBoxData> checkboxDataList = [
     new CheckBoxData(id: '1', displayId: 'Alphabet', checked: false),
-    new CheckBoxData(id: '2', displayId: 'Resiko Rendah - Resiko Tinggi', checked: false),
+    new CheckBoxData(id: '2', displayId: 'Resiko', checked: false),
   ];
 
   clearSelectedFilter(){
     checkboxDataList.clear();
   }
+
+  // Health dan Sport tidak ada filter Resiko selainnya ada filter
 
   void showFilterBottomSheet(context) {
     showModalBottomSheet<void>(
@@ -429,45 +431,7 @@ class CheckBoxData {
       };
 }
 
-class MemberItemWidget extends StatelessWidget {
-  final Member member;
 
-  MemberItemWidget({Key key, this.member}) : super (key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final prov = Provider.of<ReportProvider>(context, listen: false);
-    var width = MediaQuery.of(context).size.width;
-    return InkWell(
-      splashColor: Colors.blue,
-      onTap: () {
-        print("Widget: ${member.personId}");
-        prov.getSample(context, member.personId);
-      },
-      child: Container(
-        margin: EdgeInsets.only(left: 20),
-        child: Column(
-          children: <Widget>[
-            ClipRRect(
-              borderRadius: new BorderRadius.circular(16.0),
-              child: Image.asset(
-                'assets/images/dummy_user.jpeg',
-                //model.name,
-                fit: BoxFit.fill,
-                height: width * 0.2,
-                width: width * 0.2,
-              ),
-            ),
-            // SizedBox(
-            //   height: 4,
-            // ),
-            Text(member.name)
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 class KitServiceItemWidget extends StatefulWidget {
   final ReportDetail model;
@@ -535,15 +499,28 @@ class _KitServiceItemWidgetState extends State<KitServiceItemWidget> {
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14,
                                 color: widget.model.hasilKamu == "Tinggi"
-                                    ? Colors.red
-                                    : Colors.lightBlue)),
+                                    ? Color(0xffED2226)
+                                    : widget.model.hasilKamu == "Sedang"
+                                    ? Color(0xffF9D01D)
+                                    : Color(0xff8CC33F))
+                            ),
                       ],
                     ),
                   ),
 
+                  // widget.model.serviceName == "SPORT"
+                  //     ? MyColors.sportBlue
+                  //     : widget.model.serviceName == "HEALTH"
+                  //     ? MyColors.healthGreen
+                  //     : widget.model.serviceName == "DIET"
+                  //     ? MyColors.dietGreen
+                  //     : widget.model.serviceName == "SKIN"
+                  //     ? MyColors.skinPink
+                  //     : Colors.white,
+
                   // Spacer(),
                   IconButton(
-                    icon: Icon(Icons.arrow_forward_ios),
+                    icon: Icon(Icons.arrow_forward_ios, size: 15, color: Colors.grey,),
                     onPressed: (){
 
                     }

@@ -81,12 +81,6 @@ class _KitServiceItemWidgetState extends State<KitServiceItemWidget> {
                                 ? "Diet"
                                 : widget.model.serviceName == "SKIN"
                                 ? "Skin"
-                                : widget.model.serviceName ==
-                                "CANCER MARKER"
-                                ? "Cancer Marker"
-                                : widget.model.serviceName ==
-                                "DRUGS RESPONSE"
-                                ? "Drug Response"
                                 : widget.model.serviceName,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -227,17 +221,6 @@ class _KitServiceItemWidgetState extends State<KitServiceItemWidget> {
                               "assets/images/skin.png"),
                         ),
                       ),
-                    )
-                        : widget.model.serviceName ==
-                        "CANCER MARKER"
-                        ? GridIconMenuWidget(
-                      image: "assets/images/cancer.png",
-                    )
-                        : widget.model.serviceName ==
-                        "DRUGS RESPONSE"
-                        ? GridIconMenuWidget(
-                      image:
-                      "assets/images/drugs.png",
                     )
                         : Container()
                   ],

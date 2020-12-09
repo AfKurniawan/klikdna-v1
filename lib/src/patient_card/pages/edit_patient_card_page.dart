@@ -282,7 +282,7 @@ class _EditPatientCardPageState extends State<EditPatientCardPage> {
                           FormWidget(
                             hint: "",
                             obscure: false,
-                            labelText: "Emergency Contact",
+                            labelText: "Kontak Darurat",
                             textEditingController: prov.emergencyContactController,
                             labelStyle: TextStyle(fontSize: 16),
                           ),
@@ -290,7 +290,7 @@ class _EditPatientCardPageState extends State<EditPatientCardPage> {
                           FormWidget(
                             hint: "",
                             obscure: false,
-                            labelText: "Comorbidity",
+                            labelText: "Komorbiditas",
                             textEditingController: prov.comorbidityController,
                             labelStyle: TextStyle(fontSize: 16),
                           ),

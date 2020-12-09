@@ -373,6 +373,7 @@ class _RekomedasiItemWidgetState extends State<RekomedasiItemWidget> {
   }
 
 
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -393,42 +394,33 @@ class _RekomedasiItemWidgetState extends State<RekomedasiItemWidget> {
           ),
         ),
         Container(
-          // decoration: BoxDecoration(
-          //   color: Colors.white,
-          //   borderRadius: BorderRadius.circular(10),
-          //   boxShadow: [
-          //     BoxShadow(
-          //       offset: Offset(1, 4),
-          //       blurRadius: 10,
-          //       color: Color(0xFFB0CCE1).withOpacity(0.62),
-          //     ),
-          //   ],
-          // ),
-          margin: EdgeInsets.only(left: 10, right: 10, bottom: 16),
+          margin: EdgeInsets.only(left: 18, right: 10, bottom: 16),
           width: width,
           child: widget.model.gambarRekomendasi == null ?
           Center(
-              // child: Text("Belum ada gambar",
-              //     style: TextStyle(color: Colors.grey[500])
-              // )
+
           )
           :
-          ClipRRect(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(16.0),
-                topRight: Radius.circular(16.0),
-              ),
-              child: CachedNetworkImage(
-                imageUrl: widget.model.gambarRekomendasi,
-                //height: MediaQuery.of(context).size.height /2,
-                width: width,
-                fit: BoxFit.fitHeight,
-              )),
+          Padding(
+            padding: const EdgeInsets.only(left: 40.0),
+            child: ClipRRect(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(16.0),
+                  topRight: Radius.circular(16.0),
+                ),
+                //NOTE:  Jika gambar kurang dari 890 maka lebarnya dibagi 2, tinggi menyesuaikan (proporsional)
+                child: CachedNetworkImage(
+                  imageUrl: widget.model.gambarRekomendasi,
+                  //width: width > 890 ? width / 2 : width,
+                  fit: BoxFit.fitHeight,
+                )),
+          ),
         ),
       ],
     );
   }
 }
+
 
 
 

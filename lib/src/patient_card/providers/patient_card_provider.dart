@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flushbar/flushbar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,11 +10,13 @@ import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:new_klikdna/src/account/providers/account_provider.dart';
 import 'package:new_klikdna/src/patient_card/models/patient_card_model.dart';
 import 'package:new_klikdna/src/patient_card/widgets/dialog_error_patient_card.dart';
+import 'package:new_klikdna/src/profile/widgets/cupertino_dialog_widget.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:new_klikdna/token/providers/token_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 class PatientCardProvider with ChangeNotifier {
 
@@ -122,6 +125,27 @@ class PatientCardProvider with ChangeNotifier {
             Navigator.of(context).pushReplacementNamed('main_page', arguments: 1);
           },
         ));
+  }
+
+  void callKontakDarurat(BuildContext context, String phone) {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoDialogWidget(
+          title: "Menghubungi via Telepon",
+          message:
+          'Apakah anda yakin akan menghubungi Kontak Darurat melalui Telepon ?',
+          action: () {
+            Navigator.of(context).pop();
+            if (Platform.isIOS) {
+              launch('tel:$phone');
+            } else {
+              launch('tel:$phone');
+            }
+          },
+        );
+      },
+    );
   }
 
 

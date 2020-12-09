@@ -127,11 +127,21 @@ class _LihatProfilePageState extends State<LihatProfilePage> {
                           SizedBox(height: 10),
                           Text(prov.vallName == null ? "-" : "${prov.vallName}",
                               style: TextStyle(fontSize: 14)),
+                          SizedBox(height: 5),
+                          Container(
+                            height: 1,
+                            color: Colors.grey,
+                          ),
                           SizedBox(height: 20),
                           Text("Tanggal Lahir", style: TextStyle(fontSize: 12)),
                           SizedBox(height: 10),
                           Text(prov.vbirthdate == null ? "-" : "${prov.vbirthdate}",
                               style: TextStyle(fontSize: 14)),
+                          SizedBox(height: 5),
+                          Container(
+                            height: 1,
+                            color: Colors.grey,
+                          ),
                           SizedBox(height: 20),
                           Container(
                             color: Colors.white,
@@ -170,17 +180,32 @@ class _LihatProfilePageState extends State<LihatProfilePage> {
                           SizedBox(height: 10),
                           Text(prov.vprofilEmail == null ? "-" : "${prov.vprofilEmail}",
                               style: TextStyle(fontSize: 14)),
+                          SizedBox(height: 5),
+                          Container(
+                            height: 1,
+                            color: Colors.grey,
+                          ),
                           SizedBox(height: 20),
                           Text("Nomor Ponsel", style: TextStyle(fontSize: 12)),
                           SizedBox(height: 10),
                           Text(prov.vphone == null ? "-" : "${prov.vphone}",
                               style: TextStyle(fontSize: 14)),
+                          SizedBox(height: 5),
+                          Container(
+                            height: 1,
+                            color: Colors.grey,
+                          ),
                           SizedBox(height: 20),
                           Text("Alamat", style: TextStyle(fontSize: 12)),
                           SizedBox(height: 10),
                           Text(
                               prov.vallAddress == null ? "-"
                                   : "${prov.vallAddress}", style: TextStyle(fontSize: 14)),
+                          SizedBox(height: 5),
+                          Container(
+                            height: 1,
+                            color: Colors.grey,
+                          ),
                           SizedBox(height: 20),
                           Text("Alamat ID Digo", style: TextStyle(fontSize: 12)),
                           SizedBox(height: 10),
@@ -205,6 +230,11 @@ class _LihatProfilePageState extends State<LihatProfilePage> {
                               ),
                             ],
                           ),
+                          Container(
+                            height: 1,
+                            color: Colors.grey,
+                          ),
+
                         ],
                       ),
                     ),

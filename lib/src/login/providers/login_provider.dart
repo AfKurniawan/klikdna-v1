@@ -335,7 +335,7 @@ class LoginProvider with ChangeNotifier{
         vprovince = prefs.getString("province");
         vzipcode = prefs.getString("zipcode");
         vallAddress = "$vaddress, " + "$vkelurahan, " + "$vsubdistrict, " + "$vcity, " + "$vzipcode" ;
-        vphone = prefs.getString("vphone");
+        vphone = prefs.getString("phone");
         vleftcv = prefs.getInt("leftcv");
         vrightcv = prefs.getInt("rightcv");
         vleftpointreward = prefs.getInt("leftpointreward");

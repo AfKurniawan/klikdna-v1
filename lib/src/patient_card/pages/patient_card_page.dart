@@ -281,7 +281,11 @@ class _PatientCardPageState extends State<PatientCardPage> {
                           SizedBox(height: 20),
                           Text("Kontak Darurat"),
                           SizedBox(height: 10),
-                          Text(prov.emergencyContact == null ? "-" : prov.emergencyContact, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                          GestureDetector(
+                            onTap: (){
+                              Provider.of<PatientCardProvider>(context, listen: false).callKontakDarurat(context, prov.emergencyContact);
+                            },
+                              child: Text(prov.emergencyContact == null ? "-" : prov.emergencyContact, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
                           SizedBox(height: 20),
                           Text("Komorbiditas"),
                           SizedBox(height: 10),

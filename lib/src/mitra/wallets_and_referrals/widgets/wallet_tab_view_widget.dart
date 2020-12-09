@@ -49,7 +49,7 @@ class _WalletTabViewWidgetState extends State<WalletTabViewWidget> {
                                           ?  "Saldo Anda"
                                           : wallet.tipeValue == null
                                           ?  "Saldo Anda"
-                                          : "${wallet.tipeValue}")
+                                          : "Total ${wallet.tipeValue}")
                                ),
                                   SizedBox(height: 5),
                                   Consumer<WalletReferralProvider>(
@@ -258,6 +258,9 @@ class _WalletTabViewWidgetState extends State<WalletTabViewWidget> {
                                           height: 35,
                                         ),
                                       ]),
+
+                                      //JENIS KETIKA DIFILTER, Maka ROW jenis tidak ditampilkan
+
                                       TableRow(children: [
                                         Container(
                                           child: Padding(

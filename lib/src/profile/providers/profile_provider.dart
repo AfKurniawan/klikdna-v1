@@ -54,8 +54,8 @@ class ProfileProvider with ChangeNotifier {
     );
   }
 
-  void syaratKetentuan() async {
-    const url = 'https://dnaku.id/ketentuan/mobile/syarat_ketentuan';
+  void syaratKetentuan(String url) async {
+    //const url = 'https://dnaku.id/ketentuan/mobile/syarat_ketentuan';
     if (await canLaunch(url)) {
       await launch(url, forceWebView: true);
     } else {
@@ -64,8 +64,7 @@ class ProfileProvider with ChangeNotifier {
 
   }
 
-  void kebijakanPrivasi() async {
-    const url = 'https://dnaku.id/ketentuan/mobile/kebijakan_privasi';
+  void kebijakanPrivasi(String url) async {
     if (await canLaunch(url)) {
       await launch(url, forceWebView: true);
     } else {
