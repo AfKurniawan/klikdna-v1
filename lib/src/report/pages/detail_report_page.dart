@@ -300,14 +300,18 @@ class _DetailReportPageState extends State<DetailReportPage> {
     } else if(text == "2" && checked == true) {
       setState(() {
         sample.reportDetail.forEach((item) {
-          if (item.hasilKamu.contains('Rendah') && item.hasilKamu.contains('Sedang')) {
+          if (item.hasilKamu.contains('Rendah') || item.hasilKamu.contains("Sedang") || item.hasilKamu.contains("Tinggi")) {
             setState(() {
               sample.searchResult.add(item);
-              sample.searchResult.sort((a, b) => item.namaModul.compareTo(item.namaModul));
+              print("FILTER IS CHECKED");
+              sample.searchResult.sort((a, b) => a.hasilKamu.compareTo(b.hasilKamu));
             });
           }
         });
       });
+    } else if (text == "2" && checked == false){
+      sample.searchResult.sort((b, a) => b.hasilKamu.compareTo(a.hasilKamu));
+      print("FILTER @ NOT CHECKED");
     }
 
 

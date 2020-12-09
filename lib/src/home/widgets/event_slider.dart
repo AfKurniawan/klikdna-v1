@@ -3,14 +3,14 @@ import 'dart:ffi';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class DashboardSlider extends StatelessWidget {
+class EventSlider extends StatelessWidget {
   final String title, desc, svgSrc;
   final Function press;
   final double width;
   final double height ;
   final EdgeInsetsGeometry margin;
-
-  const DashboardSlider({
+  
+  const EventSlider({
     Key key,
     this.title,
     this.desc,
@@ -31,11 +31,11 @@ class DashboardSlider extends StatelessWidget {
       margin: margin,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
         boxShadow: [
           BoxShadow(
-            offset: Offset(0, 4),
-            blurRadius: 20,
+            offset: Offset(0, 1),
+            blurRadius: 2,
             color: Color(0xFFB0CCE1).withOpacity(0.32),
           ),
         ],
@@ -45,7 +45,7 @@ class DashboardSlider extends StatelessWidget {
         child: InkWell(
           onTap: press,
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
             child: Image.asset(
               svgSrc,
               //width: size.width - 40,
