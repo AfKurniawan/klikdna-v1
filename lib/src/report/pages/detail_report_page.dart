@@ -12,6 +12,7 @@ import 'package:new_klikdna/src/report/models/detail_report_model.dart';
 import 'package:new_klikdna/src/report/models/report_model.dart';
 import 'package:new_klikdna/src/report/providers/detail_report_provider.dart';
 import 'package:new_klikdna/src/report/providers/report_provider.dart';
+import 'package:new_klikdna/src/report/widgets/detail_service_item.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:provider/provider.dart';
 
@@ -232,8 +233,8 @@ class _DetailReportPageState extends State<DetailReportPage> {
                                                   color: Colors.grey)),
                                         ),
                                       )
-                                    :  sample.searchResult.length != 0 ? buildSearchList(sample)
-                                    : buildListView(sample);
+                                    :  sample.searchResult.length != 0 ? buildSearchList(sample, widget.model)
+                                    : buildListView(sample, widget.model);
                             //buildListView(sample);
                           },
                         ),
@@ -252,19 +253,18 @@ class _DetailReportPageState extends State<DetailReportPage> {
 
   /// NOTE BESAR: DETAIL BELUM SESUAI DENGAN LIST
 
-  ListView buildListView(DetailReportProvider sample) {
+  ListView buildListView(DetailReportProvider sample, Detail detail) {
     return ListView.builder(
         scrollDirection: Axis.vertical,
         itemCount: sample.reportDetail.length,
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
-          return KitServiceItemWidget(
-              model: sample.reportDetail.elementAt(index));
+          return DetailServiceItem(model: sample.reportDetail.elementAt(index), detail: detail);
         });
   }
 
-  Widget buildSearchList(DetailReportProvider sample) {
+  Widget buildSearchList(DetailReportProvider sample, Detail detail) {
     return ListView.builder(
         scrollDirection: Axis.vertical,
         itemCount: sample.searchResult.length,
@@ -281,43 +281,33 @@ class _DetailReportPageState extends State<DetailReportPage> {
                   style: TextStyle(
                       color: Colors.grey)),
             ),
-          ) : KitServiceItemWidget(
-              model: sample.searchResult.elementAt(index));
+          ) : DetailServiceItem(
+              model: sample.searchResult.elementAt(index), detail: detail);
         });
   }
 
-  onCheckedValue(String text, bool checked) async {
-    final sample = Provider.of<DetailReportProvider>(context, listen: false);
-    sample.searchResult.clear();
-    if(text == '1' && checked == true){
-      setState(() {
-        sample.reportDetail.sort((a, b) => a.namaModul.compareTo(b.namaModul));
-      });
-    } else if(text == '1' && checked == false){
-      setState(() {
-        sample.reportDetail.sort((b, a) => a.namaModul.compareTo(b.namaModul));
-      });
-    } else if(text == "2" && checked == true) {
-      setState(() {
-        sample.reportDetail.forEach((item) {
-          if (item.hasilKamu.contains('Rendah') || item.hasilKamu.contains("Sedang") || item.hasilKamu.contains("Tinggi")) {
-            setState(() {
-              sample.searchResult.add(item);
-              print("FILTER IS CHECKED");
-              sample.searchResult.sort((a, b) => a.hasilKamu.compareTo(b.hasilKamu));
-            });
-          }
+    onCheckedValue(String text, bool checked) async {
+      final sample = Provider.of<DetailReportProvider>(context, listen: false);
+      sample.searchResult.clear();
+      if(text == '1' && checked == true){
+        setState(() {
+          sample.reportDetail.sort((a, b) => a.namaModul.compareTo(b.namaModul));
         });
-      });
-    } else if (text == "2" && checked == false){
-      sample.reportDetail.sort((b, a) => b.hasilKamu.compareTo(a.hasilKamu));
-      print("FILTER @ NOT CHECKED");
-    }
+      } else if(text == '1' && checked == false){
+        setState(() {
+          sample.reportDetail.sort((b, a) => a.namaModul.compareTo(b.namaModul));
+        });
+      } else if(text == "2" && checked == true) {
+        setState(() {
+          sample.reportDetail.sort((a, b) => a.hasilKamu.compareTo(b.hasilKamu));
+        });
+      } else if (text == "2" && checked == false){
+        setState(() {
+          sample.reportDetail.sort((b, a) => a.hasilKamu.compareTo(b.hasilKamu));
+          print("FILTER @ NOT CHECKED");
+        });
 
-
-
-
-
+      }
 
   }
 
@@ -433,106 +423,6 @@ class CheckBoxData {
 
 
 
-class KitServiceItemWidget extends StatefulWidget {
-  final ReportDetail model;
 
-  KitServiceItemWidget({Key key, this.model}) : super(key: key);
-
-  @override
-  _KitServiceItemWidgetState createState() => _KitServiceItemWidgetState();
-}
-
-class _KitServiceItemWidgetState extends State<KitServiceItemWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 18.0, right: 18, bottom: 15),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              offset: Offset(1, 4),
-              blurRadius: 10,
-              color: Color(0xFFB0CCE1).withOpacity(0.62),
-            ),
-          ],
-        ),
-        child: InkWell(
-          splashColor: Colors.blue,
-          onTap: () {
-            Navigator.of(context)
-                .pushNamed('hasil_report_page', arguments: widget.model);
-          },
-          child: Stack(
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  widget.model.gambarJudul == null ? Container() :
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 14.0, top: 10, bottom: 20),
-                    child: Container(
-                      margin: EdgeInsets.only(right: 20),
-                      height: 40,
-                      width: 40,
-                      child: CachedNetworkImage(
-                          imageUrl: widget.model.gambarJudul),
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(widget.model.namaModul,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 14,
-                                color: MyColors.dnaGrey)),
-                        Text("Beresiko ${widget.model.hasilKamu}",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14,
-                                color: widget.model.hasilKamu == "Tinggi"
-                                    ? Color(0xffED2226)
-                                    : widget.model.hasilKamu == "Sedang"
-                                    ? Color(0xffF9D01D)
-                                    : Color(0xff8CC33F))
-                            ),
-                      ],
-                    ),
-                  ),
-
-                  // widget.model.serviceName == "SPORT"
-                  //     ? MyColors.sportBlue
-                  //     : widget.model.serviceName == "HEALTH"
-                  //     ? MyColors.healthGreen
-                  //     : widget.model.serviceName == "DIET"
-                  //     ? MyColors.dietGreen
-                  //     : widget.model.serviceName == "SKIN"
-                  //     ? MyColors.skinPink
-                  //     : Colors.white,
-
-                  // Spacer(),
-                  IconButton(
-                    icon: Icon(Icons.arrow_forward_ios, size: 15, color: Colors.grey,),
-                    onPressed: (){
-
-                    }
-                  )
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 

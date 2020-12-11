@@ -59,6 +59,8 @@ dependencies:
   json_annotation: ^2.4.0
   flutter_launcher_icons: "^0.7.3"
   flutter_downloader: ^1.5.1
+  native_share: ^1.0.0
+  wc_flutter_share: ^0.2.2
 
 flutter_icons:
   android: true

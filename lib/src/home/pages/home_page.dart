@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:native_share/native_share.dart';
 import 'package:new_klikdna/src/home/providers/artikel_provider.dart';
 import 'package:new_klikdna/src/home/widgets/artikel_item.dart';
 import 'package:new_klikdna/src/home/widgets/banner_slider.dart';
@@ -9,6 +10,7 @@ import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:new_klikdna/token/providers/token_provider.dart';
 import 'package:new_klikdna/widgets/outline_button_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:wc_flutter_share/wc_flutter_share.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -22,6 +24,8 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
+  String textevent2 = "Kabar gembira! @klikdna kembali lagi nih dengan “Health Seminar Series” yang kali ini bersama dr. Bona, Sp. KFR\n\nMinggu, 20 Desember 2020\n\nSTAY TUNED TERUS UNTUK INFO LENGKAPNYA 🔥🔥\n\n\n#KlikDNA\n#Bioinformatics\n#Biomolecular\n#CancerMarker\n#Genetics\n#Genomics\n#DNAku\n#DNAsional\n#UntukIndonesia\n#MandiriUntukNegeri\n#IamKlikDNA\n#KlikDNAHealthSeriesSeminar";
+  String textevent1 = "Kenali Potensi Olahraga melalui Profil Genetik\n\nTahukah kamu? Setiap orang memiliki potensi olahraga yang berbeda berdasarkan profil genetik masing-masing.\nIngin tahu aktivitas olahraga apa yang tepat untuk daya tahan dan kesehatan tubuhmu?\nIkuti Health Seminar Series KlikDNA yang akan diadakan pada:\n\n🗓️ Minggu, 20 Desember 2020\n⏰ 14.00-15.30 WIB\n\nSilahkan mendaftar melalui link berikut:\nbit.ly/KlikDNASportgenomik20";
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -69,7 +73,7 @@ class _HomePageState extends State<HomePage> {
                                   style: TextStyle(
                                       color: MyColors.dnaGreen, fontSize: 14)),
                               onTap: () {
-                                print("LIHAT SEMUA CLICKED");
+                                Navigator.pushNamed(context, "post_it_now_page");
                               },
                             ),
                           ],
@@ -116,7 +120,7 @@ class _HomePageState extends State<HomePage> {
                                 margin: EdgeInsets.only(right: 10),
                                 desc: "",
                                 press: () {
-
+                                  Navigator.pushNamed(context, "detail_positnow_page");
                                 },
                               ),
                               SizedBox(height: 8),
@@ -191,17 +195,17 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                     ],
                                   ),
-                                  height: 255,
+                                  height: 270,
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       EventSlider(
                                         svgSrc:
-                                        "assets/images/event_1.png",
+                                        "assets/images/event_1.jpeg",
                                         title: "",
                                         width: 312,
-                                        height: 130,
+                                        height: 145,
                                         desc: "",
                                         press: () {
 
@@ -209,30 +213,42 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                       SizedBox(height: 11),
                                       Padding(
-                                        padding: const EdgeInsets.only(left: 12.0, bottom: 12),
+                                        padding: const EdgeInsets.only(left: 12.0),
                                         child: Container(
                                             width: 300,
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Icon(Icons.share,
-                                                  color: Color(0xff717171), size: 20),
-                                                SizedBox(height: 16),
-                                                Text("DNA 101 Pengetahuan Dasar",
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.normal,
-                                                    fontSize: 14
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(left: 0, right: 5),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  GestureDetector(
+                                                    onTap:(){
+                                                      _shareImageAndText('assets/images/event_1.jpeg', textevent1);
+                                                    },
+                                                    child: Icon(Icons.share,
+                                                      color: Color(0xff717171), size: 20),
                                                   ),
-                                                ),
-                                                SizedBox(height: 9),
-                                                Text("Buat kamu yang ingin mengetahui tentang kondisi kamu pada saat menjalankan olahraga",
-                                                  style: TextStyle(
+                                                  SizedBox(height: 16),
+                                                  Text("Kenali Potensi Olahraga melalui Profil Genetik",
+                                                    maxLines: 2,
+                                                    overflow: TextOverflow.fade,
+                                                    style: TextStyle(
                                                       fontWeight: FontWeight.normal,
-                                                      fontSize: 12
+                                                      fontSize: 14
+                                                    ),
                                                   ),
-                                                ),
-                                                SizedBox(height: 14),
-                                              ],
+                                                  SizedBox(height: 9),
+                                                  Text("Tahukah kamu? Setiap orang memiliki potensi olahraga yang berbeda berdasarkan profil genetik masing-masing. ",
+                                                    maxLines: 2,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                        fontWeight: FontWeight.normal,
+                                                        fontSize: 12
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: 14),
+                                                ],
+                                              ),
                                             )),
                                       ),
 
@@ -253,17 +269,17 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                     ],
                                   ),
-                                  height: 255,
+                                  height: 270,
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       EventSlider(
                                         svgSrc:
-                                        "assets/images/event_1.png",
+                                        "assets/images/event_2.jpeg",
                                         title: "",
                                         width: 312,
-                                        height: 130,
+                                        height: 145,
                                         desc: "",
                                         press: () {
 
@@ -271,30 +287,38 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                       SizedBox(height: 11),
                                       Padding(
-                                        padding: const EdgeInsets.only(left: 12.0, bottom: 12),
+                                        padding: const EdgeInsets.only(left: 12.0),
                                         child: Container(
                                             width: 300,
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Icon(Icons.share,
-                                                    color: Color(0xff717171), size: 20),
-                                                SizedBox(height: 16),
-                                                Text("DNA 101 Pengetahuan Dasar",
-                                                  style: TextStyle(
-                                                      fontWeight: FontWeight.normal,
-                                                      fontSize: 14
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(left: 0, right: 10),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  GestureDetector(
+                                                    onTap:(){
+                                                      _shareImageAndText('assets/images/event_2.jpeg', textevent2);
+                                                    },
+                                                    child: Icon(Icons.share,
+                                                        color: Color(0xff717171), size: 20),
                                                   ),
-                                                ),
-                                                SizedBox(height: 9),
-                                                Text("Buat kamu yang ingin mengetahui tentang kondisi kamu pada saat menjalankan olahraga",
-                                                  style: TextStyle(
-                                                      fontWeight: FontWeight.normal,
-                                                      fontSize: 12
+                                                  SizedBox(height: 16),
+                                                  Text("SAVE THE DATE!",
+                                                    style: TextStyle(
+                                                        fontWeight: FontWeight.normal,
+                                                        fontSize: 14
+                                                    ),
                                                   ),
-                                                ),
-                                                SizedBox(height: 14),
-                                              ],
+                                                  SizedBox(height: 9),
+                                                  Text("Kabar gembira! @klikdna kembali lagi nih dengan “Health Seminar Series” yang kali ini bersama dr. Bona, Sp. KFR",
+                                                    style: TextStyle(
+                                                        fontWeight: FontWeight.normal,
+                                                        fontSize: 12
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: 14),
+                                                ],
+                                              ),
                                             )),
                                       ),
 
@@ -435,4 +459,20 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  void _shareImageAndText(String image, String text) async {
+    try {
+      final ByteData bytes = await rootBundle.load('$image');
+      await WcFlutterShare.share(
+          sharePopupTitle: 'share',
+          subject: 'This is subject',
+          text: '$text',
+          fileName: 'share.png',
+          mimeType: 'image/png',
+          bytesOfFile: bytes.buffer.asUint8List());
+    } catch (e) {
+      print('error: $e');
+    }
+  }
 }
+

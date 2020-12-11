@@ -17,6 +17,11 @@ PODS:
     - Flutter
   - image_picker (0.0.1):
     - Flutter
+  - MBProgressHUD (1.2.0)
+  - native_share (0.0.1):
+    - Flutter
+    - MBProgressHUD
+    - WTAuthorizationTool
   - path_provider (0.0.1):
     - Flutter
   - "permission_handler (5.0.1+1)":
@@ -30,6 +35,9 @@ PODS:
     - Flutter
   - vibration (1.7.3):
     - Flutter
+  - wc_flutter_share (0.0.1):
+    - Flutter
+  - WTAuthorizationTool (0.1.0)
 
 DEPENDENCIES:
   - device_info (from `.symlinks/plugins/device_info/ios`)
@@ -40,16 +48,20 @@ DEPENDENCIES:
   - flutter_native_image (from `.symlinks/plugins/flutter_native_image/ios`)
   - health (from `.symlinks/plugins/health/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
+  - native_share (from `.symlinks/plugins/native_share/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
   - vibration (from `.symlinks/plugins/vibration/ios`)
+  - wc_flutter_share (from `.symlinks/plugins/wc_flutter_share/ios`)
 
 SPEC REPOS:
   trunk:
     - FMDB
+    - MBProgressHUD
+    - WTAuthorizationTool
 
 EXTERNAL SOURCES:
   device_info:
@@ -68,6 +80,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/health/ios"
   image_picker:
     :path: ".symlinks/plugins/image_picker/ios"
+  native_share:
+    :path: ".symlinks/plugins/native_share/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
   permission_handler:
@@ -80,6 +94,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher/ios"
   vibration:
     :path: ".symlinks/plugins/vibration/ios"
+  wc_flutter_share:
+    :path: ".symlinks/plugins/wc_flutter_share/ios"
 
 SPEC CHECKSUMS:
   device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
@@ -91,12 +107,16 @@ SPEC CHECKSUMS:
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   health: 44840ad4328aa5586e77bef289898bfed644a81c
   image_picker: 9c3312491f862b28d21ecd8fdf0ee14e601b3f09
+  MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
+  native_share: 464a38e9258f0c1aad9b12e76855ed81119c971f
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   permission_handler: eac8e15b4a1a3fba55b761d19f3f4e6b005d15b6
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
   url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
   vibration: b5a33e764c3f609a975b9dca73dce20fdde627dc
+  wc_flutter_share: 4f17b4e14f1c34b1427495583af99a21c07fccf7
+  WTAuthorizationTool: fcc87c821a2ed34c3de811669ffe20fb91ff7b0a
 
 PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
 

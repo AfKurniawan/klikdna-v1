@@ -50,7 +50,7 @@ class EventSlider extends StatelessWidget {
               svgSrc,
               //width: size.width - 40,
               fit: BoxFit.cover,
-              height: mediaquery.size.width < 600 ? size.height / 4 : size.height / 3,
+              height: mediaquery.size.width < 600 ? size.height / 3 : size.height / 2,
               // height: 150,
             ),
           ),

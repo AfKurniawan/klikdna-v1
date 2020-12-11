@@ -13,6 +13,7 @@ import 'package:new_klikdna/src/report/widgets/button_icon_widget.dart';
 import 'package:new_klikdna/src/report/widgets/grid_icon_menu_widget.dart';
 import 'package:new_klikdna/src/report/widgets/kit_list_service2_widget.dart';
 import 'package:new_klikdna/src/report/widgets/kit_list_service_widget.dart';
+import 'package:new_klikdna/src/report/widgets/member_item_widget.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:provider/provider.dart';
 import 'dart:io' show Platform;
@@ -284,65 +285,6 @@ class _ReportPageState extends State<ReportPage> {
   }
 }
 
-class MemberItemWidget extends StatelessWidget {
-  final Member member;
 
-  MemberItemWidget({Key key, this.member}) : super (key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final prov = Provider.of<ReportProvider>(context);
-    var width = MediaQuery.of(context).size.width;
-    final mem = Provider.of<MemberProvider>(context);
-    return InkWell(
-      splashColor: Colors.blue,
-      onTap: () {
-        print("Widget: ${member.personId}");
-        prov.getSample(context, member.personId);
-        mem.getName(context, member.name);
-      },
-      child: Container(
-        margin: EdgeInsets.only(left: 10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            ClipRRect(
-              borderRadius: new BorderRadius.circular(16.0),
-              child: Image.asset(
-                'assets/images/no_image.png',
-                //model.name,
-                fit: BoxFit.fill,
-                height: width * 0.2,
-                width: width * 0.2,
-              ),
-            ),
-            // SizedBox(
-            //   height: 4,
-            // ),
-            Container(
-              height: 40,
-              width: MediaQuery.of(context).size.width /3,
-              child: Align(
-                alignment: Alignment.center,
-                child: Center(
-                  child: Text(member.name == null ? "" : "${member.name}",
-                    overflow: TextOverflow.clip,
-                    maxLines: 1,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500
-                    ),
-                  ),
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 
