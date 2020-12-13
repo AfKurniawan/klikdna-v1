@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DashboardSlider extends StatelessWidget {
-  final String title, desc, svgSrc;
+  final String title, desc, imgSrc;
   final Function press;
   final double width;
   final double height ;
@@ -14,7 +14,7 @@ class DashboardSlider extends StatelessWidget {
     Key key,
     this.title,
     this.desc,
-    this.svgSrc,
+    this.imgSrc,
     this.press,
     this.width,
     this.height,
@@ -47,11 +47,8 @@ class DashboardSlider extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: Image.asset(
-              svgSrc,
-              //width: size.width - 40,
+              imgSrc,
               fit: BoxFit.cover,
-              height: mediaquery.size.width < 600 ? size.height / 4 : size.height / 3,
-              // height: 150,
             ),
           ),
         ),

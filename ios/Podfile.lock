@@ -8,8 +8,15 @@ PODS:
   - Flutter (1.0.0)
   - flutter_downloader (0.0.1):
     - Flutter
+  - flutter_launch (0.0.1):
+    - Flutter
   - flutter_native_image (0.0.1):
     - Flutter
+  - flutter_share_me (0.0.1):
+    - Flutter
+  - fluttertoast (0.0.2):
+    - Flutter
+    - Toast
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
@@ -26,11 +33,16 @@ PODS:
     - Flutter
   - "permission_handler (5.0.1+1)":
     - Flutter
+  - share (0.0.1):
+    - Flutter
   - shared_preferences (0.0.1):
+    - Flutter
+  - social_share (0.0.1):
     - Flutter
   - sqflite (0.0.2):
     - Flutter
     - FMDB (>= 2.7.5)
+  - Toast (4.0.0)
   - url_launcher (0.0.1):
     - Flutter
   - vibration (1.7.3):
@@ -45,13 +57,18 @@ DEPENDENCIES:
   - fit_kit (from `.symlinks/plugins/fit_kit/ios`)
   - Flutter (from `Flutter`)
   - flutter_downloader (from `.symlinks/plugins/flutter_downloader/ios`)
+  - flutter_launch (from `.symlinks/plugins/flutter_launch/ios`)
   - flutter_native_image (from `.symlinks/plugins/flutter_native_image/ios`)
+  - flutter_share_me (from `.symlinks/plugins/flutter_share_me/ios`)
+  - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - health (from `.symlinks/plugins/health/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
   - native_share (from `.symlinks/plugins/native_share/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
+  - share (from `.symlinks/plugins/share/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
+  - social_share (from `.symlinks/plugins/social_share/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
   - vibration (from `.symlinks/plugins/vibration/ios`)
@@ -61,6 +78,7 @@ SPEC REPOS:
   trunk:
     - FMDB
     - MBProgressHUD
+    - Toast
     - WTAuthorizationTool
 
 EXTERNAL SOURCES:
@@ -74,8 +92,14 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_downloader:
     :path: ".symlinks/plugins/flutter_downloader/ios"
+  flutter_launch:
+    :path: ".symlinks/plugins/flutter_launch/ios"
   flutter_native_image:
     :path: ".symlinks/plugins/flutter_native_image/ios"
+  flutter_share_me:
+    :path: ".symlinks/plugins/flutter_share_me/ios"
+  fluttertoast:
+    :path: ".symlinks/plugins/fluttertoast/ios"
   health:
     :path: ".symlinks/plugins/health/ios"
   image_picker:
@@ -86,8 +110,12 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider/ios"
   permission_handler:
     :path: ".symlinks/plugins/permission_handler/ios"
+  share:
+    :path: ".symlinks/plugins/share/ios"
   shared_preferences:
     :path: ".symlinks/plugins/shared_preferences/ios"
+  social_share:
+    :path: ".symlinks/plugins/social_share/ios"
   sqflite:
     :path: ".symlinks/plugins/sqflite/ios"
   url_launcher:
@@ -103,7 +131,10 @@ SPEC CHECKSUMS:
   fit_kit: 7643191161673bcd32863ae3f10baed6ce55c7c0
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_downloader: 058b9c41564a90500f67f3e432e3524613a7fd83
+  flutter_launch: b9912ce1ce9c29df707be74ed8853a99d2ada38f
   flutter_native_image: 9c0b7451838484458e5b0fae007b86a4c2d4bdfe
+  flutter_share_me: dd04bcb65a595f76bd2fa0537df08fffc5a04903
+  fluttertoast: 6122fa75143e992b1d3470f61000f591a798cc58
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   health: 44840ad4328aa5586e77bef289898bfed644a81c
   image_picker: 9c3312491f862b28d21ecd8fdf0ee14e601b3f09
@@ -111,8 +142,11 @@ SPEC CHECKSUMS:
   native_share: 464a38e9258f0c1aad9b12e76855ed81119c971f
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   permission_handler: eac8e15b4a1a3fba55b761d19f3f4e6b005d15b6
+  share: 0b2c3e82132f5888bccca3351c504d0003b3b410
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
+  social_share: 702a5e3842addd22db515aa9e1e00a4b80a0296d
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
+  Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
   vibration: b5a33e764c3f609a975b9dca73dce20fdde627dc
   wc_flutter_share: 4f17b4e14f1c34b1427495583af99a21c07fccf7

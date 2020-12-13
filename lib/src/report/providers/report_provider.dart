@@ -1,10 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:achievement_view/achievement_view.dart';
+import 'package:achievement_view/achievement_widget.dart';
 import 'package:ext_storage/ext_storage.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:new_klikdna/src/report/models/detail_report_model.dart';
 import 'package:new_klikdna/src/report/models/report_model.dart';
@@ -174,7 +177,8 @@ class ReportProvider extends ChangeNotifier {
         File file = new File('${value.path}/REPORT-$filename.pdf');
         file.writeAsBytes(response.bodyBytes);
         print("FINISH DOWNLOAD");
-        myDialog(context);
+        //myDialog(context);
+        showToast(context, filename);
         return file;
       });
     } else {
@@ -183,11 +187,31 @@ class ReportProvider extends ChangeNotifier {
       File file = new File('$path/REPORT-$filename.pdf');
       await file.writeAsBytes(response.bodyBytes);
       print("FINISH DOWNLOAD");
-      myDialog(context);
+      //myDialog(context);
+      showToast(context, filename);
       return file;
     }
 
     return null ;
+
+  }
+
+  showToast(BuildContext context, String filename){
+      bool isCircle = true;
+      AchievementView(
+        context,
+        title: "Download Selesai",
+        alignment: Alignment.topCenter,
+        color: MyColors.dnaGreen,
+        subTitle: "$filename berhasil didownload",
+        isCircle: isCircle,
+        listener: (status) {
+          print(status);
+          if(status == AchievementState.closed){
+            Navigator.of(context).pop();
+          }
+        },
+      )..show();
 
   }
 

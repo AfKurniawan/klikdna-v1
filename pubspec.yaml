@@ -61,6 +61,17 @@ dependencies:
   flutter_downloader: ^1.5.1
   native_share: ^1.0.0
   wc_flutter_share: ^0.2.2
+  share: any
+  social_share: ^2.0.5
+  flutter_share_me: ^0.9.2
+  fluttertoast: ^7.1.5
+  achievement_view: ^0.2.1
+
+
+  #esys_flutter_share: ^1.0.2
+#  share:
+#    git:
+#      url: https://github.com/MperorM/flutter-share.git
 
 flutter_icons:
   android: true

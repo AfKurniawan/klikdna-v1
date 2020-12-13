@@ -34,8 +34,7 @@ class _DetailServiceItemState extends State<DetailServiceItem> {
         child: InkWell(
           splashColor: Colors.blue,
           onTap: () {
-            Navigator.of(context)
-                .pushNamed('hasil_report_page', arguments: widget.model);
+            Navigator.of(context).pushNamed('hasil_report_page', arguments: widget.model);
           },
           child: Stack(
             children: [

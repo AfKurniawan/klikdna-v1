@@ -75,6 +75,10 @@
         <key>NSAllowsLocalNetworking</key>
         <true/>
     </dict>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>whatsapp</string>
+    </array>
 </dict>
 
 </plist>

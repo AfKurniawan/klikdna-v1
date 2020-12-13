@@ -116,7 +116,7 @@ class Routing {
         break;
 
       case "detail_positnow_page":
-        return PageTransition(child: DetailPostitNowPage(), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
+        return PageTransition(child: DetailPostitNowPage(model: settings.arguments), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
         break;
 
 

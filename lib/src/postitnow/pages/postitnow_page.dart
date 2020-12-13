@@ -12,7 +12,7 @@ class _PostItNowPageState extends State<PostItNowPage> {
 
   final List<Widget> slideCard = [
     DashboardSlider(
-      svgSrc:
+      imgSrc:
       "assets/images/positnow_1.png",
       title: "",
       width: 380,
@@ -25,7 +25,7 @@ class _PostItNowPageState extends State<PostItNowPage> {
     ),
 
     DashboardSlider(
-      svgSrc:
+      imgSrc:
       "assets/images/positnow_2.png",
       title: "",
       width: 380,
@@ -154,7 +154,7 @@ class _PostItNowPageState extends State<PostItNowPage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           DashboardSlider(
-                            svgSrc:
+                            imgSrc:
                             "assets/images/podcast_2.png",
                             title: "",
                             width: 150,
@@ -210,7 +210,7 @@ class _PostItNowPageState extends State<PostItNowPage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           DashboardSlider(
-                            svgSrc:
+                            imgSrc:
                             "assets/images/podcast_2.png",
                             title: "",
                             width: 150,
