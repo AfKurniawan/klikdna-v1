@@ -150,14 +150,7 @@ class _ReportPageState extends State<ReportPage> {
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(24),
                             topRight: Radius.circular(24))),
-                    child: report.listDetail.length == 0 && prov.listMember.length <= 0
-                        ? Container(
-                            child: Center(
-                              child: Text("Belum ada member maupun report"),
-                            ),
-                          )
-
-                        : Column(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Padding(

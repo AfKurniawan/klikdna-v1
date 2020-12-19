@@ -15,7 +15,7 @@ class DetailReportProvider extends ChangeNotifier {
   List<ReportDetail> searchResult = [];
   List<Rekomendasi> listRecomendasi = [];
   List<PenjelasanIlmiah> penjelasanIlmiah = [];
-  List<PenjelasanDetail> penjelasanDetail = [];
+ // List<PenjelasanDetail> penjelasanDetail = [];
 
   String link ;
 
@@ -23,8 +23,9 @@ class DetailReportProvider extends ChangeNotifier {
   var rekomendasiArray = [] ;
   var penjelasanIlmiahArray = [];
   var penjelasanDetailArray = [];
+  String tahu ;
 
-  Future<List<ReportDetail>> getDetailReport(BuildContext context, String reportId) async {
+  Future<List<Rekomendasi>> getDetailReport(BuildContext context, String reportId) async {
     isLoading = true;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String person = prefs.getString("personId");
@@ -56,9 +57,12 @@ class DetailReportProvider extends ChangeNotifier {
 
       var responseJson = json.decode(request.body);
 
+
+
+
+      print("DETAIL REPORT RESPONSE CODE: ${request.body}");
+
       var dataArray = responseJson['data'];
-
-
 
       reportdetailArray = dataArray['report_detail'] as List;
 
@@ -72,13 +76,52 @@ class DetailReportProvider extends ChangeNotifier {
 
       } else {
 
-        rekomendasiArray = reportdetailArray[0]['rekomendasi'] as List;
-        penjelasanIlmiahArray = reportdetailArray[1]['penjelasan_ilmiah'] as List;
-        penjelasanDetailArray = penjelasanIlmiahArray[1]['penjelasan_detail'];
+
+
 
         reportDetail = reportdetailArray.map((p) => ReportDetail.fromJson(p)).toList();
-        listRecomendasi = rekomendasiArray.map((p) => Rekomendasi.fromJson(p)).toList();
+
+        for (int i = 0; i < reportDetail.length; i++) {
+
+          rekomendasiArray = responseJson['data']['report_detail'][i]['rekomendasi'] as List;
+
+          listRecomendasi = rekomendasiArray.map((p) => Rekomendasi.fromJson(p)).toList();
+
+          print("Judul Rekomendasi  ${listRecomendasi[0].judulRekomendasi}");
+
+          print("Gambar Rekomendasi  ${listRecomendasi[0].gambarRekomendasi}");
+
+          print("IKON Rekomendasi ${listRecomendasi[0].ikonRekomendasi}");
+
+          //reportDetail.forEach((fruit) => print(fruit.rekomendasi[0].judulRekomendasi));
+
+          notifyListeners();
+
+       }
+
+        penjelasanIlmiahArray = reportdetailArray[1]['penjelasan_ilmiah'] as List;
+
+        penjelasanDetailArray = penjelasanIlmiahArray[1]['penjelasan_detail'];
+
         penjelasanIlmiah = penjelasanIlmiahArray.map((p) => PenjelasanIlmiah.fromJson(p)).toList();
+
+        // this.listRecomendasi = [];
+        // List<ReportDetail> items = [];
+        // responseJson.forEach((item) {
+        //   items.add(ReportData.fromJson(json));
+        // });
+        // this.listRecomendasi = items;
+
+
+
+
+       // print("TEST REKOMENSDASI ${rekomendasiArray.length} $tahuxx");
+
+
+
+
+
+
         //penjelasanDetail = penjelasanDetailArray.map((p) => PenjelasanDetail.fromJson(p)).toList();
       }
 
@@ -100,7 +143,7 @@ class DetailReportProvider extends ChangeNotifier {
 
     }
 
-    return reportDetail;
+    return listRecomendasi;
   }
 
   onCheckedValue(String text) async {

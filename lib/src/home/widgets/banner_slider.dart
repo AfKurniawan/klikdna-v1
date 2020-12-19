@@ -80,27 +80,27 @@ class _BannerSliderState extends State<BannerSlider> {
               }).toList(),
             ),
 
-            InkWell(
-              onTap: () {
-                print("LIHAT");
-              },
-              child: Container(
-                height: 30,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Center(
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 10.0, right: 10),
-                    child: Text(
-                      "Lihat Semua Promo",
-                      style: TextStyle(color: MyColors.dnaGreen),
-                    ),
-                  ),
-                ),
-              ),
-            )
+            // InkWell(
+            //   onTap: () {
+            //     print("LIHAT");
+            //   },
+            //   child: Container(
+            //     height: 30,
+            //     decoration: BoxDecoration(
+            //       color: Colors.white,
+            //       borderRadius: BorderRadius.circular(5),
+            //     ),
+            //     child: Center(
+            //       child: Padding(
+            //         padding: EdgeInsets.only(left: 10.0, right: 10),
+            //         child: Text(
+            //           "Lihat Semua Promo",
+            //           style: TextStyle(color: MyColors.dnaGreen),
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // )
           ],
         ),
       ),

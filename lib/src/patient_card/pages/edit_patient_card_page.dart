@@ -172,10 +172,11 @@ class _EditPatientCardPageState extends State<EditPatientCardPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text("Kartu Asuransi"),
-                          GestureDetector(
-                            child: Icon(Icons.add, size: 15, color: MyColors.dnaGreen,),
+                          InkWell(
+                            child: Container(
+                                child: Icon(Icons.add, size: 15, color: MyColors.dnaGreen,)),
                             onTap: () {
-                              Navigator.of(context).pushNamed("asuransi_page");
+                              Navigator.of(context).pushNamed("add_asuransi_page");
                             },
                           )
                         ],

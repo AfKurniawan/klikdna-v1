@@ -1,5 +1,8 @@
 
 import 'package:flutter/material.dart';
+import 'package:new_klikdna/src/asuransi/pages/add_asuransi_page.dart';
+import 'package:new_klikdna/src/asuransi/pages/asuransi_page.dart';
+import 'package:new_klikdna/src/asuransi/pages/edit_asuransi_page.dart';
 import 'package:new_klikdna/src/foodmeter/pages/detail_food_meter_page.dart';
 import 'package:new_klikdna/src/foodmeter/pages/food_meter_page.dart';
 import 'package:new_klikdna/src/login/pages/login_page.dart';
@@ -117,6 +120,18 @@ class Routing {
 
       case "detail_positnow_page":
         return PageTransition(child: DetailPostitNowPage(model: settings.arguments), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
+        break;
+
+      case "asuransi_page":
+        return PageTransition(child: AsuransiPage(), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
+        break;
+
+      case "add_asuransi_page":
+        return PageTransition(child: AddAsuransiPage(), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
+        break;
+
+      case "edit_asuransi_page":
+        return PageTransition(child: EditAsuransiPage(model: settings.arguments), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
         break;
 
 

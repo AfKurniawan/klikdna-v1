@@ -28,7 +28,7 @@ class _MainProfilePageState extends State<MainProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black12,
+      backgroundColor: Colors.grey[20],
       appBar: AppBar(
         centerTitle: true,
         title: Text(
@@ -108,7 +108,7 @@ class _MainProfilePageState extends State<MainProfilePage> {
                 ],
               ),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 4),
             Container(
               color: Colors.white,
               child: Padding(
@@ -146,7 +146,7 @@ class _MainProfilePageState extends State<MainProfilePage> {
               ),
             ),
             SizedBox(
-              height: 10,
+              height: 4,
             ),
             Container(
               color: Colors.white,

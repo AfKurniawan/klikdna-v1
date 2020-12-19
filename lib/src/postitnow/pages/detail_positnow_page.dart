@@ -98,6 +98,9 @@ class _DetailPostitNowPageState extends State<DetailPostitNowPage> {
                             Icons.share, color: Colors.black54,
                           ),
                         ),
+                      ),
+                      Text(
+                        "Salin Text"
                       )
                     ],
                   ),

@@ -28,17 +28,16 @@ class LoginProvider with ChangeNotifier{
 
 
 
-
-
-
-
-
     Future<LoginModel> loginAction(BuildContext context) async {
         prefs = await SharedPreferences.getInstance();
         isLoading = true;
         notifyListeners();
+
         String email = emailController.text;
         String password = passwordController.text;
+
+        prefs.setString("email", emailController.text);
+        prefs.setString('passing', passwordController.text);
 
         var url = AppConstants.LOGIN_URL;
         var body = json.encode({

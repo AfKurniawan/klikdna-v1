@@ -5,18 +5,28 @@ import 'package:new_klikdna/src/mitra/pages/mitra_page.dart';
 import 'package:new_klikdna/src/pmr/pages/pmr_page.dart';
 import 'package:new_klikdna/src/profile/pages/main_profile_page.dart';
 import 'package:new_klikdna/src/report/pages/main_report_page.dart';
+import 'package:new_klikdna/src/report/providers/report_provider.dart';
 import 'package:new_klikdna/token/providers/token_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MainProvider with ChangeNotifier {
 
 
 
   Widget currenPage = new HomePage();
+  SharedPreferences prefs;
 
 
   int currentTab;
   String currentTitle;
+  String personId;
+
+  getPrefs() async {
+    prefs = await SharedPreferences.getInstance();
+    personId = prefs.getString('personId');
+    notifyListeners();
+  }
 
   void selectTab(BuildContext context, int tabItem){
       currentTab = tabItem;
@@ -46,6 +56,8 @@ class MainProvider with ChangeNotifier {
           currentTitle = "Report";
           currenPage = ReportPage();
           Provider.of<TokenProvider>(context, listen: false).getApiToken();
+          Provider.of<AccountProvider>(context, listen: false).getUserAccount(context);
+          Provider.of<ReportProvider>(context, listen: false).getSample(context, personId);
           break;
 
         case 4 :

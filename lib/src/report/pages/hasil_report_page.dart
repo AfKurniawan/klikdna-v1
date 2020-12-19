@@ -90,12 +90,18 @@ class _HasilReportPageState extends State<HasilReportPage>
                   ),
                 ),
                 SizedBox(height: 10),
-                Text(
-                  widget.model.namaModul,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
+                Container(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      widget.model.namaModul,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ),
                 ),
               ],
             )
@@ -134,8 +140,7 @@ class _HasilReportPageState extends State<HasilReportPage>
           return <Widget>[
             getAppbar(),
             SliverList(
-              delegate: SliverChildListDelegate(
-                [
+              delegate: SliverChildListDelegate([
                   SizedBox(height: 20),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -303,7 +308,7 @@ class HasilRekomendasi extends StatefulWidget {
 
 class _HasilRekomendasiState extends State<HasilRekomendasi> {
 
-  
+
 
   @override
   void setState(fn) {

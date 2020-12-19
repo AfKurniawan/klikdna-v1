@@ -8,8 +8,6 @@ PODS:
   - Flutter (1.0.0)
   - flutter_downloader (0.0.1):
     - Flutter
-  - flutter_launch (0.0.1):
-    - Flutter
   - flutter_native_image (0.0.1):
     - Flutter
   - flutter_share_me (0.0.1):
@@ -57,7 +55,6 @@ DEPENDENCIES:
   - fit_kit (from `.symlinks/plugins/fit_kit/ios`)
   - Flutter (from `Flutter`)
   - flutter_downloader (from `.symlinks/plugins/flutter_downloader/ios`)
-  - flutter_launch (from `.symlinks/plugins/flutter_launch/ios`)
   - flutter_native_image (from `.symlinks/plugins/flutter_native_image/ios`)
   - flutter_share_me (from `.symlinks/plugins/flutter_share_me/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
@@ -92,8 +89,6 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_downloader:
     :path: ".symlinks/plugins/flutter_downloader/ios"
-  flutter_launch:
-    :path: ".symlinks/plugins/flutter_launch/ios"
   flutter_native_image:
     :path: ".symlinks/plugins/flutter_native_image/ios"
   flutter_share_me:
@@ -131,7 +126,6 @@ SPEC CHECKSUMS:
   fit_kit: 7643191161673bcd32863ae3f10baed6ce55c7c0
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_downloader: 058b9c41564a90500f67f3e432e3524613a7fd83
-  flutter_launch: b9912ce1ce9c29df707be74ed8853a99d2ada38f
   flutter_native_image: 9c0b7451838484458e5b0fae007b86a4c2d4bdfe
   flutter_share_me: dd04bcb65a595f76bd2fa0537df08fffc5a04903
   fluttertoast: 6122fa75143e992b1d3470f61000f591a798cc58

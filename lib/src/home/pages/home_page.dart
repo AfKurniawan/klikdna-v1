@@ -14,6 +14,7 @@ import 'package:new_klikdna/src/home/widgets/artikel_item.dart';
 import 'package:new_klikdna/src/home/widgets/banner_slider.dart';
 import 'package:new_klikdna/src/home/widgets/dashboard_slider.dart';
 import 'package:new_klikdna/src/home/widgets/event_slider.dart';
+import 'package:new_klikdna/src/home/widgets/podcast_slider.dart';
 import 'package:new_klikdna/src/postitnow/pages/detail_positnow_page.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:new_klikdna/token/providers/token_provider.dart';
@@ -117,144 +118,98 @@ class _HomePageState extends State<HomePage> {
 
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
-                      child: Container(
-                        height: MediaQuery.of(context).size.height / 3,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Container(
-                              width: 150,
-                              height: MediaQuery.of(context).size.height,
-                              margin: EdgeInsets.only(right: 10, bottom: 10, top: 5),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    //offset: Offset(0, 4),
-                                    blurRadius: 3,
-                                    color: Color(0xFFB0CCE1).withOpacity(0.3),
-                                  ),
-                                ],
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              DashboardSlider(
+                                imgSrc: "assets/images/pin_1.jpeg",
+                                title: "",
+                                width: 150,
+                                height: 150,
+                                margin: EdgeInsets.only(right: 10, bottom: 10),
+                                desc: "",
+                                press: () {
+                                  Navigator.pushNamed(context, "detail_positnow_page",
+                                      arguments: DummyModel("$pinTitle1", "$pinDesc1",
+                                          'assets/images/pin_1.jpeg'));
+                                }),
+                              // SizedBox(height: 8),
+                              // Padding(
+                              //   padding: const EdgeInsets.all(8.0),
+                              //   child: Container(
+                              //       width: 150,
+                              //       child: Text("$pinTitle1 $pinDesc1",
+                              //         overflow: TextOverflow.ellipsis,
+                              //         maxLines: 2,
+                              //       )),
+                              // )
+                            ],
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              DashboardSlider(
+                                imgSrc: "assets/images/pin_2.jpeg",
+                                title: "",
+                                width: 150,
+                                height: 150,
+                                margin: EdgeInsets.only(right: 10, bottom: 10),
+                                desc: "",
+                                press: () {
+                                  Navigator.pushNamed(context, "detail_positnow_page",
+                                      arguments: DummyModel("$pinTitle2", "$pinDesc2",
+                                          'assets/images/pin_2.jpeg'));
+                                },
                               ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  DashboardSlider(
-                                    imgSrc: "assets/images/pin_1.jpeg",
-                                    title: "",
-                                    width: 150,
-                                    height: 150,
-                                    desc: "",
-                                    press: () {
-                                      Navigator.pushNamed(context, "detail_positnow_page",
-                                          arguments: DummyModel("$pinTitle1", "$pinDesc1",
-                                              'assets/images/pin_1.jpeg'));
-                                    }),
-                                  SizedBox(height: 8),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                        width: 150,
-                                        child: Text("$pinTitle1 $pinDesc1",
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 2,
-                                        )),
-                                  )
-                                ],
+                              // SizedBox(height: 8),
+                              // Padding(
+                              //   padding: const EdgeInsets.all(8.0),
+                              //   child: Container(
+                              //       width: 150,
+                              //       child: Text("$pinTitle2 $pinDesc2",
+                              //         overflow: TextOverflow.ellipsis,
+                              //         maxLines: 2,
+                              //       )),
+                              // )
+                            ],
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              DashboardSlider(
+                                imgSrc:
+                                "assets/images/pin_3.jpeg",
+                                title: "",
+                                width: 150,
+                                height: 150,
+                                margin: EdgeInsets.only(right: 10, bottom: 10),
+                                desc: "",
+                                press: () {
+                                  Navigator.pushNamed(context, "detail_positnow_page",
+                                      arguments: DummyModel("$pinTitle3", "$pinDesc3",
+                                          'assets/images/pin_3.jpeg'));
+                                },
                               ),
-                            ),
-                            Container(
-                              width: 150,
-                              margin: EdgeInsets.only(right: 10, bottom: 10, top: 5),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    //offset: Offset(1, 4),
-                                    blurRadius: 3,
-                                    color: Color(0xFFB0CCE1).withOpacity(0.3),
-                                  ),
-                                ],
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  DashboardSlider(
-                                    imgSrc: "assets/images/pin_2.jpeg",
-                                    title: "",
-                                    width: 150,
-                                    height: 150,
-                                    desc: "",
-                                    press: () {
-                                      Navigator.pushNamed(context, "detail_positnow_page",
-                                          arguments: DummyModel("$pinTitle2", "$pinDesc2",
-                                              'assets/images/pin_2.jpeg'));
-                                    },
-                                  ),
-                                  SizedBox(height: 8),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                        width: 150,
-                                        child: Text("$pinTitle2 $pinDesc2",
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 2,
-                                        )),
-                                  )
-                                ],
-                              ),
-                            ),
-                            Container(
-                              width: 150,
-                              margin: EdgeInsets.only(right: 10, bottom: 10, top: 5),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    //offset: Offset(1, 4),
-                                    blurRadius: 3,
-                                    color: Color(0xFFB0CCE1).withOpacity(0.3),
-                                  ),
-                                ],
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  DashboardSlider(
-                                    imgSrc:
-                                    "assets/images/pin_3.jpeg",
-                                    title: "",
-                                    width: 150,
-                                    height: 150,
-                                    desc: "",
-                                    press: () {
-                                      Navigator.pushNamed(context, "detail_positnow_page",
-                                          arguments: DummyModel("$pinTitle3", "$pinDesc3",
-                                              'assets/images/pin_3.jpeg'));
-                                    },
-                                  ),
-                                  SizedBox(height: 8),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                        width: 150,
-                                        child: Text("$pinTitle3",
-                                        overflow: TextOverflow.ellipsis,
-                                          maxLines: 2,
-                                        )),
-                                  )
-                                ],
-                              ),
-                            ),
+                              // SizedBox(height: 8),
+                              // Padding(
+                              //   padding: const EdgeInsets.all(8.0),
+                              //   child: Container(
+                              //       width: 150,
+                              //       child: Text("$pinTitle3",
+                              //       overflow: TextOverflow.ellipsis,
+                              //         maxLines: 2,
+                              //       )),
+                              // )
+                            ],
+                          ),
 
-                          ],
-                        ),
+                        ],
                       ),
                     ),
                     SizedBox(height: 22),
@@ -297,7 +252,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ],
                             ),
-                              height: MediaQuery.of(context).size.height / 1.8,
+                              height: MediaQuery.of(context).size.height / 1.7,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -363,7 +318,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ],
                             ),
-                            height: MediaQuery.of(context).size.height / 1.8,
+                            height: MediaQuery.of(context).size.height / 1.7,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -399,8 +354,8 @@ class _HomePageState extends State<HomePage> {
                                             ),
                                             SizedBox(height: 9),
                                             Container(
-                                              child: Text("Kabar gembira! @klikdna kembali lagi nih dengan “Health Seminar Series” yang kali ini bersama dr. Bona, Sp. KFR",
-                                                maxLines: 2,
+                                              child: Text("$eventDesc2",
+                                                maxLines: 3,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.normal,
@@ -447,35 +402,41 @@ class _HomePageState extends State<HomePage> {
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         children: [
-                          DashboardSlider(
+                          PodcastSlider(
                             imgSrc:
                             "assets/images/spotify_logo.png",
                             title: "",
-                            width: 103,
-                            height: 103,
+                            width: 130,
+                            height: 130,
                             margin: EdgeInsets.only(right: 10, bottom: 10),
                             desc: "",
-                            press: () {},
+                            press: () {
+                              launchSpotify();
+                            },
                           ),
-                          DashboardSlider(
+                          PodcastSlider(
                             imgSrc:
                             "assets/images/google_podcast_logo.png",
                             title: "",
-                            width: 103,
-                            height: 103,
+                            width: 130,
+                            height: 130,
                             margin: EdgeInsets.only(right: 10, bottom: 10),
                             desc: "",
-                            press: () {},
+                            press: () {
+                              launchGooglePodcast();
+                            },
                           ),
-                          DashboardSlider(
+                          PodcastSlider(
                             imgSrc:
                             "assets/images/apple_podcast_logo.png",
                             title: "",
-                            width: 103,
-                            height: 103,
+                            width: 130,
+                            height: 130,
                             margin: EdgeInsets.only(right: 10, bottom: 10),
                             desc: "",
-                            press: () {},
+                            press: () {
+                              launchApplePodcast();
+                            },
                           ),
                         ],
                       ),
@@ -491,6 +452,36 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  void launchSpotify() async {
+    const url = 'https://spotify.com';
+    if (await canLaunch(url)) {
+      await launch(url, forceWebView: false, enableJavaScript: true);
+    } else {
+      throw 'Could not launch $url';
+    }
+
+  }
+
+  void launchGooglePodcast() async {
+    const url = 'https://podcasts.google.com';
+    if (await canLaunch(url)) {
+      await launch(url, forceWebView: false, enableJavaScript: true);
+    } else {
+      throw 'Could not launch $url';
+    }
+
+  }
+
+  void launchApplePodcast() async {
+    const url = 'https://podcasts.apple.com';
+    if (await canLaunch(url)) {
+      await launch(url, forceWebView: false, enableJavaScript: true);
+    } else {
+      throw 'Could not launch $url';
+    }
+
   }
 
   void _shareImageAndText(String image, String text) async {

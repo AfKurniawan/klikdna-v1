@@ -40,6 +40,7 @@ class _DetailServiceItemState extends State<DetailServiceItem> {
             children: [
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   widget.model.gambarJudul == null ? Container() :
                   Padding(
@@ -54,7 +55,9 @@ class _DetailServiceItemState extends State<DetailServiceItem> {
                     ),
                   ),
                   Expanded(
-                    child: Column(
+
+                    child: widget.detail.serviceName.contains("DIET") || widget.detail.serviceName.contains("SPORT")
+                        ? Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -65,7 +68,20 @@ class _DetailServiceItemState extends State<DetailServiceItem> {
                                 fontWeight: FontWeight.w700,
                                 fontSize: 14,
                                 color: MyColors.dnaGrey)),
-                        Text( widget.detail.serviceName.contains("DIET") ? "${widget.model.hasilKamu}" : "Beresiko ${widget.model.hasilKamu}",
+                      ],
+                    )
+                        : Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("${widget.model.namaModul}",
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 14,
+                                color: MyColors.dnaGrey)),
+                        Text( "Beresiko ${widget.model.hasilKamu}",
                             style: TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14,

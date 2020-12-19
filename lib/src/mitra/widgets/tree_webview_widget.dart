@@ -31,6 +31,7 @@ class TreeWebViewWidget extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: (){
+            print("TREEE URL ${prov.vtree}");
             Provider.of<MitraProvider>(context, listen: false).treeWebview(prov.vtree);
           },
           child: ClipRRect(

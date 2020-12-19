@@ -59,8 +59,6 @@ class ReportProvider extends ChangeNotifier {
 
       print("LST DETAAIL @___$listDetail2");
 
-
-
       prefs.remove('tempPersonId');
 
       notifyListeners();

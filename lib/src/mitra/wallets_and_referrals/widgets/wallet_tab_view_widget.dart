@@ -204,7 +204,8 @@ class _WalletTabViewWidgetState extends State<WalletTabViewWidget> {
                                 return wallet.listWalletData[index].status.contains("Selesai") ? Container(
                                   color: Colors.white,
                                   padding: EdgeInsets.only(left:18.0, right: 18, top: 18),
-                                  child: Table(
+                                  child:  wallet.tipeValue.contains("Semua")
+                                      ? Table(
                                     border: TableBorder.all(color: Colors.black),
                                     children: [
                                        TableRow(children: [
@@ -261,6 +262,7 @@ class _WalletTabViewWidgetState extends State<WalletTabViewWidget> {
 
                                       //JENIS KETIKA DIFILTER, Maka ROW jenis tidak ditampilkan
 
+
                                       TableRow(children: [
                                         Container(
                                           child: Padding(
@@ -277,9 +279,68 @@ class _WalletTabViewWidgetState extends State<WalletTabViewWidget> {
                                           ),
                                           height: 35,
                                         ),
-                                      ]),
+                                      ])
                                     ],
-                                  ),
+                                  )
+                                      : Table(
+                                    border: TableBorder.all(color: Colors.black),
+                                    children: [
+                                      TableRow(children: [
+                                        Container(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text('Tanggal'),
+                                          ),
+                                          height: 35,
+                                        ),
+                                        Container(
+                                          color: Color(0xffF5FFFF),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text('$dateCreated'),
+                                          ),
+                                          height: 35,
+                                        ),
+                                      ]),
+                                      TableRow(children: [
+                                        Container(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text('Nominal'),
+                                          ),
+                                          height: 35,
+                                        ),
+                                        Container(
+                                          color: Color(0xffF5FFFF),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text('$fnominal'.replaceAll("-", "")),
+                                          ),
+                                          height: 35,
+                                        ),
+                                      ]),
+                                      TableRow(children: [
+                                        Container(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text('Nama Mitra'),
+                                          ),
+                                          height: 35,
+                                        ),
+                                        Container(
+                                          color: Color(0xffF5FFFF),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text('${wallet.listWalletData[index].from}'),
+                                          ),
+                                          height: 35,
+                                        ),
+                                      ]),
+
+                                      //JENIS KETIKA DIFILTER, Maka ROW jenis tidak ditampilkan
+
+                                    ],
+                                  )
                                 ) : Container(color: Colors.blue, height: 0);
                               },
                             );

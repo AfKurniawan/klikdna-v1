@@ -299,11 +299,11 @@ class _DetailReportPageState extends State<DetailReportPage> {
         });
       } else if(text == "2" && checked == true) {
         setState(() {
-          sample.reportDetail.sort((a, b) => a.hasilKamu.compareTo(b.hasilKamu));
+          sample.reportDetail.sort((b, a) => a.hasilKamu.compareTo(b.hasilKamu));
         });
       } else if (text == "2" && checked == false){
         setState(() {
-          sample.reportDetail.sort((b, a) => a.hasilKamu.compareTo(b.hasilKamu));
+          sample.reportDetail.sort((a, b) => a.hasilKamu.compareTo(b.hasilKamu));
           print("FILTER @ NOT CHECKED");
         });
 
