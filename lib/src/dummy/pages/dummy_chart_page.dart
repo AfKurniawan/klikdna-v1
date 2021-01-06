@@ -21,49 +21,38 @@ class _DummyChartPageState extends State<DummyChartPage> {
         child: Stack(
           children: <Widget>[
             Container(
-              //color: MyColors.dnaGreen,
-              height: 272,
+              height: 285,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 color: MyColors.dnaGreen,
               ),
               child: Padding(
-                padding: const EdgeInsets.only(left: 18.0, right: 18),
-                child: Center(
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Hello",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w300)),
-                        Text(
-                          "Namama",
-                          maxLines: 2,
-                          overflow: TextOverflow.clip,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        Text("ini dashboard report DNA kamu",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w300)),
-                      ],
+                padding: const EdgeInsets.only(left: 20.0, right: 18, top: 60),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("10 November 2020",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w300)),
+                    Text(
+                      "Good Day Doan!",
+                      maxLines: 2,
+                      overflow: TextOverflow.clip,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold),
                     ),
-                  ),
+
+                  ],
                 ),
               ),
             ),
 
             SingleChildScrollView(
-              padding: EdgeInsets.only(top: 160),
+              padding: EdgeInsets.only(top: 120),
               child: Container(
                 height: MediaQuery.of(context).size.height,
                 alignment: Alignment.topLeft,
@@ -75,16 +64,20 @@ class _DummyChartPageState extends State<DummyChartPage> {
                       Column(
                         children: <Widget>[
                           buildStepCard(),
-                          SizedBox(height: 30),
-                          buildSleepCard(),
+                          SizedBox(height: 20),
+                          buildHarthCard(),
+                          SizedBox(height: 20),
+                          buildCyclingCard()
                         ],
                       ),
 
                       Column(
                         children: <Widget>[
                           buildSleepCard(),
-                          SizedBox(height: 30),
+                          SizedBox(height: 20),
                           buildCaloriesCard(),
+                          SizedBox(height: 20),
+                          buildSwimmingCard()
                         ],
                       ),
                     ],
@@ -251,6 +244,163 @@ class _DummyChartPageState extends State<DummyChartPage> {
                   child: Text("Kkal", style: TextStyle(color: Colors.grey))),
             ],
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildHarthCard(){
+    return Container(
+      height: 200,
+      width: 152,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(1, 4),
+            blurRadius: 10,
+            color: MyColors.grey.withOpacity(0.62),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(18.0),
+            child: Row(
+              children: [
+                Image.asset("assets/icons/love_icon.png"),
+                SizedBox(width: 10),
+                Text("Sleep"),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(18.0),
+            child: Image.asset("assets/icons/heart_rate_icon.png"),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 18.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("75",
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.w400)),
+                Text("BPM", style: TextStyle(color: Colors.grey)),
+              ],
+            ),
+          ),
+
+
+        ],
+      ),
+    );
+  }
+
+  Widget buildCyclingCard(){
+    return Container(
+      height: 110,
+      width: 152,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(1, 4),
+            blurRadius: 10,
+            color: MyColors.grey.withOpacity(0.62),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(18.0),
+            child: Row(
+              children: [
+                Image.asset("assets/icons/bicycle_icon.png"),
+                SizedBox(width: 10),
+                Text("Cycling"),
+              ],
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.only(left: 18.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("1.15",
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.w400)),
+                Text("Km", style: TextStyle(color: Colors.grey)),
+              ],
+            ),
+          ),
+
+
+        ],
+      ),
+    );
+  }
+
+  Widget buildSwimmingCard(){
+    return Container(
+      height: 200,
+      width: 152,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(1, 4),
+            blurRadius: 10,
+            color: MyColors.grey.withOpacity(0.62),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(18.0),
+            child: Row(
+              children: [
+                Image.asset("assets/icons/swimming_icon.png"),
+                SizedBox(width: 10),
+                Text("Swimming"),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(18.0),
+            child: Image.asset("assets/icons/water_swim_icon.png"),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 18.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 20),
+                Text("75",
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.w400)),
+                Text("Metres", style: TextStyle(color: Colors.grey)),
+              ],
+            ),
+          ),
+
+
         ],
       ),
     );
