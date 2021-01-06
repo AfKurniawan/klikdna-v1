@@ -1,3 +1,4 @@
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -6,6 +7,7 @@ import 'package:new_klikdna/src/report/models/detail_report_model.dart';
 import 'package:new_klikdna/src/report/providers/detail_report_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:provider/provider.dart';
+
 
 class HasilReportPage extends StatefulWidget {
   final ReportDetail model;
@@ -23,6 +25,7 @@ class _HasilReportPageState extends State<HasilReportPage>
   @override
   void initState() {
     _tabController = TabController(length: 2, vsync: this);
+    Provider.of<DetailReportProvider>(context, listen: false).getRecomendasi(widget.model.namaModul);
     super.initState();
   }
 
@@ -309,189 +312,124 @@ class HasilRekomendasi extends StatefulWidget {
 class _HasilRekomendasiState extends State<HasilRekomendasi> {
 
 
+ double imgWidth;
 
   @override
   void setState(fn) {
+
     if (mounted) super.setState(fn);
   }
 
-  @override
-  Widget build(BuildContext context) {
 
-    final prov = Provider.of<DetailReportProvider>(context);
-
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 8.0, top: 20, right: 8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text("Rekomendasi Untuk Kamu",
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: MyColors.dnaGrey)),
-              ),
-            ),
-            SizedBox(height: 30),
-            Container(
-              child: ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  itemCount: prov.listRecomendasi.length,
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return RekomedasiItemWidget(model: prov.listRecomendasi[index]);
-                  }),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class RekomedasiItemWidget extends StatefulWidget {
-
-  final Rekomendasi model;
-  final int pos ;
-
- RekomedasiItemWidget({Key key, this.model, this.pos}) : super (key: key);
-
-  @override
-  _RekomedasiItemWidgetState createState() => _RekomedasiItemWidgetState();
-}
-
-class _RekomedasiItemWidgetState extends State<RekomedasiItemWidget> {
-
-  var document;
-  String judul ;
-  @override
-  void initState() {
-    document = parse(widget.model.judulRekomendasi);
-    judul = parse(document.body.text).documentElement.text;
-    super.initState();
-  }
 
 
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 18.0, right: 18, bottom: 18, top: 10),
-          child: Row(
-            children: [
-              Image.network(
-                widget.model.ikonRekomendasi,
-                height: 20,
-                width: 20,
-              ),
-              SizedBox(width: 20),
-              Flexible(child: Text(judul, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: MyColors.dnaGrey),)),
-            ],
-          ),
-        ),
+    return Consumer<DetailReportProvider>(
+      builder: (context, prov, _){
+        return prov.lr.length == 0 || prov.kosong == true ?
         Container(
-          margin: EdgeInsets.only(left: 18, right: 10, bottom: 16),
-          width: width,
-          child: widget.model.gambarRekomendasi == null ?
-          Center(
-
-          )
-          :
-          Padding(
-            padding: const EdgeInsets.only(left: 40.0),
-            child: ClipRRect(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(16.0),
-                  topRight: Radius.circular(16.0),
-                ),
-                //NOTE:  Jika gambar kurang dari 890 maka lebarnya dibagi 2, tinggi menyesuaikan (proporsional)
-                child: CachedNetworkImage(
-                  imageUrl: widget.model.gambarRekomendasi,
-                  //width: width > 890 ? width / 2 : width,
-                  fit: BoxFit.fitHeight,
-                )),
+          height: MediaQuery.of(context).size.height / 3,
+          child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Tidak ada data"),
+                ],
+              )
           ),
-        ),
-      ],
-    );
-  }
-}
-
-
-
-
-class RekomendasiItem extends StatefulWidget {
-  final Rekomendasi model;
-
-  RekomendasiItem({Key key, this.model}) : super (key: key);
-
-
-  @override
-  _RekomendasiItemState createState() => _RekomendasiItemState();
-}
-
-class _RekomendasiItemState extends State<RekomendasiItem> {
-
-  var document;
-  String judul ;
-  @override
-  void initState() {
-    document = parse(widget.model.judulRekomendasi);
-    judul = parse(document.body.text).documentElement.text;
-    super.initState();
-  }
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height / 2,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(width: 2, color: MyColors.dnaGreen)
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          Center(
-            child: ClipRRect(
-              borderRadius: new BorderRadius.circular(12.0),
-              child: Image.network(
-                widget.model.gambarRekomendasi,
-                fit: BoxFit.fitHeight,
-                height: 120,
-                width: 120,
-              ),
-            ),
-          ),
-          SizedBox(height: 40),
-          Padding(
-            padding: const EdgeInsets.only(left: 8, right: 8),
-            child: Row(
+        )
+        : SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8.0, top: 20, right: 8),
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Flexible(
-                  child: Text(judul,
-                    maxLines: 6,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text("Rekomendasi Untuk Kamu",
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: MyColors.dnaGrey)),
                   ),
-                )
+                ),
+                SizedBox(height: 30),
+                Container(
+                  child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      itemCount: prov.lr.length,
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+
+                        var document;
+                        String judul ;
+                        document = parse(prov.lr[index].judulRekomendasi);
+                        judul = parse(document.body.text).documentElement.text;
+                        String gambar = "${prov.lr[index].gambarRekomendasi}";
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 18.0, right: 18, bottom: 18, top: 10),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  prov.lr[index].ikonRekomendasi == "" || prov.lr[index].ikonRekomendasi == null ?
+                                  Container()
+                                      : Image.network(
+                                    "${prov.lr[index].ikonRekomendasi}",
+                                    height: 25,
+                                    width: 25,
+                                  ),
+                                  SizedBox(width: 20),
+                                  Flexible(
+                                      child: Text("$judul",
+                                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: MyColors.dnaGrey)
+                                      )
+                                  ),
+                                ],
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                              ),
+                            ),
+                            gambar == "" || gambar == null ?
+                            Center()
+                                : Padding(
+                              padding: const EdgeInsets.only(left: 20.0, right: 20),
+                              child: prov.lr[index].gambarRekomendasi == null ?
+                              Container()
+                                  : Container(
+                               // color: Colors.blueGrey,
+                                    child: prov.imgWidth > 600 ?
+                                    Container(
+                                      width: 512,
+                                      margin: EdgeInsets.only(left: 40, right: 20),
+                                      child: CachedNetworkImage(
+                                              imageUrl: "${prov.lr[index].gambarRekomendasi}",
+                                              fit: BoxFit.fitHeight),
+                                    ) : Container(
+                                      margin: EdgeInsets.only(left: 40, right: 20),
+                                      child: CachedNetworkImage(
+                                            imageUrl: "${prov.lr[index].gambarRekomendasi}",
+                                            fit: BoxFit.fitWidth),
+                                    )
+                                  ),
+                            ),
+                          ],
+                        );
+                      }),
+                ),
+
               ],
             ),
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

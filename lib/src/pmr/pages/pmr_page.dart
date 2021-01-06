@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:new_klikdna/src/login/providers/login_provider.dart';
 import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
 import 'package:new_klikdna/src/pmr/providers/pmr_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
@@ -23,14 +24,14 @@ class _PMRPageState extends State<PMRPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<PMRProvider>(
+    return Consumer<LoginProvider>(
       builder: (context, prov, _){
         return Scaffold(
           backgroundColor: Colors.white,
-          body: Column(
+          body: Stack(
             children: <Widget>[
               Container(
-                height: 116,
+                height: 160,
                 decoration: BoxDecoration(
                     color: MyColors.dnaGreen,
                     image: DecorationImage(
@@ -69,29 +70,39 @@ class _PMRPageState extends State<PMRPage> {
                           ),
                         ),
                       ),
-                      Container(
-                        child: Text("${prov.firstname} ${prov.lastname}",
-                          style: TextStyle(
-                            color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width / 2,
+                            child: Text("${prov.vallName}",
+                              style: TextStyle(
+                                color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500
+                              ),
+                            ),
                           ),
-                        ),
+
+                        ],
                       ),
+                      SizedBox(width: 30),
+
                     ],
                   ),
                 ),
               ),
               SingleChildScrollView(
-                //padding: EdgeInsets.only(top: 140),
+                padding: EdgeInsets.only(top: 140),
                 child: Container(
                   padding: EdgeInsets.only(top: 20),
                   alignment: Alignment.topLeft,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(0),
-                          topRight: Radius.circular(0))),
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20))),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 16.0, right: 16),
                     child: Column(
@@ -185,6 +196,20 @@ class _PMRPageState extends State<PMRPage> {
                         ),
                       ],
                     ),
+                  ),
+                ),
+              ),
+              Positioned(
+                right: 20,
+                top: 70,
+                child: InkWell(
+                  onTap: (){
+                    Navigator.pushNamed(context, 'health_meter_page');
+                  },
+                  child: Icon(
+                    Icons.watch,
+                    color: Colors.white,
+                    size: 30,
                   ),
                 ),
               )

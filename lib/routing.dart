@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:new_klikdna/src/asuransi/pages/add_asuransi_page.dart';
 import 'package:new_klikdna/src/asuransi/pages/asuransi_page.dart';
 import 'package:new_klikdna/src/asuransi/pages/edit_asuransi_page.dart';
+import 'package:new_klikdna/src/dummy/pages/dummy_chart_page.dart';
 import 'package:new_klikdna/src/foodmeter/pages/detail_food_meter_page.dart';
 import 'package:new_klikdna/src/foodmeter/pages/food_meter_page.dart';
 import 'package:new_klikdna/src/login/pages/login_page.dart';
@@ -19,6 +20,7 @@ import 'package:new_klikdna/src/profile/pages/lihat_profile_page.dart';
 import 'package:new_klikdna/src/report/pages/detail_report_page.dart';
 import 'package:new_klikdna/src/report/pages/hasil_report_page.dart';
 import 'package:new_klikdna/src/splash/pages/splash_page.dart';
+import 'package:new_klikdna/src/wearable/pages/health_meter_page.dart';
 import 'package:page_transition/page_transition.dart';
 
 class Routing {
@@ -132,6 +134,10 @@ class Routing {
 
       case "edit_asuransi_page":
         return PageTransition(child: EditAsuransiPage(model: settings.arguments), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
+        break;
+
+      case "health_meter_page":
+        return PageTransition(child: DummyChartPage(), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
         break;
 
 

@@ -1,12 +1,16 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:html/parser.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:new_klikdna/src/report/models/detail_report_model.dart';
 import 'package:new_klikdna/token/providers/token_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'dart:ui' as ui;
+import 'dart:async';
+
 
 class DetailReportProvider extends ChangeNotifier {
   bool isLoading;
@@ -14,6 +18,9 @@ class DetailReportProvider extends ChangeNotifier {
   List<ReportDetail> reportDetail = [];
   List<ReportDetail> searchResult = [];
   List<Rekomendasi> listRecomendasi = [];
+
+  List<Rekomendasi> searchRecomendasi = [];
+
   List<PenjelasanIlmiah> penjelasanIlmiah = [];
  // List<PenjelasanDetail> penjelasanDetail = [];
 
@@ -81,46 +88,40 @@ class DetailReportProvider extends ChangeNotifier {
 
         reportDetail = reportdetailArray.map((p) => ReportDetail.fromJson(p)).toList();
 
-        for (int i = 0; i < reportDetail.length; i++) {
 
-          rekomendasiArray = responseJson['data']['report_detail'][i]['rekomendasi'] as List;
 
-          listRecomendasi = rekomendasiArray.map((p) => Rekomendasi.fromJson(p)).toList();
+       // penjelasanIlmiahArray = reportdetailArray[1]['penjelasan_ilmiah'] as List;
 
-          print("Judul Rekomendasi  ${listRecomendasi[0].judulRekomendasi}");
+        // penjelasanDetailArray = penjelasanIlmiahArray[1]['penjelasan_detail'];
+        //
+        // penjelasanIlmiah = penjelasanIlmiahArray.map((p) => PenjelasanIlmiah.fromJson(p)).toList();
 
-          print("Gambar Rekomendasi  ${listRecomendasi[0].gambarRekomendasi}");
+
+        rekomendasiArray = reportdetailArray[0]['rekomendasi'] as List;
+        listRecomendasi = rekomendasiArray.map((p) => Rekomendasi.fromJson(p)).toList();
+
+        for (int i = 0; i < rekomendasiArray.length; i++) {
+
+
+          // print("Judul Rekomendasi  ${listRecomendasi[i].judulRekomendasi}");
+
+          print("Gambar Rekomendasi  ${listRecomendasi[i].gambarRekomendasi}");
 
           print("IKON Rekomendasi ${listRecomendasi[0].ikonRekomendasi}");
 
-          //reportDetail.forEach((fruit) => print(fruit.rekomendasi[0].judulRekomendasi));
+          //reportDetail.forEach((item) => print("OPO IKI...${item.rekomendasi[i].judulRekomendasi}"));
+
+          print("COBA $reportDetail");
 
           notifyListeners();
 
-       }
-
-        penjelasanIlmiahArray = reportdetailArray[1]['penjelasan_ilmiah'] as List;
-
-        penjelasanDetailArray = penjelasanIlmiahArray[1]['penjelasan_detail'];
-
-        penjelasanIlmiah = penjelasanIlmiahArray.map((p) => PenjelasanIlmiah.fromJson(p)).toList();
-
-        // this.listRecomendasi = [];
-        // List<ReportDetail> items = [];
-        // responseJson.forEach((item) {
-        //   items.add(ReportData.fromJson(json));
-        // });
-        // this.listRecomendasi = items;
-
-
-
-
-       // print("TEST REKOMENSDASI ${rekomendasiArray.length} $tahuxx");
+        }
 
 
 
 
 
+        notifyListeners();
 
         //penjelasanDetail = penjelasanDetailArray.map((p) => PenjelasanDetail.fromJson(p)).toList();
       }
@@ -144,6 +145,58 @@ class DetailReportProvider extends ChangeNotifier {
     }
 
     return listRecomendasi;
+  }
+
+
+  double imgWidth = 0.0 ;
+  double imgHeight = 0.0 ;
+  Future<ui.Image> getImageSize(String url) async {
+    final Completer<ui.Image> completer = Completer<ui.Image>();
+    Image image = url == null || url == "" ? Image.asset("assets/images/no_image.png") : Image.network(url);
+    image.image
+        .resolve(ImageConfiguration())
+        .addListener(ImageStreamListener((ImageInfo info, bool isSync) {
+      completer.complete(info.image);
+        imgWidth = info.image.width.toDouble();
+        imgHeight = info.image.height.toDouble();
+        print("IMAGE WIDTH: $imgWidth");
+        print("IMAGE HEIGHT: $imgHeight");
+
+    }));
+
+    return completer.future;
+  }
+
+
+  List<Rekomendasi> lr ;
+  bool kosong ;
+  getRecomendasi(String text) async {
+    print("TEST $text");
+    if (text.isEmpty) {
+      notifyListeners();
+      return;
+    }
+    reportDetail.forEach((item) {
+      if (item.namaModul.contains(text)) {
+        rekomendasiArray.add(item);
+        print("ITEM REKOMENDASI LENDGHT = ${rekomendasiArray.length}");
+        if(item.rekomendasi == null){
+          print("KOSONG");
+          kosong = true;
+
+        } else {
+          kosong = false;
+          lr = item.rekomendasi;
+          getImageSize(lr[0].gambarRekomendasi);
+          print("Judul REKOMENDASI ${lr[0].judulRekomendasi}");
+          }
+
+        }
+
+
+
+    });
+
   }
 
   onCheckedValue(String text) async {

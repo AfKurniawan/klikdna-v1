@@ -187,12 +187,13 @@ class _ReportPageState extends State<ReportPage> {
                         Consumer<ReportProvider>(
                           builder: (context, sample, _) {
                             return sample.listDetail.length == 0
-                                ? Container(
-                              color: Colors.blue,
-                                    height: MediaQuery.of(context).size.height / 5,
-                                    child: Text("Belum Ada Report",
-                                        style: TextStyle(color: Colors.grey)),
-                                  ) :
+                                ? Center(
+                                  child: Container(
+                                      height: MediaQuery.of(context).size.height / 5,
+                                      child: Text("Belum Ada Report",
+                                          style: TextStyle(color: Colors.grey)),
+                                    ),
+                                ) :
                             ListView.builder(
                                     scrollDirection: Axis.vertical,
                                     itemCount: sample.listDetail.length,
