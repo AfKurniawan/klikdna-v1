@@ -6,8 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:new_klikdna/src/login/providers/login_provider.dart';
 import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
+import 'package:new_klikdna/src/token/providers/token_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
-import 'package:new_klikdna/token/providers/token_provider.dart';
 import 'package:provider/provider.dart';
 
 class LihatProfilePage extends StatefulWidget {

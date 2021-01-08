@@ -4,6 +4,7 @@ import 'package:new_klikdna/configs/localization.dart';
 import 'package:new_klikdna/routing.dart';
 import 'package:new_klikdna/src/foodmeter/providers/food_meter_provider.dart';
 import 'package:new_klikdna/src/home/providers/artikel_provider.dart';
+import 'package:new_klikdna/src/home/providers/home_provider.dart';
 import 'package:new_klikdna/src/login/providers/login_provider.dart';
 import 'package:new_klikdna/src/main/providers/main_provider.dart';
 import 'package:new_klikdna/src/account/providers/account_provider.dart';
@@ -18,8 +19,9 @@ import 'package:new_klikdna/src/profile/providers/profile_provider.dart';
 import 'package:new_klikdna/src/report/providers/detail_report_provider.dart';
 import 'package:new_klikdna/src/report/providers/report_provider.dart';
 import 'package:new_klikdna/src/splash/providers/splash_provider.dart';
+import 'package:new_klikdna/src/token/providers/cms_token_provider.dart';
+import 'package:new_klikdna/src/token/providers/token_provider.dart';
 import 'package:new_klikdna/styles/my_theme.dart';
-import 'package:new_klikdna/token/providers/token_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -49,7 +51,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ReportProvider()),
         ChangeNotifierProvider(create: (_) => MemberProvider()),
         ChangeNotifierProvider(create: (_) => WalletReferralProvider()),
-        ChangeNotifierProvider(create: (_) => PostItNowProvider())
+        ChangeNotifierProvider(create: (_) => PostItNowProvider()),
+        ChangeNotifierProvider(create: (_) => HomeProvider()),
+        ChangeNotifierProvider(create: (_) => CmsTokenProvider())
 
       ],
       child: MaterialApp(

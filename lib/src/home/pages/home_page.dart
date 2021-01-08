@@ -1,29 +1,19 @@
 import 'dart:io';
 
-import 'package:achievement_view/achievement_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_native_image/flutter_native_image.dart';
-import 'package:flutter_share_me/flutter_share_me.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:http/http.dart' as http;
-import 'package:native_share/native_share.dart';
 import 'package:new_klikdna/src/dummy/post_it_now_models.dart';
 import 'package:new_klikdna/src/home/providers/artikel_provider.dart';
-import 'package:new_klikdna/src/home/widgets/artikel_item.dart';
 import 'package:new_klikdna/src/home/widgets/banner_slider.dart';
 import 'package:new_klikdna/src/home/widgets/dashboard_slider.dart';
 import 'package:new_klikdna/src/home/widgets/event_slider.dart';
 import 'package:new_klikdna/src/home/widgets/podcast_slider.dart';
-import 'package:new_klikdna/src/postitnow/pages/detail_positnow_page.dart';
+import 'package:new_klikdna/src/token/providers/token_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
-import 'package:new_klikdna/token/providers/token_provider.dart';
-import 'package:new_klikdna/widgets/outline_button_widget.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
-import 'package:social_share/social_share.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:wc_flutter_share/wc_flutter_share.dart';
 
@@ -42,6 +32,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+
     super.initState();
   }
 

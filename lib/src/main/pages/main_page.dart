@@ -5,8 +5,9 @@ import 'package:new_klikdna/src/home/pages/home_page.dart';
 import 'package:new_klikdna/src/login/providers/login_provider.dart';
 import 'package:new_klikdna/src/main/providers/main_provider.dart';
 import 'package:new_klikdna/src/report/providers/report_provider.dart';
+import 'package:new_klikdna/src/token/providers/cms_token_provider.dart';
+import 'package:new_klikdna/src/token/providers/token_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
-import 'package:new_klikdna/token/providers/token_provider.dart';
 import 'package:provider/provider.dart';
 
 class MainPage extends StatefulWidget {
@@ -32,6 +33,7 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     Provider.of<MainProvider>(context, listen: false).getPrefs();
     Provider.of<TokenProvider>(context, listen: false).getApiToken();
+    Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken();
     Provider.of<LoginProvider>(context, listen: false).getMitraData();
     context.read<MainProvider>().selectTab(context, widget.currentTab);
     super.initState();

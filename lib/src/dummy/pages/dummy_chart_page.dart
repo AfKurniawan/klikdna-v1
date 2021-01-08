@@ -274,7 +274,7 @@ class _DummyChartPageState extends State<DummyChartPage> {
               children: [
                 Image.asset("assets/icons/love_icon.png"),
                 SizedBox(width: 10),
-                Text("Sleep"),
+                Text("Heart Rate"),
               ],
             ),
           ),

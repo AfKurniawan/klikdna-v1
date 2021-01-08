@@ -1,11 +1,11 @@
-class HomeModels {
+class HomeModel {
   bool success;
   List<ArrayData> data;
   String message;
 
-  HomeModels({this.success, this.data, this.message});
+  HomeModel({this.success, this.data, this.message});
 
-  HomeModels.fromJson(Map<String, dynamic> json) {
+  HomeModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     if (json['data'] != null) {
       data = new List<ArrayData>();

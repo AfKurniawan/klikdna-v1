@@ -13,7 +13,7 @@ class ArtikelProvider with ChangeNotifier {
 
     print("START GET ARTIKEL");
 
-    //token = Provider.of<TokenProvider>(context, listen: false).accessToken;
+    //src.token = Provider.of<TokenProvider>(context, listen: false).accessToken;
 
     var url = AppConstants.GET_ARTIKEL_URL;
 

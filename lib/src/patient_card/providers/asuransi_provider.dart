@@ -6,8 +6,8 @@ import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:new_klikdna/src/patient_card/models/asuransi_model.dart';
 import 'package:new_klikdna/src/patient_card/models/patient_card_model.dart';
 import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
+import 'package:new_klikdna/src/token/providers/token_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
-import 'package:new_klikdna/token/providers/token_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 

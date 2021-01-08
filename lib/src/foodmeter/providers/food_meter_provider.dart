@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:new_klikdna/src/foodmeter/models/detail_food_meter_model.dart';
 import 'package:new_klikdna/src/foodmeter/models/food_meter_model.dart';
-import 'package:new_klikdna/token/providers/token_provider.dart';
+import 'package:new_klikdna/src/token/providers/token_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
