@@ -365,7 +365,6 @@ class _HasilRekomendasiState extends State<HasilRekomendasi> {
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
-
                         var document;
                         String judul ;
                         document = parse(prov.lr[index].judulRekomendasi);

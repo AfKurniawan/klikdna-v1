@@ -26,4 +26,7 @@ class AppConstants {
   static const String GET_WALLET_URL = "https://staging.klikdna.com/wallets/apilist.json";
   static const String GET_REFERRAL_URL = "https://staging.klikdna.com/referrals/apilist.json";
 
+  //CMS
+  static const String GET_HOME_ARTIKEL = "https://cms.klikdna.com/api/v1/apiArticles";
+
 }

@@ -1,16 +1,16 @@
 class HomeModel {
   bool success;
-  List<ArrayData> data;
+  List<ArrayData> arrData;
   String message;
 
-  HomeModel({this.success, this.data, this.message});
+  HomeModel({this.success, this.arrData, this.message});
 
   HomeModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     if (json['data'] != null) {
-      data = new List<ArrayData>();
+      arrData = new List<ArrayData>();
       json['data'].forEach((v) {
-        data.add(new ArrayData.fromJson(v));
+        arrData.add(new ArrayData.fromJson(v));
       });
     }
     message = json['message'];
@@ -19,8 +19,8 @@ class HomeModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['success'] = this.success;
-    if (this.data != null) {
-      data['data'] = this.data.map((v) => v.toJson()).toList();
+    if (this.arrData != null) {
+      data['data'] = this.arrData.map((v) => v.toJson()).toList();
     }
     data['message'] = this.message;
     return data;
@@ -28,13 +28,13 @@ class HomeModel {
 }
 
 class ArrayData {
-  ArrayData data;
+  Data data;
   String imageUrl;
 
   ArrayData({this.data, this.imageUrl});
 
   ArrayData.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null ? new ArrayData.fromJson(json['data']) : null;
+    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
     imageUrl = json['imageUrl'];
   }
 

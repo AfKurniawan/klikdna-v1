@@ -5,10 +5,12 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:new_klikdna/src/dummy/post_it_now_models.dart';
 import 'package:new_klikdna/src/home/providers/artikel_provider.dart';
+import 'package:new_klikdna/src/home/providers/home_provider.dart';
 import 'package:new_klikdna/src/home/widgets/banner_slider.dart';
 import 'package:new_klikdna/src/home/widgets/dashboard_slider.dart';
 import 'package:new_klikdna/src/home/widgets/event_slider.dart';
 import 'package:new_klikdna/src/home/widgets/podcast_slider.dart';
+import 'package:new_klikdna/src/token/providers/cms_token_provider.dart';
 import 'package:new_klikdna/src/token/providers/token_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:path_provider/path_provider.dart';
@@ -32,7 +34,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-
+    Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken();
+    Provider.of<HomeProvider>(context,listen: false).getHomeContents(context);
     super.initState();
   }
 
@@ -112,93 +115,209 @@ class _HomePageState extends State<HomePage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              DashboardSlider(
-                                imgSrc: "assets/images/pin_1.jpeg",
-                                title: "",
-                                width: 150,
-                                height: 150,
-                                margin: EdgeInsets.only(right: 10, bottom: 10),
-                                desc: "",
-                                press: () {
-                                  Navigator.pushNamed(context, "detail_positnow_page",
-                                      arguments: DummyModel("$pinTitle1", "$pinDesc1",
-                                          'assets/images/pin_1.jpeg'));
-                                }),
-                              // SizedBox(height: 8),
-                              // Padding(
-                              //   padding: const EdgeInsets.all(8.0),
-                              //   child: Container(
-                              //       width: 150,
-                              //       child: Text("$pinTitle1 $pinDesc1",
-                              //         overflow: TextOverflow.ellipsis,
-                              //         maxLines: 2,
-                              //       )),
-                              // )
-                            ],
+                          Consumer<HomeProvider>(
+                            builder: (context, prov, _){
+                              return Container(
+                                height: 200,
+                                //width: 500,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index ){
+                                    return Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        DashboardSlider(
+                                            imgSrc: "assets/images/pin_1.jpeg",
+                                            title: "",
+                                            width: 150,
+                                            height: 150,
+                                            margin: EdgeInsets.only(right: 10, bottom: 10),
+                                            desc: "",
+                                            press: () {
+                                              Navigator.pushNamed(context, "detail_positnow_page",
+                                                  arguments: DummyModel("$pinTitle1", "$pinDesc1",
+                                                      'assets/images/pin_1.jpeg'));
+                                            }),
+                                      ],
+                                    );
+                                  },
+                                  // child: Row(
+                                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  //   children: <Widget>[
+                                  //     Column(
+                                  //       mainAxisAlignment: MainAxisAlignment.start,
+                                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                                  //       children: [
+                                  //         DashboardSlider(
+                                  //           imgSrc: "assets/images/pin_1.jpeg",
+                                  //           title: "",
+                                  //           width: 150,
+                                  //           height: 150,
+                                  //           margin: EdgeInsets.only(right: 10, bottom: 10),
+                                  //           desc: "",
+                                  //           press: () {
+                                  //             Navigator.pushNamed(context, "detail_positnow_page",
+                                  //                 arguments: DummyModel("$pinTitle1", "$pinDesc1",
+                                  //                     'assets/images/pin_1.jpeg'));
+                                  //           }),
+                                  //       ],
+                                  //     ),
+                                  //     Column(
+                                  //       mainAxisAlignment: MainAxisAlignment.start,
+                                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                                  //       children: [
+                                  //         DashboardSlider(
+                                  //           imgSrc: "assets/images/pin_2.jpeg",
+                                  //           title: "",
+                                  //           width: 150,
+                                  //           height: 150,
+                                  //           margin: EdgeInsets.only(right: 10, bottom: 10),
+                                  //           desc: "",
+                                  //           press: () {
+                                  //             Navigator.pushNamed(context, "detail_positnow_page",
+                                  //                 arguments: DummyModel("$pinTitle2", "$pinDesc2",
+                                  //                     'assets/images/pin_2.jpeg'));
+                                  //           },
+                                  //         ),
+                                  //         // SizedBox(height: 8),
+                                  //         // Padding(
+                                  //         //   padding: const EdgeInsets.all(8.0),
+                                  //         //   child: Container(
+                                  //         //       width: 150,
+                                  //         //       child: Text("$pinTitle2 $pinDesc2",
+                                  //         //         overflow: TextOverflow.ellipsis,
+                                  //         //         maxLines: 2,
+                                  //         //       )),
+                                  //         // )
+                                  //       ],
+                                  //     ),
+                                  //     Column(
+                                  //       mainAxisAlignment: MainAxisAlignment.start,
+                                  //       crossAxisAlignment: CrossAxisAlignment.center,
+                                  //       children: [
+                                  //         DashboardSlider(
+                                  //           imgSrc:
+                                  //           "assets/images/pin_3.jpeg",
+                                  //           title: "",
+                                  //           width: 150,
+                                  //           height: 150,
+                                  //           margin: EdgeInsets.only(right: 10, bottom: 10),
+                                  //           desc: "",
+                                  //           press: () {
+                                  //             Navigator.pushNamed(context, "detail_positnow_page",
+                                  //                 arguments: DummyModel("$pinTitle3", "$pinDesc3",
+                                  //                     'assets/images/pin_3.jpeg'));
+                                  //           },
+                                  //         ),
+                                  //         // SizedBox(height: 8),
+                                  //         // Padding(
+                                  //         //   padding: const EdgeInsets.all(8.0),
+                                  //         //   child: Container(
+                                  //         //       width: 150,
+                                  //         //       child: Text("$pinTitle3",
+                                  //         //       overflow: TextOverflow.ellipsis,
+                                  //         //         maxLines: 2,
+                                  //         //       )),
+                                  //         // )
+                                  //       ],
+                                  //     ),
+                                  //
+                                  //   ],
+                                  // ),
+                                ),
+                              );
+                            },
                           ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              DashboardSlider(
-                                imgSrc: "assets/images/pin_2.jpeg",
-                                title: "",
-                                width: 150,
-                                height: 150,
-                                margin: EdgeInsets.only(right: 10, bottom: 10),
-                                desc: "",
-                                press: () {
-                                  Navigator.pushNamed(context, "detail_positnow_page",
-                                      arguments: DummyModel("$pinTitle2", "$pinDesc2",
-                                          'assets/images/pin_2.jpeg'));
-                                },
-                              ),
-                              // SizedBox(height: 8),
-                              // Padding(
-                              //   padding: const EdgeInsets.all(8.0),
-                              //   child: Container(
-                              //       width: 150,
-                              //       child: Text("$pinTitle2 $pinDesc2",
-                              //         overflow: TextOverflow.ellipsis,
-                              //         maxLines: 2,
-                              //       )),
-                              // )
-                            ],
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              DashboardSlider(
-                                imgSrc:
-                                "assets/images/pin_3.jpeg",
-                                title: "",
-                                width: 150,
-                                height: 150,
-                                margin: EdgeInsets.only(right: 10, bottom: 10),
-                                desc: "",
-                                press: () {
-                                  Navigator.pushNamed(context, "detail_positnow_page",
-                                      arguments: DummyModel("$pinTitle3", "$pinDesc3",
-                                          'assets/images/pin_3.jpeg'));
-                                },
-                              ),
-                              // SizedBox(height: 8),
-                              // Padding(
-                              //   padding: const EdgeInsets.all(8.0),
-                              //   child: Container(
-                              //       width: 150,
-                              //       child: Text("$pinTitle3",
-                              //       overflow: TextOverflow.ellipsis,
-                              //         maxLines: 2,
-                              //       )),
-                              // )
-                            ],
-                          ),
+                          // Column(
+                          //   mainAxisAlignment: MainAxisAlignment.start,
+                          //   crossAxisAlignment: CrossAxisAlignment.start,
+                          //   children: [
+                          //     DashboardSlider(
+                          //       imgSrc: "assets/images/pin_1.jpeg",
+                          //       title: "",
+                          //       width: 150,
+                          //       height: 150,
+                          //       margin: EdgeInsets.only(right: 10, bottom: 10),
+                          //       desc: "",
+                          //       press: () {
+                          //         Navigator.pushNamed(context, "detail_positnow_page",
+                          //             arguments: DummyModel("$pinTitle1", "$pinDesc1",
+                          //                 'assets/images/pin_1.jpeg'));
+                          //       }),
+                          //     // SizedBox(height: 8),
+                          //     // Padding(
+                          //     //   padding: const EdgeInsets.all(8.0),
+                          //     //   child: Container(
+                          //     //       width: 150,
+                          //     //       child: Text("$pinTitle1 $pinDesc1",
+                          //     //         overflow: TextOverflow.ellipsis,
+                          //     //         maxLines: 2,
+                          //     //       )),
+                          //     // )
+                          //   ],
+                          // ),
+                          // Column(
+                          //   mainAxisAlignment: MainAxisAlignment.start,
+                          //   crossAxisAlignment: CrossAxisAlignment.start,
+                          //   children: [
+                          //     DashboardSlider(
+                          //       imgSrc: "assets/images/pin_2.jpeg",
+                          //       title: "",
+                          //       width: 150,
+                          //       height: 150,
+                          //       margin: EdgeInsets.only(right: 10, bottom: 10),
+                          //       desc: "",
+                          //       press: () {
+                          //         Navigator.pushNamed(context, "detail_positnow_page",
+                          //             arguments: DummyModel("$pinTitle2", "$pinDesc2",
+                          //                 'assets/images/pin_2.jpeg'));
+                          //       },
+                          //     ),
+                          //     // SizedBox(height: 8),
+                          //     // Padding(
+                          //     //   padding: const EdgeInsets.all(8.0),
+                          //     //   child: Container(
+                          //     //       width: 150,
+                          //     //       child: Text("$pinTitle2 $pinDesc2",
+                          //     //         overflow: TextOverflow.ellipsis,
+                          //     //         maxLines: 2,
+                          //     //       )),
+                          //     // )
+                          //   ],
+                          // ),
+                          // Column(
+                          //   mainAxisAlignment: MainAxisAlignment.start,
+                          //   crossAxisAlignment: CrossAxisAlignment.center,
+                          //   children: [
+                          //     DashboardSlider(
+                          //       imgSrc:
+                          //       "assets/images/pin_3.jpeg",
+                          //       title: "",
+                          //       width: 150,
+                          //       height: 150,
+                          //       margin: EdgeInsets.only(right: 10, bottom: 10),
+                          //       desc: "",
+                          //       press: () {
+                          //         Navigator.pushNamed(context, "detail_positnow_page",
+                          //             arguments: DummyModel("$pinTitle3", "$pinDesc3",
+                          //                 'assets/images/pin_3.jpeg'));
+                          //       },
+                          //     ),
+                          //     // SizedBox(height: 8),
+                          //     // Padding(
+                          //     //   padding: const EdgeInsets.all(8.0),
+                          //     //   child: Container(
+                          //     //       width: 150,
+                          //     //       child: Text("$pinTitle3",
+                          //     //       overflow: TextOverflow.ellipsis,
+                          //     //         maxLines: 2,
+                          //     //       )),
+                          //     // )
+                          //   ],
+                          // ),
 
                         ],
                       ),
@@ -599,7 +718,71 @@ class _HomePageState extends State<HomePage> {
   //   )..show();
   // }
 
+  Widget buildContainer() {
 
+    Color gradientStart = Colors.transparent;
+    Color gradientMid = Colors.black12;
+    Color gradientEnd = MyColors.overlaySlider;
+
+    return Consumer<HomeProvider>(
+      builder: (context, prov, _){
+        return ListView.builder(
+            scrollDirection: Axis.vertical,
+            itemCount: prov.bannerArray.length,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              return Container(
+                height: 400,
+                width: 200,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(prov.bannerArray[index].imageUrl),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              );
+            });
+        // return ShaderMask(
+        //   shaderCallback: (rect) {
+        //     return LinearGradient(
+        //       begin: Alignment.topCenter,
+        //       end: Alignment.bottomCenter,
+        //       colors: [gradientStart, gradientMid, gradientEnd],
+        //     ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height - 50));
+        //   },
+        //   blendMode: BlendMode.softLight,
+        //   child: Container(
+        //     decoration: BoxDecoration(
+        //       image: DecorationImage(
+        //         image: ExactAssetImage(item),
+        //         fit: BoxFit.cover,
+        //       ),
+        //     ),
+        //   ),
+        // );
+      },
+    );
+
+    // return ShaderMask(
+    //   shaderCallback: (rect) {
+    //     return LinearGradient(
+    //       begin: Alignment.topCenter,
+    //       end: Alignment.bottomCenter,
+    //       colors: [gradientStart, gradientMid, gradientEnd],
+    //     ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height - 50));
+    //   },
+    //   blendMode: BlendMode.softLight,
+    //   child: Container(
+    //     decoration: BoxDecoration(
+    //       image: DecorationImage(
+    //         image: ExactAssetImage(item),
+    //         fit: BoxFit.cover,
+    //       ),
+    //     ),
+    //   ),
+    // );
+  }
 
 
 

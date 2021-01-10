@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -38,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
             centerTitle: true,
             automaticallyImplyLeading: false,
           ),
-          body: login.isLoading == true ? Center(child: CupertinoActivityIndicator())
+          body: login.isLoading == true ? Center(child: Platform.isIOS ? CupertinoActivityIndicator():CircularProgressIndicator(strokeWidth: 2))
               : ListView(
             children: [
               Container(
