@@ -175,73 +175,93 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 22),
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Podcast",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Sanomat Grab Web',
-                                color: Colors.black,
-                              )),
-                          GestureDetector(
-                            child: Text("Lihat Semua",
-                                style: TextStyle(
-                                    color: MyColors.dnaGreen, fontSize: 14)),
-                            onTap: () {
-                              print("LIHAT SEMUA CLICKED");
-                            },
-                          ),
-                        ],
-                      )),
-                  SizedBox(height: 12),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        PodcastSlider(
-                          imgSrc: "assets/images/spotify_logo.png",
-                          title: "",
-                          width: 130,
-                          height: 130,
-                          margin: EdgeInsets.only(right: 10, bottom: 10),
-                          desc: "",
-                          press: () {
-                            launchSpotify();
-                          },
-                        ),
-                        PodcastSlider(
-                          imgSrc: "assets/images/google_podcast_logo.png",
-                          title: "",
-                          width: 130,
-                          height: 130,
-                          margin: EdgeInsets.only(right: 10, bottom: 10),
-                          desc: "",
-                          press: () {
-                            launchGooglePodcast();
-                          },
-                        ),
-                        PodcastSlider(
-                          imgSrc: "assets/images/apple_podcast_logo.png",
-                          title: "",
-                          width: 130,
-                          height: 130,
-                          margin: EdgeInsets.only(right: 10, bottom: 10),
-                          desc: "",
-                          press: () {
-                            launchApplePodcast();
-                          },
+                  SizedBox(height: 10),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(0),
+                      boxShadow: [
+                        BoxShadow(
+                          offset: Offset(0, 4),
+                          blurRadius: 20,
+                          color: Colors.grey.withOpacity(0.32),
                         ),
                       ],
                     ),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0, right: 10, top: 20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Podcast",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Sanomat Grab Web',
+                                    color: Colors.black,
+                                  )),
+                              GestureDetector(
+                                child: Text("Lihat Semua",
+                                    style: TextStyle(
+                                        color: MyColors.dnaGreen, fontSize: 14)),
+                                onTap: () {
+                                  print("LIHAT SEMUA CLICKED");
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              PodcastSlider(
+                                imgSrc: "assets/images/spotify_logo.png",
+                                title: "",
+                                width: 130,
+                                height: 130,
+                                margin: EdgeInsets.only(right: 10, bottom: 10),
+                                desc: "",
+                                press: () {
+                                  launchSpotify();
+                                },
+                              ),
+                              PodcastSlider(
+                                imgSrc: "assets/images/google_podcast_logo.png",
+                                title: "",
+                                width: 130,
+                                height: 130,
+                                margin: EdgeInsets.only(right: 10, bottom: 10),
+                                desc: "",
+                                press: () {
+                                  launchGooglePodcast();
+                                },
+                              ),
+                              PodcastSlider(
+                                imgSrc: "assets/images/apple_podcast_logo.png",
+                                title: "",
+                                width: 130,
+                                height: 130,
+                                margin: EdgeInsets.only(right: 10, bottom: 10),
+                                desc: "",
+                                press: () {
+                                  launchApplePodcast();
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 14),
+                      ],
+                    ),
                   ),
+
                 ],
               ),
-              SizedBox(height: 20)
+              SizedBox(height: 10)
             ],
           ),
         ),

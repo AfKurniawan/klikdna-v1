@@ -58,7 +58,7 @@ class EventWidget extends StatelessWidget {
                             context, "detail_positnow_page",
                             arguments: DummyModel(
                                 "${prov.eventArray[index].data.title}",
-                                "$text",
+                                "${prov.eventArray[index].data.text}",
                                 "${prov.eventArray[index].imageUrl}"));
                       },
                     ),

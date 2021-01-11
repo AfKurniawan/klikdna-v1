@@ -80,5 +80,7 @@ class MyColors {
 
   static const totalSaldoTileColor = Color(0xffB5CCD5);
 
+  //static const primaryBlack = Color(0xff433F3F);
+
 
 }

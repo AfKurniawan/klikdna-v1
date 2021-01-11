@@ -5,6 +5,7 @@ import 'package:new_klikdna/src/home/models/home_model.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:new_klikdna/src/home/providers/home_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:new_klikdna/src/token/providers/cms_token_provider.dart';
 
 class BannerSlider extends StatefulWidget {
   @override
@@ -23,6 +24,7 @@ class _BannerSliderState extends State<BannerSlider> {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken();
     Size size = MediaQuery.of(context).size;
 
     final porv = Provider.of<HomeProvider>(context, listen: false);
@@ -92,7 +94,7 @@ class _BannerSliderState extends State<BannerSlider> {
 
                 InkWell(
                   onTap: () {
-                    print("LIHAT");
+                    Navigator.pushNamed(context, "semua_promo_page");
                   },
                   child: Container(
                     height: 30,

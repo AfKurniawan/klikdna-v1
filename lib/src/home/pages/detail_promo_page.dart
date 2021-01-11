@@ -3,29 +3,29 @@ import 'dart:io';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:fluttericon/linearicons_free_icons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:native_share/native_share.dart';
 import 'package:new_klikdna/src/dummy/post_it_now_models.dart';
 import 'package:new_klikdna/src/home/widgets/dashboard_slider.dart';
+import 'package:new_klikdna/src/home/widgets/detail_promo_widget.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share/share.dart';
 
-class DetailPostitNowPage extends StatefulWidget {
+class DetailPromoPage extends StatefulWidget {
 
   DummyModel model ;
   static const routeName = 'details';
 
-  DetailPostitNowPage({Key key, this.model}) : super(key: key);
+  DetailPromoPage({Key key, this.model}) : super(key: key);
 
   @override
-  _DetailPostitNowPageState createState() => _DetailPostitNowPageState();
+  _DetailPromoPageState createState() => _DetailPromoPageState();
 }
 
-class _DetailPostitNowPageState extends State<DetailPostitNowPage> {
+class _DetailPromoPageState extends State<DetailPromoPage> {
 
 
   @override
@@ -58,55 +58,19 @@ class _DetailPostitNowPageState extends State<DetailPostitNowPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 10.0, right: 2, top: 0),
-                child: Container(
-                  child: DashboardSlider(
-                    imgSrc:
-                    "${widget.model.image}",
-                    title: "",
-                    margin: EdgeInsets.only(right: 10),
-                    desc: "",
-                    press: () {
+              Container(
+                child: DetailPromoWidget(
+                  svgSrc: "${widget.model.image}",
+                  title: "",
+                  height: 180,
+                  radius: 0,
+                  desc: "",
+                  press: () {
 
-                    },
-                  ),
+                  },
                 ),
               ),
 
-              SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.only(left:12.0, right: 12),
-                child: Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Icon(
-                        LineariconsFree.download
-                      ),
-                      SizedBox(width: 20),
-                      InkWell(
-                        onTap: (){
-                          print("SHAREEEEE");
-
-                          shareImage(context, '${widget.model.image}', '${widget.model.title}\n${widget.model.desc}');
-                          //NativeShare.share({'title':'${widget.model.desc}','url': "", 'image':'https://cdn.pixabay.com/photo/2016/11/29/05/45/astronomy-1867616__340.jpg'});
-                        },
-                        splashColor: MyColors.dnaGreen,
-                        child: Container(
-                          child: Icon(
-                            Icons.share, color: Colors.black54,
-                          ),
-                        ),
-                      ),
-                      Text(
-                        "Salin Text"
-                      )
-                    ],
-                  ),
-                ),
-              ),
               SizedBox(height: 20),
               Container(
                   child: Padding(
@@ -116,19 +80,11 @@ class _DetailPostitNowPageState extends State<DetailPostitNowPage> {
                   )),
 
               SizedBox(height: 20),
-              // Container(
-              //     child: Padding(
-              //       padding: const EdgeInsets.only(left: 12.0, right: 12),
-              //       child: Text("${widget.model.desc}"),
-              // )),
-
               Container(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 12.0, right: 12),
-                    child: HtmlWidget("${widget.model.desc}",
-                      textStyle: TextStyle(fontSize: 14),
-                    ),
-                  )),
+                    child: Text("${widget.model.desc}"),
+              )),
 
 
 

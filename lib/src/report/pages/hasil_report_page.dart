@@ -1,7 +1,6 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:html/parser.dart';
 import 'package:new_klikdna/src/report/models/detail_report_model.dart';
 import 'package:new_klikdna/src/report/providers/detail_report_provider.dart';
@@ -223,8 +222,16 @@ class HasilKamu extends StatefulWidget {
 }
 
 class _HasilKamuState extends State<HasilKamu> {
+
   @override
   Widget build(BuildContext context) {
+    var document;
+    String text;
+    document =
+        parse(widget.model.deskripsi);
+    text = parse(document.body.text)
+        .documentElement
+        .text;
     return SingleChildScrollView(
       physics: NeverScrollableScrollPhysics(),
       child: Padding(
@@ -263,7 +270,7 @@ class _HasilKamuState extends State<HasilKamu> {
                       Text("Berikut ini merupakan hasil tes kamu:",
                           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                       SizedBox(height: 20),
-                      Html(data: widget.model.deskripsiHasil),
+                      Text("$text"),
                       //Text(widget.model.deskripsiHasil),
                       SizedBox(height: 20),
                       Center(
@@ -292,7 +299,7 @@ class _HasilKamuState extends State<HasilKamu> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
-                  child: Html(data: widget.model.deskripsi),
+                  child: Text("$text"),
                 ),
               ),
               SizedBox(height: 30)

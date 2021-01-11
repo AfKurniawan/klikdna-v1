@@ -51,11 +51,10 @@ dependencies:
   lazy_load_scrollview: ^1.1.0
   english_words: ^3.1.5
   dio: ^3.0.10
-  html: ^0.13.3
+  html: ^0.14.0+3
   cached_network_image: ^2.3.1
   ext_storage:
   permission_handler: ^5.0.1+1
-  flutter_html: ^0.8.2
   json_annotation: ^2.4.0
   flutter_launcher_icons: "^0.7.3"
   flutter_downloader: ^1.5.1
@@ -68,6 +67,8 @@ dependencies:
   achievement_view: ^0.2.1
   charts_flutter: ^0.9.0
   fl_chart: ^0.12.0
+  flutter_widget_from_html_core: ^0.5.1+4
+
 
 
   #esys_flutter_share: ^1.0.2
