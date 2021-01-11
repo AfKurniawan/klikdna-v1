@@ -46,10 +46,10 @@ class EventSlider extends StatelessWidget {
           onTap: press,
           child: ClipRRect(
             borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-            child: Image.asset(
+            child: Image.network(
               svgSrc,
               //width: size.width - 40,
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
               height: mediaquery.size.width < 600 ? size.height / 3 : size.height / 2,
               // height: 150,
             ),

@@ -10,18 +10,22 @@ class HomeProvider extends ChangeNotifier {
 
 
 
-  List<ArrayData> mapArray = [];
-  List<ArrayData> lr ;
-  String imagePromo = "";
-  List<Data> myData = [];
-  //List<String> imageUrl = [];
+
+  List<ArrayData> bannerMapArray = [];
   List<ArrayData> bannerArray ;
+
+  List<ArrayData> pinMapArray = [];
+  List<ArrayData> pinArray ;
+
+  List<ArrayData> eventMapArray = [];
+  List<ArrayData> eventArray ;
+
+
   var jsonArray = [];
   var promo ;
-  var rekomendasiArray = [] ;
-  int bannerLenght = 0;
-  int pinId = 11 ;
+
   Future<List<HomeModel>> getHomeContents(BuildContext context) async {
+    Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken();
     var url = AppConstants.GET_HOME_ARTIKEL;
     final prov = Provider.of<CmsTokenProvider>(context, listen: false);
     String accessToken = prov.cmsAccessToken;
@@ -39,18 +43,28 @@ class HomeProvider extends ChangeNotifier {
         promo = Data.fromJson(jsonArray[i]['data']);
         if(promo.categoryId == 4){
           print("PROMOID ${promo.categoryId}");
-          mapArray = jsonArray.map((p) => ArrayData.fromJson(p)).toList();
-          bannerArray = mapArray.where((i) => i.data.categoryId == 4).toList();
-          bannerLenght = bannerArray.length ;
-          print("IMAGE PROMO: ${mapArray[i].imageUrl}");
-          print(" Banner ARRAY LEGHT: $bannerLenght");
+          bannerMapArray = jsonArray.map((p) => ArrayData.fromJson(p)).toList();
+          bannerArray = bannerMapArray.where((i) => i.data.categoryId == 4).toList();
+
+          print("IMAGE PROMO: ${bannerMapArray[i].imageUrl}");
+          print("Banner ARRAY LEGHT: ${bannerArray.length}");
 
         } else if(promo.categoryId == 11) {
+
           print("PROMOID PIN ${promo.categoryId}");
-          mapArray = jsonArray.map((p) => ArrayData.fromJson(p)).toList();
-          bannerArray = mapArray.where((i) => i.data.categoryId == 11).toList();
-          print("IMAGE PIN: ${mapArray[i].imageUrl}");
-          bannerLenght = bannerArray.length;
+          pinMapArray = jsonArray.map((p) => ArrayData.fromJson(p)).toList();
+          pinArray = pinMapArray.where((i) => i.data.categoryId == 11).toList();
+          print("IMAGE PIN: ${pinMapArray[i].imageUrl}");
+          print("PIN ARRAY LEGHT: ${pinArray.length}");
+
+        } else if(promo.categoryId == 10){
+
+          print("PROMOID EVENT ${promo.categoryId}");
+          eventMapArray = jsonArray.map((p) => ArrayData.fromJson(p)).toList();
+          eventArray = eventMapArray.where((i) => i.data.categoryId == 10).toList();
+          print("IMAGE EVENT: ${eventMapArray[i].imageUrl}");
+          print("EVENT ARRAY LENGHT: ${eventArray.length}");
+
         }
 
 

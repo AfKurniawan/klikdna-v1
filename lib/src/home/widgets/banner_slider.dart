@@ -13,6 +13,12 @@ class BannerSlider extends StatefulWidget {
 
 class _BannerSliderState extends State<BannerSlider> {
 
+  final List<String> imgAsset = [
+    "assets/images/slider_1.png",
+    "assets/images/slider_2.png",
+    "assets/images/slider_3.png"
+  ];
+
   int _current = 0;
 
   @override
@@ -20,16 +26,16 @@ class _BannerSliderState extends State<BannerSlider> {
     Size size = MediaQuery.of(context).size;
 
     final porv = Provider.of<HomeProvider>(context, listen: false);
-    //final List<Widget> imageSliders = imgAsset.map((item) => buildContainer(item, size)).toList();
+    final List<Widget> imageSliders = imgAsset.map((item) => buildContainer(item, size)).toList();
 
-    List<Widget> _getIngredients = porv.bannerArray.map((i) => buildContainer(porv.bannerArray[_current].imageUrl, size)).toList();
+    List<Widget> getBanner = porv.bannerArray.map((i) => buildContainer(porv.bannerArray[_current].imageUrl, size)).toList();
 
     return Stack(
         children: [
       Container(
 
         child: CarouselSlider(
-          items: _getIngredients,
+          items: getBanner,
           options: CarouselOptions(
               autoPlay: true,
               enlargeCenterPage: true,
@@ -58,8 +64,8 @@ class _BannerSliderState extends State<BannerSlider> {
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: prov.bannerArray.map((url) {
-                    int index = prov.bannerArray.indexOf(url);
+                  children: imgAsset.map((url) {
+                    int index = imgAsset.indexOf(url);
                     if (_current == index) {
                       return Container(
                         width: 18.0,
