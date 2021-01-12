@@ -24,7 +24,6 @@ class _BannerSliderState extends State<BannerSlider> {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken();
     Size size = MediaQuery.of(context).size;
 
     final porv = Provider.of<HomeProvider>(context, listen: false);
@@ -139,7 +138,7 @@ class _BannerSliderState extends State<BannerSlider> {
       },
       blendMode: BlendMode.softLight,
       child: Container(
-          child: Image.network(item, fit: BoxFit.fill))
+          child: CachedNetworkImage(imageUrl: item, fit: BoxFit.fill))
     );
 
     // return ShaderMask(

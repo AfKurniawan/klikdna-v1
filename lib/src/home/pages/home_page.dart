@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -38,30 +39,8 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken();
-    Provider.of<HomeProvider>(context, listen: false).getHomeContents(context);
     super.initState();
   }
-
-  String eventDesc2 =
-      "Kabar gembira! @klikdna kembali lagi nih dengan “Health Seminar Series” yang kali ini bersama dr. Bona, Sp. KFR\n\nMinggu, 20 Desember 2020\n\nSTAY TUNED TERUS UNTUK INFO LENGKAPNYA 🔥🔥\n\n\n#KlikDNA\n#Bioinformatics\n#Biomolecular\n#CancerMarker\n#Genetics\n#Genomics\n#DNAku\n#DNAsional\n#UntukIndonesia\n#MandiriUntukNegeri\n#IamKlikDNA\n#KlikDNAHealthSeriesSeminar";
-  String eventDesc1 =
-      "Kenali Potensi Olahraga melalui Profil Genetik\n\nTahukah kamu? Setiap orang memiliki potensi olahraga yang berbeda berdasarkan profil genetik masing-masing.\nIngin tahu aktivitas olahraga apa yang tepat untuk daya tahan dan kesehatan tubuhmu?\nIkuti Health Seminar Series KlikDNA yang akan diadakan pada:\n\n🗓️ Minggu, 20 Desember 2020\n\n⏰ 14.00-15.30 WIB\n\nSilahkan mendaftar melalui link berikut:\nbit.ly/KlikDNASportgenomik20";
-
-  String eventTitle1 = "Kenali Potensi Olahraga melalui Profil Genetik";
-  String eventTitle2 = "SAVE THE DATE!";
-
-  String pinTitle1 = "Cara Mendeteksi Kanker Payudara Sedari Dini";
-  String pinDesc1 =
-      "#octoberbreastcancerawareness\n\n\n1. SADARI\nPemeriksaan ini dilakukan agar semua perubahan yang mengarah ke kondisi serius bisa segera ditangani. Waktu terbaik untuk melakukan SADARI adalah beberapa hari setelah menstruasi kamu berakhir.\n\n2. SADANIS\nPemeriksaan ini diperlukan untuk menentukan apakah benjolan dan penyebab perubahan merupakan tanda atau gejala awal dari kanker payudara. Contohnya seperti pemeriksaan fisik oleh dokter, mamografi, MRI, USG, atau biopsi.\n\n3. MAMOGRAFI\nIni merupakan salah satu pemeriksaan penunjang yang dilakukan untuk memeriksa dan mendeteksi bentuk kelainan pada payudara. Jika kamu wanita berusia 40 tahun keatas atau memiliki risiko genetik kanker payudara disarankan melakukan mamografi secara berkala.\n“Cancer can be prevented”\n“Early detection saves lives” 🎀\n\n#KlikDNAPeduliKankerPayudara\n#KlikDNA\n#Bioinformatics\n#Biomolecular\n#CancerMarker\n#Genetics\n#Genomics\n#DNAku\n#DNAsional\n#UntukIndonesia\n#MandiriUntukNegeri\n#IamKlikDNA\n#BreastCancerAwarenessMonth\n#BulanKesadaranKankerPayudara\n#KankerPayudara\n#BreastCancerAwareness\n#EarlyDetectionSavesLives";
-
-  String pinTitle2 = "Rosalind Franklin";
-  String pinDesc2 =
-      "Rosalind Franklin, seorang ilmuan perempuan asal Inggris ini adalah ‘Penemu’ struktur DNA lho.\nPenelitian yang dilakukannya memiliki kontribusi penting dalam struktur molekular dengan penggambaran DNA dalam bentuk double helix.\n\n#KlikDNA\n#Bioinformatics\n#Biomolecular\n#CancerMarker\n#Genetics\n#Genomics\n#DNAku\n#DNAsional\n#UntukIndonesia\n#MandiriUntukNegeri\n#IamKlikDNA\n#RosalindFranklin\n#NobelPrize\n#DNA\n#DNAHelix";
-
-  String pinTitle3 =
-      "Apa yang akan terjadi jika tubuh kamu terhidrasi dengan baik?";
-  String pinDesc3 =
-      "\n- Cairan tubuhmu menjadi seimbang\n- Energi dan fungsi otakmu akan meningkat\n- Fungsi ususmu terjaga dan terhindar dari sembelit\n- Laju metabolisme mu meningkat\n- Risiko terkena batu ginjal akan berkurang\n\nYuk cek seberapa terhidrasi kah kamu\n🙌🏻\n\n#KlikDNA\n#Bioinformatics\n#Biomolecular\n#CancerMarker\n#Genetics\n#Genomics\n#DNAku\n#DNAsional\n#UntukIndonesia\n#MandiriUntukNegeri\n#IamKlikDNA\n#AirPutih\n#HidrasiTubuh\n#HidrasiTubuhmu\n#HidrasiTubuhLebihBaik";
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +48,7 @@ class _HomePageState extends State<HomePage> {
     var mediaquery = MediaQuery.of(context);
     Provider.of<ArtikelProvider>(context, listen: false)
         .getArtikel(context, context.watch<TokenProvider>().accessToken);
+    Provider.of<HomeProvider>(context, listen: false).getHomeContents(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: const SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.light,
@@ -76,194 +56,198 @@ class _HomePageState extends State<HomePage> {
       ),
       child: Scaffold(
         //appBar:  myApbar(context),
-        body: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Stack(
+        body: Consumer<HomeProvider>(
+          builder: (context, prov, _){
+            return prov.isLoading == true ? Platform.isIOS ? Center(child: CupertinoActivityIndicator()) : Center(child: CircularProgressIndicator(strokeWidth: 2)) : SingleChildScrollView(
+              child: Column(
                 children: <Widget>[
-                  BannerSlider(),
-                ],
-              ),
-              Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(0),
-                      boxShadow: [
-                        BoxShadow(
-                          offset: Offset(0, 4),
-                          blurRadius: 20,
-                          color: Colors.grey.withOpacity(0.32),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 10.0, right: 10, top: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("Post it now",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Sanomat Grab Web',
-                                    color: Colors.black,
-                                  )),
-                              GestureDetector(
-                                child: Text("Lihat Semua",
-                                    style: TextStyle(
-                                        color: MyColors.dnaGreen,
-                                        fontSize: 14)),
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                      context, "post_it_now_page");
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: 12),
-                        PinWidget(),
-                      ],
-                    ),
+                  Stack(
+                    children: <Widget>[
+                      BannerSlider(),
+                    ],
                   ),
-                  SizedBox(height: 10),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(0),
-                      boxShadow: [
-                        BoxShadow(
-                          offset: Offset(0, 4),
-                          blurRadius: 20,
-                          color: Colors.grey.withOpacity(0.32),
+                  Column(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(0),
+                          boxShadow: [
+                            BoxShadow(
+                              offset: Offset(0, 4),
+                              blurRadius: 20,
+                              color: Colors.grey.withOpacity(0.32),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 10.0, right: 10, top: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("Event",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Sanomat Grab Web',
-                                    color: Colors.black,
-                                  )),
-                              GestureDetector(
-                                child: Text("Lihat Semua",
-                                    style: TextStyle(
-                                        color: MyColors.dnaGreen, fontSize: 14)),
-                                onTap: () {
-                                  print("LIHAT SEMUA CLICKED");
-                                },
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 10.0, right: 10, top: 20),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Post it now",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Sanomat Grab Web',
+                                        color: Colors.black,
+                                      )),
+                                  GestureDetector(
+                                    child: Text("Lihat Semua",
+                                        style: TextStyle(
+                                            color: MyColors.dnaGreen,
+                                            fontSize: 14)),
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                          context, "post_it_now_page");
+                                    },
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                            SizedBox(height: 12),
+                            PinWidget(),
+                          ],
                         ),
-                        SizedBox(height: 10),
-                        EventWidget(),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(0),
-                      boxShadow: [
-                        BoxShadow(
-                          offset: Offset(0, 4),
-                          blurRadius: 20,
-                          color: Colors.grey.withOpacity(0.32),
+                      ),
+                      SizedBox(height: 10),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(0),
+                          boxShadow: [
+                            BoxShadow(
+                              offset: Offset(0, 4),
+                              blurRadius: 20,
+                              color: Colors.grey.withOpacity(0.32),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10.0, right: 10, top: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("Podcast",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Sanomat Grab Web',
-                                    color: Colors.black,
-                                  )),
-                              GestureDetector(
-                                child: Text("Lihat Semua",
-                                    style: TextStyle(
-                                        color: MyColors.dnaGreen, fontSize: 14)),
-                                onTap: () {
-                                  print("LIHAT SEMUA CLICKED");
-                                },
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 10.0, right: 10, top: 20),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Event",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Sanomat Grab Web',
+                                        color: Colors.black,
+                                      )),
+                                  GestureDetector(
+                                    child: Text("Lihat Semua",
+                                        style: TextStyle(
+                                            color: MyColors.dnaGreen, fontSize: 14)),
+                                    onTap: () {
+                                      print("LIHAT SEMUA CLICKED");
+                                    },
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                            SizedBox(height: 10),
+                            EventWidget(),
+                          ],
                         ),
-                        SizedBox(height: 10),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: [
-                              PodcastSlider(
-                                imgSrc: "assets/images/spotify_logo.png",
-                                title: "",
-                                width: 130,
-                                height: 130,
-                                margin: EdgeInsets.only(right: 10, bottom: 10),
-                                desc: "",
-                                press: () {
-                                  launchSpotify();
-                                },
-                              ),
-                              PodcastSlider(
-                                imgSrc: "assets/images/google_podcast_logo.png",
-                                title: "",
-                                width: 130,
-                                height: 130,
-                                margin: EdgeInsets.only(right: 10, bottom: 10),
-                                desc: "",
-                                press: () {
-                                  launchGooglePodcast();
-                                },
-                              ),
-                              PodcastSlider(
-                                imgSrc: "assets/images/apple_podcast_logo.png",
-                                title: "",
-                                width: 130,
-                                height: 130,
-                                margin: EdgeInsets.only(right: 10, bottom: 10),
-                                desc: "",
-                                press: () {
-                                  launchApplePodcast();
-                                },
-                              ),
-                            ],
-                          ),
+                      ),
+                      SizedBox(height: 10),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(0),
+                          boxShadow: [
+                            BoxShadow(
+                              offset: Offset(0, 4),
+                              blurRadius: 20,
+                              color: Colors.grey.withOpacity(0.32),
+                            ),
+                          ],
                         ),
-                        SizedBox(height: 14),
-                      ],
-                    ),
-                  ),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10.0, right: 10, top: 20),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Podcast",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Sanomat Grab Web',
+                                        color: Colors.black,
+                                      )),
+                                  GestureDetector(
+                                    child: Text("Lihat Semua",
+                                        style: TextStyle(
+                                            color: MyColors.dnaGreen, fontSize: 14)),
+                                    onTap: () {
+                                      print("LIHAT SEMUA CLICKED");
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: [
+                                  PodcastSlider(
+                                    imgSrc: "assets/images/spotify_logo.png",
+                                    title: "",
+                                    width: 130,
+                                    height: 130,
+                                    margin: EdgeInsets.only(right: 10, bottom: 10),
+                                    desc: "",
+                                    press: () {
+                                      launchSpotify();
+                                    },
+                                  ),
+                                  PodcastSlider(
+                                    imgSrc: "assets/images/google_podcast_logo.png",
+                                    title: "",
+                                    width: 130,
+                                    height: 130,
+                                    margin: EdgeInsets.only(right: 10, bottom: 10),
+                                    desc: "",
+                                    press: () {
+                                      launchGooglePodcast();
+                                    },
+                                  ),
+                                  PodcastSlider(
+                                    imgSrc: "assets/images/apple_podcast_logo.png",
+                                    title: "",
+                                    width: 130,
+                                    height: 130,
+                                    margin: EdgeInsets.only(right: 10, bottom: 10),
+                                    desc: "",
+                                    press: () {
+                                      launchApplePodcast();
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 14),
+                          ],
+                        ),
+                      ),
 
+                    ],
+                  ),
+                  SizedBox(height: 10)
                 ],
               ),
-              SizedBox(height: 10)
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

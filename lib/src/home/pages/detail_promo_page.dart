@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:fluttericon/linearicons_free_icons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
@@ -83,8 +84,10 @@ class _DetailPromoPageState extends State<DetailPromoPage> {
               Container(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 12.0, right: 12),
-                    child: Text("${widget.model.desc}"),
-              )),
+                    child: HtmlWidget("${widget.model.desc}",
+                      textStyle: TextStyle(fontSize: 14),
+                    ),
+                  )),
 
 
 

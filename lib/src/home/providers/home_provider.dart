@@ -23,9 +23,10 @@ class HomeProvider extends ChangeNotifier {
 
   var jsonArray = [];
   var promo ;
+  bool isLoading ;
 
   Future<List<HomeModel>> getHomeContents(BuildContext context) async {
-    Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken();
+    isLoading = true ;
     var url = AppConstants.GET_HOME_ARTIKEL;
     final prov = Provider.of<CmsTokenProvider>(context, listen: false);
     String accessToken = prov.cmsAccessToken;
@@ -38,7 +39,7 @@ class HomeProvider extends ChangeNotifier {
     if(response.statusCode == 200){
       var responseJson = json.decode(response.body);
       jsonArray = responseJson['data'] as List;
-
+      isLoading = false ;
       for (int i = 0; i < jsonArray.length; i++) {
         promo = Data.fromJson(jsonArray[i]['data']);
         if(promo.categoryId == 4){

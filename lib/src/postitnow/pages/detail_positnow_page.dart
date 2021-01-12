@@ -79,13 +79,11 @@ class _DetailPostitNowPageState extends State<DetailPostitNowPage> {
                 padding: const EdgeInsets.only(left:12.0, right: 12),
                 child: Container(
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Icon(
-                        LineariconsFree.download
-                      ),
-                      SizedBox(width: 20),
+                      // Icon(
+                      //   LineariconsFree.download
+                      // ),
                       InkWell(
                         onTap: (){
                           print("SHAREEEEE");
@@ -100,8 +98,15 @@ class _DetailPostitNowPageState extends State<DetailPostitNowPage> {
                           ),
                         ),
                       ),
-                      Text(
-                        "Salin Text"
+                      GestureDetector(
+                        onTap: (){
+                          print("COPY");
+                        },
+                        child: Text(
+                          "Salin", style: TextStyle(
+                          color: MyColors.dnaGreen
+                        ),
+                        ),
                       )
                     ],
                   ),

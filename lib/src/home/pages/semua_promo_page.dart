@@ -124,12 +124,17 @@ class _SemuaPromoPageState extends State<SemuaPromoPage> {
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         Container(
-                                          child: Align(
-                                            child: Text(
-                                              "$text"
+                                          child: Text(
+                                            "$text",
+                                            maxLines: 3,
+                                            overflow: TextOverflow.ellipsis,
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.normal,
+                                              fontSize: 12,
                                             ),
-                                            alignment: Alignment.center,
                                           ),
+
                                         ),
                                         SizedBox(height: 14),
                                       ],

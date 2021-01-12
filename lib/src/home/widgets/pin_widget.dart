@@ -55,7 +55,7 @@ class PinWidget extends StatelessWidget {
                             Navigator.pushNamed(context, "detail_positnow_page",
                                 arguments: DummyModel(
                                     "${prov.pinArray[index].data.title}",
-                                    "$text",
+                                    "${prov.pinArray[index].data.text}",
                                     '${prov.pinArray[index].imageUrl}'));
                           }),
                       SizedBox(height: 9),
