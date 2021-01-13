@@ -48,7 +48,7 @@ class DashboardSlider extends StatelessWidget {
             borderRadius: BorderRadius.circular(0),
             child: Image.network(
               imgSrc,
-              fit: BoxFit.cover,
+              fit: BoxFit.fitWidth,
             ),
           ),
         ),

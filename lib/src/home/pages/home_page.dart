@@ -102,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                                             fontSize: 14)),
                                     onTap: () {
                                       Navigator.pushNamed(
-                                          context, "post_it_now_page");
+                                          context, "semua_pin_page");
                                     },
                                   ),
                                 ],

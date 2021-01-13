@@ -199,7 +199,7 @@ class DetailReportProvider extends ChangeNotifier {
 
   }
 
-  onCheckedValue(String text) async {
+  onCheckedValuexxx(String text) async {
     searchResult.clear();
 
     print("CHECKED VALUE: $text");

@@ -9,8 +9,6 @@ import 'dart:convert';
 class HomeProvider extends ChangeNotifier {
 
 
-
-
   List<ArrayData> bannerMapArray = [];
   List<ArrayData> bannerArray ;
 
@@ -60,9 +58,12 @@ class HomeProvider extends ChangeNotifier {
 
         } else if(promo.categoryId == 10){
 
+
+
           print("PROMOID EVENT ${promo.categoryId}");
           eventMapArray = jsonArray.map((p) => ArrayData.fromJson(p)).toList();
           eventArray = eventMapArray.where((i) => i.data.categoryId == 10).toList();
+          eventArray.sort((a, b) => a.data.createdAt.compareTo(b.data.createdAt));
           print("IMAGE EVENT: ${eventMapArray[i].imageUrl}");
           print("EVENT ARRAY LENGHT: ${eventArray.length}");
 

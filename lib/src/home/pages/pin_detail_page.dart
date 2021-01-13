@@ -6,35 +6,42 @@ import 'package:flutter/services.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:fluttericon/linearicons_free_icons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:native_share/native_share.dart';
 import 'package:new_klikdna/src/dummy/post_it_now_models.dart';
 import 'package:new_klikdna/src/home/widgets/dashboard_slider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
+import 'package:new_klikdna/widgets/my_appbar.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share/share.dart';
+import 'package:http/http.dart' as http;
 
-class DetailPostitNowPage extends StatefulWidget {
+class PinDetailPage extends StatefulWidget {
 
   DummyModel model ;
   static const routeName = 'details';
 
-  DetailPostitNowPage({Key key, this.model}) : super(key: key);
+  PinDetailPage({Key key, this.model}) : super(key: key);
 
   @override
-  _DetailPostitNowPageState createState() => _DetailPostitNowPageState();
+  _PinDetailPageState createState() => _PinDetailPageState();
 }
 
-class _DetailPostitNowPageState extends State<DetailPostitNowPage> {
+class _PinDetailPageState extends State<PinDetailPage> {
 
 
   @override
   Widget build(BuildContext context) {
+    var document;
+    String text;
+    document = parse(widget.model.desc);
+    text = parse(document.body.text).documentElement.text;
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
         title: Text(
-          "Kembali",
+          "Post It Now",
           style: TextStyle(fontSize: 14),
         ),
         elevation: 0,
@@ -79,49 +86,44 @@ class _DetailPostitNowPageState extends State<DetailPostitNowPage> {
                 padding: const EdgeInsets.only(left:12.0, right: 12),
                 child: Container(
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      // Icon(
-                      //   LineariconsFree.download
-                      // ),
+
                       InkWell(
                         onTap: (){
                           print("SHAREEEEE");
-
-                          shareImage(context, '${widget.model.image}', '${widget.model.title}\n${widget.model.desc}');
+                          shareImage(context, '${widget.model.image}', '$text');
                           //NativeShare.share({'title':'${widget.model.desc}','url': "", 'image':'https://cdn.pixabay.com/photo/2016/11/29/05/45/astronomy-1867616__340.jpg'});
                         },
                         splashColor: MyColors.dnaGreen,
                         child: Container(
                           child: Icon(
                             Icons.share, color: Colors.black54,
+                            size: 25,
                           ),
                         ),
                       ),
+                      SizedBox(width: 20),
                       GestureDetector(
                         onTap: (){
                           print("COPY");
-                          copyText("${widget.model.title}\n${widget.model.desc}");
+                          copyText("$text");
                         },
-                        child: Text(
-                          "Salin", style: TextStyle(
-                          color: MyColors.dnaGreen
-                        ),
-                        ),
+                        child: Image.asset("assets/icons/copy_icon.png", height: 25),
                       )
                     ],
                   ),
                 ),
               ),
-              SizedBox(height: 20),
-              Container(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 12.0, right: 12),
-                    child: Text("${widget.model.title}", style:
-                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  )),
+              SizedBox(height: 40),
+              // Container(
+              //     child: Padding(
+              //       padding: const EdgeInsets.only(left: 12.0, right: 12),
+              //       child: Text("${widget.model.title}", style:
+              //         TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              //     )),
 
-              SizedBox(height: 20),
+              //SizedBox(height: 20),
               // Container(
               //     child: Padding(
               //       padding: const EdgeInsets.only(left: 12.0, right: 12),
@@ -165,29 +167,16 @@ class _DetailPostitNowPageState extends State<DetailPostitNowPage> {
   }
 
   Future<File> shareImage(BuildContext context, String path, String desc) async {
-    final byteData = await rootBundle.load('$path');
+
+
+    final response = await http.get("$path");
     final Directory tempo = await getTemporaryDirectory();
     final File imageFile = File('${tempo.path}/sharedImages.jpg');
-    await imageFile.writeAsBytes(byteData.buffer.asUint8List(
-        byteData.offsetInBytes, byteData.lengthInBytes));
-    Share.shareFiles(['${tempo.path}/sharedImages.jpg']);
+    imageFile.writeAsBytesSync(response.bodyBytes);
 
     if(Platform.isIOS){
       Share.shareFiles(['${tempo.path}/sharedImages.jpg']);
-      Clipboard.setData(new ClipboardData(text: "$desc"))
-          .then((result) {
-
-        Fluttertoast.showToast(
-            msg: "Text yang akan dibagikan sudah dicopy, tempel pada caption anda",
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 2,
-            backgroundColor: Colors.black,
-            textColor: Colors.white,
-            fontSize: 16.0
-        );
-
-      });
+      copyText(desc);
     } else {
       Share.shareFiles(['${tempo.path}/sharedImages.jpg'], text: '$desc');
     }
@@ -195,3 +184,5 @@ class _DetailPostitNowPageState extends State<DetailPostitNowPage> {
     return imageFile;
   }
 }
+
+

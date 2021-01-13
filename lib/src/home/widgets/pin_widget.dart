@@ -21,7 +21,7 @@ class PinWidget extends StatelessWidget {
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               shrinkWrap: true,
-              itemCount: 3,
+              itemCount: 5,
               itemBuilder: (context, index) {
                 var document;
                 String text;
@@ -52,10 +52,11 @@ class PinWidget extends StatelessWidget {
                           margin: EdgeInsets.only(right: 10, left: 10),
                           desc: "",
                           press: () {
-                            Navigator.pushNamed(context, "detail_positnow_page",
+                            Navigator.pushNamed(context, "pin_detail_page",
                                 arguments: DummyModel(
                                     "${prov.pinArray[index].data.title}",
-                                    "${prov.pinArray[index].data.text}",
+                                    //"${prov.pinArray[index].data.text}",
+                                    "$text",
                                     '${prov.pinArray[index].imageUrl}'));
                           }),
                       SizedBox(height: 9),
