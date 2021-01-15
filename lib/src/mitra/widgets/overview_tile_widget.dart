@@ -162,16 +162,6 @@ class OverViewTileWidget extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Satu",
-                                  overflow: TextOverflow.clip,
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w300
-                                  ),
-                                ),
-                                SizedBox(height: 5),
                                 Text(prov.vtimone == null ? "" : "${prov.vtimone}",
                                   overflow: TextOverflow.clip,
                                   maxLines: 1,
@@ -186,7 +176,7 @@ class OverViewTileWidget extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Dua",
+                                Text("Kiri",
                                   overflow: TextOverflow.clip,
                                   maxLines: 1,
                                   style: TextStyle(
@@ -215,7 +205,7 @@ class OverViewTileWidget extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text("Dua",
+                                Text("Kiri",
                                   overflow: TextOverflow.clip,
                                   maxLines: 1,
                                   style: TextStyle(
@@ -239,7 +229,7 @@ class OverViewTileWidget extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Satu",
+                                Text("Kanan",
                                   overflow: TextOverflow.clip,
                                   maxLines: 1,
                                   style: TextStyle(
