@@ -17,7 +17,7 @@ class _KitService2ItemWidgetState extends State<KitService2ItemWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 16, right: 16, bottom: 16),
+      margin: EdgeInsets.only(left: 16, right: 16, bottom: 16, top: 20),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
@@ -90,7 +90,7 @@ class _KitService2ItemWidgetState extends State<KitService2ItemWidget> {
                                   : widget.model.serviceName == "SPORT" ? MyColors.sportBlue
                                   : widget.model.serviceName == "DIET" ? MyColors.dietGreen
                                   : widget.model.serviceName == "SKIN" ? MyColors.skinPink
-                                  : MyColors.dnaGreen
+                                  : Color(0xffff69f2)
                           )),
                       Container(
                         width: MediaQuery.of(context).size.width -180,

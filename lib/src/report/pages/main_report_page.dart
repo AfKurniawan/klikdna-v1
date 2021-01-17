@@ -61,177 +61,169 @@ class _ReportPageState extends State<ReportPage> {
               child: Platform.isIOS
                   ? CupertinoActivityIndicator()
                   : CircularProgressIndicator(strokeWidth: 2))
-          : Stack(
-              children: <Widget>[
-                Container(
-                  //color: MyColors.dnaGreen,
-                  height: 200,
-                  decoration: BoxDecoration(
-                    color: MyColors.dnaGreen,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 18.0, right: 18),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Consumer<AccountProvider>(
-                              builder: (context, prov, _) {
-                                return Container(
-                                  height: 80,
-                                  //color: Colors.blue,
-                                  width:
-                                      MediaQuery.of(context).size.width - 100,
-                                  child: Center(
-                                    child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text("Hello",
+          : SingleChildScrollView(
+            child: Stack(
+                children: <Widget>[
+                  Container(
+                    //color: MyColors.dnaGreen,
+                    height: 200,
+                    decoration: BoxDecoration(
+                      color: MyColors.dnaGreen,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 18.0, right: 18),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Consumer<AccountProvider>(
+                                builder: (context, prov, _) {
+                                  return Container(
+                                    height: 80,
+                                    //color: Colors.blue,
+                                    width:
+                                        MediaQuery.of(context).size.width - 100,
+                                    child: Center(
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text("Hello",
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w300)),
+                                            Text(
+                                              "${prov.name}",
+                                              maxLines: 2,
+                                              overflow: TextOverflow.clip,
                                               style: TextStyle(
                                                   color: Colors.white,
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w300)),
-                                          Text(
-                                            "${prov.name}",
-                                            maxLines: 2,
-                                            overflow: TextOverflow.clip,
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 24,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                          Text("ini dashboard report DNA kamu",
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w300)),
-                                        ],
+                                                  fontSize: 24,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                            Text("ini dashboard report DNA kamu",
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w300)),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                );
-                              },
-                            ),
-                            Consumer<PatientCardProvider>(
-                              builder: (context, model, _) {
-                                return ClipRRect(
-                                    borderRadius: BorderRadius.circular(50),
-                                    child: model.photoView == null
-                                        ? Image.asset(
-                                            "assets/images/no_image.png",
-                                            height: 62,
-                                            width: 62,
-                                            fit: BoxFit.cover)
-                                        : Image.memory(
-                                            model.photoView,
-                                            width: 62,
-                                            fit: BoxFit.cover,
-                                            height: 62,
-                                            // height: 150,
-                                          ));
-                              },
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SingleChildScrollView(
-                  padding: EdgeInsets.only(top: 170),
-                  child: Container(
-                      padding: EdgeInsets.only(top: 20),
-                      alignment: Alignment.topLeft,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(24),
-                              topRight: Radius.circular(24))),
-                      child: Consumer<ReportProvider>(
-                        builder: (context, sample, _) {
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, bottom: 30),
-                                  child: Text("Pilih Pengguna",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                          color: MyColors.dnaGrey))),
-                              buildListMember(width, prov),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 20.0, right: 20),
-                                child: ButtonIconWidget(
-                                  myIcon: Icon(LineariconsFree.download,
-                                      color: Colors.white),
-                                  //myIcon: Image.asset("assets/icons/download_icon.png"),
-                                  btnText: "Download Report",
-                                  color: MyColors.dnaGreen,
-                                  btnAction: () {
-                                    Provider.of<ReportProvider>(context,
-                                            listen: false)
-                                        .showModalDownload(context);
-                                  },
-                                ),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 20, top: 10),
-                                  child: Text("Report Kamu",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                          color: MyColors.dnaGrey))),
-                              ListView.builder(
-                                      scrollDirection: Axis.vertical,
-                                      itemCount: sample.listDetail.length,
-                                      shrinkWrap: true,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      itemBuilder: (context, index) {
-                                        return KitServiceItemWidget(
-                                            model: sample.listDetail
-                                                .elementAt(index));
-                                      }),
-                              Consumer<ReportProvider>(
-                                builder: (context, sample, _) {
-                                  return buildReportList(width, sample);
+                                  );
                                 },
                               ),
+                              Consumer<PatientCardProvider>(
+                                builder: (context, model, _) {
+                                  return ClipRRect(
+                                      borderRadius: BorderRadius.circular(50),
+                                      child: model.photoView == null
+                                          ? Image.asset(
+                                              "assets/images/no_image.png",
+                                              height: 62,
+                                              width: 62,
+                                              fit: BoxFit.cover)
+                                          : Image.memory(
+                                              model.photoView,
+                                              width: 62,
+                                              fit: BoxFit.cover,
+                                              height: 62,
+                                              // height: 150,
+                                            ));
+                                },
+                              )
                             ],
-                          );
-                        },
-                      )),
-                ),
-              ],
-            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SingleChildScrollView(
+                    physics: NeverScrollableScrollPhysics(),
+                    padding: EdgeInsets.only(top: 170),
+                    child: Container(
+                        padding: EdgeInsets.only(top: 20),
+                        height: MediaQuery.of(context).size.height + 200,
+                        //alignment: Alignment.topLeft,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(24),
+                                topRight: Radius.circular(24))),
+                        child: Consumer<ReportProvider>(
+                          builder: (context, sample, _) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 20, bottom: 30),
+                                    child: Text("Pilih Pengguna",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            color: MyColors.dnaGrey))),
+                                buildListMember(width, prov),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 20.0, right: 20),
+                                  child: ButtonIconWidget(
+                                    myIcon: Icon(LineariconsFree.download,
+                                        color: Colors.white),
+                                    //myIcon: Image.asset("assets/icons/download_icon.png"),
+                                    btnText: "Download Report",
+                                    color: MyColors.dnaGreen,
+                                    btnAction: () {
+                                      Provider.of<ReportProvider>(context,
+                                              listen: false)
+                                          .showModalDownload(context);
+                                    },
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Padding(
+                                    padding:
+                                        const EdgeInsets.only(left: 20, top: 10),
+                                    child: Text("Report Kamu",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            color: MyColors.dnaGrey))),
+                                ListView.builder(
+                                        scrollDirection: Axis.vertical,
+                                        itemCount: sample.listDetail.length,
+                                        shrinkWrap: true,
+                                        physics: NeverScrollableScrollPhysics(),
+                                        itemBuilder: (context, index) {
+                                          return KitServiceItemWidget(
+                                              model: sample.listDetail
+                                                  .elementAt(index));
+                                        }),
+                                Consumer<ReportProvider>(
+                                  builder: (context, sample, _) {
+                                    return buildReportList(width, sample);
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        )),
+                  ),
+                ],
+              ),
+          ),
     );
   }
-
-  // ListView buildReportList(ReportProvider sample) {
-  //   return ListView.builder(
-  //       scrollDirection: Axis.vertical,
-  //       itemCount: sample.listDetail2.length,
-  //       shrinkWrap: true,
-  //       physics: NeverScrollableScrollPhysics(),
-  //       itemBuilder: (context, index) {
-  //         return KitService2ItemWidget(
-  //             model: sample.listDetail2.elementAt(index));
-  //       });
-  // }
 
   Widget buildReportList(double width, ReportProvider sample) {
     return FutureBuilder(
