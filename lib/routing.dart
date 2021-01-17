@@ -4,14 +4,13 @@ import 'package:new_klikdna/src/asuransi/pages/add_asuransi_page.dart';
 import 'package:new_klikdna/src/asuransi/pages/asuransi_page.dart';
 import 'package:new_klikdna/src/asuransi/pages/edit_asuransi_page.dart';
 import 'package:new_klikdna/src/dummy/pages/dummy_chart_page.dart';
-import 'package:new_klikdna/src/foodmeter/models/detail_food_meter_model.dart';
 import 'package:new_klikdna/src/foodmeter/pages/detail_food_meter_page.dart';
 import 'package:new_klikdna/src/foodmeter/pages/food_meter_page.dart';
 import 'package:new_klikdna/src/home/pages/pin_detail_page.dart';
 import 'package:new_klikdna/src/home/pages/detail_promo_page.dart';
+import 'package:new_klikdna/src/home/pages/semua_event_page.dart';
 import 'package:new_klikdna/src/home/pages/semua_pin_page.dart';
 import 'package:new_klikdna/src/home/pages/semua_promo_page.dart';
-import 'package:new_klikdna/src/home/widgets/detail_promo_widget.dart';
 import 'package:new_klikdna/src/login/pages/login_page.dart';
 import 'package:new_klikdna/src/lorem_ipsum/pages/lorem_ipsum_page.dart';
 import 'package:new_klikdna/src/main/pages/main_page.dart';
@@ -160,6 +159,10 @@ class Routing {
 
       case "pin_detail_page":
         return PageTransition(child: PinDetailPage(model: settings.arguments), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
+        break;
+
+      case "semua_event_page":
+        return PageTransition(child: SemuaEventPage(), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
         break;
 
 

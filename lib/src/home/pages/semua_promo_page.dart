@@ -92,7 +92,7 @@ class _SemuaPromoPageState extends State<SemuaPromoPage> {
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             DetailPromoWidget(
                               svgSrc:
@@ -114,33 +114,39 @@ class _SemuaPromoPageState extends State<SemuaPromoPage> {
                             SizedBox(height: 11),
                             Padding(
                               padding:
-                              const EdgeInsets.only(left: 12.0),
-                              child: Container(
-                                  width: 300,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 0, right: 10),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          child: Text(
-                                            "$text",
-                                            maxLines: 3,
-                                            overflow: TextOverflow.ellipsis,
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.normal,
-                                              fontSize: 12,
-                                            ),
+                              const EdgeInsets.only(bottom: 12),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Container(
+                                      width: 80,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 10, right: 0),
+                                        child: Text(
+                                          "$text",
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
                                           ),
-
                                         ),
-                                        SizedBox(height: 14),
-                                      ],
+                                        ),
+                                      ),
+                                  Text(
+                                    "Lihat Detail",
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 12,
+                                      color: Colors.grey
                                     ),
-                                  )),
-                            ),
+                                  ),
+                                ],
+                              )),
+
                           ],
                         ),
                       );

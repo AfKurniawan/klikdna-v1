@@ -57,6 +57,7 @@ class Data {
   String image;
   int categoryId;
   int status;
+  String doDate;
   String createdAt;
   String updatedAt;
   String deletedAt;
@@ -71,6 +72,7 @@ class Data {
         this.image,
         this.categoryId,
         this.status,
+        this.doDate,
         this.createdAt,
         this.updatedAt,
         this.deletedAt,
@@ -85,6 +87,7 @@ class Data {
     image = json['image'];
     categoryId = json['category_id'];
     status = json['status'];
+    doDate = json['do_date'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     deletedAt = json['deleted_at'];
@@ -103,6 +106,9 @@ class Data {
     data['image'] = this.image;
     data['category_id'] = this.categoryId;
     data['status'] = this.status;
+    if(this.doDate != null){
+      data['do_date'] = this.doDate;
+    }
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     data['deleted_at'] = this.deletedAt;

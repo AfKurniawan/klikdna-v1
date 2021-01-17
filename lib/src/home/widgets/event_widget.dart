@@ -20,17 +20,17 @@ class EventWidget extends StatelessWidget {
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
-            itemCount: prov.eventArray.length,
+            itemCount: prov.allEventArray.length,
             itemBuilder: (context, index) {
               var document;
               String text;
               document =
-                  parse(prov.eventArray[index].data.text);
+                  parse(prov.allEventArray[index].data.text);
               text = parse(document.body.text)
                   .documentElement
                   .text;
               return Container(
-                margin: EdgeInsets.only(left: 10, bottom: 10, top: 10),
+                margin: EdgeInsets.only(left: 10, bottom: 10, top: 10, right: 10),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
@@ -48,7 +48,7 @@ class EventWidget extends StatelessWidget {
                   children: [
                     EventSlider(
                       svgSrc:
-                      "${prov.eventArray[index].imageUrl}",
+                      "${prov.allEventArray[index].imageUrl}",
                       title: "",
                       width: 350,
                       height: 220,
@@ -57,9 +57,9 @@ class EventWidget extends StatelessWidget {
                         Navigator.pushNamed(
                             context, "detail_positnow_page",
                             arguments: DummyModel(
-                                "${prov.eventArray[index].data.title}",
-                                "${prov.eventArray[index].data.text}",
-                                "${prov.eventArray[index].imageUrl}"));
+                                "${prov.allEventArray[index].data.title}",
+                                "${prov.allEventArray[index].data.text}",
+                                "${prov.allEventArray[index].imageUrl}"));
                       },
                     ),
                     SizedBox(height: 11),
@@ -76,7 +76,7 @@ class EventWidget extends StatelessWidget {
                               CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "${prov.eventArray[index].data.title}",
+                                  "${prov.allEventArray[index].data.title}",
                                   style: TextStyle(
                                       fontWeight:
                                       FontWeight.bold,

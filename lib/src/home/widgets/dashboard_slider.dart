@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -46,8 +47,8 @@ class DashboardSlider extends StatelessWidget {
           onTap: press,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(0),
-            child: Image.network(
-              imgSrc,
+            child: CachedNetworkImage(
+              imageUrl: imgSrc,
               fit: BoxFit.fitWidth,
             ),
           ),

@@ -36,7 +36,7 @@ class EventSlider extends StatelessWidget {
           BoxShadow(
             offset: Offset(0, 1),
             blurRadius: 2,
-            color: Color(0xFFB0CCE1).withOpacity(0.32),
+            color: Colors.grey.withOpacity(0.32),
           ),
         ],
       ),

@@ -28,8 +28,8 @@ class _ReportPageState extends State<ReportPage> {
   Future _future;
   @override
   void initState() {
-     getAccount();
-     getPersonId();
+    getAccount();
+    getPersonId();
     super.initState();
   }
 
@@ -43,9 +43,9 @@ class _ReportPageState extends State<ReportPage> {
   }
 
   getAccount() {
-    Provider.of<AccountProvider>(context, listen: false).getUserAccount(context);
+    Provider.of<AccountProvider>(context, listen: false)
+        .getUserAccount(context);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -81,27 +81,30 @@ class _ReportPageState extends State<ReportPage> {
                                 return Container(
                                   height: 80,
                                   //color: Colors.blue,
-                                  width: MediaQuery.of(context).size.width -100,
+                                  width:
+                                      MediaQuery.of(context).size.width - 100,
                                   child: Center(
                                     child: Align(
                                       alignment: Alignment.centerLeft,
                                       child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text("Hello",
                                               style: TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 12,
                                                   fontWeight: FontWeight.w300)),
-                                          Text("${prov.name}",
+                                          Text(
+                                            "${prov.name}",
                                             maxLines: 2,
                                             overflow: TextOverflow.clip,
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 24,
-                                                fontWeight: FontWeight.w500
-                                            ),
+                                                fontWeight: FontWeight.w500),
                                           ),
                                           Text("ini dashboard report DNA kamu",
                                               style: TextStyle(
@@ -119,15 +122,19 @@ class _ReportPageState extends State<ReportPage> {
                               builder: (context, model, _) {
                                 return ClipRRect(
                                     borderRadius: BorderRadius.circular(50),
-                                    child: model.photoView == null ?
-                                    Image.asset("assets/images/no_image.png", height: 62, width: 62, fit: BoxFit.cover)
+                                    child: model.photoView == null
+                                        ? Image.asset(
+                                            "assets/images/no_image.png",
+                                            height: 62,
+                                            width: 62,
+                                            fit: BoxFit.cover)
                                         : Image.memory(
-                                      model.photoView,
-                                      width: 62,
-                                      fit: BoxFit.cover,
-                                      height: 62,
-                                      // height: 150,
-                                    ));
+                                            model.photoView,
+                                            width: 62,
+                                            fit: BoxFit.cover,
+                                            height: 62,
+                                            // height: 150,
+                                          ));
                               },
                             )
                           ],
@@ -139,93 +146,91 @@ class _ReportPageState extends State<ReportPage> {
                 SingleChildScrollView(
                   padding: EdgeInsets.only(top: 170),
                   child: Container(
-                    padding: EdgeInsets.only(top: 20),
-                    alignment: Alignment.topLeft,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(24),
-                            topRight: Radius.circular(24))),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                            padding:
-                                const EdgeInsets.only(left: 20, bottom: 30),
-                            child: Text("Pilih Pengguna",
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: MyColors.dnaGrey))),
-                        buildListMember(width, prov),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20.0, right: 20),
-                          child: ButtonIconWidget(
-                            myIcon: Icon(LineariconsFree.download, color: Colors.white),
-                            //myIcon: Image.asset("assets/icons/download_icon.png"),
-                            btnText: "Download Report",
-                            color: MyColors.dnaGreen,
-                            btnAction: () {
-                              Provider.of<ReportProvider>(context, listen: false).showModalDownload(context);
-                            },
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Padding(
-                            padding: const EdgeInsets.only(left: 20, top: 10),
-                            child: Text("Report Kamu",
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: MyColors.dnaGrey))),
-                        Consumer<ReportProvider>(
-                          builder: (context, sample, _) {
-                            return sample.listDetail.length == 0
-                                ? Center(
-                                  child: Container(
-                                      height: MediaQuery.of(context).size.height / 5,
+                      padding: EdgeInsets.only(top: 20),
+                      alignment: Alignment.topLeft,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(24),
+                              topRight: Radius.circular(24))),
+                      child: Consumer<ReportProvider>(
+                        builder: (context, sample, _) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 20, bottom: 30),
+                                  child: Text("Pilih Pengguna",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: MyColors.dnaGrey))),
+                              buildListMember(width, prov),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 20.0, right: 20),
+                                child: ButtonIconWidget(
+                                  myIcon: Icon(LineariconsFree.download,
+                                      color: Colors.white),
+                                  //myIcon: Image.asset("assets/icons/download_icon.png"),
+                                  btnText: "Download Report",
+                                  color: MyColors.dnaGreen,
+                                  btnAction: () {
+                                    Provider.of<ReportProvider>(context,
+                                            listen: false)
+                                        .showModalDownload(context);
+                                  },
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 20, top: 10),
+                                  child: Text("Report Kamu",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: MyColors.dnaGrey))),
+                              sample.listDetail.length == 0
+                                  ? Container(
+                                    height: MediaQuery.of(context).size.height / 3,
+                                    child: Center(
                                       child: Text("Belum Ada Report",
-                                          style: TextStyle(color: Colors.grey)),
+                                          style:
+                                              TextStyle(color: Colors.grey)),
                                     ),
-                                ) :
-                            ListView.builder(
-                                    scrollDirection: Axis.vertical,
-                                    itemCount: sample.listDetail.length,
-                                    shrinkWrap: true,
-                                    physics: NeverScrollableScrollPhysics(),
-                                    itemBuilder: (context, index) {
-                                      return KitServiceItemWidget(
-                                          model: sample.listDetail
-                                              .elementAt(index));
-                                    });
-                          },
-                        ),
-                        Consumer<ReportProvider>(
-                          builder: (context, sample, _) {
-                            return sample.listDetail.length == 0
-                                ? Container(
-                              height: MediaQuery.of(context).size.height / 6,
-                              child: Text("Belum Ada Report",
-                                  style: TextStyle(color: Colors.grey)),
-                            ) :
-                            ListView.builder(
-                                scrollDirection: Axis.vertical,
-                                itemCount: sample.listDetail2.length,
-                                shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
-                                itemBuilder: (context, index) {
-                                  return KitService2ItemWidget(
-                                      model: sample.listDetail2
-                                          .elementAt(index));
-                                });
-                          },
-                        ),
-
-                      ],
-                    ),
-                  ),
+                                  )
+                                  : ListView.builder(
+                                      scrollDirection: Axis.vertical,
+                                      itemCount: sample.listDetail.length,
+                                      shrinkWrap: true,
+                                      physics: NeverScrollableScrollPhysics(),
+                                      itemBuilder: (context, index) {
+                                        return KitServiceItemWidget(
+                                            model: sample.listDetail
+                                                .elementAt(index));
+                                      }),
+                              Consumer<ReportProvider>(
+                                builder: (context, sample, _) {
+                                  return ListView.builder(
+                                      scrollDirection: Axis.vertical,
+                                      itemCount: sample.listDetail2.length,
+                                      shrinkWrap: true,
+                                      physics: NeverScrollableScrollPhysics(),
+                                      itemBuilder: (context, index) {
+                                        return KitService2ItemWidget(
+                                            model: sample.listDetail2
+                                                .elementAt(index));
+                                      });
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      )),
                 ),
               ],
             ),
@@ -251,10 +256,10 @@ class _ReportPageState extends State<ReportPage> {
                         itemCount: prov.listMember.length,
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
-                          return MemberItemWidget(member:
-                              prov.listMember[index]);
+                          return MemberItemWidget(
+                              member: prov.listMember[index]);
                         }),
-                );
+              );
             }
           } else {
             return Platform.isIOS
@@ -274,7 +279,3 @@ class _ReportPageState extends State<ReportPage> {
         });
   }
 }
-
-
-
-

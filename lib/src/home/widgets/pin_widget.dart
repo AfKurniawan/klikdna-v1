@@ -42,7 +42,7 @@ class PinWidget extends StatelessWidget {
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       DashboardSlider(
                           imgSrc: prov.pinArray[index].imageUrl,
@@ -62,10 +62,11 @@ class PinWidget extends StatelessWidget {
                       SizedBox(height: 9),
                       Container(
                         width: 150,
-                        child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
                           child: Text(
                             "${prov.pinArray[index].data.title}",
-                            maxLines: 2,
+                            maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontWeight: FontWeight.normal,

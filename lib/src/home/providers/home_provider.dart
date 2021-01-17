@@ -15,8 +15,16 @@ class HomeProvider extends ChangeNotifier {
   List<ArrayData> pinMapArray = [];
   List<ArrayData> pinArray ;
 
-  List<ArrayData> eventMapArray = [];
-  List<ArrayData> eventArray ;
+  List<ArrayData> allEventMapArray = [];
+  List<ArrayData> allEventArray = [] ;
+
+  List<ArrayData> trainingEventMapArray = [];
+  List<ArrayData> trainingEventArray = [] ;
+
+  List<ArrayData> healthEventMapArray = [];
+  List<ArrayData> healthEventArray = [] ;
+
+
 
 
   var jsonArray = [];
@@ -38,34 +46,51 @@ class HomeProvider extends ChangeNotifier {
       var responseJson = json.decode(response.body);
       jsonArray = responseJson['data'] as List;
       isLoading = false ;
+
+      print("RESPONE STATUS CODE ====== ${response.statusCode}");
+
+
+
       for (int i = 0; i < jsonArray.length; i++) {
         promo = Data.fromJson(jsonArray[i]['data']);
         if(promo.categoryId == 4){
-          print("PROMOID ${promo.categoryId}");
+
+          //print("PROMOID ${promo.categoryId}");
           bannerMapArray = jsonArray.map((p) => ArrayData.fromJson(p)).toList();
           bannerArray = bannerMapArray.where((i) => i.data.categoryId == 4).toList();
 
-          print("IMAGE PROMO: ${bannerMapArray[i].imageUrl}");
-          print("Banner ARRAY LEGHT: ${bannerArray.length}");
+          // print("IMAGE PROMO: ${bannerMapArray[i].imageUrl}");
+          // print("Banner ARRAY LEGHT: ${bannerArray.length}");
+          // print("DO DATE ${bannerMapArray[i].data.doDate}");
 
         } else if(promo.categoryId == 11) {
 
-          print("PROMOID PIN ${promo.categoryId}");
+          //print("PROMOID PIN ${promo.categoryId}");
           pinMapArray = jsonArray.map((p) => ArrayData.fromJson(p)).toList();
           pinArray = pinMapArray.where((i) => i.data.categoryId == 11).toList();
-          print("IMAGE PIN: ${pinMapArray[i].imageUrl}");
-          print("PIN ARRAY LEGHT: ${pinArray.length}");
 
-        } else if(promo.categoryId == 10){
+          //print("IMAGE PIN: ${pinMapArray[i].imageUrl}");
+          // print("PIN ARRAY LEGHT: ${pinArray.length}");
+          // print("DO DATE ${pinMapArray[i].data.doDate}");
 
+        } else if(promo.categoryId == 10  || promo.categoryId == 13){
 
+          var now = new DateTime.now();
+          var sekarang = now.subtract(Duration(days: 0));
+          allEventMapArray = jsonArray.map((p) => ArrayData.fromJson(p)).toList();
+          allEventArray = allEventMapArray.where((i) => i.data.categoryId == 13 || i.data.categoryId == 10).toList();
+          allEventArray.removeWhere((el) => DateTime.parse(el.data.doDate).isBefore(sekarang));
+          allEventArray.sort((a, b) => a.data.createdAt.compareTo(b.data.createdAt));
 
-          print("PROMOID EVENT ${promo.categoryId}");
-          eventMapArray = jsonArray.map((p) => ArrayData.fromJson(p)).toList();
-          eventArray = eventMapArray.where((i) => i.data.categoryId == 10).toList();
-          eventArray.sort((a, b) => a.data.createdAt.compareTo(b.data.createdAt));
-          print("IMAGE EVENT: ${eventMapArray[i].imageUrl}");
-          print("EVENT ARRAY LENGHT: ${eventArray.length}");
+          trainingEventMapArray = jsonArray.map((p) => ArrayData.fromJson(p)).toList();
+          trainingEventArray = trainingEventMapArray.where((i) => i.data.categoryId == 10).toList();
+          trainingEventArray.removeWhere((el) => DateTime.parse(el.data.doDate).isBefore(sekarang));
+          trainingEventArray.sort((a, b) => a.data.createdAt.compareTo(b.data.createdAt));
+
+          healthEventMapArray = jsonArray.map((p) => ArrayData.fromJson(p)).toList();
+          healthEventArray = healthEventMapArray.where((i) => i.data.categoryId == 13).toList();
+          healthEventArray.removeWhere((el) => DateTime.parse(el.data.doDate).isBefore(sekarang));
+          healthEventArray.sort((a, b) => a.data.createdAt.compareTo(b.data.createdAt));
 
         }
 

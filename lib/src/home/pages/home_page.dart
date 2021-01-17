@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:html/parser.dart';
 import 'package:new_klikdna/src/dummy/post_it_now_models.dart';
@@ -58,7 +59,8 @@ class _HomePageState extends State<HomePage> {
         //appBar:  myApbar(context),
         body: Consumer<HomeProvider>(
           builder: (context, prov, _){
-            return prov.isLoading == true ? Platform.isIOS ? Center(child: CupertinoActivityIndicator()) : Center(child: CircularProgressIndicator(strokeWidth: 2)) : SingleChildScrollView(
+            return prov.isLoading == true ? Platform.isIOS ? Center(child: CupertinoActivityIndicator()) : Center(child: SpinKitDoubleBounce(color: Colors.grey))
+                : SingleChildScrollView(
               child: Column(
                 children: <Widget>[
                   Stack(
@@ -146,7 +148,7 @@ class _HomePageState extends State<HomePage> {
                                         style: TextStyle(
                                             color: MyColors.dnaGreen, fontSize: 14)),
                                     onTap: () {
-                                      print("LIHAT SEMUA CLICKED");
+                                      Navigator.pushNamed(context, "semua_event_page");
                                     },
                                   ),
                                 ],
