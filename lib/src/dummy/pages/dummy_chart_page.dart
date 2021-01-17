@@ -1,9 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:new_klikdna/src/dummy/widgets/Indicator.dart';
-import 'package:new_klikdna/src/login/providers/account_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
-import 'package:provider/provider.dart';
 
 class DummyChartPage extends StatefulWidget {
   @override

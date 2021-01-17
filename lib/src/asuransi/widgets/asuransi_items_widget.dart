@@ -6,7 +6,7 @@ import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:provider/provider.dart';
 
 class AsuransiItemWidget extends StatefulWidget {
-  Asuransi model;
+  final Asuransi model;
 
   AsuransiItemWidget({Key key, this.model}) : super(key: key);
 

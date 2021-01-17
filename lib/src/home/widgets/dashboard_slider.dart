@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,8 +23,6 @@ class DashboardSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    var mediaquery = MediaQuery.of(context);
     return Container(
       width: width,
       height: height,

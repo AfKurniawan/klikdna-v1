@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
 import 'package:new_klikdna/src/dummy/post_it_now_models.dart';
 import 'package:new_klikdna/src/home/providers/home_provider.dart';
-import 'package:new_klikdna/src/home/widgets/detail_promo_widget.dart';
+import 'package:new_klikdna/src/home/widgets/detail_widget.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:provider/provider.dart';
 
@@ -94,7 +94,7 @@ class _SemuaPromoPageState extends State<SemuaPromoPage> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            DetailPromoWidget(
+                            DetailWidget(
                               svgSrc:
                               "${prov.bannerArray[index].imageUrl}",
                               title: "",

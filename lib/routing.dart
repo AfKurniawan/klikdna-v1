@@ -6,11 +6,12 @@ import 'package:new_klikdna/src/asuransi/pages/edit_asuransi_page.dart';
 import 'package:new_klikdna/src/dummy/pages/dummy_chart_page.dart';
 import 'package:new_klikdna/src/foodmeter/pages/detail_food_meter_page.dart';
 import 'package:new_klikdna/src/foodmeter/pages/food_meter_page.dart';
-import 'package:new_klikdna/src/home/pages/pin_detail_page.dart';
-import 'package:new_klikdna/src/home/pages/detail_promo_page.dart';
-import 'package:new_klikdna/src/home/pages/semua_event_page.dart';
-import 'package:new_klikdna/src/home/pages/semua_pin_page.dart';
-import 'package:new_klikdna/src/home/pages/semua_promo_page.dart';
+import 'package:new_klikdna/src/home/pages/details/detail_pin_page.dart';
+import 'package:new_klikdna/src/home/pages/details/detail_promo_page.dart';
+import 'package:new_klikdna/src/home/pages/details/detail_event_page.dart';
+import 'package:new_klikdna/src/home/pages/semua/semua_event_page.dart';
+import 'package:new_klikdna/src/home/pages/semua/semua_pin_page.dart';
+import 'package:new_klikdna/src/home/pages/semua/semua_promo_page.dart';
 import 'package:new_klikdna/src/login/pages/login_page.dart';
 import 'package:new_klikdna/src/lorem_ipsum/pages/lorem_ipsum_page.dart';
 import 'package:new_klikdna/src/main/pages/main_page.dart';
@@ -18,14 +19,11 @@ import 'package:new_klikdna/src/mitra/wallets_and_referrals/pages/wallet_referra
 import 'package:new_klikdna/src/onboarding/pages/on_boarding_page.dart';
 import 'package:new_klikdna/src/patient_card/pages/edit_patient_card_page.dart';
 import 'package:new_klikdna/src/patient_card/pages/patient_card_page.dart';
-import 'package:new_klikdna/src/postitnow/pages/detail_positnow_page.dart';
-import 'package:new_klikdna/src/postitnow/pages/postitnow_page.dart';
 import 'package:new_klikdna/src/profile/pages/main_profile_page.dart';
 import 'package:new_klikdna/src/profile/pages/lihat_profile_page.dart';
 import 'package:new_klikdna/src/report/pages/detail_report_page.dart';
 import 'package:new_klikdna/src/report/pages/hasil_report_page.dart';
 import 'package:new_klikdna/src/splash/pages/splash_page.dart';
-import 'package:new_klikdna/src/wearable/pages/health_meter_page.dart';
 import 'package:page_transition/page_transition.dart';
 
 class Routing {
@@ -121,13 +119,11 @@ class Routing {
         return PageTransition(child: LoremIpsumPage(), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
         break;
 
-      case "post_it_now_page":
-        return PageTransition(child: PostItNowPage(), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
-        break;
+      // case "post_it_now_page":
+      //   return PageTransition(child: PostItNowPage(), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
+      //   break;
 
-      case "detail_positnow_page":
-        return PageTransition(child: DetailPostitNowPage(model: settings.arguments), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
-        break;
+
 
       case "detail_promo_page":
         return PageTransition(child: DetailPromoPage(model: settings.arguments), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
@@ -157,13 +153,18 @@ class Routing {
         return PageTransition(child: SemuaPinPage(), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
         break;
 
-      case "pin_detail_page":
-        return PageTransition(child: PinDetailPage(model: settings.arguments), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
-        break;
-
       case "semua_event_page":
         return PageTransition(child: SemuaEventPage(), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
         break;
+
+      case "detail_pin_page":
+        return PageTransition(child: DetailPinPage(model: settings.arguments), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
+        break;
+
+      case "detail_event_page":
+        return PageTransition(child: DetailEventPage(model: settings.arguments), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
+        break;
+
 
 
     }

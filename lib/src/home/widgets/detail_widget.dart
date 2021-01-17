@@ -1,9 +1,9 @@
-import 'dart:ffi';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class DetailPromoWidget extends StatelessWidget {
+class DetailWidget extends StatelessWidget {
   final String title, desc, svgSrc;
   final Function press;
   final double width;
@@ -11,7 +11,7 @@ class DetailPromoWidget extends StatelessWidget {
   final double radius;
   final EdgeInsetsGeometry margin;
   
-  const DetailPromoWidget({
+  const DetailWidget({
     Key key,
     this.title,
     this.desc,
@@ -47,8 +47,8 @@ class DetailPromoWidget extends StatelessWidget {
           onTap: press,
           child: ClipRRect(
             borderRadius: BorderRadius.all(Radius.circular(radius)),
-            child: Image.network(
-              svgSrc,
+            child: CachedNetworkImage(
+              imageUrl: svgSrc,
               //width: size.width - 40,
               fit: BoxFit.fill,
               width: MediaQuery.of(context).size.width,

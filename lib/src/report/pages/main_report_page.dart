@@ -26,6 +26,7 @@ class ReportPage extends StatefulWidget {
 class _ReportPageState extends State<ReportPage> {
   String persoinId;
   Future _future;
+  Future _getSample;
   @override
   void initState() {
     getAccount();
@@ -40,6 +41,8 @@ class _ReportPageState extends State<ReportPage> {
 
     _future = Provider.of<MemberProvider>(context, listen: false)
         .getMember(context, prefs.getString("personId"));
+    _getSample = Provider.of<ReportProvider>(context, listen: false)
+        .getSample(context, prefs.getString("personId"));
   }
 
   getAccount() {
@@ -51,7 +54,6 @@ class _ReportPageState extends State<ReportPage> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     final prov = Provider.of<MemberProvider>(context);
-    final report = Provider.of<ReportProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: prov.isLoading == true
@@ -194,16 +196,7 @@ class _ReportPageState extends State<ReportPage> {
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
                                           color: MyColors.dnaGrey))),
-                              sample.listDetail.length == 0
-                                  ? Container(
-                                    height: MediaQuery.of(context).size.height / 3,
-                                    child: Center(
-                                      child: Text("Belum Ada Report",
-                                          style:
-                                              TextStyle(color: Colors.grey)),
-                                    ),
-                                  )
-                                  : ListView.builder(
+                              ListView.builder(
                                       scrollDirection: Axis.vertical,
                                       itemCount: sample.listDetail.length,
                                       shrinkWrap: true,
@@ -215,16 +208,7 @@ class _ReportPageState extends State<ReportPage> {
                                       }),
                               Consumer<ReportProvider>(
                                 builder: (context, sample, _) {
-                                  return ListView.builder(
-                                      scrollDirection: Axis.vertical,
-                                      itemCount: sample.listDetail2.length,
-                                      shrinkWrap: true,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      itemBuilder: (context, index) {
-                                        return KitService2ItemWidget(
-                                            model: sample.listDetail2
-                                                .elementAt(index));
-                                      });
+                                  return buildReportList(width, sample);
                                 },
                               ),
                             ],
@@ -236,6 +220,67 @@ class _ReportPageState extends State<ReportPage> {
             ),
     );
   }
+
+  // ListView buildReportList(ReportProvider sample) {
+  //   return ListView.builder(
+  //       scrollDirection: Axis.vertical,
+  //       itemCount: sample.listDetail2.length,
+  //       shrinkWrap: true,
+  //       physics: NeverScrollableScrollPhysics(),
+  //       itemBuilder: (context, index) {
+  //         return KitService2ItemWidget(
+  //             model: sample.listDetail2.elementAt(index));
+  //       });
+  // }
+
+  Widget buildReportList(double width, ReportProvider sample) {
+    return FutureBuilder(
+        future: _getSample,
+        builder: (context, snap) {
+          if (snap.connectionState == ConnectionState.done) {
+            if (sample.listDetail2.length == 0) {
+              return SizedBox(
+                  height: MediaQuery.of(context).size.height /
+                      3,
+                  child: Center(child: Text("Belum ada report")));
+            } else {
+              return SizedBox(
+                height: MediaQuery.of(context).size.height /
+                    3,
+                child: sample.listDetail2.length == 0
+                    ? Center(child: Text("Belum ada report"))
+                    : ListView.builder(
+                scrollDirection: Axis.vertical,
+                itemCount: sample.listDetail2.length,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return KitService2ItemWidget(
+                      model: sample.listDetail2.elementAt(index));
+                }),
+              );
+            }
+          } else {
+            return Platform.isIOS
+                ? SizedBox(
+              height: MediaQuery.of(context).size.height /
+                  3,
+              child: Center(
+                child: CupertinoActivityIndicator(),
+              ),
+            )
+                : SizedBox(
+              height:MediaQuery.of(context).size.height /
+                  3,
+              child: Center(
+                child: CupertinoActivityIndicator(),
+              ),
+            );
+          }
+        });
+  }
+
+
 
   Widget buildListMember(double width, MemberProvider prov) {
     return FutureBuilder(

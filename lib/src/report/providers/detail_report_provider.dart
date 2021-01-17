@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:html/parser.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:new_klikdna/src/report/models/detail_report_model.dart';
 import 'package:new_klikdna/src/token/providers/token_provider.dart';

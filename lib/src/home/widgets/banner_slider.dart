@@ -1,11 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:new_klikdna/src/home/models/home_model.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:new_klikdna/src/home/providers/home_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:new_klikdna/src/token/providers/cms_token_provider.dart';
 
 class BannerSlider extends StatefulWidget {
   @override
@@ -14,11 +12,11 @@ class BannerSlider extends StatefulWidget {
 
 class _BannerSliderState extends State<BannerSlider> {
 
-  final List<String> imgAsset = [
-    "assets/images/slider_1.png",
-    "assets/images/slider_2.png",
-    "assets/images/slider_3.png"
-  ];
+  // final List<String> imgAsset = [
+  //   "assets/images/slider_1.png",
+  //   "assets/images/slider_2.png",
+  //   "assets/images/slider_3.png"
+  // ];
 
   int _current = 0;
 
@@ -27,7 +25,7 @@ class _BannerSliderState extends State<BannerSlider> {
     Size size = MediaQuery.of(context).size;
 
     final porv = Provider.of<HomeProvider>(context, listen: false);
-    final List<Widget> imageSliders = imgAsset.map((item) => buildContainer(item, size)).toList();
+    //final List<Widget> imageSliders = imgAsset.map((item) => buildContainer(item, size)).toList();
 
     List<Widget> getBanner = porv.bannerArray.map((i) => buildContainer(porv.bannerArray[_current].imageUrl, size)).toList();
 
@@ -65,8 +63,8 @@ class _BannerSliderState extends State<BannerSlider> {
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: imgAsset.map((url) {
-                    int index = imgAsset.indexOf(url);
+                  children: prov.bannerArray.map((url) {
+                    int index = prov.bannerArray.indexOf(url);
                     if (_current == index) {
                       return Container(
                         width: 18.0,

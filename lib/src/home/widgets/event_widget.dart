@@ -55,7 +55,7 @@ class EventWidget extends StatelessWidget {
                       desc: "",
                       press: () {
                         Navigator.pushNamed(
-                            context, "detail_positnow_page",
+                            context, "detail_event_page",
                             arguments: DummyModel(
                                 "${prov.allEventArray[index].data.title}",
                                 "${prov.allEventArray[index].data.text}",

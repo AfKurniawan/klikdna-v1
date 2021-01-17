@@ -1,5 +1,5 @@
-import 'dart:ffi';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -46,8 +46,8 @@ class EventSlider extends StatelessWidget {
           onTap: press,
           child: ClipRRect(
             borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-            child: Image.network(
-              svgSrc,
+            child: CachedNetworkImage(
+              imageUrl: svgSrc,
               //width: size.width - 40,
               fit: BoxFit.fill,
               height: mediaquery.size.width < 600 ? size.height / 3 : size.height / 2,

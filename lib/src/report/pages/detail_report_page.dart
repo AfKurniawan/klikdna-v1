@@ -1,17 +1,14 @@
 import 'dart:io' show Platform;
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:new_klikdna/src/account/providers/account_provider.dart';
 import 'package:new_klikdna/src/login/providers/login_provider.dart';
-import 'package:new_klikdna/src/member/models/member_model.dart';
 import 'package:new_klikdna/src/member/providers/member_provider.dart';
 import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
 import 'package:new_klikdna/src/report/models/detail_report_model.dart';
 import 'package:new_klikdna/src/report/models/report_model.dart';
 import 'package:new_klikdna/src/report/providers/detail_report_provider.dart';
-import 'package:new_klikdna/src/report/providers/report_provider.dart';
 import 'package:new_klikdna/src/report/widgets/detail_service_item.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:provider/provider.dart';
@@ -312,7 +309,7 @@ class _DetailReportPageState extends State<DetailReportPage> {
   }
 
   List<CheckBoxData> checkboxDataList = [
-    new CheckBoxData(id: '1', displayId: 'Alphabet', checked: false),
+    new CheckBoxData(id: '1', displayId: 'Alphabet', checked: false, ),
     new CheckBoxData(id: '2', displayId: 'Resiko', checked: false),
   ];
 

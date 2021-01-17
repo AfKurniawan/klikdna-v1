@@ -8,23 +8,10 @@ import 'package:url_launcher/url_launcher.dart';
 
 class ProfileProvider with ChangeNotifier {
 
-  String _radioValue;
   String result;
   final format = DateFormat("yyyy-MM-dd");
 
-  void _handleRadioValueChange(String value) {
 
-      _radioValue = value;
-      switch (_radioValue) {
-        case "Male":
-          result = "L";
-          break;
-        case "Female":
-          result = "W";
-          break;
-      }
-      notifyListeners();
-  }
 
   logout(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

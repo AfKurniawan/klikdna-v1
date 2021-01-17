@@ -8,7 +8,7 @@ import 'package:new_klikdna/widgets/form_widget.dart';
 import 'package:provider/provider.dart';
 
 class EditAsuransiPage extends StatefulWidget {
-  Asuransi model;
+  final Asuransi model;
 
   EditAsuransiPage({Key key, this.model}) : super (key: key);
 

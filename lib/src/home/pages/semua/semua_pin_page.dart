@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:html/parser.dart';
 import 'package:new_klikdna/src/dummy/post_it_now_models.dart';
 import 'package:new_klikdna/src/home/providers/home_provider.dart';
 import 'package:new_klikdna/src/home/widgets/dashboard_slider.dart';
-import 'package:new_klikdna/src/home/widgets/event_slider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:provider/provider.dart';
 
@@ -81,11 +79,10 @@ class _SemuaPinPageState extends State<SemuaPinPage> {
                               margin: EdgeInsets.only(right: 10, left: 10),
                               desc: "",
                               press: () {
-                                Navigator.pushNamed(context, "pin_detail_page",
+                                Navigator.pushNamed(context, "detail_pin_page",
                                     arguments: DummyModel(
                                         "${prov.pinArray[index].data.title}",
-                                        //"${prov.pinArray[index].data.text}",
-                                        "$text",
+                                        "${prov.pinArray[index].data.text}",
                                         '${prov.pinArray[index].imageUrl}'));
                               }),
                           SizedBox(height: 9),

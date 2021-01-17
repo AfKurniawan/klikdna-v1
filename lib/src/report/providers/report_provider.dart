@@ -35,6 +35,7 @@ class ReportProvider extends ChangeNotifier {
     print("Person ID: $personId");
 
     String accessToken = prov.accessToken;
+
     Map<String, String> ndas = {
       "Accept": "application/json",
       "Authorization": "Bearer $accessToken"

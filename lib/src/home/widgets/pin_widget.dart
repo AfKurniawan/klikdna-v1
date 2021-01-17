@@ -52,7 +52,7 @@ class PinWidget extends StatelessWidget {
                           margin: EdgeInsets.only(right: 10, left: 10),
                           desc: "",
                           press: () {
-                            Navigator.pushNamed(context, "pin_detail_page",
+                            Navigator.pushNamed(context, "detail_pin_page",
                                 arguments: DummyModel(
                                     "${prov.pinArray[index].data.title}",
                                     //"${prov.pinArray[index].data.text}",

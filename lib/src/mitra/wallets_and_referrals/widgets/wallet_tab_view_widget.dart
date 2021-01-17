@@ -200,7 +200,6 @@ class _WalletTabViewWidgetState extends State<WalletTabViewWidget> {
                                 var parsedDate = DateTime.parse(wallet.listWalletData[index].created);
                                 String dateCreated = ('${formatTgl.format(parsedDate)}');
                                 String fnominal = NumberFormat.currency(name: '').format(wallet.listWalletData[index].nominal).split(".")[0].replaceAll(",", ".");
-                                String fsaldo = NumberFormat.currency(name: '').format(wallet.listWalletData[index].saldo).split(".")[0].replaceAll(",", ".");
                                 return wallet.listWalletData[index].status.contains("Selesai") ? Container(
                                   color: Colors.white,
                                   padding: EdgeInsets.only(left:18.0, right: 18, top: 18),

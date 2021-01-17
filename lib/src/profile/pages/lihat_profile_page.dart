@@ -168,6 +168,7 @@ class _LihatProfilePageState extends State<LihatProfilePage> {
                                       groupValue: _radioValue,
                                       focusColor: MyColors.dnaGreen,
                                       activeColor: MyColors.dnaGreen,
+                                      onChanged: _handleRadioValueChange,
                                     ),
                                     Text("Wanita")
                                   ],

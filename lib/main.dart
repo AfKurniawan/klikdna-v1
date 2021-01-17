@@ -14,7 +14,6 @@ import 'package:new_klikdna/src/mitra/wallets_and_referrals/providers/wallet_ref
 import 'package:new_klikdna/src/patient_card/providers/asuransi_provider.dart';
 import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
 import 'package:new_klikdna/src/pmr/providers/pmr_provider.dart';
-import 'package:new_klikdna/src/postitnow/providers/postitnow_provider.dart';
 import 'package:new_klikdna/src/profile/providers/profile_provider.dart';
 import 'package:new_klikdna/src/report/providers/detail_report_provider.dart';
 import 'package:new_klikdna/src/report/providers/report_provider.dart';
@@ -51,7 +50,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ReportProvider()),
         ChangeNotifierProvider(create: (_) => MemberProvider()),
         ChangeNotifierProvider(create: (_) => WalletReferralProvider()),
-        ChangeNotifierProvider(create: (_) => PostItNowProvider()),
         ChangeNotifierProvider(create: (_) => HomeProvider()),
         ChangeNotifierProvider(create: (_) => CmsTokenProvider())
 

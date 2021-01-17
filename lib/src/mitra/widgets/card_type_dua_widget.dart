@@ -30,8 +30,8 @@ class CardTypeDuaWidget extends StatelessWidget {
                   ? MyColors.imperialLeaderColor
                   : model.vpar.contains("Presidential")
                   ? MyColors.presidentAndDirectorColor
-                  : model.vpar.contains("Producer")
-                  ? MyColors.producerCardColor
+                  : model.vpar.contains("Star")
+                  ? MyColors.startCardColor
                   : model.vhighestrank == "0" && model.vtype.contains('Mitra') || model.vhighestrank.contains('Mitra')
                   ? MyColors.mitraCardColor
                   : model.vhighestrank.contains('Producer')

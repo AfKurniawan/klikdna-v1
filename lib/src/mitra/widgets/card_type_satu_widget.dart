@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:new_klikdna/src/login/providers/login_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:new_klikdna/styles/my_theme.dart';
@@ -36,6 +35,8 @@ class CardTypeSatuWidget extends StatelessWidget {
                   ? MyColors.startCardColor
                   : model.vhighestrank == "Executive Builder" || model.vhighestrank == "Elite Builder" || model.vhighestrank == "Pro Builder"
                   ? MyColors.builderCardColor
+                  : model.vhighestrank.contains("Producer")
+                  ? MyColors.producerColor
                   : MyColors.mitraCardColor,
               stops: [0.1, 1],
             ),

@@ -5,15 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:html/parser.dart';
 import 'package:new_klikdna/src/dummy/post_it_now_models.dart';
-import 'package:new_klikdna/src/home/models/home_model.dart';
 import 'package:new_klikdna/src/home/providers/artikel_provider.dart';
 import 'package:new_klikdna/src/home/providers/home_provider.dart';
 import 'package:new_klikdna/src/home/widgets/banner_slider.dart';
-import 'package:new_klikdna/src/home/widgets/dashboard_slider.dart';
-import 'package:new_klikdna/src/home/widgets/dummy_dashboard_slider.dart';
-import 'package:new_klikdna/src/home/widgets/event_slider.dart';
 import 'package:new_klikdna/src/home/widgets/event_widget.dart';
 import 'package:new_klikdna/src/home/widgets/pin_widget.dart';
 import 'package:new_klikdna/src/home/widgets/podcast_slider.dart';
@@ -27,7 +22,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:wc_flutter_share/wc_flutter_share.dart';
 
 class HomePage extends StatefulWidget {
-  DummyModel model;
+  final DummyModel model;
   HomePage({Key key, this.model}) : super(key: key);
 
   @override
@@ -35,7 +30,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -45,8 +39,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    var mediaquery = MediaQuery.of(context);
     Provider.of<ArtikelProvider>(context, listen: false)
         .getArtikel(context, context.watch<TokenProvider>().accessToken);
     Provider.of<HomeProvider>(context, listen: false).getHomeContents(context);
@@ -403,9 +395,6 @@ class _HomePageState extends State<HomePage> {
   // }
 
   Widget buildContainer() {
-    Color gradientStart = Colors.transparent;
-    Color gradientMid = Colors.black12;
-    Color gradientEnd = MyColors.overlaySlider;
 
     return Consumer<HomeProvider>(
       builder: (context, prov, _) {
