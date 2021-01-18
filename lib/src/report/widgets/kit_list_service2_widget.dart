@@ -17,7 +17,7 @@ class _KitService2ItemWidgetState extends State<KitService2ItemWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 16, right: 16, bottom: 16, top: 20),
+      margin: EdgeInsets.only(left: 16, right: 16, bottom: 16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),

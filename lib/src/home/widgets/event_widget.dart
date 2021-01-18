@@ -51,7 +51,7 @@ class EventWidget extends StatelessWidget {
                       "${prov.allEventArray[index].imageUrl}",
                       title: "",
                       width: 350,
-                      height: 220,
+                      height: 200,
                       desc: "",
                       press: () {
                         Navigator.pushNamed(
