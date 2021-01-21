@@ -275,8 +275,7 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
                                               padding: EdgeInsets.only(
                                                   right: 18,
                                                   top: 18),
-                                              child: wallet.tipeValue
-                                                      .contains("Semua")
+                                              child: wallet.tipeValue.contains("Semua")
                                                   ? Column(
                                                       mainAxisAlignment: MainAxisAlignment.start,
                                                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -352,89 +351,82 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
 
                                                       ],
                                                     )
-                                                  : Table(
-                                                      border: TableBorder.all(
-                                                          color: Colors.black),
-                                                      children: [
-                                                        TableRow(children: [
-                                                          Container(
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(8.0),
-                                                              child: Text(
-                                                                  'Tanggal'),
-                                                            ),
-                                                            height: 35,
-                                                          ),
-                                                          Container(
-                                                            color: Color(
-                                                                0xffF5FFFF),
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(8.0),
-                                                              child: Text(
-                                                                  '$dateCreated'),
-                                                            ),
-                                                            height: 35,
-                                                          ),
-                                                        ]),
-                                                        TableRow(children: [
-                                                          Container(
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(8.0),
-                                                              child: Text(
-                                                                  'Nominal'),
-                                                            ),
-                                                            height: 35,
-                                                          ),
-                                                          Container(
-                                                            color: Color(
-                                                                0xffF5FFFF),
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(8.0),
-                                                              child: Text(
-                                                                  '$fnominal'
-                                                                      .replaceAll(
-                                                                          "-",
-                                                                          "")),
-                                                            ),
-                                                            height: 35,
-                                                          ),
-                                                        ]),
-                                                        TableRow(children: [
-                                                          Container(
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(8.0),
-                                                              child: Text(
-                                                                  'Nama Mitra'),
-                                                            ),
-                                                            height: 35,
-                                                          ),
-                                                          Container(
-                                                            color: Color(
-                                                                0xffF5FFFF),
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(8.0),
-                                                              child: Text(
-                                                                  '${wallet.listWalletData[index].from}'),
-                                                            ),
-                                                            height: 35,
-                                                          ),
-                                                        ]),
-
-                                                        //JENIS KETIKA DIFILTER, Maka ROW jenis tidak ditampilkan
+                                                  : Column(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                    width: 156,
+                                                    height: 45,
+                                                    decoration: BoxDecoration(
+                                                      color: wallet.listWalletData[index].type.contains("Tim")
+                                                          ? Color(0xffB5CCD5)
+                                                          : wallet.listWalletData[index].type.contains("Referral")
+                                                          ? Color(0xff29656C)
+                                                          : wallet.listWalletData[index].type.contains("Royalti")
+                                                          ? Color(0xffEF846E)
+                                                          : wallet.listWalletData[index].type.contains("Withdraw")
+                                                          ? Color(0xffD7516A)
+                                                          : Colors.white12,
+                                                      borderRadius: BorderRadius.only(
+                                                          topRight: Radius.circular(25),
+                                                          bottomRight: Radius.circular(25)
+                                                      ),
+                                                    ),
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.only(top: 13.0, left: 10),
+                                                      child: Text("${wallet.listWalletData[index].type}", style: TextStyle(
+                                                          color: Colors.white, fontSize: 16
+                                                      ),),
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: 30),
+                                                  Container(
+                                                    width: MediaQuery.of(context).size.width,
+                                                    height: 70,
+                                                    margin: EdgeInsets.only(bottom: 10, left: 18, right: 18),
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius: BorderRadius.circular(10),
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          offset: Offset(0, 1),
+                                                          blurRadius: 3,
+                                                          color: Colors.grey[700].withOpacity(0.32),
+                                                        ),
                                                       ],
-                                                    ))
+                                                    ),
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.all(18.0),
+                                                      child: Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Text("$dateCreated"),
+                                                          Row(
+                                                            children: [
+                                                              wallet.listWalletData[index].type.contains("Withdraw")
+                                                                  ? Icon(Icons.arrow_circle_down,
+                                                                  size: 20,
+                                                                  color: Colors.redAccent)
+                                                                  : Icon(Icons.arrow_circle_up,
+                                                                  size: 20,
+                                                                  color: Colors.green)
+
+
+                                                            ],
+                                                          ),
+                                                          Text('IDR $fnominal'.replaceAll("-", ""),
+                                                              style: TextStyle(
+                                                                  fontWeight: FontWeight.bold
+                                                              )),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  )
+
+                                                ],
+                                              )
+                                      )
                                           : Container(
                                               color: Colors.blue, height: 0);
                                     },
