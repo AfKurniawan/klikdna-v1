@@ -31,9 +31,9 @@ class CardTypeSatuWidget extends StatelessWidget {
                   ? MyColors.imperialLeaderColor
                   : model.vhighestrank == "0" && model.vtype == "Mitra" && model.vtype == "Mitra Pro"
                   ? MyColors.mitraCardColor
-                  : model.vhighestrank == "1 Star"
+                  : model.vhighestrank.contains("Star")
                   ? MyColors.startCardColor
-                  : model.vhighestrank == "Executive Builder" || model.vhighestrank == "Elite Builder" || model.vhighestrank == "Pro Builder"
+                  : model.vhighestrank.contains("Builder")
                   ? MyColors.builderCardColor
                   : model.vhighestrank.contains("Producer")
                   ? MyColors.producerColor

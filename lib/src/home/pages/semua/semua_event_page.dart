@@ -99,7 +99,7 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
     return Consumer<HomeProvider>(
             builder: (context, prov, _) {
               return Container(
-                height: MediaQuery.of(context).size.height / 2,
+                height: 400,
                 padding: const EdgeInsets.only(bottom: 18.0),
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
@@ -197,7 +197,7 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
     return Consumer<HomeProvider>(
             builder: (context, prov, _) {
               return Container(
-                height: MediaQuery.of(context).size.height / 2,
+                height: 400,
                 padding: const EdgeInsets.only(bottom: 18.0),
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
@@ -209,7 +209,7 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
                     document = parse(prov.healthEventArray[index].data.text);
                     text = parse(document.body.text).documentElement.text;
                     return Container(
-                      height: 360,
+                      height: 400,
                       margin: EdgeInsets.only(left: 15, bottom: 10, top: 10, right: 10),
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -268,7 +268,7 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
                                       Container(
                                         child: Text(
                                           "$text",
-                                          maxLines: 3,
+                                          maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
                                               fontWeight: FontWeight.normal,

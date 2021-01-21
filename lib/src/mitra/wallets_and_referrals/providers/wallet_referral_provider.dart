@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
+import 'package:new_klikdna/src/login/models/new_login_model.dart';
 import 'package:new_klikdna/src/mitra/wallets_and_referrals/models/referral_model.dart';
 import 'package:new_klikdna/src/mitra/wallets_and_referrals/models/wallet_model.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
@@ -14,7 +15,7 @@ import 'package:http/http.dart' as http ;
 
 class WalletReferralProvider with ChangeNotifier {
 
-  bool isTai ;
+  bool isLoading ;
   bool isError ;
   List<Wallet> listWalletData = [];
   int sum = 0;
@@ -25,9 +26,9 @@ class WalletReferralProvider with ChangeNotifier {
 
   Future<WalletModel> getWalletData(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    isTai = true;
+    isLoading = true;
     notifyListeners();
-    print("ISTAI $isTai");
+    print("LOADING $isLoading");
 
     var url = AppConstants.GET_WALLET_URL;
     var body = json.encode({
@@ -49,7 +50,7 @@ class WalletReferralProvider with ChangeNotifier {
       var allArray = json.decode(response.body);
       var dataArray = allArray['data'] as List;
       listWalletData = dataArray.map<Wallet>((j) => Wallet.fromJson(j)).toList();
-      isTai = false ;
+      isLoading = false ;
       isError = false ;
 
 
@@ -70,7 +71,7 @@ class WalletReferralProvider with ChangeNotifier {
 
     } else {
       isError = true ;
-      isTai = false ;
+      isLoading = false ;
       notifyListeners();
 
     }
@@ -79,11 +80,16 @@ class WalletReferralProvider with ChangeNotifier {
   }
 
 
+
+  List<Wallet> walletMapMapArray = [];
+  List<Wallet> walletArray ;
+  var count ;
+
   Future<WalletModel> filterWalletData(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    isTai = true;
+    isLoading = true;
     notifyListeners();
-    print("ISLOADING $isTai");
+    print("ISLOADING $isLoading");
 
     var url = AppConstants.GET_WALLET_URL;
     var body = json.encode({
@@ -110,7 +116,7 @@ class WalletReferralProvider with ChangeNotifier {
       var dataArray = allArray['data'] as List;
 
       listWalletData = dataArray.map<Wallet>((j) => Wallet.fromJson(j)).toList();
-      isTai = false ;
+      isLoading = false ;
       isError = false ;
 
       var myStatus = listWalletData.map((e) => e.status);
@@ -126,7 +132,7 @@ class WalletReferralProvider with ChangeNotifier {
 
     } else {
       isError = true ;
-      isTai = false ;
+      isLoading = false ;
       notifyListeners();
 
     }
@@ -412,6 +418,9 @@ class WalletReferralProvider with ChangeNotifier {
 
   String tipeValue = "Semua Data" ;
   String result;
+  List<Wallet> walletlength = [];
+
+
 
   List<String> deviceTypes = ["Semua Data", "Komisi Referral", "Komisi Tim", "Komisi Royalti", "National Sharing", "Withdraw"];
 

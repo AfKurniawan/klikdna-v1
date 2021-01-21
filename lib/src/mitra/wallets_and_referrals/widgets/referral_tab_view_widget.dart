@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:new_klikdna/src/mitra/wallets_and_referrals/providers/wallet_referral_provider.dart';
 import 'package:provider/provider.dart';
 
-class RefferalTabViewPage extends StatefulWidget {
+class RefferalTabViewWidget extends StatefulWidget {
   @override
-  _RefferalTabViewPageState createState() => _RefferalTabViewPageState();
+  _RefferalTabViewWidgetState createState() => _RefferalTabViewWidgetState();
 }
 
-class _RefferalTabViewPageState extends State<RefferalTabViewPage> {
+class _RefferalTabViewWidgetState extends State<RefferalTabViewWidget> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

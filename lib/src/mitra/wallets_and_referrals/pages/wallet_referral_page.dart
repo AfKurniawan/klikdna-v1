@@ -2,7 +2,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:new_klikdna/src/mitra/wallets_and_referrals/providers/wallet_referral_provider.dart';
-import 'package:new_klikdna/src/mitra/wallets_and_referrals/widgets/referral_tab_view_page.dart';
+import 'package:new_klikdna/src/mitra/wallets_and_referrals/widgets/new_wallet_tab_view.dart';
+import 'package:new_klikdna/src/mitra/wallets_and_referrals/widgets/referral_tab_view_widget.dart';
 import 'package:new_klikdna/src/mitra/wallets_and_referrals/widgets/wallet_tab_view_widget.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:provider/provider.dart';
@@ -72,8 +73,8 @@ class _WalletsAndReferralPageState extends State<WalletsAndReferralPage> with Si
       body: TabBarView(
         controller: controller,
         children: [
-          WalletTabViewWidget(future: future),
-          RefferalTabViewPage()
+          NewWalletTabView(future: future),
+          RefferalTabViewWidget()
         ],
       ),
     );

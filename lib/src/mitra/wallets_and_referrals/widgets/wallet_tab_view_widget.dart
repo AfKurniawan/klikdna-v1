@@ -102,7 +102,7 @@ class _WalletTabViewWidgetState extends State<WalletTabViewWidget> {
                       ),
                    ),
                   ),
-                    wallet.isTai == true
+                    wallet.isLoading == true
                     ? Container(
                     height: MediaQuery.of(context).size.height /1.3,
                     child: Center(child: Platform.isIOS ? CupertinoActivityIndicator(radius: 12) : CircularProgressIndicator(strokeWidth: 2)))

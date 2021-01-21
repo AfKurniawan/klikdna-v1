@@ -37,8 +37,8 @@ class EventWidget extends StatelessWidget {
                   boxShadow: [
                     BoxShadow(
                       offset: Offset(0, 1),
-                      blurRadius: 1,
-                      color: Colors.grey.withOpacity(0.32),
+                      blurRadius: 3,
+                      color: Colors.grey[700].withOpacity(0.32),
                     ),
                   ],
                 ),

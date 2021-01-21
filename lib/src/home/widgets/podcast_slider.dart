@@ -31,9 +31,9 @@ class PodcastSlider extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            offset: Offset(0, 4),
-            blurRadius: 20,
-            color: Color(0xFFB0CCE1).withOpacity(0.32),
+            offset: Offset(0, 1),
+            blurRadius: 1,
+            color: Colors.grey[900].withOpacity(0.32),
           ),
         ],
       ),
@@ -43,12 +43,9 @@ class PodcastSlider extends StatelessWidget {
           onTap: press,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
-            child: Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: Image.asset(
-                imgSrc,
-                fit: BoxFit.cover,
-              ),
+            child: Image.asset(
+              imgSrc,
+              fit: BoxFit.fill,
             ),
           ),
         ),
