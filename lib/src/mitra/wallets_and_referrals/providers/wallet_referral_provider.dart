@@ -479,7 +479,7 @@ class WalletReferralProvider with ChangeNotifier {
 
     if(response.statusCode == 200){
 
-      //print("RESPONSE BODY GET REFERRAL: ${response.body}");
+      print("RESPONSE BODY GET REFERRAL: ${response.body}");
       var allArray = json.decode(response.body);
       var dataArray = allArray['data'] as List;
       listReferralData = dataArray.map<Referral>((j) => Referral.fromJson(j)).toList();

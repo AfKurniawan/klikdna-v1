@@ -15,6 +15,9 @@ class NewWalletTabView extends StatefulWidget {
 
   final Future future;
 
+
+
+
   @override
   _NewWalletTabViewState createState() => _NewWalletTabViewState();
 }
@@ -211,8 +214,7 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
                                       child: Container(
                                         height: 40,
                                         width:
-                                            MediaQuery.of(context).size.width /
-                                                2,
+                                            MediaQuery.of(context).size.width / 2,
                                         decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(5),
@@ -280,6 +282,12 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
                                                       mainAxisAlignment: MainAxisAlignment.start,
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: [
+                                                        /// COLOR
+                                                        // #FF7D67  < National Sharing
+                                                        // #006971 < Referal
+                                                        // #B5CCD5 < Tim
+                                                        // #359389 < Royalti
+
                                                         Container(
                                                           width: 156,
                                                           height: 45,
@@ -287,11 +295,13 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
                                                             color: wallet.listWalletData[index].type.contains("Tim") 
                                                                 ? Color(0xffB5CCD5)
                                                                 : wallet.listWalletData[index].type.contains("Referral")
-                                                                ? Color(0xff29656C)
+                                                                ? Color(0xff006971)
                                                                 : wallet.listWalletData[index].type.contains("Royalti")
-                                                                ? Color(0xffEF846E)
+                                                                ? Color(0xff359389)
                                                                 : wallet.listWalletData[index].type.contains("Withdraw")
                                                                 ? Color(0xffD7516A)
+                                                                : wallet.listWalletData[index].type.contains("National")
+                                                                ? Color(0xffFF7D67)
                                                                 : Colors.white12,
                                                             borderRadius: BorderRadius.only(
                                                                 topRight: Radius.circular(25),
