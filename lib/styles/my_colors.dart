@@ -72,6 +72,8 @@ class MyColors {
 
   static const mitraCardColor = [Color(0xff848FA5), Color(0xff9EA9BD)];
 
+  static const tidakAktifColor = [Color(0xffC8C8C8), Color(0xffC8C8C8)] ;
+
   static const cvTileColor = Color(0xffFF7D67);
 
   static const pointRewardTileColor = Color(0xff006971);

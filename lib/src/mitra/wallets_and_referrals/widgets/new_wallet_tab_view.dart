@@ -310,9 +310,9 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
                                                           ),
                                                           child: Padding(
                                                             padding: const EdgeInsets.only(top: 13.0, left: 10),
-                                                            child: Text("${wallet.listWalletData[index].type}", style: TextStyle(
+                                                            child: Text(wallet.listWalletData[index].type.contains("Withdraw") ? "Penarikan" : "${wallet.listWalletData[index].type}", style: TextStyle(
                                                                 color: Colors.white, fontSize: 16
-                                                            ),),
+                                                            )),
                                                           ),
                                                         ),
                                                         SizedBox(height: 30),
@@ -385,9 +385,9 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
                                                     ),
                                                     child: Padding(
                                                       padding: const EdgeInsets.only(top: 13.0, left: 10),
-                                                      child: Text("${wallet.listWalletData[index].type}", style: TextStyle(
-                                                          color: Colors.white, fontSize: 16
-                                                      ),),
+                                                      child: Text(wallet.listWalletData[index].type.contains("Withdraw") ? "Penarikan" : "${wallet.listWalletData[index].type}", style: TextStyle(
+                                                            color: Colors.white, fontSize: 16
+                                                      )),
                                                     ),
                                                   ),
                                                   SizedBox(height: 30),

@@ -16,14 +16,13 @@ import 'dart:io' show Platform;
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ReportPage extends StatefulWidget {
-  static const String id = "/report_page";
+class HomeReportPage extends StatefulWidget {
 
   @override
-  _ReportPageState createState() => _ReportPageState();
+  _HomeReportPageState createState() => _HomeReportPageState();
 }
 
-class _ReportPageState extends State<ReportPage> {
+class _HomeReportPageState extends State<HomeReportPage> {
   String persoinId;
   Future _future;
   Future _getSample;

@@ -422,7 +422,7 @@ class WalletReferralProvider with ChangeNotifier {
 
 
 
-  List<String> deviceTypes = ["Semua Data", "Komisi Referral", "Komisi Tim", "Komisi Royalti", "National Sharing", "Withdraw"];
+  List<String> deviceTypes = ["Semua Data", "Komisi Referral", "Komisi Tim", "Komisi Royalti", "National Sharing", "Penarikan"];
 
   void _handleRadioValueChange(String value) {
       tipeValue = value;
@@ -447,7 +447,7 @@ class WalletReferralProvider with ChangeNotifier {
           result = "4";
           print("RESULT $result");
           break;
-        case "Withdraw":
+        case "Penarikan":
           result = "5";
           print("RESULT $result");
           break;

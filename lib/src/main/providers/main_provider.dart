@@ -4,7 +4,8 @@ import 'package:new_klikdna/src/home/pages/home_page.dart';
 import 'package:new_klikdna/src/mitra/pages/mitra_page.dart';
 import 'package:new_klikdna/src/pmr/pages/pmr_page.dart';
 import 'package:new_klikdna/src/profile/pages/main_profile_page.dart';
-import 'package:new_klikdna/src/report/pages/main_report_page.dart';
+import 'package:new_klikdna/src/report/pages/home_report_page.dart';
+import 'package:new_klikdna/src/report/pages/new_main_report_page.dart';
 import 'package:new_klikdna/src/report/providers/report_provider.dart';
 import 'package:new_klikdna/src/token/providers/cms_token_provider.dart';
 import 'package:new_klikdna/src/token/providers/token_provider.dart';
@@ -58,7 +59,7 @@ class MainProvider with ChangeNotifier {
 
         case 3 :
           currentTitle = "Report";
-          currenPage = ReportPage();
+          currenPage = NewMainReportPage();
           Provider.of<TokenProvider>(context, listen: false).getApiToken();
           Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken();
           Provider.of<AccountProvider>(context, listen: false).getUserAccount(context);

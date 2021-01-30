@@ -204,8 +204,8 @@ class _NewReferralTabViewState extends State<NewReferralTabView> {
                                                         ? MyColors.startCardColor
                                                             : wallet.listReferralData[index].type.contains("Royalti")
                                                         ? MyColors.presidentAndDirectorColor
-                                                            : wallet.listReferralData[index].type.contains("Withdraw")
-                                                        ? MyColors.mitraCardColor
+                                                            : wallet.listReferralData[index].status.contains("Belum")
+                                                        ? MyColors.tidakAktifColor
                                                             : MyColors.mitraCardColor,
                                                       )
                                                     ),
