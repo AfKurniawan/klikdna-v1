@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttericon/linearicons_free_icons.dart';
 import 'package:new_klikdna/src/account/providers/account_provider.dart';
 import 'package:new_klikdna/src/member/providers/member_provider.dart';
@@ -55,16 +56,27 @@ class _HomeReportPageState extends State<HomeReportPage> {
     final prov = Provider.of<MemberProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white,
-      body: prov.isLoading == true
-          ? Center(
-              child: Platform.isIOS
-                  ? CupertinoActivityIndicator()
-                  : CircularProgressIndicator(strokeWidth: 2))
-          : Stack(
+      appBar: AppBar(
+        backgroundColor: MyColors.dnaGreen,
+        title: Text("Report", style: TextStyle(color: Colors.white)),
+        elevation: 0,
+        leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.white,
+              size: 20,
+            ),
+            onPressed: () {
+              //Navigator.pushReplacementNamed(context, "detail_report_page");
+              Navigator.of(context).pop();
+            }),
+
+      ),
+      body: Stack(
               children: <Widget>[
                 Container(
                   //color: MyColors.dnaGreen,
-                  height: 200,
+                  height: 160,
                   decoration: BoxDecoration(
                     color: MyColors.dnaGreen,
                   ),
@@ -145,7 +157,7 @@ class _HomeReportPageState extends State<HomeReportPage> {
                   ),
                 ),
                 SingleChildScrollView(
-                  padding: EdgeInsets.only(top: 170),
+                  padding: EdgeInsets.only(top: 140),
                   child: Container(
                       padding: EdgeInsets.only(top: 20),
                       //alignment: Alignment.topLeft,
@@ -195,21 +207,8 @@ class _HomeReportPageState extends State<HomeReportPage> {
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
                                           color: MyColors.dnaGrey))),
-                              ListView.builder(
-                                      scrollDirection: Axis.vertical,
-                                      itemCount: sample.listDetail.length,
-                                      shrinkWrap: true,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      itemBuilder: (context, index) {
-                                        return KitServiceItemWidget(
-                                            model: sample.listDetail
-                                                .elementAt(index));
-                                      }),
-                              Consumer<ReportProvider>(
-                                builder: (context, sample, _) {
-                                  return buildReportList(width, sample);
-                                },
-                              ),
+                              buildReportList(width, sample),
+
                             ],
                           );
                         },
@@ -230,32 +229,36 @@ class _HomeReportPageState extends State<HomeReportPage> {
                   height: MediaQuery.of(context).size.height / 3,
                   child: Center(child: Text("Belum ada report")));
             } else {
-              return  ListView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount: sample.listDetail2.length,
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return KitService2ItemWidget(
-                      model: sample.listDetail2.elementAt(index));
-                });
+              return  Column(
+                children: [
+                  ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      itemCount: sample.listDetail.length,
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return KitServiceItemWidget(
+                            model: sample.listDetail
+                                .elementAt(index));
+                      }),
+                  SizedBox(height: 20),
+                  ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      itemCount: sample.listDetail2.length,
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return KitService2ItemWidget(
+                            model: sample.listDetail2.elementAt(index));
+                      })
+
+                ],
+              );
             }
           } else {
-            return Platform.isIOS
-                ? SizedBox(
-              height: MediaQuery.of(context).size.height /
-                  3,
-              child: Center(
-                child: CupertinoActivityIndicator(),
-              ),
-            )
-                : SizedBox(
-              height:MediaQuery.of(context).size.height /
-                  3,
-              child: Center(
-                child: CupertinoActivityIndicator(),
-              ),
-            );
+            return  SizedBox(
+              height: MediaQuery.of(context).size.height / 3,
+                child: Center(child: SpinKitDoubleBounce(color: Colors.grey, size: 30)));
           }
         });
   }
@@ -287,19 +290,7 @@ class _HomeReportPageState extends State<HomeReportPage> {
               );
             }
           } else {
-            return Platform.isIOS
-                ? SizedBox(
-                    height: width * 0.33,
-                    child: Center(
-                      child: CupertinoActivityIndicator(),
-                    ),
-                  )
-                : SizedBox(
-                    height: width * 0.33,
-                    child: Center(
-                      child: CupertinoActivityIndicator(),
-                    ),
-                  );
+            return SizedBox(height: 125);
           }
         });
   }

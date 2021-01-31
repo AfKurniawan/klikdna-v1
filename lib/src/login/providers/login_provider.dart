@@ -387,8 +387,6 @@ class LoginProvider with ChangeNotifier{
         vdateto = prefs.getString("dateto");
 
 
-
-
         notifyListeners();
 
         print("TIM 1 POS : $vtimoneposition && TIM 2 POS : $vtimtwoposition");

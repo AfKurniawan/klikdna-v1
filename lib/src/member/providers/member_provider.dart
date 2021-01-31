@@ -38,6 +38,8 @@ class MemberProvider with ChangeNotifier {
       listMember = personArray.map<Member>((j) => Member.fromJson(j)).toList();
       notifyListeners();
       print("NAMA MEMBER: $listMember");
+    } else {
+      isLoading = false;
     }
 
     return null;

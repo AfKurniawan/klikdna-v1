@@ -1,20 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:fluttericon/linearicons_free_icons.dart';
-import 'package:new_klikdna/src/account/providers/account_provider.dart';
 import 'package:new_klikdna/src/member/providers/member_provider.dart';
-import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
-import 'package:new_klikdna/src/report/providers/report_provider.dart';
-import 'package:new_klikdna/src/report/widgets/button_icon_widget.dart';
-import 'package:new_klikdna/src/report/widgets/kit_list_service2_widget.dart';
-import 'package:new_klikdna/src/report/widgets/kit_list_service_widget.dart';
-import 'package:new_klikdna/src/report/widgets/member_item_widget.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
+import 'package:new_klikdna/widgets/button_and_icon_widget.dart';
+import 'package:new_klikdna/widgets/button_widget.dart';
+import 'package:new_klikdna/widgets/dialogs/row_button_pop_dialog_widget.dart';
 import 'package:provider/provider.dart';
 import 'dart:io' show Platform;
 
-import 'package:shared_preferences/shared_preferences.dart';
 
 class NewMainReportPage extends StatefulWidget {
   static const String id = "/report_page";
@@ -67,7 +61,7 @@ class _NewMainReportPageState extends State<NewMainReportPage> {
                   children: <Widget>[
                     InkWell(
                       onTap: (){
-                        Navigator.of(context).pushNamed("main_report_page");
+                        Navigator.of(context).pushNamed("home_report_page");
                       },
                       child: Container(
                         height: 70,
@@ -109,7 +103,39 @@ class _NewMainReportPageState extends State<NewMainReportPage> {
           ),
         ],
       ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(left: 10.0, right: 10, bottom: 10),
+        child: ButtonAndIconWidget(
+          btnText: "Lab Lainnya",
+          btnAction: (){
+            showPopDialog(context);
+          },
+          color: MyColors.dnaGreen,
+          height: 50,
+          widht: 200,
+          myIcon: Icons.add_circle_rounded,
+          iconColor: Colors.white,
+        ),
+      ),
     );
   }
 
+}
+
+Future<void> showPopDialog(BuildContext context) async {
+  return showDialog<void>(
+      context: context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) => RowButtonPopDialogWidget(
+        title: "",
+        description: "Tampilkan file data genomik kamu ?",
+        filledButtonText: "Lanjutkan",
+        filledButtonaction: (){
+
+        },
+        disabledButtonText: "Tidak",
+        disabledButtonAction: (){
+          Navigator.of(context).pop();
+        },
+      ));
 }

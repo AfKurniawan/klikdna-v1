@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
         //appBar:  myApbar(context),
         body: Consumer<HomeProvider>(
           builder: (context, prov, _){
-            return prov.isLoading == true ? Platform.isIOS ? Center(child: CupertinoActivityIndicator()) : Center(child: SpinKitDoubleBounce(color: Colors.grey))
+            return prov.isLoading == true ? Center(child: SpinKitDoubleBounce(color: Colors.grey))
                 : SingleChildScrollView(
               child: Column(
                 children: <Widget>[

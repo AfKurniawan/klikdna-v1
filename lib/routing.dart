@@ -23,6 +23,7 @@ import 'package:new_klikdna/src/profile/pages/main_profile_page.dart';
 import 'package:new_klikdna/src/profile/pages/lihat_profile_page.dart';
 import 'package:new_klikdna/src/report/pages/detail_report_page.dart';
 import 'package:new_klikdna/src/report/pages/hasil_report_page.dart';
+import 'package:new_klikdna/src/report/pages/home_report_page.dart';
 import 'package:new_klikdna/src/splash/pages/splash_page.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -59,6 +60,12 @@ class Routing {
       case "edit_patient_card_page" :
         return PageTransition(
             child: EditPatientCardPage(),
+            type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
+        break;
+
+      case "home_report_page" :
+        return PageTransition(
+            child: HomeReportPage(),
             type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
         break;
 
