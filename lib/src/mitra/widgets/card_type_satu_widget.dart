@@ -70,7 +70,7 @@ class CardTypeSatuWidget extends StatelessWidget {
                           children: [
                             Container(
                               width: MediaQuery.of(context).size.width / 2,
-                              child: Text(model.vallName.length > 20 ? "${model.vallName.substring(0, 20)}" : "${model.vallName}",
+                              child: Text(model.vallName.length > 20 ? "${model.vallName.substring(0, 20).toUpperCase()}" : "${model.vallName.toUpperCase()}",
                                 overflow: TextOverflow.clip,
                                 maxLines: 1,
                                 style: TextStyle(
@@ -98,7 +98,7 @@ class CardTypeSatuWidget extends StatelessWidget {
                                     ),
                                   ),
 
-                                  Text(model.parsedTanggalExpired == null ? "-" : "${model.parsedTanggalExpired.substring(0, 11)}",
+                                  Text(model.parsedTanggalExpired == null ? "-" : "${model.parsedTanggalExpired}",
                                     overflow: TextOverflow.clip,
                                     maxLines: 1,
                                     style: TextStyle(

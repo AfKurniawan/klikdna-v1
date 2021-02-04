@@ -15,7 +15,7 @@ class ProfileProvider with ChangeNotifier {
 
   logout(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.clear();
+    await prefs.clear();
     Navigator.pushReplacementNamed(context, "/");
     notifyListeners();
   }

@@ -27,6 +27,9 @@ class LoginProvider with ChangeNotifier{
     String buttonText = "Masuk";
 
 
+    var formattedCommission = new NumberFormat.currency(name: "", locale: "en_US".toString());
+
+    var totalFormattedCommision = new NumberFormat.currency(name: "", locale: "en_US");
 
     Future<LoginModel> loginAction(BuildContext context) async {
         prefs = await SharedPreferences.getInstance();
@@ -60,12 +63,11 @@ class LoginProvider with ChangeNotifier{
             prefs.setBool('isLogin', true);
 
             /// USER
-            prefs.setString("number", responseJson.user.member.number);
-
             prefs.setInt("userid", responseJson.user.id);
 
 
             ///MEMBER
+
             prefs.setString("number", responseJson.user.member.number);
 
             prefs.setString("firstname", responseJson.user.member.firstname);
@@ -98,13 +100,24 @@ class LoginProvider with ChangeNotifier{
 
             prefs.setInt("rightpointreward", responseJson.user.member.rightpointreward);
 
-            prefs.setString("commission", formattedCommission.format(responseJson.user.member.commission));
+
+            if(responseJson.user.member.commission == null) {
+                prefs.setInt("commission", responseJson.user.member.commission);
+            } else {
+                prefs.setString("commission", formattedCommission.format(responseJson.user.member.commission));
+            }
+
 
             prefs.setString("rank", responseJson.user.member.rank);
 
             prefs.setString("par", responseJson.user.member.par);
 
-            prefs.setString("expired", responseJson.user.member.expired);
+            if(responseJson.user.member.expired == null) {
+                prefs.setString("expired", "-");
+            } else {
+                prefs.setString("expired", responseJson.user.member.expired);
+            }
+
 
             prefs.setString("highestrank", responseJson.user.member.highestrank.toString());
 
@@ -220,9 +233,7 @@ class LoginProvider with ChangeNotifier{
 
 
 
-    var formattedCommission = new NumberFormat.currency(name: "", locale: "en_US");
 
-    var totalFormattedCommision = new NumberFormat.currency(name: "", locale: "en_US");
 
     /// USER ID
     int vuserid;
@@ -307,12 +318,19 @@ class LoginProvider with ChangeNotifier{
     getMitraData() async {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         vnumber = prefs.getString("number");
-
         vuserid = prefs.getInt("userid");
 
-        expParsedDate = DateTime.parse(prefs.getString("expired")).toLocal();
+        String nulledExpired = prefs.getString("expired") == null ? "-" : prefs.getString("expired");
 
-        parsedTanggalExpired = ('${formatTgl.format(expParsedDate)}');
+        if(nulledExpired == "-"){
+            expParsedDate = "-" ;
+            parsedTanggalExpired = "-" ;
+        } else {
+            expParsedDate = DateTime.parse(prefs.getString("expired")).toLocal();
+            parsedTanggalExpired = ('${formatTgl.format(expParsedDate).substring(0, 11)}');
+        }
+
+
 
         ///MEMBER
         vfirstname = prefs.getString("firstname");

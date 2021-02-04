@@ -23,7 +23,7 @@ class _MitraPageState extends State<MitraPage> {
     CardTypeDuaWidget()
   ];
 
-  int _current = 0;
+  int _current = 1;
 
   @override
   void initState() {
@@ -84,8 +84,7 @@ class _MitraPageState extends State<MitraPage> {
                               return Container(
                                 width: 18.0,
                                 height: 8.0,
-                                margin:
-                                EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                                margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
                                 decoration: BoxDecoration(
                                   color: MyColors.dnaGreen,
                                   borderRadius: BorderRadius.circular(10),
@@ -95,8 +94,7 @@ class _MitraPageState extends State<MitraPage> {
                               return Container(
                                 width: 8.0,
                                 height: 8.0,
-                                margin:
-                                EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                                margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
                                 decoration: BoxDecoration(
                                     shape: BoxShape.circle, color: MyColors.grey),
                               );
@@ -110,7 +108,26 @@ class _MitraPageState extends State<MitraPage> {
               )
               : Padding(
                 padding: const EdgeInsets.only(left: 10.0),
-                child: CardTypeSatuWidget(),
+                child: Column(
+                  children: [
+                    CardTypeSatuWidget(),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: Center(
+                          child: Container(
+                            width: 8.0,
+                            height: 8.0,
+                            margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle, color: MyColors.dnaGreen),
+                          )
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
 
               Padding(

@@ -24,15 +24,15 @@ class ReportProvider extends ChangeNotifier {
   List<Detail> listDetail = [];
   List<Detail> listDetail2 = [];
   bool isLoading;
+  bool notfound = false;
 
 
   Future<List<ReportModel>> getSample(BuildContext context, String personId) async {
     isLoading = true;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var url = AppConstants.GET_SAMPLE_URL + '$personId';
+    String accountId = prefs.getString("personAccountId");
+    var url = AppConstants.GET_SAMPLE_URL + '$accountId';
     final prov = Provider.of<TokenProvider>(context, listen: false);
-
-    print("Person ID: $personId");
 
     String accessToken = prov.accessToken;
 
@@ -42,10 +42,11 @@ class ReportProvider extends ChangeNotifier {
     };
 
     final request = await http.get(url, headers: ndas);
-    print("SAMPLE RESPONSE CODE: ${request.body}");
+    print("SAMPLE RESPONSE CODE: ${request.statusCode}");
 
     if (request.statusCode == 200) {
       isLoading = false;
+      notfound = false ;
       var allArray = json.decode(request.body);
 
       var dataArray = allArray['data'] as List;
@@ -61,16 +62,19 @@ class ReportProvider extends ChangeNotifier {
 
       prefs.remove('tempPersonId');
 
+
       notifyListeners();
     } else if (request.statusCode == 404) {
       print("REPORT Not Found");
       listSample = [];
       isLoading = false;
+      notfound = true ;
       notifyListeners();
       listDetail.clear();
     } else if (request.statusCode == 500) {
       listSample = [];
       isLoading = false;
+      notfound = true ;
       notifyListeners();
       listDetail.clear();
     }

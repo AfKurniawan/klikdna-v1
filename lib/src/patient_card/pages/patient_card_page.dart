@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:new_klikdna/src/account/providers/account_provider.dart';
 import 'package:new_klikdna/src/login/providers/login_provider.dart';
 import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
@@ -77,7 +78,7 @@ class _PatientCardPageState extends State<PatientCardPage> {
               ],
             ),
             body: prov.isMuter == true
-                ? Center(child: Platform.isIOS ? CupertinoActivityIndicator() : CircularProgressIndicator(strokeWidth: 2))
+                ? Center(child: SpinKitDoubleBounce(color: Colors.grey))
                 : Provider.of<AccountProvider>(context, listen: false).listPatentCard.length == 0
                 ? Center(child: Text("Anda belum memiliki Kartu Pasien"))
                 : SingleChildScrollView (

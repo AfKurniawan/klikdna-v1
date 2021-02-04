@@ -115,7 +115,7 @@ class _NewReferralTabViewState extends State<NewReferralTabView> {
                                       .min, // To make the card compact
                                   children: <Widget>[
                                     Text(
-                                      "Tidak ada data",
+                                      "Tidak ada data referral",
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontSize: 16.0,
@@ -123,51 +123,6 @@ class _NewReferralTabViewState extends State<NewReferralTabView> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    Text(
-                                      "Untuk jenis atau tanggal yang dipilih",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontSize: 14.0,
-                                          color: MyColors.dnaGrey,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                    SizedBox(height: 16.0),
-                                    InkWell(
-                                      onTap: () {
-                                        Provider.of<WalletReferralProvider>(
-                                                context,
-                                                listen: false)
-                                            .showBottomSheetFilter(context);
-                                      },
-                                      child: Container(
-                                        height: 40,
-                                        width:
-                                            MediaQuery.of(context).size.width / 2,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            color: MyColors.dnaGreen),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Center(
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
-                                              children: <Widget>[
-                                                Text(
-                                                  "Ulangi",
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    )
                                   ],
                                 ),
                               ),

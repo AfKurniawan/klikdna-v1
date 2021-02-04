@@ -65,7 +65,7 @@ class OverViewTileWidget extends StatelessWidget {
                                     ),
                                   ),
                                   SizedBox(height: 5),
-                                  Text(prov.vleftcv == null ? "" : "${prov.vleftcv}",
+                                  Text(prov.vleftcv == null ? "-" : "${prov.vleftcv}",
                                     overflow: TextOverflow.clip,
                                     maxLines: 1,
                                     style: TextStyle(
@@ -89,7 +89,7 @@ class OverViewTileWidget extends StatelessWidget {
                                     ),
                                   ),
                                   SizedBox(height: 5),
-                                  Text(prov.vrightcv == null ? "" : "${prov.vrightcv}",
+                                  Text(prov.vrightcv == null ? "-" : "${prov.vrightcv}",
                                     overflow: TextOverflow.clip,
                                     maxLines: 1,
                                     style: TextStyle(
@@ -162,7 +162,17 @@ class OverViewTileWidget extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(prov.vtimone == null ? "" : "${prov.vtimone}",
+                                Text("Kiri",
+                                  overflow: TextOverflow.clip,
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w300
+                                  ),
+                                ),
+                                SizedBox(height: 5),
+                                Text(prov.vtimone == null ? "-" : "${prov.vtimone}",
                                   overflow: TextOverflow.clip,
                                   maxLines: 1,
                                   style: TextStyle(
@@ -176,7 +186,7 @@ class OverViewTileWidget extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Kiri",
+                                Text("Kanan",
                                   overflow: TextOverflow.clip,
                                   maxLines: 1,
                                   style: TextStyle(
@@ -186,7 +196,7 @@ class OverViewTileWidget extends StatelessWidget {
                                   ),
                                 ),
                                 SizedBox(height: 5),
-                                Text(prov.vtimtwo == null ? "" : "${prov.vtimtwo}",
+                                Text(prov.vtimtwo == null ? "-" : "${prov.vtimtwo}",
                                   overflow: TextOverflow.clip,
                                   maxLines: 1,
                                   style: TextStyle(
@@ -310,7 +320,7 @@ class OverViewTileWidget extends StatelessWidget {
                                   ),
                                 ),
                                 SizedBox(height: 5),
-                                Text(prov.vleftpointreward == null ? "" : "${prov.vleftpointreward}",
+                                Text(prov.vleftpointreward == null ? "-" : "${prov.vleftpointreward}",
                                   overflow: TextOverflow.clip,
                                   maxLines: 1,
                                   style: TextStyle(
@@ -335,7 +345,7 @@ class OverViewTileWidget extends StatelessWidget {
                                   ),
                                 ),
                                 SizedBox(height: 5),
-                                Text(prov.vrightpointreward == null ? "" : "${prov.vrightpointreward}",
+                                Text(prov.vrightpointreward == null ? "-" : "${prov.vrightpointreward}",
                                   overflow: TextOverflow.clip,
                                   maxLines: 1,
                                   style: TextStyle(

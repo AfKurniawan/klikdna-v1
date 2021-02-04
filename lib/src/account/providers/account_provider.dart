@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:new_klikdna/src/account/models/account_model.dart';
+import 'package:new_klikdna/src/report/providers/report_provider.dart';
 import 'package:new_klikdna/src/token/providers/token_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -51,7 +52,7 @@ class AccountProvider with ChangeNotifier {
 
     final request = await http.get(url, headers: ndas);
     final accountResponse = AccountModel.fromJson(json.decode(request.body));
-    print("ACCOUNT RESPONSE: ${request.body}");
+   // print("ACCOUNT RESPONSE: ${request.body}");
 
     if(accountResponse.success == true){
       isLoading = false ;
@@ -78,6 +79,7 @@ class AccountProvider with ChangeNotifier {
       prefs.setString("personId", accountResponse.data.userId);
       print("PERSON ACOUNT___: ${accountResponse.data.userId}");
       nameController.text = accountResponse.data.name;
+      Provider.of<ReportProvider>(context, listen: false).getSample(context, accountResponse.data.userId);
 //      notifyListeners();
 
     } else {

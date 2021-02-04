@@ -1,7 +1,7 @@
-import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'package:new_klikdna/src/mitra/wallets_and_referrals/providers/wallet_referral_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
@@ -27,12 +27,11 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
       builder: (context, wallet, _) {
         return SingleChildScrollView(
             child: Container(
-          color: Colors.white,
-          child: Column(
+            //color: Colors.white,
+              child: Column(
             children: [
               Padding(
-                  padding:
-                      const EdgeInsets.only(left: 18.0, right: 18, top: 20),
+                  padding: EdgeInsets.only(left: 18.0, right: 18, top: 20),
                   child: wallet.listWalletData.length == 0
                       ? Container()
                       : wallet.tipeValue == "Semua Data"
@@ -66,7 +65,8 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
                                                 style: TextStyle(
                                                     fontSize: 16,
                                                     color: MyColors.dnaGreen2,
-                                                    fontWeight: FontWeight.bold)));
+                                                    fontWeight:
+                                                        FontWeight.bold)));
                                       },
                                     ),
                                     SizedBox(height: 5),
@@ -92,7 +92,8 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
                               child: Padding(
                                 padding: const EdgeInsets.all(18.0),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Column(
                                       mainAxisAlignment: MainAxisAlignment.center,
@@ -101,76 +102,63 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
                                         SizedBox(height: 5),
                                         wallet.tipeValue.contains("Referral")
                                             ? Container(
-                                                child: Text(
-                                                    wallet.totalsum == null
-                                                        ? "0"
-                                                        : "IDR ${wallet.totalsum.split(".")[0].replaceAll("-", "")}",
+                                                child: Text(wallet.totalsum == null ? "0" : "IDR ${wallet.totalsum.split(".")[0].replaceAll("-", "")}",
                                                     style: TextStyle(
                                                         fontSize: 16,
                                                         color: MyColors.dnaBadge,
-                                                        fontWeight:
-                                                            FontWeight.bold)))
+                                                        fontWeight: FontWeight.bold)))
                                             : wallet.tipeValue
                                                     .contains("Royalti")
                                                 ? Container(
-                                                    child: Text(
-                                                        wallet.totalsum == null
-                                                            ? ""
-                                                            : "IDR ${wallet.totalsum.split(".")[0].replaceAll("-", "")}",
+                                                    child: Text(wallet.totalsum == null ? "" : "IDR ${wallet.totalsum.split(".")[0].replaceAll("-", "")}",
                                                         style: TextStyle(
                                                             fontSize: 16,
                                                             color: MyColors.dnaBadge,
-                                                            fontWeight: FontWeight
-                                                                .bold)))
-                                                : wallet.tipeValue
-                                                        .contains("Tim")
+                                                            fontWeight: FontWeight.bold)))
+                                                : wallet.tipeValue.contains("Tim")
                                                     ? Container(
-                                                        child: Text(wallet.totalsum == null
-                                                            ? ""
-                                                            : "IDR ${wallet.totalsum.split(".")[0].replaceAll("-", "")}",
+                                                        child: Text(wallet.totalsum == null ? "" : "IDR ${wallet.totalsum.split(".")[0].replaceAll("-", "")}",
                                                             style: TextStyle(
                                                                 fontSize: 16,
                                                                 color: MyColors.dnaBadge,
                                                                 fontWeight: FontWeight.bold)))
                                                     : wallet.tipeValue.contains("Penarikan")
-                                                        ? Container(child: Text(wallet.totalsum == null
-                                                        ? "" : "IDR ${wallet.totalsum.split(".")[0].replaceAll("-", "")}",
-                                                            style: TextStyle(
-                                                                fontSize: 16,
-                                                                color: MyColors.dnaBadge,
-                                                                fontWeight: FontWeight.bold)))
-                                                        : Container(child: Text("0",
-                                                            style: TextStyle(
-                                                                fontSize: 16,
-                                                                color: MyColors.dnaBadge,
-                                                                fontWeight: FontWeight.bold))),
+                                                        ? Container(child: Text(wallet.totalsum == null ? "" : "IDR ${wallet.totalsum.split(".")[0].replaceAll("-", "")}", style: TextStyle(fontSize: 16, color: MyColors.dnaBadge, fontWeight: FontWeight.bold)))
+                                                        : Container(child: Text("0", style: TextStyle(fontSize: 16, color: MyColors.dnaBadge, fontWeight: FontWeight.bold))),
                                         SizedBox(height: 5),
                                         wallet.tipeValue.contains("Referral")
                                             ? Text("Komisi Referral")
                                             : wallet.tipeValue.contains("Tim")
-                                            ? Text("Komisi Tim")
-                                            : wallet.tipeValue.contains("Royalti")
-                                            ? Text("Komisi Royalti")
-                                            : wallet.tipeValue.contains("National")
-                                            ? Text("National Sharing")
-                                            : wallet.tipeValue.contains("Penarikan")
-                                            ? Text("Penarikan")
-                                            : "",
+                                                ? Text("Komisi Tim")
+                                                : wallet.tipeValue.contains("Royalti")
+                                                    ? Text("Komisi Royalti")
+                                                    : wallet.tipeValue.contains("National")
+                                                        ? Text("National Sharing")
+                                                          : wallet.tipeValue.contains("Star Maker")
+                                                            ? Text("Star Maker")
+                                                             : wallet.tipeValue.contains("Penarikan")
+                                                              ? Text("Penarikan")
+                                                                : "",
                                       ],
                                     ),
+                                    Container(
+                                      height: 50,
+                                      width: 2,
+                                      color: Colors.grey,
+                                    ),
                                     Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
-                                        Container(child: Text(wallet.komisi == null
-                                            ? ""
-                                            : "IDR ${wallet.komisi.split(".")[0].replaceAll("-", "")}",
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                color: MyColors.dnaGreen2,
-                                                fontWeight: FontWeight.bold))),
+                                        Container(
+                                            child: Text(
+                                                wallet.komisi == null
+                                                    ? ""
+                                                    : "IDR ${wallet.komisi.split(".")[0].replaceAll("-", "")}",
+                                                style: TextStyle(
+                                                    fontSize: 16,
+                                                    color: MyColors.dnaGreen2,
+                                                    fontWeight: FontWeight.bold))),
                                         SizedBox(height: 5),
                                         Text("Saldo Anda"),
                                       ],
@@ -179,55 +167,55 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
                                 ),
                               ),
                             )),
-              Padding(
-                padding: const EdgeInsets.only(left: 18.0, right: 18),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                            child: Text("Transaksi",
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold))),
-                        SizedBox(height: 5),
-                        Container(
-                            child: Text(
-                                "Total ${wallet.listWalletData.length} Transaksi"))
-                      ],
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Provider.of<WalletReferralProvider>(context,
-                                listen: false)
-                            .showBottomSheetFilter(context);
-                      },
-                      splashColor: Colors.blueGrey,
-                      child: Container(
-                        color: Colors.transparent,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.asset(
-                            "assets/icons/sorting_wallet_referral.png",
-                            height: 20,
+              Visibility(
+                visible: wallet.isLoading == true ? false : true,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 18.0, right: 18),
+                  child: wallet.listWalletData.length == 0 ? Container()
+                  : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                              child: Text("Transaksi",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold))),
+                          SizedBox(height: 5),
+                          Container(
+                              child: Text(
+                                  "Total ${wallet.listWalletData.length} Transaksi"))
+                        ],
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Provider.of<WalletReferralProvider>(context, listen: false).showBottomSheetFilter(context);
+                        },
+                        splashColor: Colors.blueGrey,
+                        child: Container(
+                          color: Colors.transparent,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.asset(
+                              "assets/icons/sorting_wallet_referral.png",
+                              height: 20,
+                            ),
                           ),
                         ),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
               ),
               wallet.isLoading == true
                   ? Container(
                       height: MediaQuery.of(context).size.height / 1.3,
                       child: Center(
-                          child: Platform.isIOS
-                              ? CupertinoActivityIndicator(radius: 12)
-                              : CircularProgressIndicator(strokeWidth: 2)))
+                          child: SpinKitDoubleBounce(color: Colors.grey)))
                   : wallet.listWalletData.length == 0
                       ? Container(
                           height: MediaQuery.of(context).size.height / 1.6,
@@ -261,7 +249,7 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
                                       .min, // To make the card compact
                                   children: <Widget>[
                                     Text(
-                                      "Tidak ada data",
+                                      "Tidak ada data transaksi",
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontSize: 16.0,
@@ -269,52 +257,6 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    Text(
-                                      "Untuk jenis atau tanggal yang dipilih",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontSize: 14.0,
-                                          color: MyColors.dnaGrey,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                    SizedBox(height: 16.0),
-                                    InkWell(
-                                      onTap: () {
-                                        Provider.of<WalletReferralProvider>(
-                                                context,
-                                                listen: false)
-                                            .showBottomSheetFilter(context);
-                                      },
-                                      child: Container(
-                                        height: 40,
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                2,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            color: MyColors.dnaGreen),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Center(
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
-                                              children: <Widget>[
-                                                Text(
-                                                  "Ulangi",
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    )
                                   ],
                                 ),
                               ),
@@ -322,331 +264,7 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
                           ))
                       : Consumer<WalletReferralProvider>(
                           builder: (child, wallet, _) {
-                            return FutureBuilder(
-                                future: widget.future,
-                                builder: (context, snapshot) {
-                                  return ListView.builder(
-                                    shrinkWrap: true,
-                                    physics: NeverScrollableScrollPhysics(),
-                                    itemCount: wallet.listWalletData.length == 0
-                                        ? 0
-                                        : wallet.listWalletData.length,
-                                    itemBuilder: (context, index) {
-                                      var formatTgl =
-                                          DateFormat('dd MMMM yyyy');
-                                      var parsedDate = DateTime.parse(
-                                          wallet.listWalletData[index].created);
-                                      String dateCreated =
-                                          ('${formatTgl.format(parsedDate)}');
-                                      String fnominal =
-                                          NumberFormat.currency(name: '')
-                                              .format(wallet
-                                                  .listWalletData[index]
-                                                  .nominal)
-                                              .split(".")[0]
-                                              .replaceAll(",", ".");
-                                      return wallet.listWalletData[index].status
-                                              .contains("Selesai")
-                                          ? Container(
-                                              color: Colors.white,
-                                              padding: EdgeInsets.only(
-                                                  right: 18, top: 18),
-                                              child:
-                                                  wallet.tipeValue
-                                                          .contains("Semua")
-                                                      ? Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            /// COLOR
-                                                            // #FF7D67  < National Sharing
-                                                            // #006971 < Referal
-                                                            // #B5CCD5 < Tim
-                                                            // #359389 < Royalti
-
-                                                            Container(
-                                                              width: 156,
-                                                              height: 45,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: wallet
-                                                                        .listWalletData[
-                                                                            index]
-                                                                        .type
-                                                                        .contains(
-                                                                            "Tim")
-                                                                    ? Color(
-                                                                        0xffB5CCD5)
-                                                                    : wallet
-                                                                            .listWalletData[
-                                                                                index]
-                                                                            .type
-                                                                            .contains(
-                                                                                "Referral")
-                                                                        ? Color(
-                                                                            0xff006971)
-                                                                        : wallet.listWalletData[index].type.contains("Royalti")
-                                                                            ? Color(0xff359389)
-                                                                            : wallet.listWalletData[index].type.contains("Withdraw")
-                                                                                ? Color(0xffD7516A)
-                                                                                : wallet.listWalletData[index].type.contains("National")
-                                                                                    ? Color(0xffFF7D67)
-                                                                                    : Colors.white12,
-                                                                borderRadius: BorderRadius.only(
-                                                                    topRight: Radius
-                                                                        .circular(
-                                                                            25),
-                                                                    bottomRight:
-                                                                        Radius.circular(
-                                                                            25)),
-                                                              ),
-                                                              child: Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .only(
-                                                                        top:
-                                                                            13.0,
-                                                                        left:
-                                                                            10),
-                                                                child: Text(
-                                                                    wallet
-                                                                            .listWalletData[
-                                                                                index]
-                                                                            .type
-                                                                            .contains(
-                                                                                "Withdraw")
-                                                                        ? "Penarikan"
-                                                                        : "${wallet.listWalletData[index].type}",
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .white,
-                                                                        fontSize:
-                                                                            16)),
-                                                              ),
-                                                            ),
-                                                            SizedBox(
-                                                                height: 30),
-                                                            Container(
-                                                              width:
-                                                                  MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width,
-                                                              height: 70,
-                                                              margin: EdgeInsets
-                                                                  .only(
-                                                                      bottom:
-                                                                          10,
-                                                                      left: 18,
-                                                                      right:
-                                                                          18),
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: Colors
-                                                                    .white,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10),
-                                                                boxShadow: [
-                                                                  BoxShadow(
-                                                                    offset:
-                                                                        Offset(
-                                                                            0,
-                                                                            1),
-                                                                    blurRadius:
-                                                                        3,
-                                                                    color: Colors
-                                                                        .grey[
-                                                                            700]
-                                                                        .withOpacity(
-                                                                            0.32),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              child: Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .all(
-                                                                        18.0),
-                                                                child: Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceBetween,
-                                                                  children: [
-                                                                    Text(
-                                                                        "$dateCreated"),
-                                                                    Row(
-                                                                      children: [
-                                                                        wallet.listWalletData[index].type.contains("Withdraw")
-                                                                            ? Icon(Icons.arrow_circle_down,
-                                                                                size: 20,
-                                                                                color: Colors.redAccent)
-                                                                            : Icon(Icons.arrow_circle_up, size: 20, color: Colors.green)
-                                                                      ],
-                                                                    ),
-                                                                    Text(
-                                                                        'IDR $fnominal'.replaceAll(
-                                                                            "-",
-                                                                            ""),
-                                                                        style: TextStyle(
-                                                                            fontWeight:
-                                                                                FontWeight.bold)),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            )
-                                                          ],
-                                                        )
-                                                      : Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Container(
-                                                              width: 156,
-                                                              height: 45,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: wallet
-                                                                        .listWalletData[
-                                                                            index]
-                                                                        .type
-                                                                        .contains(
-                                                                            "Tim")
-                                                                    ? Color(
-                                                                        0xffB5CCD5)
-                                                                    : wallet
-                                                                            .listWalletData[
-                                                                                index]
-                                                                            .type
-                                                                            .contains(
-                                                                                "Referral")
-                                                                        ? Color(
-                                                                            0xff29656C)
-                                                                        : wallet.listWalletData[index].type.contains("Royalti")
-                                                                            ? Color(0xffEF846E)
-                                                                            : wallet.listWalletData[index].type.contains("Withdraw")
-                                                                                ? Color(0xffD7516A)
-                                                                                : Colors.white12,
-                                                                borderRadius: BorderRadius.only(
-                                                                    topRight: Radius
-                                                                        .circular(
-                                                                            25),
-                                                                    bottomRight:
-                                                                        Radius.circular(
-                                                                            25)),
-                                                              ),
-                                                              child: Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .only(
-                                                                        top:
-                                                                            13.0,
-                                                                        left:
-                                                                            10),
-                                                                child: Text(
-                                                                    wallet
-                                                                            .listWalletData[
-                                                                                index]
-                                                                            .type
-                                                                            .contains(
-                                                                                "Withdraw")
-                                                                        ? "Penarikan"
-                                                                        : "${wallet.listWalletData[index].type}",
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .white,
-                                                                        fontSize:
-                                                                            16)),
-                                                              ),
-                                                            ),
-                                                            SizedBox(
-                                                                height: 30),
-                                                            Container(
-                                                              width:
-                                                                  MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width,
-                                                              height: 70,
-                                                              margin: EdgeInsets
-                                                                  .only(
-                                                                      bottom:
-                                                                          10,
-                                                                      left: 18,
-                                                                      right:
-                                                                          18),
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: Colors
-                                                                    .white,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10),
-                                                                boxShadow: [
-                                                                  BoxShadow(
-                                                                    offset:
-                                                                        Offset(
-                                                                            0,
-                                                                            1),
-                                                                    blurRadius:
-                                                                        3,
-                                                                    color: Colors
-                                                                        .grey[
-                                                                            700]
-                                                                        .withOpacity(
-                                                                            0.32),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              child: Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .all(
-                                                                        18.0),
-                                                                child: Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceBetween,
-                                                                  children: [
-                                                                    Text(
-                                                                        "$dateCreated"),
-                                                                    Row(
-                                                                      children: [
-                                                                        wallet.listWalletData[index].type.contains("Withdraw")
-                                                                            ? Icon(Icons.arrow_circle_down,
-                                                                                size: 20,
-                                                                                color: Colors.redAccent)
-                                                                            : Icon(Icons.arrow_circle_up, size: 20, color: Colors.green)
-                                                                      ],
-                                                                    ),
-                                                                    Text(
-                                                                        'IDR $fnominal'.replaceAll(
-                                                                            "-",
-                                                                            ""),
-                                                                        style: TextStyle(
-                                                                            fontWeight:
-                                                                                FontWeight.bold)),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            )
-                                                          ],
-                                                        ))
-                                          : Container(
-                                              color: Colors.blue, height: 0);
-                                    },
-                                  );
-                                });
+                            return buildFutureBuilder(wallet);
                           },
                         ),
               SizedBox(height: 30),
@@ -655,5 +273,218 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
         ));
       },
     );
+  }
+
+  Widget buildFutureBuilder(WalletReferralProvider wallet) {
+    return FutureBuilder(
+        future: widget.future,
+        builder: (context, snapshot) {
+          return ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: wallet.listWalletData.length == 0
+                ? 0
+                : wallet.listWalletData.length,
+            itemBuilder: (context, index) {
+              var formatTgl = DateFormat('dd MMMM yyyy');
+              var parsedDate =
+                  DateTime.parse(wallet.listWalletData[index].created);
+              String dateCreated = ('${formatTgl.format(parsedDate)}');
+              String fnominal = NumberFormat.currency(name: '')
+                  .format(wallet.listWalletData[index].nominal)
+                  .split(".")[0]
+                  .replaceAll(",", ".");
+              return wallet.listWalletData[index].status.contains("Selesai")
+                  ? Container(
+                      color: Colors.white,
+                      padding: EdgeInsets.only(top: 18),
+                      child: wallet.tipeValue.contains("Semua")
+                          ? Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                /// COLOR
+                                // #FF7D67  < National Sharing
+                                // #006971 < Referal
+                                // #B5CCD5 < Tim
+                                // #359389 < Royalti
+
+                                Container(
+                                  width: 156,
+                                  height: 45,
+                                  decoration: BoxDecoration(
+                                    color: wallet.listWalletData[index].type
+                                            .contains("Tim")
+                                        ? Color(0xffB5CCD5)
+                                        : wallet.listWalletData[index].type
+                                                .contains("Referral")
+                                            ? Color(0xff006971)
+                                            : wallet.listWalletData[index].type
+                                                    .contains("Royalti")
+                                                ? Color(0xff359389)
+                                                : wallet.listWalletData[index].type.contains("Withdraw")
+                                                    ? Color(0xffD7516A)
+                                                      : wallet.listWalletData[index].type.contains("Star")
+                                                        ? Color(0xff006971)
+                                                          : wallet.listWalletData[index].type.contains("National")
+                                                            ? Color(0xffFF7D67)
+                                                              : Colors.grey,
+                                    borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(25),
+                                        bottomRight: Radius.circular(25)),
+                                  ),
+                                  child: Padding(
+                                    padding:
+                                        EdgeInsets.only(top: 13.0, left: 10),
+                                    child: Text(
+                                        wallet.listWalletData[index].type.contains("Withdraw")
+                                            ? "Penarikan"
+                                            : "${wallet.listWalletData[index].type}",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 16)),
+                                  ),
+                                ),
+                                SizedBox(height: 30),
+                                Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 80,
+                                  margin: EdgeInsets.only(
+                                      bottom: 10, left: 18, right: 18),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        offset: Offset(0, 3),
+                                        blurRadius: 5,
+                                        color: Colors.grey[700].withOpacity(0.5),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(18.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text("$dateCreated"),
+                                        wallet.listWalletData[index].type.contains("Withdraw")
+                                            ? Row(
+                                                children: [
+                                                  Icon(Icons.arrow_downward,
+                                                      size: 15,
+                                                      color: Colors.redAccent),
+                                                  SizedBox(width: 3),
+                                                  Text("Out",
+                                                      style: TextStyle(
+                                                          color: Colors.redAccent))
+                                                ],
+                                              )
+                                            : Row(
+                                                children: [
+                                                  Icon(Icons.arrow_upward,
+                                                      size: 15,
+                                                      color: Colors.green),
+                                                  SizedBox(width: 3),
+                                                  Text("In",
+                                                      style: TextStyle(
+                                                          color: Colors.green))
+                                                ],
+                                              ),
+                                        Text(
+                                            'IDR $fnominal'.replaceAll("-", ""),
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold)),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
+                            )
+                          : Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: 156,
+                                  height: 45,
+                                  decoration: BoxDecoration(
+                                    color: wallet.listWalletData[index].type.contains("Tim")
+                                        ? Color(0xffB5CCD5)
+                                        : wallet.listWalletData[index].type.contains("Referral")
+                                            ? Color(0xff29656C)
+                                            : wallet.listWalletData[index].type.contains("Royalti")
+                                                ? Color(0xffEF846E)
+                                                  : wallet.listWalletData[index].type.contains("Star")
+                                                    ? Color(0xff006971)
+                                                      : wallet.listWalletData[index].type.contains("Withdraw")
+                                                    ? Color(0xffD7516A)
+                                                    : Colors.white12,
+                                        borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(25),
+                                        bottomRight: Radius.circular(25)),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 13.0, left: 10),
+                                    child: Text(
+                                        wallet.listWalletData[index].type.contains("Withdraw")
+                                            ? "Penarikan"
+                                            : "${wallet.listWalletData[index].type}",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 16)),
+                                  ),
+                                ),
+                                SizedBox(height: 30),
+                                Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 70,
+                                  margin: EdgeInsets.only(
+                                      bottom: 10, left: 18, right: 18),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        offset: Offset(0, 1),
+                                        blurRadius: 3,
+                                        color:
+                                            Colors.grey[700].withOpacity(0.32),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(18.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text("$dateCreated"),
+                                        Row(
+                                          children: [
+                                            wallet.listWalletData[index].type
+                                                    .contains("Withdraw")
+                                                ? Icon(Icons.arrow_circle_down,
+                                                    size: 20,
+                                                    color: Colors.redAccent)
+                                                : Icon(Icons.arrow_circle_up,
+                                                    size: 20,
+                                                    color: Colors.green)
+                                          ],
+                                        ),
+                                        Text(
+                                            'IDR $fnominal'.replaceAll("-", ""),
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold)),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ))
+                  : Container(color: Colors.blue, height: 0);
+            },
+          );
+        });
   }
 }

@@ -25,7 +25,7 @@ class ButtonAndIconWidget extends StatelessWidget {
     return InkWell(
       onTap: btnAction,
       splashColor: Colors.white,
-      child: Ink(
+      child: Container(
         height: height,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(6),

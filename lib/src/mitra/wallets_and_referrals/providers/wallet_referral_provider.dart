@@ -53,7 +53,12 @@ class WalletReferralProvider with ChangeNotifier {
       isError = false ;
 
 
-      sum = listWalletData.map((e) => e.nominal).reduce((value, element) => value + element);
+      if(listWalletData.length == 0){
+        sum = 0;
+      } else {
+        sum = listWalletData.map((e) => e.nominal).reduce((value, element) => value + element);
+      }
+
 
       print("Sum : $sum");
 
