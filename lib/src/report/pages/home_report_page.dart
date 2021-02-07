@@ -37,7 +37,6 @@ class _HomeReportPageState extends State<HomeReportPage> {
   getPersonId() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     //Provider.of<ReportProvider>(context, listen: false).getSample(context, prefs.getString("personId"));
-
     _future = Provider.of<MemberProvider>(context, listen: false).getMember(context, prefs.getString("personId"));
     _getSample = Provider.of<ReportProvider>(context, listen: false).getSample(context, prefs.getString("personId"));
   }
