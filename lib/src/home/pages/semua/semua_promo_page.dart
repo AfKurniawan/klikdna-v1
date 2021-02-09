@@ -99,7 +99,7 @@ class _SemuaPromoPageState extends State<SemuaPromoPage> {
                               "${prov.bannerArray[index].imageUrl}",
                               title: "",
                               width: MediaQuery.of(context).size.width,
-                              height: 180,
+                              height: 160,
                               desc: "",
                               radius: 10,
                               press: () {

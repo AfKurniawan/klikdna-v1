@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
 import 'package:new_klikdna/src/dummy/post_it_now_models.dart';
@@ -96,6 +97,7 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
   }
 
   Consumer<HomeProvider> buildTraining() {
+    Size size = MediaQuery.of(context).size;
     return Consumer<HomeProvider>(
             builder: (context, prov, _) {
               return Container(
@@ -111,7 +113,7 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
                     document = parse(prov.trainingEventArray[index].data.text);
                     text = parse(document.body.text).documentElement.text;
                     return Container(
-                      height: 360,
+                      height: MediaQuery.of(context).size.height /2.1,
                       margin: EdgeInsets.only(left: 15, bottom: 10, top: 10, right: 10),
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -128,20 +130,36 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          EventSlider(
-                            svgSrc: "${prov.trainingEventArray[index].imageUrl}",
-                            title: "",
-                            width: 365,
-                            height: 220,
-                            desc: "",
-                            press: () {
-                              Navigator.pushNamed(
-                                  context, "detail_promo_page",
-                                  arguments: DummyModel(
-                                      "${prov.trainingEventArray[index].data.title}",
-                                      "${prov.trainingEventArray[index].data.text}",
-                                      "${prov.trainingEventArray[index].imageUrl}"));
-                            },
+                          Container(
+                            width: size.width - 20,
+                            height: size.height / 3.5,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                            ),
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                onTap: (){
+                                  Navigator.pushNamed(
+                                      context, "detail_event_page",
+                                      arguments: DummyModel(
+                                          "${prov.trainingEventArray[index].data.title}",
+                                          "${prov.trainingEventArray[index].data.text}",
+                                          "${prov.trainingEventArray[index].imageUrl}"));
+                                },
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                                  child: CachedNetworkImage(
+                                    imageUrl: "${prov.trainingEventArray[index].imageUrl}",
+                                    //width: size.width - 40,
+                                    fit: BoxFit.cover,
+                                    height: size.height / 4,
+                                    // height: 150,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                           SizedBox(height: 11),
                           Padding(
@@ -162,7 +180,7 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
                                       ),
                                       SizedBox(height: 20),
                                       Text(
-                                        "${prov.allEventArray[index].data.title}",
+                                        "${prov.trainingEventArray[index].data.title}",
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 13),
@@ -194,6 +212,7 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
   }
 
   Widget buildHealthSeries() {
+    Size size = MediaQuery.of(context).size;
     return Consumer<HomeProvider>(
             builder: (context, prov, _) {
               return Container(
@@ -226,20 +245,36 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          EventSlider(
-                            svgSrc: "${prov.healthEventArray[index].imageUrl}",
-                            title: "",
-                            width: 365,
-                            height: 220,
-                            desc: "",
-                            press: () {
-                              Navigator.pushNamed(
-                                  context, "detail_promo_page",
-                                  arguments: DummyModel(
-                                      "${prov.healthEventArray[index].data.title}",
-                                      "${prov.healthEventArray[index].data.text}",
-                                      "${prov.healthEventArray[index].imageUrl}"));
-                            },
+                          Container(
+                            width: size.width - 20,
+                            height: size.height / 3.5,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                            ),
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                onTap: (){
+                                  Navigator.pushNamed(
+                                      context, "detail_event_page",
+                                      arguments: DummyModel(
+                                          "${prov.healthEventArray[index].data.title}",
+                                          "${prov.healthEventArray[index].data.text}",
+                                          "${prov.healthEventArray[index].imageUrl}"));
+                                },
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                                  child: CachedNetworkImage(
+                                    imageUrl: "${prov.healthEventArray[index].imageUrl}",
+                                    //width: size.width - 40,
+                                    fit: BoxFit.cover,
+                                    height: size.height / 4,
+                                    // height: 150,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                           SizedBox(height: 11),
                           Padding(

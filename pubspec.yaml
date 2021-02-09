@@ -24,8 +24,8 @@ dependencies:
   page_transition: ^1.1.7+3
   pin_code_fields: ^5.0.1
   flutter_pin_code_fields: ^1.1.0
-  #shared_preferences: ^0.5.8
-  shared_preferences: ^0.4.3
+  shared_preferences: ^0.5.8
+  ##shared_preferences: ^0.4.3
   font_awesome_flutter: ^8.5.0
   carousel_slider: ^2.2.1
   fluttericon: ^1.0.7

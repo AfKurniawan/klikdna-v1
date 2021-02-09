@@ -17,7 +17,7 @@ class PinWidget extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.only(bottom: 18.0),
           child: Container(
-            height: 220,
+            height: 210,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               shrinkWrap: true,
@@ -49,7 +49,7 @@ class PinWidget extends StatelessWidget {
                           title: "",
                           width: 160,
                           height: 160,
-                          margin: EdgeInsets.only(right: 10, left: 10),
+                          margin: EdgeInsets.only(right: 0, left: 0),
                           desc: "",
                           press: () {
                             Navigator.pushNamed(context, "detail_pin_page",

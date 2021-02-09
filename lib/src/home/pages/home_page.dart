@@ -82,12 +82,12 @@ class _HomePageState extends State<HomePage> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text("Post it now",
+                                  Text("Post It Now",
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
                                         fontFamily: 'Sanomat Grab Web',
-                                        color: Colors.black,
+                                        color: MyColors.blackPrimary,
                                       )),
                                   GestureDetector(
                                     child: Text("Lihat Semua",
@@ -102,12 +102,12 @@ class _HomePageState extends State<HomePage> {
                                 ],
                               ),
                             ),
-                            SizedBox(height: 12),
+                            SizedBox(height: 10),
                             PinWidget(),
                           ],
                         ),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 6),
                       Container(
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -133,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
                                         fontFamily: 'Sanomat Grab Web',
-                                        color: Colors.black,
+                                        color: MyColors.blackPrimary,
                                       )),
                                   GestureDetector(
                                     child: Text("Lihat Semua",
@@ -146,12 +146,12 @@ class _HomePageState extends State<HomePage> {
                                 ],
                               ),
                             ),
-                            SizedBox(height: 10),
+                            SizedBox(height: 20),
                             EventWidget(),
                           ],
                         ),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 6),
                       Container(
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -186,17 +186,39 @@ class _HomePageState extends State<HomePage> {
                                   ],
                                 ),
                               ),
-                              SizedBox(height: 10),
-                              PodcastSlider(
-                                imgSrc: "assets/images/netpro_image.png",
-                                title: "",
-                                width: 130,
-                                height: 130,
-                                margin: EdgeInsets.only(right: 10, bottom: 10),
-                                desc: "",
-                                press: () {
-                                  launchSpotify();
-                                },
+                              SizedBox(height: 20),
+                              Container(
+                                child: Stack(
+                                  children: [
+                                    PodcastSlider(
+                                      imgSrc: "assets/images/netpro_image.png",
+                                      title: "",
+                                      width: 130,
+                                      height: 130,
+                                      margin: EdgeInsets.only(right: 10, bottom: 10),
+                                      desc: "",
+                                      press: () {
+                                        //launchSpotify();
+                                      },
+                                    ),
+                                    Positioned(
+                                      top: 0,
+                                        left: 0,
+                                        child: Center(
+                                          child: Container(
+                                            height: 130,
+                                            width: 130,
+                                            decoration: BoxDecoration(
+                                              color: Colors.black.withOpacity(0.7),
+                                              borderRadius: BorderRadius.circular(10),
+                                            ),
+                                            child: Center(
+                                              child: Text("Coming Soon", style: TextStyle(color: Colors.white, fontSize: 12)),
+                                            ),
+                                          ),
+                                        ))
+                                  ],
+                                ),
                               ),
                               Text("Netpro", style: TextStyle(fontWeight: FontWeight.bold)),
                               Text("Klikdna", style: TextStyle(fontWeight: FontWeight.w200)),

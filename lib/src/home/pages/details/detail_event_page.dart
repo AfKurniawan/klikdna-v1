@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:html/parser.dart';
 import 'package:new_klikdna/src/dummy/post_it_now_models.dart';
 import 'package:new_klikdna/src/home/providers/home_provider.dart';
 import 'package:new_klikdna/src/home/widgets/dashboard_slider.dart';
@@ -28,6 +30,10 @@ class _DetailEventPageState extends State<DetailEventPage> {
 
   @override
   Widget build(BuildContext context) {
+    var document;
+    String text;
+    document = parse(widget.model.desc);
+    text = parse(document.body.text).documentElement.text;
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -59,17 +65,28 @@ class _DetailEventPageState extends State<DetailEventPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 10.0, right: 2, top: 0),
+                    padding: const EdgeInsets.only(left: 0.0, right: 0, top: 0),
                     child: Container(
-                      child: DashboardSlider(
-                        imgSrc:
-                        "${widget.model.image}",
-                        title: "",
-                        margin: EdgeInsets.only(right: 10),
-                        desc: "",
-                        press: () {
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height /3.4,
+                        child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            onTap: (){
 
-                        },
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(0),
+                              child: CachedNetworkImage(
+                                imageUrl: '${widget.model.image}',
+                                width: 140,
+                                height: MediaQuery.of(context).size.height / 4,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -84,13 +101,13 @@ class _DetailEventPageState extends State<DetailEventPage> {
                           InkWell(
                             onTap: (){
                               print("SHAREEEEE");
-                              prov.shareContents(context, '${widget.model.image}', '${widget.model.title}\n${widget.model.desc}');
+                              prov.shareContents(context, '${widget.model.image}', '${widget.model.title}\n$text');
                               //NativeShare.share({'title':'${widget.model.desc}','url': "", 'image':'https://cdn.pixabay.com/photo/2016/11/29/05/45/astronomy-1867616__340.jpg'});
                             },
                             splashColor: MyColors.dnaGreen,
                             child: Container(
                               child: Icon(
-                                Icons.share, color: Colors.black54,
+                                Icons.share_outlined, color: Colors.black54,
                               ),
                             ),
                           ),
@@ -115,17 +132,15 @@ class _DetailEventPageState extends State<DetailEventPage> {
                       )),
 
                   SizedBox(height: 20),
-                  // Container(
-                  //     child: Padding(
-                  //       padding: const EdgeInsets.only(left: 12.0, right: 12),
-                  //       child: Text("${widget.model.desc}"),
-                  // )),
-
                   Container(
                       child: Padding(
                         padding: const EdgeInsets.only(left: 12.0, right: 12),
                         child: HtmlWidget("${widget.model.desc}",
                           textStyle: TextStyle(fontSize: 14),
+                          onTapUrl: (url){
+                            print("URL: $url");
+                            prov.handleUrl(url);
+                          },
                         ),
                       )),
 

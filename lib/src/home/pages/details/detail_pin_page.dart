@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
@@ -67,16 +68,26 @@ class _DetailPinPageState extends State<DetailPinPage> {
                   Padding(
                     padding: const EdgeInsets.only(left: 10.0, right: 2, top: 0),
                     child: Container(
-                      child: DashboardSlider(
-                        imgSrc:
-                        "${widget.model.image}",
-                        title: "",
-                        margin: EdgeInsets.only(right: 10),
-                        desc: "",
-                        press: () {
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        //height: MediaQuery.of(context).size.height /3.4,
+                        child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            onTap: (){
 
-                        },
-                      ),
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(0),
+                              child: CachedNetworkImage(
+                                imageUrl: '${widget.model.image}',
+                                width: 140,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
                     ),
                   ),
 
@@ -95,7 +106,7 @@ class _DetailPinPageState extends State<DetailPinPage> {
                             splashColor: MyColors.dnaGreen,
                             child: Container(
                               child: Icon(
-                                Icons.share, color: Colors.black54,
+                                Icons.share_outlined, color: Colors.black54,
                                 size: 25,
                               ),
                             ),
@@ -134,9 +145,6 @@ class _DetailPinPageState extends State<DetailPinPage> {
                           textStyle: TextStyle(fontSize: 14),
                         ),
                       )),
-
-
-
                   SizedBox(height: 24),
 
                 ],

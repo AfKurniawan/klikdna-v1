@@ -32,13 +32,13 @@ class EventSlider extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-        boxShadow: [
-          BoxShadow(
-            offset: Offset(0, 1),
-            blurRadius: 2,
-            color: Colors.grey.withOpacity(0.32),
-          ),
-        ],
+        // boxShadow: [
+        //   BoxShadow(
+        //     offset: Offset(0, 1),
+        //     blurRadius: 2,
+        //     color: Colors.grey.withOpacity(0.32),
+        //   ),
+        // ],
       ),
       child: Material(
         color: Colors.transparent,

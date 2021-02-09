@@ -12,6 +12,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:share/share.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeProvider extends ChangeNotifier {
 
@@ -128,6 +129,15 @@ class HomeProvider extends ChangeNotifier {
       );
 
     });
+  }
+
+  void handleUrl(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+
   }
 
 
