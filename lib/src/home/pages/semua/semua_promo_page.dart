@@ -99,7 +99,7 @@ class _SemuaPromoPageState extends State<SemuaPromoPage> {
                               "${prov.bannerArray[index].imageUrl}",
                               title: "",
                               width: MediaQuery.of(context).size.width,
-                              height: 160,
+                              height: 180,
                               desc: "",
                               radius: 10,
                               press: () {
@@ -108,7 +108,10 @@ class _SemuaPromoPageState extends State<SemuaPromoPage> {
                                     arguments: DummyModel(
                                         "${prov.bannerArray[index].data.title}",
                                         "${prov.bannerArray[index].data.text}",
-                                        "${prov.bannerArray[index].imageUrl}"));
+                                        "${prov.bannerArray[index].imageUrl}",
+                                          prov.bannerArray.length
+
+                                    ));
                               },
                             ),
                             SizedBox(height: 11),

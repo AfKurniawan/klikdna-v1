@@ -14,7 +14,20 @@ class PinWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<HomeProvider>(
       builder: (context, prov, _) {
-        return Padding(
+        return prov.pinArray.length == 0 ?
+        Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset("assets/images/no_data.png"),
+                Text("Oopss Belum Post It Now", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                SizedBox(height: 5),
+                Text("Saat ini belum ada post it now terbaru", style: TextStyle(fontSize: 12)),
+                Text("Cek aplikasi secara berkala untuk mendapatkan update", style: TextStyle(fontSize: 12))
+              ],
+            )
+        )
+        : Padding(
           padding: const EdgeInsets.only(bottom: 18.0),
           child: Container(
             height: 210,
@@ -56,7 +69,9 @@ class PinWidget extends StatelessWidget {
                                 arguments: DummyModel(
                                     "${prov.pinArray[index].data.title}",
                                     "${prov.pinArray[index].data.text}",
-                                    '${prov.pinArray[index].imageUrl}'));
+                                    '${prov.pinArray[index].imageUrl}',
+                                    prov.pinArray.length
+                                ));
                           }),
                       SizedBox(height: 9),
                       Container(

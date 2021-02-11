@@ -11,8 +11,7 @@ class SplashProvider with ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
       isLogin = prefs.getBool("isLogin");
       print("ISLOGIN IN SPLASHPAGE $isLogin");
-    var duration = new Duration(seconds: 2);
-
+    var duration = new Duration(seconds: 5);
     if(isLogin == null || isLogin == false){
       Timer(duration, (){
         Navigator.of(context).pushReplacementNamed("login_page");

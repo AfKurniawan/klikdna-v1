@@ -9,6 +9,7 @@ import 'package:new_klikdna/src/foodmeter/pages/food_meter_page.dart';
 import 'package:new_klikdna/src/home/pages/details/detail_pin_page.dart';
 import 'package:new_klikdna/src/home/pages/details/detail_promo_page.dart';
 import 'package:new_klikdna/src/home/pages/details/detail_event_page.dart';
+import 'package:new_klikdna/src/home/pages/semua/all_event_by_categories_page.dart';
 import 'package:new_klikdna/src/home/pages/semua/semua_event_page.dart';
 import 'package:new_klikdna/src/home/pages/semua/semua_pin_page.dart';
 import 'package:new_klikdna/src/home/pages/semua/semua_promo_page.dart';
@@ -171,6 +172,11 @@ class Routing {
       case "detail_event_page":
         return PageTransition(child: DetailEventPage(model: settings.arguments), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
         break;
+
+      case "all_event_by_category":
+        return PageTransition(child: AllEventByCategoriesPage(), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
+        break;
+
 
 
 

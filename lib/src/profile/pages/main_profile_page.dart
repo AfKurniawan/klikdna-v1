@@ -188,15 +188,15 @@ class _MainProfilePageState extends State<MainProfilePage> {
                             Provider.of<ProfileProvider>(context, listen: false).kebijakanPrivasi(model.vkebijakanPrivacy);
                           },
                         ),
-                        ListTile(
-                          leading: Icon(FontAwesomeIcons.lightbulb, size: 20),
-                          title: Text("Cara Menggunakan",
-                              style: TextStyle(fontSize: 14)),
-                          contentPadding: EdgeInsets.only(top: 0),
-                          onTap: (){
-                            Navigator.of(context).pushNamed("lorem_ipsum_page");
-                          },
-                        ),
+                        // ListTile(
+                        //   leading: Icon(FontAwesomeIcons.lightbulb, size: 20),
+                        //   title: Text("Cara Menggunakan",
+                        //       style: TextStyle(fontSize: 14)),
+                        //   contentPadding: EdgeInsets.only(top: 0),
+                        //   onTap: (){
+                        //     Navigator.of(context).pushNamed("lorem_ipsum_page");
+                        //   },
+                        // ),
                         ExpansionTile(
                           tilePadding: EdgeInsets.only(left: 2),
                           leading:
@@ -225,6 +225,16 @@ class _MainProfilePageState extends State<MainProfilePage> {
                                   )),
                               onTap: () {
                                 Provider.of<ProfileProvider>(context, listen: false).openWhatsapp(context);
+                              },
+                            ),
+                            ListTile(
+                              leading: Icon(FontAwesomeIcons.telegram, size: 16),
+                              title: Text("Telegram",
+                                  style: TextStyle(
+                                      fontSize: 14
+                                  )),
+                              onTap: () {
+                                Provider.of<ProfileProvider>(context, listen: false).openTelegram(context);
                               },
                             ),
                             ListTile(

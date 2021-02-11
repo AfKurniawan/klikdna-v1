@@ -13,6 +13,7 @@ import 'dart:convert';
 
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:wc_flutter_share/wc_flutter_share.dart';
 
 class HomeProvider extends ChangeNotifier {
 
@@ -38,6 +39,10 @@ class HomeProvider extends ChangeNotifier {
   var jsonArray = [];
   var promo ;
   bool isLoading ;
+  int healthArray = 0 ;
+  int allArray = 0;
+  int trainArray = 0 ;
+  var status ;
 
   Future<List<HomeModel>> getHomeContents(BuildContext context) async {
     isLoading = true ;
@@ -57,9 +62,7 @@ class HomeProvider extends ChangeNotifier {
       jsonArray = responseJson['data'] as List;
       isLoading = false ;
 
-      print("RESPONE STATUS CODE ====== ${response.statusCode}");
-
-
+      print("RESPONE STATUS BODY ====== ${response.body}");
 
       for (int i = 0; i < jsonArray.length; i++) {
         promo = Data.fromJson(jsonArray[i]['data']);
@@ -73,26 +76,47 @@ class HomeProvider extends ChangeNotifier {
         var now = new DateTime.now();
         var sekarang = now.subtract(Duration(days: 0));
         allEventMapArray = jsonArray.map((p) => ArrayData.fromJson(p)).toList();
-        allEventArray = allEventMapArray.where((i) => i.data.categoryId == 13 || i.data.categoryId == 10 && i.data.status == 1).toList();
+        allEventArray = allEventMapArray.where((i) => i.data.categoryId == 13 || i.data.categoryId == 10).toList();
         allEventArray.removeWhere((el) => DateTime.parse(el.data.doDate).isBefore(sekarang));
         allEventArray.sort((a, b) => a.data.createdAt.compareTo(b.data.createdAt));
+        allArray = allEventArray.length;
 
+        //
         trainingEventMapArray = jsonArray.map((p) => ArrayData.fromJson(p)).toList();
         trainingEventArray = trainingEventMapArray.where((i) => i.data.categoryId == 10 && i.data.status == 1).toList();
         trainingEventArray.removeWhere((el) => DateTime.parse(el.data.doDate).isBefore(sekarang));
         trainingEventArray.sort((a, b) => a.data.createdAt.compareTo(b.data.createdAt));
-
+        trainArray = trainingEventArray.length;
+        //
         healthEventMapArray = jsonArray.map((p) => ArrayData.fromJson(p)).toList();
         healthEventArray = healthEventMapArray.where((i) => i.data.categoryId == 13 && i.data.status == 1).toList();
         healthEventArray.removeWhere((el) => DateTime.parse(el.data.doDate).isBefore(sekarang) && el.data.status == 1);
         healthEventArray.sort((a, b) => a.data.createdAt.compareTo(b.data.createdAt));
+        healthArray = healthEventArray.length ;
 
+        notifyListeners();
 
       }
-      notifyListeners();
+
     }
 
     return null;
+
+  }
+
+
+  List<ArrayData> filterMapArray = [] ;
+  List<ArrayData> filterArray = [] ;
+  filteringCategory(BuildContext context, int catId) {
+    var now = new DateTime.now();
+    var sekarang = now.subtract(Duration(days: 0));
+    filterMapArray = jsonArray.map((p) => ArrayData.fromJson(p)).toList();
+    filterArray = filterMapArray.where((i) => i.data.categoryId == catId && i.data.status == 1).toList();
+    filterArray.removeWhere((el) => DateTime.parse(el.data.doDate).isBefore(sekarang) && el.data.status == 1);
+    filterArray.sort((a, b) => a.data.createdAt.compareTo(b.data.createdAt));
+    Navigator.pushNamed(context, "all_event_by_category");
+
+    notifyListeners();
 
   }
 
@@ -138,6 +162,34 @@ class HomeProvider extends ChangeNotifier {
       throw 'Could not launch $url';
     }
 
+  }
+
+
+
+  shareImageAndText(String image, String text) async {
+    // try {
+    //   await WcFlutterShare.share(
+    //       sharePopupTitle: 'Share',
+    //       subject: 'This is subject',
+    //       text: 'This is text',
+    //       mimeType: 'text/plain');
+    // } catch (e) {
+    //   print('error: $e');
+    // }
+    try {
+      final response = await http.get("$image");
+      final Directory tempo = await getTemporaryDirectory();
+      await WcFlutterShare.share(
+          sharePopupTitle: 'Share',
+          subject: '',
+          text: '$text',
+          fileName: 'share.png',
+          mimeType: 'image/png',
+          bytesOfFile: response.bodyBytes.buffer.asUint8List()
+      );
+    } catch (e) {
+      print("EREORER $e");
+    }
   }
 
 

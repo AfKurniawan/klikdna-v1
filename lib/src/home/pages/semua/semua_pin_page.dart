@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:html/parser.dart';
@@ -15,6 +16,7 @@ class SemuaPinPage extends StatefulWidget {
 class _SemuaPinPageState extends State<SemuaPinPage> {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -41,29 +43,29 @@ class _SemuaPinPageState extends State<SemuaPinPage> {
                 child: GridView.builder(
                   scrollDirection: Axis.vertical,
                   itemCount: prov.pinArray.length,
-                  padding: EdgeInsets.all(5),
+                  //padding: EdgeInsets.all(5),
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       crossAxisSpacing: 5,
                       mainAxisSpacing: 1,
-                      childAspectRatio: 0.83),
+                      childAspectRatio: size.width < 600 ? 0.78 : 0.85),
                   itemBuilder: (context, index){
                     var document;
                     String text;
                     document = parse(prov.pinArray[index].data.text);
                     text = parse(document.body.text).documentElement.text;
                     return Container(
-                      margin: EdgeInsets.only(left: 10, bottom: 20, top: 10),
+                      margin: EdgeInsets.only(left: 10, bottom: 10, top: 10, right: 10),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: [
                           BoxShadow(
-                            offset: Offset(0, 4),
-                            blurRadius: 10,
-                            color: Colors.grey.withOpacity(0.5),
+                            offset: Offset(0, 1),
+                            blurRadius: 3,
+                            color: Colors.grey[700].withOpacity(0.32),
                           ),
                         ],
                       ),
@@ -71,28 +73,50 @@ class _SemuaPinPageState extends State<SemuaPinPage> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          DashboardSlider(
-                              imgSrc: prov.pinArray[index].imageUrl,
-                              title: "",
-                              width: 160,
-                              height: 160,
-                              margin: EdgeInsets.only(right: 10, left: 10),
-                              desc: "",
-                              press: () {
-                                Navigator.pushNamed(context, "detail_pin_page",
-                                    arguments: DummyModel(
-                                        "${prov.pinArray[index].data.title}",
-                                        "${prov.pinArray[index].data.text}",
-                                        '${prov.pinArray[index].imageUrl}'));
-                              }),
+                          Container(
+                            width: size.width < 600 ? size.height / 3.07 : size.height * 1.8,
+                            height: size.width < 600 ? size.height / 4.4 : size.height * 0.95,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(10)
+                              ),
+                            ),
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                onTap: (){
+                                  Navigator.pushNamed(context, "detail_pin_page",
+                                      arguments: DummyModel(
+                                          "${prov.pinArray[index].data.title}",
+                                          "${prov.pinArray[index].data.text}",
+                                          '${prov.pinArray[index].imageUrl}',
+                                          prov.pinArray.length
+                                      ));
+                                },
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(10)
+                                  ),
+                                  child: CachedNetworkImage(
+                                    imageUrl: prov.pinArray[index].imageUrl,
+                                    width: size.width < 600 ? size.width / 4.3 : size.width * 1,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                           SizedBox(height: 9),
                           Container(
-                            width: 150,
+                            width: MediaQuery.of(context).size.width -100,
                             child: Padding(
                               padding: const EdgeInsets.only(left: 10.0),
                               child: Text(
                                 "${prov.pinArray[index].data.title}",
-                                maxLines: 1,
+                                maxLines: size.width < 600 ? 1 : 4,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   fontWeight: FontWeight.normal,

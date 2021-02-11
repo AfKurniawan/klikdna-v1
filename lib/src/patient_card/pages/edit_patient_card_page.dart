@@ -6,7 +6,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'package:new_klikdna/src/login/providers/login_provider.dart';
 import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
-import 'package:new_klikdna/src/patient_card/widgets/asuransi_item.dart';
 import 'package:new_klikdna/src/token/providers/token_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:new_klikdna/widgets/form_widget.dart';
@@ -220,8 +219,94 @@ class _EditPatientCardPageState extends State<EditPatientCardPage> {
                                     shrinkWrap: true,
                                     physics: NeverScrollableScrollPhysics(),
                                     itemBuilder: (context, index) {
-                                      return AsuransiItemWidget(
-                                          model: prov.listAsuransi[index]);
+                                      return Container(
+                                        margin: EdgeInsets.only(top:0, bottom: 10),
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(8),
+                                            border: Border.all(
+                                                width: 1.3,
+                                                color: MyColors.grey
+                                            )
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.all(15.0),
+                                              child: Row(
+                                                children: [
+                                                  Column(
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text("Nama Asuransi"),
+                                                      SizedBox(height: 10),
+                                                      Text("Nomor Polis"),
+                                                      SizedBox(height: 10),
+                                                      Text("Pemegang Polis"),
+                                                      SizedBox(height: 10),
+                                                      Text("Nama Peserta"),
+                                                      SizedBox(height: 10),
+                                                      Text("Nomor Kartu"),
+                                                    ],
+                                                  ),
+                                                  SizedBox(width: 20),
+                                                  Column(
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(":"),
+                                                      SizedBox(height: 10),
+                                                      Text(":"),
+                                                      SizedBox(height: 10),
+                                                      Text(":"),
+                                                      SizedBox(height: 10),
+                                                      Text(":"),
+                                                      SizedBox(height: 10),
+                                                      Text(":"),
+                                                    ],
+                                                  ),
+                                                  SizedBox(width: 20),
+                                                  Column(
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(prov.listAsuransi[index].nomorAsuransi == null ? "-" : prov.listAsuransi[index].nomorAsuransi),
+                                                      SizedBox(height: 10),
+                                                      Text(prov.listAsuransi[index].nomorPolis == null ? "-" : prov.listAsuransi[index].nomorPolis),
+                                                      SizedBox(height: 10),
+                                                      Text(prov.listAsuransi[index].pemegangPolis == null ? "-" : prov.listAsuransi[index].pemegangPolis),
+                                                      SizedBox(height: 10),
+                                                      Text(prov.listAsuransi[index].nomorKartu == null ? "-" : prov.listAsuransi[index].nomorKartu),
+                                                      SizedBox(height: 10),
+                                                      Text(prov.listAsuransi[index].namaPeserta == null ? "-" : prov.listAsuransi[index].namaPeserta),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(left:15.0, right: 15, bottom: 15, top: 20),
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  GestureDetector(
+                                                    child: Text("Ubah", style: TextStyle(color: MyColors.dnaGreen)),
+                                                    onTap: (){
+                                                      Navigator.of(context).pushNamed("edit_asuransi_page", arguments: prov.listAsuransi[index]);
+                                                    },
+                                                  ),
+                                                  GestureDetector(
+                                                    child: Text("Hapus", style: TextStyle(color: MyColors.kPrimaryColor)),
+                                                    onTap: (){
+                                                      prov.showDialogKonfirmasiHapus(context);
+                                                    },
+                                                  )
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      );
                                     }),
                               ],
                             ),
@@ -247,26 +332,33 @@ class _EditPatientCardPageState extends State<EditPatientCardPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text("Jenis Kelamin"),
-                          Row(
-                            children: [
-                              Radio(
-                                value: "male",
-                                groupValue: _radioValue,
-                                onChanged: _handleRadioValueChange,
-                                focusColor: MyColors.dnaGreen,
-                                activeColor: MyColors.dnaGreen,
-                              ),
-                              Text("Pria"),
-                              SizedBox(width: 20),
-                              Radio(
-                                value: "female",
-                                groupValue: _radioValue,
-                                onChanged: _handleRadioValueChange,
-                                focusColor: MyColors.dnaGreen,
-                                activeColor: MyColors.dnaGreen,
-                              ),
-                              Text("Wanita")
-                            ],
+                          Theme(
+                            data: Theme.of(context).copyWith(
+                                unselectedWidgetColor: Colors.grey,
+                                disabledColor: MyColors.dnaGreen
+                            ),
+                            child: Row(
+                              children: [
+                                Radio(
+                                  value: "Laki-laki",
+                                  onChanged: _handleRadioValueChange,
+                                  groupValue: prov.gender,
+                                  focusColor: MyColors.dnaGreen,
+                                  activeColor: MyColors.dnaGreen,
+                                ),
+                                Text("Pria"),
+                                SizedBox(width: 20),
+                                Radio(
+                                  value: "Perempuan",
+                                  groupValue: prov.gender,
+                                  onChanged: _handleRadioValueChange,
+                                  focusColor: MyColors.dnaGreen,
+                                  activeColor: MyColors.dnaGreen,
+
+                                ),
+                                Text("Wanita")
+                              ],
+                            ),
                           ),
                           SizedBox(height: 15),
                           FormWidget(

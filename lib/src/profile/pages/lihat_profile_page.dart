@@ -32,7 +32,7 @@ class _LihatProfilePageState extends State<LihatProfilePage> {
         case "Laki-Laki":
           result = "L";
           break;
-        case "Wanita":
+        case "Perempuan":
           result = "W";
           break;
       }
@@ -44,7 +44,7 @@ class _LihatProfilePageState extends State<LihatProfilePage> {
     _radioValue = Provider.of<LoginProvider>(context, listen: false).vgender;
     print("RADIO VALUE: $_radioValue");
     Provider.of<TokenProvider>(context, listen: false).getApiToken();
-    Provider.of<PatientCardProvider>(context, listen: false).getPatientCard(context);
+    //Provider.of<PatientCardProvider>(context, listen: false).getPatientCard(context);
     super.initState();
   }
 
@@ -164,7 +164,7 @@ class _LihatProfilePageState extends State<LihatProfilePage> {
                                     Text("Pria"),
                                     SizedBox(width: 20),
                                     Radio(
-                                      value: "Wanita",
+                                      value: "Perempuan",
                                       groupValue: _radioValue,
                                       focusColor: MyColors.dnaGreen,
                                       activeColor: MyColors.dnaGreen,

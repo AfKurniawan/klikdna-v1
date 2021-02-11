@@ -95,6 +95,7 @@ class ProfileProvider with ChangeNotifier {
     showCupertinoModalPopup(
       context: context,
       builder: (BuildContext context) {
+
         return CupertinoDialogWidget(
           title: "Menghubungi via Telegram",
           message:
@@ -102,9 +103,9 @@ class ProfileProvider with ChangeNotifier {
           action: () {
             Navigator.of(context).pop();
             if (Platform.isIOS) {
-              launch('tg://msg?text=&to=+6285155488140');
+              launch('https://t.me/joinchat/AAAAAEhlwknZ0OyOKtitiw');
             } else {
-              launch('tg://msg?text=&to=+6285155488140');
+              launch('https://t.me/joinchat/AAAAAEhlwknZ0OyOKtitiw');
             }
           },
         );

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:new_klikdna/src/dummy/post_it_now_models.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:new_klikdna/src/home/providers/home_provider.dart';
@@ -40,24 +41,63 @@ class _BannerSliderState extends State<BannerSlider> {
                 arguments: DummyModel(
                     "${porv.bannerArray[_current].data.title}",
                     "${porv.bannerArray[_current].data.text}",
-                    "${porv.bannerArray[_current].imageUrl}"));
+                    "${porv.bannerArray[_current].imageUrl}",
+                    porv.bannerArray.length
+                ));
           },
-          child: CarouselSlider(
-            items: getBanner,
-            options: CarouselOptions(
-                autoPlay: true,
-                enlargeCenterPage: true,
-                height: MediaQuery.of(context).size.height /3.8,
-                viewportFraction: 1,
-                onPageChanged: (index, reason) {
-                  setState(() {
-                    _current = index;
-                  });
-                }),
+          child: Container(
+            //color: Colors.blue,
+            child: CarouselSlider(
+              items: getBanner,
+              options: CarouselOptions(
+                  autoPlay: true,
+                  enlargeCenterPage: true,
+                  height: MediaQuery.of(context).size.width > 600 ? MediaQuery.of(context).size.height
+                      :  170,
+                  viewportFraction: 1,
+                  onPageChanged: (index, reason) {
+                    setState(() {
+                      _current = index;
+                    });
+                  }),
+            ),
           ),
         ),
       ),
-      Positioned(top: 150, right: 0, left: 0, child: buildIndicatorSlider()),
+      Positioned(bottom: 2, right: 0, left: 0,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              buildIndicatorSlider(),
+              Padding(
+                padding: const EdgeInsets.only(right: 10, bottom: 2),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, "semua_promo_page");
+                  },
+                  child: Container(
+                    height: 25,
+                    decoration: BoxDecoration(
+                      //color: Color(0xff433F3F),
+                      color: Colors.grey[800],
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Center(
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 15.0, right: 15),
+                        child: Text(
+                          "Lihat Semua Promo",
+                          style: TextStyle(color: Colors.white, fontSize: 10),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          )),
+
     ]);
   }
 
@@ -68,10 +108,11 @@ class _BannerSliderState extends State<BannerSlider> {
           padding: const EdgeInsets.only(left: 10.0, right: 10.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: prov.bannerArray.map((url) {
                   int index = prov.bannerArray.indexOf(url);
                   if (_current == index) {
@@ -97,29 +138,6 @@ class _BannerSliderState extends State<BannerSlider> {
                   }
                 }).toList(),
               ),
-
-              InkWell(
-                onTap: () {
-                  Navigator.pushNamed(context, "semua_promo_page");
-                },
-                child: Container(
-                  height: 25,
-                  decoration: BoxDecoration(
-                    //color: Color(0xff433F3F),
-                    color: Colors.grey[800],
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Center(
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 15.0, right: 15),
-                      child: Text(
-                        "Lihat Semua Promo",
-                        style: TextStyle(color: Colors.white, fontSize: 10),
-                      ),
-                    ),
-                  ),
-                ),
-              )
             ],
           ),
         );
@@ -144,7 +162,8 @@ class _BannerSliderState extends State<BannerSlider> {
       },
       blendMode: BlendMode.softLight,
       child: Container(
-          child: CachedNetworkImage(imageUrl: item, fit: BoxFit.fill))
+          child: CachedNetworkImage(
+              imageUrl: item, fit: BoxFit.fill))
     );
 
     // return ShaderMask(

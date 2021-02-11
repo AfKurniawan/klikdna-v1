@@ -9,6 +9,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:new_klikdna/src/account/providers/account_provider.dart';
 import 'package:new_klikdna/src/patient_card/models/patient_card_model.dart';
+import 'package:new_klikdna/src/patient_card/providers/asuransi_provider.dart';
+import 'package:new_klikdna/src/patient_card/widgets/custom_dialog_confirm.dart';
 import 'package:new_klikdna/src/patient_card/widgets/dialog_error_patient_card.dart';
 import 'package:new_klikdna/src/profile/widgets/cupertino_dialog_widget.dart';
 import 'package:new_klikdna/src/token/providers/token_provider.dart';
@@ -123,6 +125,25 @@ class PatientCardProvider with ChangeNotifier {
           filledButtonText: "Oke",
           filledButtonaction: (){
             Navigator.of(context).pushReplacementNamed('main_page', arguments: 1);
+          },
+        ));
+  }
+
+  Future<void> showDialogKonfirmasiHapus(BuildContext context) async {
+    return showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) => CustomDialogKonfirmasiWidget(
+          title: "Kartu Asuransi ini akan dihapus",
+          description: "Apakah kamu yakin akan menghapus Kartu Asuransi ini?",
+          filledButtonText: "Batal",
+          outlineButtonText: "Hapus",
+          filledButtonaction: (){
+            Navigator.of(context).pop();
+
+          },
+          outlineButtonAction: (){
+            Provider.of<AsuransiProvider>(context, listen: false).deleteAsuransi(context, id);
           },
         ));
   }

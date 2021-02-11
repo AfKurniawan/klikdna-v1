@@ -13,6 +13,8 @@ class SemuaEventPage extends StatefulWidget {
 }
 
 class _SemuaEventPageState extends State<SemuaEventPage> {
+  int index = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,18 +53,21 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
                         fontFamily: 'Sanomat Grab Web',
                         color: Colors.black,
                       )),
-                  GestureDetector(
-                    child: Text("Lihat Semua",
-                        style:
-                            TextStyle(color: MyColors.dnaGreen, fontSize: 14)),
-                    onTap: () {
-                      Navigator.pushNamed(context, "semua_event_page");
+                  Consumer<HomeProvider>(
+                    builder: (context, prov, _){
+                      return GestureDetector(
+                        child: Text("Lihat Semua",
+                            style: TextStyle(color: MyColors.dnaGreen, fontSize: 14)),
+                        onTap: (){
+                          prov.filteringCategory(context, 10);
+                        },
+                      );
                     },
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 8),
             buildTraining(),
             SizedBox(height: 30),
             Padding(
@@ -77,18 +82,22 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
                         fontFamily: 'Sanomat Grab Web',
                         color: Colors.black,
                       )),
-                  GestureDetector(
-                    child: Text("Lihat Semua",
-                        style:
-                        TextStyle(color: MyColors.dnaGreen, fontSize: 14)),
-                    onTap: () {
-                      Navigator.pushNamed(context, "semua_event_page");
+                  Consumer<HomeProvider>(
+                    builder: (context, prov, _){
+                      return GestureDetector(
+                        child: Text("Lihat Semua",
+                            style:
+                            TextStyle(color: MyColors.dnaGreen, fontSize: 14)),
+                        onTap: () {
+                          prov.filteringCategory(context, 13);
+                        },
+                      );
                     },
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 8),
             buildHealthSeries(),
           ],
         ),
@@ -96,232 +105,278 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
     );
   }
 
-  Consumer<HomeProvider> buildTraining() {
+  Widget buildTraining() {
     Size size = MediaQuery.of(context).size;
     return Consumer<HomeProvider>(
-            builder: (context, prov, _) {
-              return Container(
-                height: 400,
-                padding: const EdgeInsets.only(bottom: 18.0),
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  itemCount: prov.trainingEventArray.length,
-                  itemBuilder: (context, index) {
-                    var document;
-                    String text;
-                    document = parse(prov.trainingEventArray[index].data.text);
-                    text = parse(document.body.text).documentElement.text;
-                    return Container(
-                      height: MediaQuery.of(context).size.height /2.1,
-                      margin: EdgeInsets.only(left: 15, bottom: 10, top: 10, right: 10),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            offset: Offset(0, 1),
-                            blurRadius: 10,
-                            color: Colors.grey.withOpacity(1),
-                          ),
-                        ],
+      builder: (context, prov, _) {
+        return prov.trainingEventArray.length == 0 ?
+        Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset("assets/images/no_data.png"),
+                Text("Oopss Belum Ada Event", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                SizedBox(height: 5),
+                Text("Saat ini belum ada event terbaru", style: TextStyle(fontSize: 12)),
+                Text("Cek aplikasi secara berkala untuk mendapatkan update", style: TextStyle(fontSize: 12))
+              ],
+            )
+        )
+        : Container(
+          height: MediaQuery.of(context).size.width < 600 ? MediaQuery.of(context).size.height / 1.9
+              :  MediaQuery.of(context).size.height * 1.7,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            itemCount: prov.trainingEventArray.length,
+            itemBuilder: (context, index) {
+              var document;
+              String text;
+              document = parse(prov.trainingEventArray[index].data.text);
+              text = parse(document.body.text).documentElement.text;
+              return Padding(
+                padding: const EdgeInsets.only(top:10, bottom: 10, right: 10, left: 10),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        offset: Offset(0, 1),
+                        blurRadius: 3,
+                        color: Colors.grey[700].withOpacity(0.32),
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: size.width - 20,
-                            height: size.height / 3.5,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                    ],
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: (){
+                            Navigator.pushNamed(
+                                context, "detail_event_page",
+                                arguments: DummyModel(
+                                    "${prov.trainingEventArray[index].data.title}",
+                                    "${prov.trainingEventArray[index].data.text}",
+                                    "${prov.trainingEventArray[index].imageUrl}",
+                                      prov.trainingEventArray.length
+                                ));
+                          },
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                            child: CachedNetworkImage(
+                              imageUrl: "${prov.trainingEventArray[index].imageUrl}",
+                              width: size.width - 20,
+                              fit: BoxFit.fitHeight,
                             ),
-                            child: Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                onTap: (){
-                                  Navigator.pushNamed(
-                                      context, "detail_event_page",
-                                      arguments: DummyModel(
-                                          "${prov.trainingEventArray[index].data.title}",
-                                          "${prov.trainingEventArray[index].data.text}",
-                                          "${prov.trainingEventArray[index].imageUrl}"));
-                                },
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-                                  child: CachedNetworkImage(
-                                    imageUrl: "${prov.trainingEventArray[index].imageUrl}",
-                                    //width: size.width - 40,
-                                    fit: BoxFit.cover,
-                                    height: size.height / 4,
-                                    // height: 150,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 11),
+                      Padding(
+                        padding: const EdgeInsets.only(left:8.0, top: 8),
+                        child: InkWell(
+                          onTap: (){
+                            print("SHAREEEEE");
+                            prov.shareContents(context,
+                                '${prov.trainingEventArray[index].imageUrl}',
+                                '${prov.trainingEventArray[index].data.title}\n$text');
+                          },
+                          splashColor: MyColors.dnaGreen,
+                          child: Container(
+                            child: Icon(
+                              Icons.share_outlined, color: Colors.black54,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding:
+                        const EdgeInsets.only(left: 10.0, top: 10),
+                        child: Container(
+                            width: MediaQuery.of(context).size.width -50,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 0, right: 10),
+                              child: Column(
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "${prov.trainingEventArray[index].data.title}",
+                                    style: TextStyle(
+                                        fontWeight:
+                                        FontWeight.bold,
+                                        fontSize: 13),
                                   ),
-                                ),
+                                  SizedBox(height: 9),
+                                  Container(
+                                    child: Text(
+                                      "$text",
+                                      maxLines: 3,
+                                      overflow:
+                                      TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontWeight:
+                                          FontWeight.normal,
+                                          fontSize: 12),
+                                    ),
+                                  ),
+                                  SizedBox(height: 14),
+                                ],
                               ),
-                            ),
-                          ),
-                          SizedBox(height: 11),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 12.0),
-                            child: Container(
-                                width: 300,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 0, right: 10),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      GestureDetector(
-                                          child: Icon(Icons.share_outlined, size: 30),
-                                      onTap: (){
-                                        prov.shareContents(context, '${prov.trainingEventArray[index].imageUrl}', '$text');
-                                      },
-                                      ),
-                                      SizedBox(height: 20),
-                                      Text(
-                                        "${prov.trainingEventArray[index].data.title}",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 13),
-                                      ),
-                                      SizedBox(height: 9),
-                                      Container(
-                                        child: Text(
-                                          "$text",
-                                          maxLines: 3,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.normal,
-                                              fontSize: 12),
-                                        ),
-                                      ),
-                                      SizedBox(height: 14),
-                                    ],
-                                  ),
-                                )),
-                          ),
-                        ],
+                            )),
                       ),
-                    );
-                  },
+                    ],
+                  ),
                 ),
               );
             },
-          );
+          ),
+        );
+      },
+    );
   }
 
   Widget buildHealthSeries() {
     Size size = MediaQuery.of(context).size;
     return Consumer<HomeProvider>(
-            builder: (context, prov, _) {
-              return Container(
-                height: 400,
-                padding: const EdgeInsets.only(bottom: 18.0),
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  itemCount: prov.healthEventArray.length,
-                  itemBuilder: (context, index) {
-                    var document;
-                    String text;
-                    document = parse(prov.healthEventArray[index].data.text);
-                    text = parse(document.body.text).documentElement.text;
-                    return Container(
-                      height: 400,
-                      margin: EdgeInsets.only(left: 15, bottom: 10, top: 10, right: 10),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            offset: Offset(0, 1),
-                            blurRadius: 10,
-                            color: Colors.grey.withOpacity(1),
-                          ),
-                        ],
+      builder: (context, prov, _) {
+        return prov.healthEventArray.length == 0 ?
+        Center(
+            child: Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset("assets/images/no_data.png"),
+                  Text("Oopss Belum Ada Event", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                  SizedBox(height: 5),
+                  Text("Saat ini belum ada event terbaru", style: TextStyle(fontSize: 12)),
+                  Text("Cek aplikasi secara berkala untuk mendapatkan update", style: TextStyle(fontSize: 12))
+                ],
+              ),
+            )
+        )
+        : Container(
+          height: MediaQuery.of(context).size.width < 600 ? MediaQuery.of(context).size.height / 1.9
+              :  MediaQuery.of(context).size.height * 1.7,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            itemCount: prov.healthEventArray.length,
+            itemBuilder: (context, index) {
+              var document;
+              String text;
+              document = parse(prov.healthEventArray[index].data.text);
+              text = parse(document.body.text).documentElement.text;
+              return Padding(
+                padding: const EdgeInsets.only(top:10, bottom: 10, right: 10, left: 10),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        offset: Offset(0, 1),
+                        blurRadius: 3,
+                        color: Colors.grey[700].withOpacity(0.32),
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: size.width - 20,
-                            height: size.height / 3.5,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                    ],
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: (){
+                            Navigator.pushNamed(
+                                context, "detail_event_page",
+                                arguments: DummyModel(
+                                    "${prov.healthEventArray[index].data.title}",
+                                    "${prov.healthEventArray[index].data.text}",
+                                    "${prov.healthEventArray[index].imageUrl}",
+                                      prov.healthEventArray.length
+                                ));
+                          },
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                            child: CachedNetworkImage(
+                              imageUrl: "${prov.healthEventArray[index].imageUrl}",
+                              width: size.width - 20,
+                              fit: BoxFit.fitHeight,
                             ),
-                            child: Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                onTap: (){
-                                  Navigator.pushNamed(
-                                      context, "detail_event_page",
-                                      arguments: DummyModel(
-                                          "${prov.healthEventArray[index].data.title}",
-                                          "${prov.healthEventArray[index].data.text}",
-                                          "${prov.healthEventArray[index].imageUrl}"));
-                                },
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-                                  child: CachedNetworkImage(
-                                    imageUrl: "${prov.healthEventArray[index].imageUrl}",
-                                    //width: size.width - 40,
-                                    fit: BoxFit.cover,
-                                    height: size.height / 4,
-                                    // height: 150,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 11),
+                      Padding(
+                        padding: const EdgeInsets.only(left:8.0, top: 8),
+                        child: InkWell(
+                          onTap: (){
+                            print("SHAREEEEE");
+                            prov.shareContents(context,
+                                '${prov.healthEventArray[index].imageUrl}',
+                                '${prov.healthEventArray[index].data.title}\n$text');
+                          },
+                          splashColor: MyColors.dnaGreen,
+                          child: Container(
+                            child: Icon(
+                              Icons.share_outlined, color: Colors.black54,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding:
+                        const EdgeInsets.only(left: 10.0, top: 10),
+                        child: Container(
+                            width: MediaQuery.of(context).size.width -50,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 0, right: 10),
+                              child: Column(
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "${prov.healthEventArray[index].data.title}",
+                                    style: TextStyle(
+                                        fontWeight:
+                                        FontWeight.bold,
+                                        fontSize: 13),
                                   ),
-                                ),
+                                  SizedBox(height: 9),
+                                  Container(
+                                    child: Text(
+                                      "$text",
+                                      maxLines: 3,
+                                      overflow:
+                                      TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontWeight:
+                                          FontWeight.normal,
+                                          fontSize: 12),
+                                    ),
+                                  ),
+                                  SizedBox(height: 14),
+                                ],
                               ),
-                            ),
-                          ),
-                          SizedBox(height: 11),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 12.0),
-                            child: Container(
-                                width: 300,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 0, right: 10),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      GestureDetector(
-                                        onTap:(){
-                                          prov.shareContents(context, '${prov.healthEventArray[index].imageUrl}', '$text');
-                                        },
-                                          child: Icon(Icons.share_outlined, size: 30)),
-                                      SizedBox(height: 20),
-                                      Text(
-                                        "${prov.healthEventArray[index].data.title}",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 13),
-                                      ),
-                                      SizedBox(height: 9),
-                                      Container(
-                                        child: Text(
-                                          "$text",
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.normal,
-                                              fontSize: 12),
-                                        ),
-                                      ),
-                                      SizedBox(height: 14),
-                                    ],
-                                  ),
-                                )),
-                          ),
-                        ],
+                            )),
                       ),
-                    );
-                  },
+                    ],
+                  ),
                 ),
               );
             },
-          );
+          ),
+        );
+      },
+    );
   }
 }

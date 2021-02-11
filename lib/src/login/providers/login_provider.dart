@@ -309,8 +309,8 @@ class LoginProvider with ChangeNotifier{
     String parsedTanggalExpired ;
     var tglLahir ;
 
-    var formatTgl = DateFormat('dd MMM yyyy');
-    var formatTglLahir = DateFormat('dd MMMM yyyy');
+    var formatTgl = DateFormat('dd MMM yyyy', "id_ID");
+    var formatTglLahir = DateFormat('dd MMMM yyyy', "id_ID");
     var expParsedDate ;
     String vtglLahir ;
     String vallAddress ;
@@ -344,6 +344,8 @@ class LoginProvider with ChangeNotifier{
         vbirthdate = ('${formatTglLahir.format(tglLahir)}');
 
         vgender = prefs.getString("gender");
+
+        print("GENDER >>>>>>>>>>>>> $vgender");
 
         vaddress = prefs.getString("address");
         vkelurahan = prefs.getString("kelurahan");

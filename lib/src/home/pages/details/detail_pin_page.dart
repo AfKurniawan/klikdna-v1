@@ -66,7 +66,7 @@ class _DetailPinPageState extends State<DetailPinPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 10.0, right: 2, top: 0),
+                    padding: const EdgeInsets.only(top: 0),
                     child: Container(
                       child: Container(
                         width: MediaQuery.of(context).size.width,
