@@ -52,7 +52,7 @@ class _EventWidgetState extends State<EventWidget> {
           : Padding(
             padding: const EdgeInsets.only(left: 10.0, bottom: 18),
             child: Container(
-              height: size.width > 600 ? size.height * 1.6 : size.height / 2.03,
+              height: size.width > 600 ? 650 : 380,
               child: Row(
                 children: [
                   ListView.builder(

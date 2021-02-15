@@ -27,7 +27,7 @@ class CardTypeSatuWidget extends StatelessWidget {
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
               colors:
-              model.vhighestrank == "Imperial Leader"
+              model.vhighestrank.contains("Leader")
                   ? MyColors.imperialLeaderColor
                   : model.vhighestrank == "0" && model.vtype == "Mitra" && model.vtype == "Mitra Pro"
                   ? MyColors.mitraCardColor

@@ -38,7 +38,7 @@ class CardTypeDuaWidget extends StatelessWidget {
                   ? MyColors.producerCardColor
                   : model.vhighestrank.contains('Star')
                   ? MyColors.startCardColor
-                  : model.vhighestrank.contains('Builder')
+                  : model.vpar.contains("Builder")
                   ? MyColors.builderCardColor
                   : MyColors.mitraCardColor,
               stops: [0.1, 1],

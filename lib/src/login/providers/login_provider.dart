@@ -362,8 +362,10 @@ class LoginProvider with ChangeNotifier{
         vcommission = prefs.getString("commission");
         vrank = prefs.getString("rank");
         vpar = prefs.getString("par");
+        print("VPAR >>>>>>>>>>>>>>> $vpar");
         vexpired = prefs.getString("expired");
         vhighestrank = prefs.getString("highestrank");
+        print("HIGEST RANK >>>>>>>>>>>>>>> $vhighestrank");
         vtimone = prefs.getInt("timone");
         vtimtwo = prefs.getInt("timtwo");
         vtotalcommission = prefs.getString("totalcommission");

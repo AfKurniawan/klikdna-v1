@@ -69,8 +69,7 @@ class _DetailEventPageState extends State<DetailEventPage> {
                     child: Container(
                       child: Container(
                         width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.width < 600 ? MediaQuery.of(context).size.height / 3.3
-                            :  MediaQuery.of(context).size.height * 1.22,
+                       // height: 500,
                         child: Material(
                           color: Colors.transparent,
                           child: InkWell(
@@ -81,8 +80,8 @@ class _DetailEventPageState extends State<DetailEventPage> {
                               borderRadius: BorderRadius.circular(0),
                               child: CachedNetworkImage(
                                 imageUrl: '${widget.model.image}',
-                                height: MediaQuery.of(context).size.width < 600 ? MediaQuery.of(context).size.height / 1.9
-                                    :  MediaQuery.of(context).size.height * 1.7,
+                                height: MediaQuery.of(context).size.width < 600 ? 240
+                                    :  500,
                                 fit: BoxFit.fill,
                               ),
                             ),

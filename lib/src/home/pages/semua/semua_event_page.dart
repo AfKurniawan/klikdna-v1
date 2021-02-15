@@ -123,8 +123,7 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
             )
         )
         : Container(
-          height: MediaQuery.of(context).size.width < 600 ? MediaQuery.of(context).size.height / 1.9
-              :  MediaQuery.of(context).size.height * 1.7,
+          height: size.width > 600 ? 670 : 400,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
@@ -262,8 +261,7 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
             )
         )
         : Container(
-          height: MediaQuery.of(context).size.width < 600 ? MediaQuery.of(context).size.height / 1.9
-              :  MediaQuery.of(context).size.height * 1.7,
+          height: size.width > 600 ? 670 : 400,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
