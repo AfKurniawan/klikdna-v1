@@ -50,20 +50,24 @@ class _EventWidgetState extends State<EventWidget> {
               )
           )
           : Padding(
-            padding: const EdgeInsets.only(left: 10.0, bottom: 18),
+            padding: const EdgeInsets.only(left: 10.0, bottom: 10),
             child: Container(
-              height: size.width > 600 ? 650 : 380,
+              height: size.width > 600 ? 650 : 370,
               child: Row(
                 children: [
                   ListView.builder(
                     scrollDirection: Axis.horizontal,
                     shrinkWrap: true,
-                    itemCount: prov.healthArray > 0
-                        ? 2 : 3,
+                    // itemCount: prov.healthArray < 1
+                    //     ? 2
+                    //     : prov.trainArray > 2
+                    //     ? 2
+                    //     : 3,
+                    itemCount: 3,
                     itemBuilder: (context, index) {
                       var document;
                       String text;
-                      document = parse(prov.trainingEventArray[index].data.text);
+                      document = parse(prov.allEventArray[index].data.text);
                       text = parse(document.body.text).documentElement.text;
                       return Container(
                         margin: EdgeInsets.only(right: 18),
@@ -89,16 +93,16 @@ class _EventWidgetState extends State<EventWidget> {
                                   Navigator.pushNamed(
                                       context, "detail_event_page",
                                       arguments: DummyModel(
-                                          "${prov.trainingEventArray[index].data.title}",
-                                          "${prov.trainingEventArray[index].data.text}",
-                                          "${prov.trainingEventArray[index].imageUrl}",
-                                          prov.trainingEventArray.length
+                                          "${prov.allEventArray[index].data.title}",
+                                          "${prov.allEventArray[index].data.text}",
+                                          "${prov.allEventArray[index].imageUrl}",
+                                          prov.allEventArray.length
                                       ));
                                 },
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
                                   child: CachedNetworkImage(
-                                    imageUrl: "${prov.trainingEventArray[index].imageUrl}",
+                                    imageUrl: "${prov.allEventArray[index].imageUrl}",
                                     width: size.width - 20,
                                     fit: BoxFit.fitHeight,
                                   ),
@@ -114,7 +118,7 @@ class _EventWidgetState extends State<EventWidget> {
                                 splashColor: MyColors.dnaGreen,
                                 onPressed: (){
                                   print("SHAREXXX");
-                                  prov.shareImageAndText('${prov.trainingEventArray[index].imageUrl}','${prov.trainingEventArray[index].data.title}\n$text');
+                                  prov.shareImageAndText('${prov.allEventArray[index].imageUrl}','${prov.allEventArray[index].data.title}\n$text');
                                 },
                               ),
                             ),
@@ -131,112 +135,7 @@ class _EventWidgetState extends State<EventWidget> {
                                       CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "${prov.trainingEventArray[index].data.status} ${prov.trainingEventArray[index].data.categoryId}",
-                                          style: TextStyle(
-                                              fontWeight:
-                                              FontWeight.bold,
-                                              fontSize: 12),
-                                        ),
-                                        SizedBox(height: 9),
-                                        Container(
-                                          child: Text(
-                                            "$text",
-                                            maxLines: 3,
-                                            overflow:
-                                            TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                                fontWeight:
-                                                FontWeight.normal,
-                                                fontSize: 10),
-                                          ),
-                                        ),
-                                        SizedBox(height: 14),
-                                      ],
-                                    ),
-                                  )),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                  ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    itemCount: prov.healthArray > 0 ? 1 : 0,
-                    itemBuilder: (context, index) {
-                      var document;
-                      String text;
-                      document = parse(prov.healthEventArray[index].data.text);
-                      text = parse(document.body.text).documentElement.text;
-                      return Container(
-                        margin: EdgeInsets.only(right: 18),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              offset: Offset(0, 1),
-                              blurRadius: 3,
-                              color: Colors.grey[700].withOpacity(0.32),
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                onTap: (){
-                                  Navigator.pushNamed(
-                                      context, "detail_event_page",
-                                      arguments: DummyModel(
-                                          "${prov.healthEventArray[index].data.title}",
-                                          "${prov.healthEventArray[index].data.text}",
-                                          "${prov.healthEventArray[index].imageUrl}",
-                                          prov.healthEventArray.length
-                                      ));
-                                },
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-                                  child: CachedNetworkImage(
-                                    imageUrl: "${prov.healthEventArray[index].imageUrl}",
-                                    width: size.width - 20,
-                                    fit: BoxFit.fitHeight,
-                                  ),
-                                ),
-                              ),
-                            ),
-
-                            Container(
-                              padding: EdgeInsets.all(2),
-                              alignment: Alignment.center,
-                              child: IconButton(
-                                icon: Icon(Icons.share_outlined, color: Colors.black54),
-                                splashColor: MyColors.dnaGreen,
-                                onPressed: (){
-                                  print("SHAREXXX");
-                                  prov.shareImageAndText('${prov.healthEventArray[index].imageUrl}','${prov.healthEventArray[index].data.title}\n$text');
-                                },
-
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                              const EdgeInsets.only(left: 10.0),
-                              child: Container(
-                                  width: MediaQuery.of(context).size.width -50,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 0, right: 10),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "${prov.healthEventArray[index].data.title}",
+                                          "${prov.allEventArray[index].data.title}",
                                           style: TextStyle(
                                               fontWeight:
                                               FontWeight.bold,

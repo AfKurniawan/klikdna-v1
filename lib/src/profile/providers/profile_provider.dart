@@ -42,9 +42,14 @@ class ProfileProvider with ChangeNotifier {
   }
 
   void syaratKetentuan(String url) async {
-    //const url = 'https://dnaku.id/ketentuan/mobile/syarat_ketentuan';
-    if (await canLaunch(url)) {
-      await launch(url, forceWebView: true);
+   const url2 = 'https://www.klikdna.com/webviewpages/ketentuanpengguna';
+   // const testUrl = "https://google.com" ;
+    print("URL >>>>>>>>>>>> $url2");
+    if (await canLaunch(url2)) {
+      await launch(url2,
+          forceWebView: true,
+        enableJavaScript: true
+      );
     } else {
       throw 'Could not launch $url';
     }
@@ -52,23 +57,26 @@ class ProfileProvider with ChangeNotifier {
   }
 
   void kebijakanPrivasi(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url, forceWebView: true);
+    const url2 = 'https://www.klikdna.com/webviewpages/kebijakanprivasi';
+    if (await canLaunch(url2)) {
+      await launch(url2, forceWebView: true, enableJavaScript: true);
     } else {
-      throw 'Could not launch $url';
+      throw 'Could not launch $url2';
     }
 
   }
 
-  void lembarPersetujuan() async {
-    const url = 'https://dnaku.id/ketentuan/mobile/lembar_persetujuan';
-    if (await canLaunch(url)) {
-      await launch(url, forceWebView: true);
-    } else {
-      throw 'Could not launch $url';
-    }
-
-  }
+  // void lembarPersetujuan() async {
+  //   const url = 'https://dnaku.id/ketentuan/mobile/lembar_persetujuan';
+  //   if (await canLaunch(url)) {
+  //     await launch(url,
+  //         //forceWebView: true
+  //     );
+  //   } else {
+  //     throw 'Could not launch $url';
+  //   }
+  //
+  // }
 
   void openWhatsapp(BuildContext context) {
     showCupertinoModalPopup(

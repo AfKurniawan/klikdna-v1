@@ -24,8 +24,6 @@ class TokenProvider with ChangeNotifier {
 
     if(request.statusCode == 200){
 
-      print("AKSES TOKEN GET TOKEN >>>>>>>>>> ${request.body}");
-
       accessToken = apiTokenResponse.accessToken;
 
       notifyListeners();

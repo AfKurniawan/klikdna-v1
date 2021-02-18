@@ -90,7 +90,7 @@ class PatientCardProvider with ChangeNotifier {
       photo = response.data.photo;
 
 
-      print("FOTO PATIENT CARD: $photo");
+      print("GENDER PATIENT CARD: $gender");
 
 
       sukses = response.success;

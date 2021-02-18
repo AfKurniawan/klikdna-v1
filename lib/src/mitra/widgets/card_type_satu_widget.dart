@@ -29,7 +29,7 @@ class CardTypeSatuWidget extends StatelessWidget {
               colors:
               model.vhighestrank.contains("Leader")
                   ? MyColors.imperialLeaderColor
-                  : model.vhighestrank == "0" && model.vtype == "Mitra" && model.vtype == "Mitra Pro"
+                  : (model.vhighestrank == "0" && model.vtype == "Mitra" && model.vtype == "Mitra Pro")
                   ? MyColors.mitraCardColor
                   : model.vhighestrank.contains("Star")
                   ? MyColors.startCardColor
@@ -84,7 +84,8 @@ class CardTypeSatuWidget extends StatelessWidget {
                             SizedBox(width: MediaQuery.of(context).size.width /10),
 
                             Container(
-                              child: Column(
+                              child: model.vtype == "Mitra" ? Container()
+                              : Column(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [

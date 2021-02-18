@@ -36,6 +36,7 @@ class _WalletsAndReferralPageState extends State<WalletsAndReferralPage> with Si
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xffEDF0F4),
       appBar: AppBar(
         centerTitle: false,
         title: Text(

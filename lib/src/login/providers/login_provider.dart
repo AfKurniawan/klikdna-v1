@@ -361,6 +361,7 @@ class LoginProvider with ChangeNotifier{
         vrightpointreward = prefs.getInt("rightpointreward");
         vcommission = prefs.getString("commission");
         vrank = prefs.getString("rank");
+        print("VRANK ........... $vrank");
         vpar = prefs.getString("par");
         print("VPAR >>>>>>>>>>>>>>> $vpar");
         vexpired = prefs.getString("expired");
@@ -370,6 +371,7 @@ class LoginProvider with ChangeNotifier{
         vtimtwo = prefs.getInt("timtwo");
         vtotalcommission = prefs.getString("totalcommission");
         vtype = prefs.getString("type");
+        print("VTYPE ------->>>>>> $vtype");
         vprofilEmail = prefs.getString("profilemail");
         vreferralUrl = prefs.getString("referralurl");
         vtimoneposition = prefs.getString("timoneposition");

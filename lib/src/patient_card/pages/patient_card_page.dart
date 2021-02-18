@@ -7,6 +7,7 @@ import 'package:new_klikdna/src/login/providers/login_provider.dart';
 import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PatientCardPage extends StatefulWidget {
   @override
@@ -16,28 +17,40 @@ class PatientCardPage extends StatefulWidget {
 class _PatientCardPageState extends State<PatientCardPage> {
 
   bool isExpanded = false;
-  String result;
-  String _radioValue;
+  String choice;
+  String gender;
   String _valProvince;
 
-  void _handleRadioValueChange(String value) {
-
+  void radioButtonChanges(String value) {
     setState(() {
-      _radioValue = value;
-      switch (_radioValue) {
-        case "Laki-Laki":
-          result = "L";
+      switch (value) {
+        case 'Perempuan':
+          choice = value;
           break;
-        case "Perempuan":
-          result = "W";
+        case 'Laki-Laki':
+          choice = value;
           break;
+        default:
+          choice = null;
       }
+      debugPrint("SELECTED GENDER >>>>>>>>> $choice"); //Debug the choice in console
     });
+  }
+
+  getPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      gender = prefs.getString("gender");
+    });
+
+    debugPrint("GENDER >>>>>>>>>>>> $gender");
+
   }
 
 
   @override
   void initState() {
+    getPrefs();
     Provider.of<AccountProvider>(context, listen: false).getUserAccount(context);
     Provider.of<PatientCardProvider>(context, listen: false).getPatientCard(context);
     super.initState();
@@ -319,7 +332,7 @@ class _PatientCardPageState extends State<PatientCardPage> {
                     ),
                   ),
                   SizedBox(height: 8),
-                  Consumer<PatientCardProvider>(
+                  Consumer<LoginProvider>(
                     builder: (child, pcard, _){
                       return Container(
                         color: Colors.white,
@@ -340,9 +353,9 @@ class _PatientCardPageState extends State<PatientCardPage> {
                                 child: Row(
                                   children: [
                                     Radio(
-                                      value: "Laki-laki",
-                                      onChanged: _handleRadioValueChange,
-                                      groupValue: pcard.gender,
+                                      value: "Laki-Laki",
+                                      onChanged: radioButtonChanges,
+                                      groupValue: gender,
                                       focusColor: MyColors.dnaGreen,
                                       activeColor: MyColors.dnaGreen,
                                     ),
@@ -350,8 +363,8 @@ class _PatientCardPageState extends State<PatientCardPage> {
                                     SizedBox(width: 20),
                                     Radio(
                                       value: "Perempuan",
-                                      groupValue: pcard.gender,
-                                      onChanged: _handleRadioValueChange,
+                                      groupValue: gender,
+                                      onChanged: radioButtonChanges,
                                       focusColor: MyColors.dnaGreen,
                                       activeColor: MyColors.dnaGreen,
 

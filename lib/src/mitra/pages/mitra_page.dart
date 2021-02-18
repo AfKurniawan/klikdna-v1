@@ -23,7 +23,7 @@ class _MitraPageState extends State<MitraPage> {
     CardTypeDuaWidget()
   ];
 
-  int _current = 1;
+  int _current = 0;
 
   @override
   void initState() {

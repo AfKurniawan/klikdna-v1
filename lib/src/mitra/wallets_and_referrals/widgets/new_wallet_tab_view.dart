@@ -27,7 +27,6 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
       builder: (context, wallet, _) {
         return SingleChildScrollView(
             child: Container(
-            //color: Colors.white,
               child: Column(
             children: [
               Padding(
@@ -107,8 +106,7 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
                                                         fontSize: 16,
                                                         color: MyColors.dnaBadge,
                                                         fontWeight: FontWeight.bold)))
-                                            : wallet.tipeValue
-                                                    .contains("Royalti")
+                                            : wallet.tipeValue.contains("Royalti")
                                                 ? Container(
                                                     child: Text(wallet.totalsum == null ? "" : "IDR ${wallet.totalsum.split(".")[0].replaceAll("-", "")}",
                                                         style: TextStyle(
@@ -124,7 +122,7 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
                                                                 fontWeight: FontWeight.bold)))
                                                     : wallet.tipeValue.contains("Penarikan")
                                                         ? Container(child: Text(wallet.totalsum == null ? "" : "IDR ${wallet.totalsum.split(".")[0].replaceAll("-", "")}", style: TextStyle(fontSize: 16, color: MyColors.dnaBadge, fontWeight: FontWeight.bold)))
-                                                        : Container(child: Text("0", style: TextStyle(fontSize: 16, color: MyColors.dnaBadge, fontWeight: FontWeight.bold))),
+                                                          : Container(child: Text("0", style: TextStyle(fontSize: 16, color: MyColors.dnaBadge, fontWeight: FontWeight.bold))),
                                         SizedBox(height: 5),
                                         wallet.tipeValue.contains("Referral")
                                             ? Text("Komisi Referral")
@@ -286,17 +284,17 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
                 ? 0
                 : wallet.listWalletData.length,
             itemBuilder: (context, index) {
-              var formatTgl = DateFormat('dd MMMM yyyy');
-              var parsedDate =
-                  DateTime.parse(wallet.listWalletData[index].created);
-              String dateCreated = ('${formatTgl.format(parsedDate)}');
+
+              var formatTgl = DateFormat('dd MMMM yyyy', "id_ID");
+              var parsedDate = DateTime.parse(wallet.listWalletData[index].created).toLocal();
+              String dateCreated = '${formatTgl.format(parsedDate)}';
               String fnominal = NumberFormat.currency(name: '')
                   .format(wallet.listWalletData[index].nominal)
                   .split(".")[0]
                   .replaceAll(",", ".");
               return wallet.listWalletData[index].status.contains("Selesai")
                   ? Container(
-                      color: Colors.white,
+                      color: Color(0xffEDF0F4),
                       padding: EdgeInsets.only(top: 18),
                       child: wallet.tipeValue.contains("Semua")
                           ? Column(
@@ -364,10 +362,17 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(18.0),
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
-                                        Text("$dateCreated"),
+                                        Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text("$dateCreated", style: TextStyle(fontWeight: FontWeight.bold)),
+                                            Text("${wallet.listWalletData[index].from}", style: TextStyle(fontSize: 12))
+                                          ],
+                                        ),
                                         wallet.listWalletData[index].type.contains("Withdraw")
                                             ? Row(
                                                 children: [
@@ -419,6 +424,8 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
                                                     ? Color(0xff006971)
                                                       : wallet.listWalletData[index].type.contains("Withdraw")
                                                     ? Color(0xffD7516A)
+                                                      : wallet.listWalletData[index].type.contains("National")
+                                                        ? Color(0xffFF7D67)
                                                     : Colors.white12,
                                         borderRadius: BorderRadius.only(
                                         topRight: Radius.circular(25),
@@ -459,17 +466,35 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text("$dateCreated"),
-                                        Row(
+                                        Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            wallet.listWalletData[index].type
-                                                    .contains("Withdraw")
-                                                ? Icon(Icons.arrow_circle_down,
-                                                    size: 20,
-                                                    color: Colors.redAccent)
-                                                : Icon(Icons.arrow_circle_up,
-                                                    size: 20,
-                                                    color: Colors.green)
+                                            Text("$dateCreated", style: TextStyle(fontWeight: FontWeight.bold)),
+                                            //Text("${wallet.listWalletData[index].from}", style: TextStyle(fontSize: 12))
+                                          ],
+                                        ),
+                                        wallet.listWalletData[index].type.contains("Withdraw")
+                                            ? Row(
+                                          children: [
+                                            Icon(Icons.arrow_downward,
+                                                size: 15,
+                                                color: Colors.redAccent),
+                                            SizedBox(width: 3),
+                                            Text("Out",
+                                                style: TextStyle(
+                                                    color: Colors.redAccent))
+                                          ],
+                                        )
+                                            : Row(
+                                          children: [
+                                            Icon(Icons.arrow_upward,
+                                                size: 15,
+                                                color: Colors.green),
+                                            SizedBox(width: 3),
+                                            Text("In",
+                                                style: TextStyle(
+                                                    color: Colors.green))
                                           ],
                                         ),
                                         Text(

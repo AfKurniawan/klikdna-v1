@@ -65,7 +65,7 @@ class OverViewTileWidget extends StatelessWidget {
                                     ),
                                   ),
                                   SizedBox(height: 5),
-                                  Text(prov.vleftcv == null ? "-" : "${prov.vleftcv}",
+                                  Text(prov.vleftcv == null ? "0" : "${prov.vleftcv}",
                                     overflow: TextOverflow.clip,
                                     maxLines: 1,
                                     style: TextStyle(
@@ -89,7 +89,7 @@ class OverViewTileWidget extends StatelessWidget {
                                     ),
                                   ),
                                   SizedBox(height: 5),
-                                  Text(prov.vrightcv == null ? "-" : "${prov.vrightcv}",
+                                  Text(prov.vrightcv == null ? "0" : "${prov.vrightcv}",
                                     overflow: TextOverflow.clip,
                                     maxLines: 1,
                                     style: TextStyle(
@@ -320,7 +320,7 @@ class OverViewTileWidget extends StatelessWidget {
                                   ),
                                 ),
                                 SizedBox(height: 5),
-                                Text(prov.vleftpointreward == null ? "-" : "${prov.vleftpointreward}",
+                                Text(prov.vleftpointreward == null ? "0" : "${prov.vleftpointreward}",
                                   overflow: TextOverflow.clip,
                                   maxLines: 1,
                                   style: TextStyle(
@@ -345,7 +345,7 @@ class OverViewTileWidget extends StatelessWidget {
                                   ),
                                 ),
                                 SizedBox(height: 5),
-                                Text(prov.vrightpointreward == null ? "-" : "${prov.vrightpointreward}",
+                                Text(prov.vrightpointreward == null ? "0" : "${prov.vrightpointreward}",
                                   overflow: TextOverflow.clip,
                                   maxLines: 1,
                                   style: TextStyle(

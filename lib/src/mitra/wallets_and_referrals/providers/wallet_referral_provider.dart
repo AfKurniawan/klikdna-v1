@@ -86,6 +86,8 @@ class WalletReferralProvider with ChangeNotifier {
   List<Wallet> walletMapMapArray = [];
   List<Wallet> walletArray ;
   var count ;
+  var filterSum ;
+
 
   Future<WalletModel> filterWalletData(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -109,27 +111,70 @@ class WalletReferralProvider with ChangeNotifier {
     final response = await http.post(url, body: body, headers: headers);
     final responseJson = WalletModel.fromJson(json.decode(response.body));
 
+    // if(response.statusCode == 200){
+    //
+    //
+    //   print("RESPONSE BODY GET WALLET: ${response.body}");
+    //
+    //   var allArray = json.decode(response.body);
+    //   var dataArray = allArray['data'] as List;
+    //
+    //   listWalletData = dataArray.map<Wallet>((j) => Wallet.fromJson(j)).toList();
+    //   isLoading = false ;
+    //   isError = false ;
+    //
+    //   var myStatus = listWalletData.map((e) => e.status);
+    //
+    //
+    //
+    //   myStatus.forEach((w){
+    //     sum = listWalletData.map((e) => e.nominal).reduce((value, element) => value + element);
+    //     totalsum = totalFormattedCommision.format(sum);
+    //     // if(w.contains("Selesai"))
+    //     //   sum = listWalletData.map((e) => e.nominal).reduce((value, element) => value + element);
+    //     //   totalsum = totalFormattedCommision.format(sum);
+    //   });
+    //
+    //   notifyListeners();
+    //
+    //
+    // } else {
+    //   isError = true ;
+    //   isLoading = false ;
+    //   notifyListeners();
+    //
+    // }
+    //
+    //
+    // return responseJson;
     if(response.statusCode == 200){
 
-
-      print("RESPONSE BODY GET WALLET: ${response.body}");
+      //print("RESPONSE BODY GET WALLET: ${response.body}");
 
       var allArray = json.decode(response.body);
       var dataArray = allArray['data'] as List;
-
       listWalletData = dataArray.map<Wallet>((j) => Wallet.fromJson(j)).toList();
       isLoading = false ;
       isError = false ;
 
-      var myStatus = listWalletData.map((e) => e.status);
 
-      myStatus.forEach((w){
-        if(w.contains("Selesai"))
-          sum = listWalletData.map((e) => e.nominal).reduce((value, element) => value + element);
-          totalsum = totalFormattedCommision.format(sum);
-      });
+      if(listWalletData.length == 0){
+        sum = 0;
+      } else {
+        sum = listWalletData.map((e) => e.nominal).reduce((value, element) => value + element);
+      }
+
+
+      print("Sum : $sum");
+
+      filterSum = totalFormattedCommision.format(sum);
+
+      komisi = prefs.getString("commission");
 
       notifyListeners();
+      print("SUM FILTER $totalsum");
+      print("JUMLAH KOMISI FILTER $komisi");
+
 
 
     } else {
@@ -138,7 +183,6 @@ class WalletReferralProvider with ChangeNotifier {
       notifyListeners();
 
     }
-
 
     return responseJson;
   }

@@ -30,7 +30,7 @@ class ReportProvider extends ChangeNotifier {
   Future<List<ReportModel>> getSample(BuildContext context, String personId) async {
     isLoading = true;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String accountId = prefs.getString("personAccountId");
+    String accountId = prefs.getString("personId");
     var url = AppConstants.GET_SAMPLE_URL + '$accountId';
     final prov = Provider.of<TokenProvider>(context, listen: false);
 
@@ -49,18 +49,19 @@ class ReportProvider extends ChangeNotifier {
       notfound = false ;
       var allArray = json.decode(request.body);
 
-      var dataArray = allArray['data'] as List;
-      listSample = dataArray.map<ReportData>((j) => ReportData.fromJson(j)).toList();
+      for(int i = 0; i < allArray.length; i++){
+        var dataArray = allArray['data'] as List;
+        listSample = dataArray.map<ReportData>((j) => ReportData.fromJson(j)).toList();
 
-      var detailArray = dataArray[0]['detail'] as List;
-      listDetail = detailArray.map<Detail>((j) => Detail.fromJson(j)).toList();
+        var detailArray = dataArray[0]['detail'] as List;
+        listDetail = detailArray.map<Detail>((j) => Detail.fromJson(j)).toList();
 
-      var detail2Array = allArray['data'][1]['detail'] as List;
-      listDetail2 = detail2Array.map<Detail>((j) => Detail.fromJson(j)).toList();
+        var detail2Array = allArray['data'][i]['detail'] as List;
+        listDetail2 = detail2Array.map<Detail>((j) => Detail.fromJson(j)).toList();
+      }
 
-      print("LST DETAAIL @___$listDetail2");
 
-      prefs.remove('tempPersonId');
+
 
 
       notifyListeners();
@@ -95,7 +96,6 @@ class ReportProvider extends ChangeNotifier {
     print("PERSON ID: $person");
 
     String accessToken = prov.accessToken;
-    print("AKSES TOKEN: $accessToken");
     print("REPORT ID: $reportId");
     Map<String, String> ndas = {
       "Accept": "application/json",

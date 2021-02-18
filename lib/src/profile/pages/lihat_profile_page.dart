@@ -9,6 +9,7 @@ import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dar
 import 'package:new_klikdna/src/token/providers/token_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LihatProfilePage extends StatefulWidget {
   @override
@@ -18,31 +19,42 @@ class LihatProfilePage extends StatefulWidget {
 class _LihatProfilePageState extends State<LihatProfilePage> {
   bool isExpanded = false;
 
-  String _radioValue;
-  String result;
+  String gender;
+  String choice;
   final format = DateFormat("yyyy-MM-dd");
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  void _handleRadioValueChange(String value) {
-
+  void radioButtonChanges(String value) {
     setState(() {
-      _radioValue = value;
-      switch (_radioValue) {
-        case "Laki-Laki":
-          result = "L";
+      switch (value) {
+        case 'Perempuan':
+          choice = value;
           break;
-        case "Perempuan":
-          result = "W";
+        case 'Laki-Laki':
+          choice = value;
           break;
+        default:
+          choice = null;
       }
+      debugPrint("SELECTED GENDER >>>>>>>>> $choice"); //Debug the choice in console
     });
+  }
+
+  getPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      gender = prefs.getString("gender");
+    });
+
+    debugPrint("GENDER >>>>>>>>>>>> $gender");
+
   }
 
   @override
   void initState() {
-    _radioValue = Provider.of<LoginProvider>(context, listen: false).vgender;
-    print("RADIO VALUE: $_radioValue");
+    getPrefs();
+
     Provider.of<TokenProvider>(context, listen: false).getApiToken();
     //Provider.of<PatientCardProvider>(context, listen: false).getPatientCard(context);
     super.initState();
@@ -143,38 +155,49 @@ class _LihatProfilePageState extends State<LihatProfilePage> {
                             color: Colors.grey,
                           ),
                           SizedBox(height: 20),
-                          Container(
-                            color: Colors.white,
-                            width: MediaQuery.of(context).size.width,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Jenis Kelamin"),
-                                SizedBox(height: 10),
-                                Row(
+                          Consumer<LoginProvider>(
+                            builder: (child, pcard, _){
+                              return Container(
+                                color: Colors.white,
+                                width: MediaQuery.of(context).size.width,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Radio(
-                                      value: "Laki-Laki",
-                                      groupValue: _radioValue,
-                                      onChanged: _handleRadioValueChange,
-                                      focusColor: MyColors.dnaGreen,
-                                      activeColor: MyColors.dnaGreen,
+                                    Text("Jenis Kelamin"),
+                                    SizedBox(height: 10),
+                                    Theme(
+                                      data: Theme.of(context).copyWith(
+                                          unselectedWidgetColor: Colors.grey,
+                                          disabledColor: MyColors.dnaGreen
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Radio(
+                                            value: "Laki-Laki",
+                                            onChanged: radioButtonChanges,
+                                            groupValue: gender,
+                                            focusColor: MyColors.dnaGreen,
+                                            activeColor: MyColors.dnaGreen,
+                                          ),
+                                          Text("Pria"),
+                                          SizedBox(width: 20),
+                                          Radio(
+                                            value: "Perempuan",
+                                            groupValue: gender,
+                                            onChanged: radioButtonChanges,
+                                            focusColor: MyColors.dnaGreen,
+                                            activeColor: MyColors.dnaGreen,
+
+                                          ),
+                                          Text("Wanita")
+                                        ],
+                                      ),
                                     ),
-                                    Text("Pria"),
-                                    SizedBox(width: 20),
-                                    Radio(
-                                      value: "Perempuan",
-                                      groupValue: _radioValue,
-                                      focusColor: MyColors.dnaGreen,
-                                      activeColor: MyColors.dnaGreen,
-                                      onChanged: _handleRadioValueChange,
-                                    ),
-                                    Text("Wanita")
                                   ],
                                 ),
-                              ],
-                            ),
+                              );
+                            },
                           ),
                           SizedBox(height: 20),
                           Text("Email", style: TextStyle(fontSize: 12)),

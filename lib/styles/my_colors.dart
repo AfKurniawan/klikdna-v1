@@ -55,8 +55,8 @@ class MyColors {
 
   static const mitraProColor = [Color(0xff848FA5), Color(0xff848FA5)];
   static const imperialLeaderColor = [Color(0xff000000), Color(0xff434343)];
-  static const executiveBuilderColor = [Color(0xff1D3557), Color(0xff1C53A0)];
-  static const producerColor = [Color(0xff0B7A75), Color(0xff28A7A1)];
+  static const executiveBuilderColor = [Color(0xff0477BF), Color(0xff2885BE)];
+  static const producerColor = [Color(0xff4ECDC4), Color(0xff64D4CD)];
   static const mitraColor = [Color(0xff7A542E), Color(0xffA38363)];
   static const eliteAndPro = [Color(0xff1D3557), Color(0xff1D3557)];
   static const presidentAndDirectorColor = [Color(0xff05090F), Color(0xff05090F)];
@@ -67,7 +67,7 @@ class MyColors {
 
   static const builderCardColor = [Color(0xff0477BF), Color(0xff2885BE)];
 
-  static const producerCardColor = [Color(0xff77ACA2), Color(0xff97C8BF)];
+  //static const producerCardColor = [Color(0xff77ACA2), Color(0xff97C8BF)];
 
   static const startCardColor = [Color(0xffEE964B), Color(0xffF8A55E)];
 

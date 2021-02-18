@@ -24,13 +24,13 @@ class CmsTokenProvider with ChangeNotifier {
 
     if(request.statusCode == 200){
 
-      print("CMS TOKEN GET TOKEN: ${request.statusCode}");
+     // print("CMS TOKEN GET TOKEN: ${request.statusCode}");
 
       cmsAccessToken = cmsTokenResponse.accessToken;
 
       notifyListeners();
 
-      print("CMS ASKSES TOKEN $cmsAccessToken");
+      //print("CMS ASKSES TOKEN $cmsAccessToken");
 
     } else {
 

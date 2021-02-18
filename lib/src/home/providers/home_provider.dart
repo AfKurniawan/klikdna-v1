@@ -49,7 +49,6 @@ class HomeProvider extends ChangeNotifier {
     var url = AppConstants.GET_HOME_ARTIKEL;
     final prov = Provider.of<CmsTokenProvider>(context, listen: false);
     String accessToken = prov.cmsAccessToken;
-    print("CMS TOKEN IN HOME+++++ :$accessToken");
     Map<String, String> ndas = {
       "Accept": "application/json",
       "Authorization": "Bearer $accessToken"
@@ -62,8 +61,6 @@ class HomeProvider extends ChangeNotifier {
       jsonArray = responseJson['data'] as List;
       isLoading = false ;
 
-      print("RESPONE STATUS BODY ====== ${response.body}");
-
       for (int i = 0; i < jsonArray.length; i++) {
         promo = Data.fromJson(jsonArray[i]['data']);
 
@@ -74,18 +71,18 @@ class HomeProvider extends ChangeNotifier {
         pinArray = pinMapArray.where((i) => i.data.categoryId == 11 && i.data.status == 1).toList();
 
         var now = new DateTime.now();
-        var sekarang = now.subtract(Duration(days: 0));
+        var sekarang = now.subtract(Duration(days: 1));
         allEventMapArray = jsonArray.map((p) => ArrayData.fromJson(p)).toList();
-        allEventArray = allEventMapArray.where((i) => i.data.categoryId == 13 || i.data.categoryId == 10).toList();
+        allEventArray = allEventMapArray.where((i) => (i.data.categoryId == 10 || i.data.categoryId == 13) && i.data.status == 1).toList();
         allEventArray.removeWhere((el) => DateTime.parse(el.data.doDate).isBefore(sekarang));
-        allEventArray.sort((a, b) => a.data.createdAt.compareTo(b.data.createdAt));
+        allEventArray.sort((a, b) => a.data.doDate.compareTo(b.data.doDate));
         allArray = allEventArray.length;
 
         //
         trainingEventMapArray = jsonArray.map((p) => ArrayData.fromJson(p)).toList();
         trainingEventArray = trainingEventMapArray.where((i) => i.data.categoryId == 10 && i.data.status == 1).toList();
         trainingEventArray.removeWhere((el) => DateTime.parse(el.data.doDate).isBefore(sekarang));
-        trainingEventArray.sort((a, b) => a.data.createdAt.compareTo(b.data.createdAt));
+        trainingEventArray.sort((a, b) => a.data.doDate.compareTo(b.data.createdAt));
         trainArray = trainingEventArray.length;
         //
         healthEventMapArray = jsonArray.map((p) => ArrayData.fromJson(p)).toList();

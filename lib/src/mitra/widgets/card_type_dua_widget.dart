@@ -26,20 +26,25 @@ class CardTypeDuaWidget extends StatelessWidget {
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
               colors:
-                    model.vhighestrank.contains("Leader")
+                    //model.vhighestrank.contains("Leader")
+                    // ? MyColors.imperialLeaderColor
+                    model.vpar.contains("Builder")
+                  ? MyColors.builderCardColor
+                        : model.vpar.contains("Producer")
+                        ? MyColors.producerColor
+                  : model.vhighestrank.contains("Leader")
                   ? MyColors.imperialLeaderColor
                   : model.vpar.contains("Presidential")
                   ? MyColors.presidentAndDirectorColor
                   : model.vpar.contains("Star")
                   ? MyColors.startCardColor
-                  : model.vhighestrank == "0" && model.vtype.contains('Mitra') || model.vhighestrank.contains('Mitra')
+                  : (model.vhighestrank == "0" && model.vtype.contains('Mitra')) || model.vhighestrank.contains('Mitra')
                   ? MyColors.mitraCardColor
-                  : model.vhighestrank.contains('Producer')
-                  ? MyColors.producerCardColor
-                  : model.vhighestrank.contains('Star')
-                  ? MyColors.startCardColor
-                  : model.vpar.contains("Builder")
-                  ? MyColors.builderCardColor
+                  // : model.vhighestrank.contains('Producer')
+                  // ? MyColors.producerColor
+
+                  // : model.vhighestrank.contains('Star')
+                  // ? MyColors.startCardColor
                   : MyColors.mitraCardColor,
               stops: [0.1, 1],
             ),
@@ -58,13 +63,17 @@ class CardTypeDuaWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(model.vhighestrank == "0" || model.vpar == "" ? "${model.vtype}" : "${model.vpar}",
+                      Text((model.vhighestrank == "0" || model.vpar == "") ? "${model.vtype}" : "${model.vpar}",
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,
                               fontWeight: FontWeight.bold)),
                       SizedBox(height: 5),
-                      Text(model.vhighestrank == "0" || model.vpar == "" ? "Kualifikasi Peringkat: ${model.vrank}" : "Kualifikasi Peringkat: ${model.vrank}",
+                      Text(model.vhighestrank == "0" || model.vpar == ""
+                          ? model.vrank == ""
+                          ? "Kualifikasi Peringkat: -"
+                          : "Kualifikasi Peringkat: ${model.vrank}"
+                          : "Kualifikasi Peringkat: ${model.vrank}",
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 12,
@@ -80,7 +89,7 @@ class CardTypeDuaWidget extends StatelessWidget {
                           children: [
                             Container(
                               width: MediaQuery.of(context).size.width / 2,
-                              child: Text(model.vallName.length > 20 ? "${model.vallName.substring(0, 20)}" : "${model.vallName}",
+                              child: Text(model.vallName.length > 20 ? "${model.vallName.substring(0, 20).toUpperCase()}" : "${model.vallName.toUpperCase()}",
                                 overflow: TextOverflow.clip,
                                 maxLines: 1,
                                 style: TextStyle(
