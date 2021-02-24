@@ -63,7 +63,7 @@ class CardTypeDuaWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text((model.vhighestrank == "0" || model.vpar == "") ? "${model.vtype}" : "${model.vpar}",
+                      Text((model.vhighestrank == "0" || model.vpar == "") ? "${model.vpar}" : "${model.vtype}",
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,

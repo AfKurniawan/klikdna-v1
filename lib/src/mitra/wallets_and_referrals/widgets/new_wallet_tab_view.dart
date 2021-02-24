@@ -122,6 +122,8 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
                                                                 fontWeight: FontWeight.bold)))
                                                     : wallet.tipeValue.contains("Penarikan")
                                                         ? Container(child: Text(wallet.totalsum == null ? "" : "IDR ${wallet.totalsum.split(".")[0].replaceAll("-", "")}", style: TextStyle(fontSize: 16, color: MyColors.dnaBadge, fontWeight: FontWeight.bold)))
+                                            : wallet.tipeValue.contains("National")
+                                                ? Container(child: Text(wallet.filterSum == null ? "" : "IDR ${wallet.filterSum.split(".")[0].replaceAll("-", "")}", style: TextStyle(fontSize: 16, color: MyColors.dnaBadge, fontWeight: FontWeight.bold)))
                                                           : Container(child: Text("0", style: TextStyle(fontSize: 16, color: MyColors.dnaBadge, fontWeight: FontWeight.bold))),
                                         SizedBox(height: 5),
                                         wallet.tipeValue.contains("Referral")

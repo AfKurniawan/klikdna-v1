@@ -63,7 +63,7 @@ class _EventWidgetState extends State<EventWidget> {
                     //     : prov.trainArray > 2
                     //     ? 2
                     //     : 3,
-                    itemCount: 3,
+                    itemCount: prov.allEventArray.length < 3 ? prov.allEventArray.length : 3,
                     itemBuilder: (context, index) {
                       var document;
                       String text;

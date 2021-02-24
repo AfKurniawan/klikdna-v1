@@ -167,7 +167,7 @@ class WalletReferralProvider with ChangeNotifier {
 
       print("Sum : $sum");
 
-      filterSum = totalFormattedCommision.format(sum);
+      totalsum = totalFormattedCommision.format(sum);
 
       komisi = prefs.getString("commission");
 
