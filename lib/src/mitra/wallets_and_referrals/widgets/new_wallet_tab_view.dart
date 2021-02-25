@@ -1,4 +1,6 @@
 
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -20,12 +22,14 @@ class NewWalletTabView extends StatefulWidget {
 }
 
 class _NewWalletTabViewState extends State<NewWalletTabView> {
+
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context);
     return Consumer<WalletReferralProvider>(
       builder: (context, wallet, _) {
         return SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
             child: Container(
               child: Column(
             children: [
@@ -89,7 +93,7 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
                                 ],
                               ),
                               child: Padding(
-                                padding: const EdgeInsets.all(18.0),
+                                padding: const EdgeInsets.all(8.0),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -123,7 +127,7 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
                                                     : wallet.tipeValue.contains("Penarikan")
                                                         ? Container(child: Text(wallet.totalsum == null ? "" : "IDR ${wallet.totalsum.split(".")[0].replaceAll("-", "")}", style: TextStyle(fontSize: 16, color: MyColors.dnaBadge, fontWeight: FontWeight.bold)))
                                             : wallet.tipeValue.contains("National")
-                                                ? Container(child: Text(wallet.filterSum == null ? "" : "IDR ${wallet.filterSum.split(".")[0].replaceAll("-", "")}", style: TextStyle(fontSize: 16, color: MyColors.dnaBadge, fontWeight: FontWeight.bold)))
+                                                ? Container(child: Text(wallet.totalsum == null ? "" : "IDR ${wallet.totalsum.split(".")[0].replaceAll("-", "")}", style: TextStyle(fontSize: 16, color: MyColors.dnaBadge, fontWeight: FontWeight.bold)))
                                                           : Container(child: Text("0", style: TextStyle(fontSize: 16, color: MyColors.dnaBadge, fontWeight: FontWeight.bold))),
                                         SizedBox(height: 5),
                                         wallet.tipeValue.contains("Referral")
@@ -281,12 +285,11 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
         builder: (context, snapshot) {
           return ListView.builder(
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+            //physics: NeverScrollableScrollPhysics(),
             itemCount: wallet.listWalletData.length == 0
                 ? 0
                 : wallet.listWalletData.length,
             itemBuilder: (context, index) {
-
               var formatTgl = DateFormat('dd MMMM yyyy', "id_ID");
               var parsedDate = DateTime.parse(wallet.listWalletData[index].created).toLocal();
               String dateCreated = '${formatTgl.format(parsedDate)}';
@@ -311,7 +314,7 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
 
                                 Container(
                                   width: 156,
-                                  height: 45,
+                                  height: 35,
                                   decoration: BoxDecoration(
                                     color: wallet.listWalletData[index].type
                                             .contains("Tim")
@@ -333,21 +336,19 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
                                         topRight: Radius.circular(25),
                                         bottomRight: Radius.circular(25)),
                                   ),
-                                  child: Padding(
-                                    padding:
-                                        EdgeInsets.only(top: 13.0, left: 10),
+                                  child: Center(
                                     child: Text(
                                         wallet.listWalletData[index].type.contains("Withdraw")
                                             ? "Penarikan"
                                             : "${wallet.listWalletData[index].type}",
                                         style: TextStyle(
-                                            color: Colors.white, fontSize: 16)),
+                                            color: Colors.white, fontSize: 14)),
                                   ),
                                 ),
-                                SizedBox(height: 30),
+                                SizedBox(height: 10),
                                 Container(
                                   width: MediaQuery.of(context).size.width,
-                                  height: 80,
+                                  height: 70,
                                   margin: EdgeInsets.only(
                                       bottom: 10, left: 18, right: 18),
                                   decoration: BoxDecoration(
@@ -362,7 +363,7 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
                                     ],
                                   ),
                                   child: Padding(
-                                    padding: const EdgeInsets.all(18.0),
+                                    padding: const EdgeInsets.only(left: 12.0, right: 12),
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -371,8 +372,8 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Text("$dateCreated", style: TextStyle(fontWeight: FontWeight.bold)),
-                                            Text("${wallet.listWalletData[index].from}", style: TextStyle(fontSize: 12))
+                                            Text("$dateCreated", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                                            Text("${wallet.listWalletData[index].from}", style: TextStyle(fontSize: 10))
                                           ],
                                         ),
                                         wallet.listWalletData[index].type.contains("Withdraw")
@@ -414,7 +415,7 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
                               children: [
                                 Container(
                                   width: 156,
-                                  height: 45,
+                                  height: 35,
                                   decoration: BoxDecoration(
                                     color: wallet.listWalletData[index].type.contains("Tim")
                                         ? Color(0xffB5CCD5)
@@ -444,10 +445,10 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
                                             color: Colors.white, fontSize: 16)),
                                   ),
                                 ),
-                                SizedBox(height: 30),
+                                SizedBox(height: 10),
                                 Container(
                                   width: MediaQuery.of(context).size.width,
-                                  height: 70,
+                                  height: 75,
                                   margin: EdgeInsets.only(
                                       bottom: 10, left: 18, right: 18),
                                   decoration: BoxDecoration(
@@ -463,7 +464,7 @@ class _NewWalletTabViewState extends State<NewWalletTabView> {
                                     ],
                                   ),
                                   child: Padding(
-                                    padding: const EdgeInsets.all(18.0),
+                                    padding: const EdgeInsets.only(left: 12.0, right: 12),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,

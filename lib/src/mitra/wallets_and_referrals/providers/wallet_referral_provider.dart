@@ -157,6 +157,8 @@ class WalletReferralProvider with ChangeNotifier {
       isLoading = false ;
       isError = false ;
 
+      print("LIST WALLET DATA LWNGHT >>>>>>>>>>> ${listWalletData.length}");
+
 
       if(listWalletData.length == 0){
         sum = 0;

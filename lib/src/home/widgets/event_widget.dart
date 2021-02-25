@@ -58,11 +58,6 @@ class _EventWidgetState extends State<EventWidget> {
                   ListView.builder(
                     scrollDirection: Axis.horizontal,
                     shrinkWrap: true,
-                    // itemCount: prov.healthArray < 1
-                    //     ? 2
-                    //     : prov.trainArray > 2
-                    //     ? 2
-                    //     : 3,
                     itemCount: prov.allEventArray.length < 3 ? prov.allEventArray.length : 3,
                     itemBuilder: (context, index) {
                       var document;
