@@ -1,29 +1,181 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
+import 'package:new_klikdna/configs/app_constants.dart';
+import 'package:new_klikdna/src/mitra/wallets_and_referrals/models/wallet_model.dart';
 import 'package:new_klikdna/src/mitra/wallets_and_referrals/providers/wallet_referral_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class NewWalletTabViewFix extends StatefulWidget {
-  const NewWalletTabViewFix({
-    Key key,
-    @required this.future,
-  }) : super(key: key);
 
-  final Future future;
   @override
   _NewWalletTabViewFixState createState() => _NewWalletTabViewFixState();
 }
 
 class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
+
+  bool isLoading ;
+  bool isError ;
+  List<Wallet> listWalletData = [];
+  int sum = 0;
+  var totalFormattedCommision = new NumberFormat.currency(name: "", locale: "en_US");
+  var totalsum ;
+  var komisi = "";
+  String  dropdownValueFirst="One";
+
+  ScrollController controller;
+  final _all = <Wallet>[];
+  final _saved = new Set<Wallet>();
+  GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+  List<Wallet> _healthDataList = [];
+
+  DateTime endDate = DateTime.now();
+  DateTime startDate = DateTime(2020, 01, 01);
+
+  List<Wallet> healthData;
+
+  final items = List<Wallet>();
+
+  int present = 0;
+  int perPage = 2;
+
+  @override
+  void initState() {
+    super.initState();
+    isLoading = true;
+    fetchData();
+    controller = new ScrollController()..addListener(_scrollListener);
+  }
+
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
+
+
+
+  fetchData() async {
+    var _duration = new Duration(seconds: 2);
+    return new Timer(_duration, onResponse);
+  }
+
+
+  Future<void> onResponse() async {
+    getWalletData();
+    setState(() {
+      controller = new ScrollController()..addListener(_scrollListener);
+      isLoading = false;
+      _all.addAll(_healthDataList);
+      if((present + perPage )> _all.length) {
+        items.addAll(
+            _healthDataList.getRange(present, _all.length));
+      } else {
+        items.addAll(
+            _all.getRange(present, present + perPage));
+      }
+      present = present + perPage;
+    });
+
+  }
+
+
+
+
+  void _scrollListener() {
+    if (controller.position.pixels == controller.position.maxScrollExtent) {
+      loadMore();
+    }
+  }
+
+  loadMore() {
+    setState(() {
+      if((present + perPage )> _all.length) {
+        items.addAll(
+            listWalletData.getRange(present, _all.length));
+      } else {
+        items.addAll(
+            _all.getRange(present, present + perPage));
+      }
+      present = present + perPage;
+    });
+
+  }
+
+
+
+  Future<List<Wallet>> getWalletData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isLoading = true;
+    print("LOADING $isLoading");
+
+    var url = AppConstants.GET_WALLET_URL;
+    var body = json.encode({
+      "accesskey" : prefs.getString("accesskey")
+    });
+
+    Map<String, String> headers = {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+    };
+
+    final response = await http.post(url, body: body, headers: headers);
+    final responseJson = WalletModel.fromJson(json.decode(response.body));
+
+    if(response.statusCode == 200){
+
+      var allArray = json.decode(response.body);
+      var dataArray = allArray['data'] as List;
+
+      setState(() {
+        controller = new ScrollController()..addListener(_scrollListener);
+        listWalletData = dataArray.map<Wallet>((j) => Wallet.fromJson(j)).toList();
+        isLoading = false ;
+        isError = false ;
+
+        if(listWalletData.length == 0){
+          sum = 0;
+        } else {
+          sum = listWalletData.map((e) => e.nominal).reduce((value, element) => value + element);
+        }
+
+
+        print("Sum : $sum");
+        totalsum = totalFormattedCommision.format(sum);
+        komisi = prefs.getString("commission");
+        print("SUM $totalsum");
+        print("JUMLAH KOMISI $komisi");
+      });
+
+
+    } else {
+
+      setState(() {
+        isError = true ;
+        isLoading = false ;
+      });
+
+    }
+
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
         scrollDirection: Axis.vertical,
+        controller: controller,
         child: Consumer<WalletReferralProvider>(
           builder: (context, wallet, _){
-            return wallet.listWalletData.length == 0 ? Container()
+            return listWalletData.length == 0 ? Container()
             : Container(
               child: Column(
                 children: [
@@ -49,9 +201,9 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                              wallet.komisi == null
+                              komisi == null
                                   ? "0"
-                                  : "IDR ${wallet.komisi.split(".")[0].replaceAll("-", "")}",
+                                  : "IDR ${komisi.split(".")[0].replaceAll("-", "")}",
                               style: TextStyle(
                                   fontSize: 16,
                                   color: MyColors.dnaGreen2,
@@ -74,29 +226,29 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                                 SizedBox(height: 5),
                                 wallet.tipeValue.contains("Referral")
                                     ? Container(
-                                    child: Text(wallet.totalsum == null ? "0" : "IDR ${wallet.totalsum.split(".")[0].replaceAll("-", "")}",
+                                    child: Text(totalsum == null ? "0" : "IDR ${totalsum.split(".")[0].replaceAll("-", "")}",
                                         style: TextStyle(
                                             fontSize: 16,
                                             color: MyColors.dnaBadge,
                                             fontWeight: FontWeight.bold)))
                                     : wallet.tipeValue.contains("Royalti")
                                     ? Container(
-                                    child: Text(wallet.totalsum == null ? "" : "IDR ${wallet.totalsum.split(".")[0].replaceAll("-", "")}",
+                                    child: Text(totalsum == null ? "" : "IDR ${totalsum.split(".")[0].replaceAll("-", "")}",
                                         style: TextStyle(
                                             fontSize: 16,
                                             color: MyColors.dnaBadge,
                                             fontWeight: FontWeight.bold)))
                                     : wallet.tipeValue.contains("Tim")
                                     ? Container(
-                                    child: Text(wallet.totalsum == null ? "" : "IDR ${wallet.totalsum.split(".")[0].replaceAll("-", "")}",
+                                    child: Text(totalsum == null ? "" : "IDR ${totalsum.split(".")[0].replaceAll("-", "")}",
                                         style: TextStyle(
                                             fontSize: 16,
                                             color: MyColors.dnaBadge,
                                             fontWeight: FontWeight.bold)))
                                     : wallet.tipeValue.contains("Penarikan")
-                                    ? Container(child: Text(wallet.totalsum == null ? "" : "IDR ${wallet.totalsum.split(".")[0].replaceAll("-", "")}", style: TextStyle(fontSize: 16, color: MyColors.dnaBadge, fontWeight: FontWeight.bold)))
+                                    ? Container(child: Text(totalsum == null ? "" : "IDR ${totalsum.split(".")[0].replaceAll("-", "")}", style: TextStyle(fontSize: 16, color: MyColors.dnaBadge, fontWeight: FontWeight.bold)))
                                     : wallet.tipeValue.contains("National")
-                                    ? Container(child: Text(wallet.totalsum == null ? "" : "IDR ${wallet.totalsum.split(".")[0].replaceAll("-", "")}", style: TextStyle(fontSize: 16, color: MyColors.dnaBadge, fontWeight: FontWeight.bold)))
+                                    ? Container(child: Text(totalsum == null ? "" : "IDR ${totalsum.split(".")[0].replaceAll("-", "")}", style: TextStyle(fontSize: 16, color: MyColors.dnaBadge, fontWeight: FontWeight.bold)))
                                     : Container(child: Text("0", style: TextStyle(fontSize: 16, color: MyColors.dnaBadge, fontWeight: FontWeight.bold))),
                                 SizedBox(height: 5),
                                 wallet.tipeValue.contains("Referral")
@@ -125,9 +277,9 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                               children: [
                                 Container(
                                     child: Text(
-                                        wallet.komisi == null
+                                        komisi == null
                                             ? ""
-                                            : "IDR ${wallet.komisi.split(".")[0].replaceAll("-", "")}",
+                                            : "IDR ${komisi.split(".")[0].replaceAll("-", "")}",
                                         style: TextStyle(
                                             fontSize: 16,
                                             color: MyColors.dnaGreen2,
@@ -159,7 +311,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                             SizedBox(height: 5),
                             Container(
                                 child: Text(
-                                    "Total ${wallet.listWalletData.length} Transaksi"))
+                                    "Total ${listWalletData.length} Transaksi"))
                           ],
                         ),
                         InkWell(
@@ -181,12 +333,12 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                       ],
                     ),
                   ),
-                  wallet.isLoading == true
+                  isLoading == true
                       ? Container(
                       height: MediaQuery.of(context).size.height / 1.3,
                       child: Center(
                           child: SpinKitDoubleBounce(color: Colors.grey)))
-                      : wallet.listWalletData.length == 0
+                      : listWalletData.length == 0
                       ? Container(
                       height: MediaQuery.of(context).size.height / 1.6,
                       child: Column(
@@ -233,18 +385,18 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                       : ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: wallet.listWalletData.length == 0
+                    itemCount: listWalletData.length == 0
                         ? 0
-                        : wallet.listWalletData.length,
+                        : listWalletData.length,
                     itemBuilder: (context, index) {
                       var formatTgl = DateFormat('dd MMMM yyyy', "id_ID");
-                      var parsedDate = DateTime.parse(wallet.listWalletData[index].created).toLocal();
+                      var parsedDate = DateTime.parse(listWalletData[index].created).toLocal();
                       String dateCreated = '${formatTgl.format(parsedDate)}';
                       String fnominal = NumberFormat.currency(name: '')
-                          .format(wallet.listWalletData[index].nominal)
+                          .format(listWalletData[index].nominal)
                           .split(".")[0]
                           .replaceAll(",", ".");
-                      return wallet.listWalletData[index].status.contains("Selesai")
+                      return listWalletData[index].status.contains("Selesai")
                           ? Container(
                           color: Color(0xffEDF0F4),
                           padding: EdgeInsets.only(top: 18),
@@ -263,20 +415,20 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                                 width: 156,
                                 height: 35,
                                 decoration: BoxDecoration(
-                                  color: wallet.listWalletData[index].type
+                                  color: listWalletData[index].type
                                       .contains("Tim")
                                       ? Color(0xffB5CCD5)
-                                      : wallet.listWalletData[index].type
+                                      : listWalletData[index].type
                                       .contains("Referral")
                                       ? Color(0xff006971)
-                                      : wallet.listWalletData[index].type
+                                      : listWalletData[index].type
                                       .contains("Royalti")
                                       ? Color(0xff359389)
-                                      : wallet.listWalletData[index].type.contains("Withdraw")
+                                      : listWalletData[index].type.contains("Withdraw")
                                       ? Color(0xffD7516A)
-                                      : wallet.listWalletData[index].type.contains("Star")
+                                      : listWalletData[index].type.contains("Star")
                                       ? Color(0xff006971)
-                                      : wallet.listWalletData[index].type.contains("National")
+                                      : listWalletData[index].type.contains("National")
                                       ? Color(0xffFF7D67)
                                       : Colors.grey,
                                   borderRadius: BorderRadius.only(
@@ -285,7 +437,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                                 ),
                                 child: Center(
                                   child: Text(
-                                      "${wallet.listWalletData[index].type}",
+                                      "${listWalletData[index].type}",
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 14)),
                                 ),
@@ -318,10 +470,10 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text("$dateCreated", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
-                                          Text("${wallet.listWalletData[index].from}", style: TextStyle(fontSize: 10))
+                                          Text("${listWalletData[index].from}", style: TextStyle(fontSize: 10))
                                         ],
                                       ),
-                                      wallet.listWalletData[index].type.contains("Withdraw")
+                                      listWalletData[index].type.contains("Withdraw")
                                           ? Row(
                                         children: [
                                           Icon(Icons.arrow_downward,
@@ -362,17 +514,17 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                                 width: 156,
                                 height: 35,
                                 decoration: BoxDecoration(
-                                  color: wallet.listWalletData[index].type.contains("Tim")
+                                  color: listWalletData[index].type.contains("Tim")
                                       ? Color(0xffB5CCD5)
-                                      : wallet.listWalletData[index].type.contains("Referral")
+                                      : listWalletData[index].type.contains("Referral")
                                       ? Color(0xff29656C)
-                                      : wallet.listWalletData[index].type.contains("Royalti")
+                                      : listWalletData[index].type.contains("Royalti")
                                       ? Color(0xffEF846E)
-                                      : wallet.listWalletData[index].type.contains("Star")
+                                      : listWalletData[index].type.contains("Star")
                                       ? Color(0xff006971)
-                                      : wallet.listWalletData[index].type.contains("Withdraw")
+                                      : listWalletData[index].type.contains("Withdraw")
                                       ? Color(0xffD7516A)
-                                      : wallet.listWalletData[index].type.contains("National")
+                                      : listWalletData[index].type.contains("National")
                                       ? Color(0xffFF7D67)
                                       : Colors.white12,
                                   borderRadius: BorderRadius.only(
@@ -383,9 +535,9 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                                   padding: const EdgeInsets.only(
                                       top: 13.0, left: 10),
                                   child: Text(
-                                      wallet.listWalletData[index].type.contains("Withdraw")
+                                      listWalletData[index].type.contains("Withdraw")
                                           ? "Penarikan"
-                                          : "${wallet.listWalletData[index].type}",
+                                          : "${listWalletData[index].type}",
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 16)),
                                 ),
@@ -422,7 +574,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                                           //Text("${wallet.listWalletData[index].from}", style: TextStyle(fontSize: 12))
                                         ],
                                       ),
-                                      wallet.listWalletData[index].type.contains("Withdraw")
+                                      listWalletData[index].type.contains("Withdraw")
                                           ? Row(
                                         children: [
                                           Icon(Icons.arrow_downward,

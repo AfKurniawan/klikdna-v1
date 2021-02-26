@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:ui';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
@@ -23,9 +24,16 @@ class WalletReferralProvider with ChangeNotifier {
   var komisi = "";
   String  dropdownValueFirst="One";
 
-  Future<WalletModel> getWalletData(BuildContext context) async {
+  ScrollController scrollController;
+
+  final _all = <Wallet>[];
+  final _saved = new Set<Wallet>();
+  GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  Future<List<Wallet>> getWalletData(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     isLoading = true;
+    scrollController = new ScrollController()..addListener(_scrollListener);
     notifyListeners();
     print("LOADING $isLoading");
 
@@ -78,8 +86,50 @@ class WalletReferralProvider with ChangeNotifier {
 
     }
 
-    return responseJson;
   }
+
+
+  void _scrollListener() {
+    if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+      loadMore();
+    }
+  }
+
+  loadMore() {
+      if((present + perPage )> _all.length) {
+        items.addAll(
+            listWalletData.getRange(present, _all.length));
+      } else {
+        items.addAll(
+            _all.getRange(present, present + perPage));
+      }
+      present = present + perPage;
+      notifyListeners();
+  }
+
+
+  int present = 0;
+  int perPage = 5;
+
+  List<Wallet> healthData;
+  final items = List<Wallet>();
+
+  Future<void> onResponse() async {
+      scrollController = new ScrollController()..addListener(_scrollListener);
+      isLoading = false;
+      _all.addAll(healthData);
+      if((present + perPage )> _all.length) {
+        items.addAll(
+            listWalletData.getRange(present, _all.length));
+      } else {
+        items.addAll(
+            _all.getRange(present, present + perPage));
+      }
+      present = present + perPage;
+
+  }
+
+
 
 
 

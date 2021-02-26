@@ -22,7 +22,7 @@ class _WalletsAndReferralPageState extends State<WalletsAndReferralPage> with Si
 
   @override
   void initState() {
-    future = Provider.of<WalletReferralProvider>(context, listen: false).getWalletData(context) ;
+   // future = Provider.of<WalletReferralProvider>(context, listen: false).getWalletData(context) ;
     Provider.of<WalletReferralProvider>(context, listen: false).getReferralData(context) ;
     controller = new TabController(vsync: this, length: 2);
     super.initState();
@@ -76,7 +76,7 @@ class _WalletsAndReferralPageState extends State<WalletsAndReferralPage> with Si
       body: TabBarView(
         controller: controller,
         children: [
-          NewWalletTabViewFix(future: future),
+          NewWalletTabViewFix(),
           NewReferralTabView(future: future)
         ],
       ),

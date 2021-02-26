@@ -21,6 +21,8 @@ class WalletTabViewWidget extends StatefulWidget {
 
 class _WalletTabViewWidgetState extends State<WalletTabViewWidget> {
 
+
+
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context);
