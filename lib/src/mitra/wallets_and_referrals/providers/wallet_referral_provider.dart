@@ -22,18 +22,15 @@ class WalletReferralProvider with ChangeNotifier {
   var totalFormattedCommision = new NumberFormat.currency(name: "", locale: "en_US");
   var totalsum ;
   var komisi = "";
-  String  dropdownValueFirst="One";
 
-  ScrollController scrollController;
-
-  final _all = <Wallet>[];
-  final _saved = new Set<Wallet>();
   GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
 
+
+  List<Wallet> walletMapMapArray = [];
+  List<Wallet> walletArray ;
   Future<List<Wallet>> getWalletData(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     isLoading = true;
-    scrollController = new ScrollController()..addListener(_scrollListener);
     notifyListeners();
     print("LOADING $isLoading");
 
@@ -52,14 +49,14 @@ class WalletReferralProvider with ChangeNotifier {
 
     if(response.statusCode == 200){
 
-      //print("RESPONSE BODY GET WALLET: ${response.body}");
-
+      print("RESPONSE BODY GET WALLET: ${response.body}");
       var allArray = json.decode(response.body);
       var dataArray = allArray['data'] as List;
-      listWalletData = dataArray.map<Wallet>((j) => Wallet.fromJson(j)).toList();
+      walletMapMapArray = dataArray.map<Wallet>((j) => Wallet.fromJson(j)).toList();
+      listWalletData = walletMapMapArray.where((i) => i.status == "Selesai").toList();
+
       isLoading = false ;
       isError = false ;
-
 
       if(listWalletData.length == 0){
         sum = 0;
@@ -89,52 +86,6 @@ class WalletReferralProvider with ChangeNotifier {
   }
 
 
-  void _scrollListener() {
-    if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
-      loadMore();
-    }
-  }
-
-  loadMore() {
-      if((present + perPage )> _all.length) {
-        items.addAll(
-            listWalletData.getRange(present, _all.length));
-      } else {
-        items.addAll(
-            _all.getRange(present, present + perPage));
-      }
-      present = present + perPage;
-      notifyListeners();
-  }
-
-
-  int present = 0;
-  int perPage = 5;
-
-  List<Wallet> healthData;
-  final items = List<Wallet>();
-
-  Future<void> onResponse() async {
-      scrollController = new ScrollController()..addListener(_scrollListener);
-      isLoading = false;
-      _all.addAll(healthData);
-      if((present + perPage )> _all.length) {
-        items.addAll(
-            listWalletData.getRange(present, _all.length));
-      } else {
-        items.addAll(
-            _all.getRange(present, present + perPage));
-      }
-      present = present + perPage;
-
-  }
-
-
-
-
-
-  List<Wallet> walletMapMapArray = [];
-  List<Wallet> walletArray ;
   var count ;
   var filterSum ;
 
@@ -161,49 +112,17 @@ class WalletReferralProvider with ChangeNotifier {
     final response = await http.post(url, body: body, headers: headers);
     final responseJson = WalletModel.fromJson(json.decode(response.body));
 
-    // if(response.statusCode == 200){
-    //
-    //
-    //   print("RESPONSE BODY GET WALLET: ${response.body}");
-    //
-    //   var allArray = json.decode(response.body);
-    //   var dataArray = allArray['data'] as List;
-    //
-    //   listWalletData = dataArray.map<Wallet>((j) => Wallet.fromJson(j)).toList();
-    //   isLoading = false ;
-    //   isError = false ;
-    //
-    //   var myStatus = listWalletData.map((e) => e.status);
-    //
-    //
-    //
-    //   myStatus.forEach((w){
-    //     sum = listWalletData.map((e) => e.nominal).reduce((value, element) => value + element);
-    //     totalsum = totalFormattedCommision.format(sum);
-    //     // if(w.contains("Selesai"))
-    //     //   sum = listWalletData.map((e) => e.nominal).reduce((value, element) => value + element);
-    //     //   totalsum = totalFormattedCommision.format(sum);
-    //   });
-    //
-    //   notifyListeners();
-    //
-    //
-    // } else {
-    //   isError = true ;
-    //   isLoading = false ;
-    //   notifyListeners();
-    //
-    // }
-    //
-    //
-    // return responseJson;
     if(response.statusCode == 200){
 
       //print("RESPONSE BODY GET WALLET: ${response.body}");
 
       var allArray = json.decode(response.body);
+      print("RESPOINSE WALLET ---> $allArray");
       var dataArray = allArray['data'] as List;
-      listWalletData = dataArray.map<Wallet>((j) => Wallet.fromJson(j)).toList();
+      walletMapMapArray = dataArray.map<Wallet>((j) => Wallet.fromJson(j)).toList();
+      listWalletData = walletMapMapArray.where((i) => i.status == "Selesai").toList();
+
+
       isLoading = false ;
       isError = false ;
 
@@ -451,7 +370,7 @@ class WalletReferralProvider with ChangeNotifier {
                                   hint: Text('Semua Data'),
                                   value: tipeValue,
                                   underline: Container(),
-                                  items: deviceTypes.map((String value) {
+                                  items: walletType.map((String value) {
                                     return new DropdownMenuItem<String>(
                                       value: value,
                                       child: new Text(value,
@@ -461,6 +380,7 @@ class WalletReferralProvider with ChangeNotifier {
                                   }).toList(),
                                   onChanged: (String value) {
                                     setState(() {
+                                      clearFilter();
                                       _handleRadioValueChange(context, value);
                                     });
                                   },
@@ -480,8 +400,8 @@ class WalletReferralProvider with ChangeNotifier {
                           borderRadius: BorderRadius.circular(10),
                           child: InkWell(
                             onTap: (){
-                              //filterWalletData(context);
-                              clearDateFilter();
+                              filterWalletData(context);
+                              //clearDateFilter();
                               Navigator.of(context).pop();
                             },
                             splashColor: Colors.white,
@@ -523,13 +443,14 @@ class WalletReferralProvider with ChangeNotifier {
 
 
 
-  List<String> deviceTypes = ["Semua Data", "Komisi Referral", "Komisi Tim", "Komisi Royalti", "National Sharing", "Penarikan"];
+  List<String> walletType = ["Semua Data", "Komisi Referral", "Komisi Tim", "Komisi Royalti", "National Sharing", "Penarikan"];
 
   void _handleRadioValueChange(BuildContext context, String value) {
       tipeValue = value;
       switch (tipeValue) {
         case "Semua Data":
           result = "";
+          getWalletData(context);
           print("RESULT $result");
           break;
         case "Komisi Referral":
