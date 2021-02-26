@@ -8,26 +8,27 @@ import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:provider/provider.dart';
 
 class NewWalletTabViewFix extends StatefulWidget {
-  const NewWalletTabViewFix({
+
+  NewWalletTabViewFix({
     Key key,
     @required this.future,
   }) : super(key: key);
 
-  final Future future;
+   Future future;
   @override
   _NewWalletTabViewFixState createState() => _NewWalletTabViewFixState();
 }
 
 class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
   int present = 0;
-  int perPage = 5;
-
+  int perPage = 6;
   var items = List<Wallet>();
 
   @override
   void initState() {
     super.initState();
     setState(() {
+      widget.future = Provider.of<WalletReferralProvider>(context, listen: false).getWalletData(context);
       items.addAll(Provider.of<WalletReferralProvider>(context, listen: false)
           .listWalletData
           .getRange(present, present + perPage));

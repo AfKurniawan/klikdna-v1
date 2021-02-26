@@ -29,6 +29,7 @@ class WalletReferralProvider with ChangeNotifier {
   List<Wallet> walletMapMapArray = [];
   List<Wallet> walletArray ;
   Future<List<Wallet>> getWalletData(BuildContext context) async {
+    tipeValue = "Semua Data" ;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     isLoading = true;
     notifyListeners();
