@@ -52,9 +52,9 @@ class _BannerSliderState extends State<BannerSlider> {
               options: CarouselOptions(
                   autoPlay: true,
                   enlargeCenterPage: true,
-                  height: MediaQuery.of(context).size.width > 600 ? 380
-                      :  190,
-                  viewportFraction: 1,
+                  height: MediaQuery.of(context).size.width > 600 ? 360
+                      :  170,
+                  viewportFraction: 2,
                   onPageChanged: (index, reason) {
                     setState(() {
                       _current = index;

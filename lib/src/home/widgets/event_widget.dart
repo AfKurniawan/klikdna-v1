@@ -137,19 +137,17 @@ class _EventWidgetState extends State<EventWidget> {
                                               fontSize: 12),
                                         ),
                                         SizedBox(height: 9),
-                                        Container(
-                                          child: Text(
-                                            "$text",
-                                            maxLines: 3,
-                                            overflow:
-                                            TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                                fontWeight:
-                                                FontWeight.normal,
-                                                fontSize: 10),
-                                          ),
+                                        Text(
+                                          "$text",
+                                          maxLines: 3,
+                                          overflow:
+                                          TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              fontWeight:
+                                              FontWeight.normal,
+                                              fontSize: 10),
                                         ),
-                                        SizedBox(height: 14),
+                                        SizedBox(height: 10),
                                       ],
                                     ),
                                   )),
