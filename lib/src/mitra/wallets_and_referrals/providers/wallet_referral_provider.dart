@@ -28,6 +28,8 @@ class WalletReferralProvider with ChangeNotifier {
 
   List<Wallet> walletMapMapArray = [];
   List<Wallet> walletArray ;
+
+
   Future<List<Wallet>> getWalletData(BuildContext context) async {
     tipeValue = "Semua Data" ;
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -50,7 +52,7 @@ class WalletReferralProvider with ChangeNotifier {
 
     if(response.statusCode == 200){
 
-      print("RESPONSE BODY GET WALLET: ${response.body}");
+      // print("RESPONSE BODY GET WALLET: ${response.body}");
       var allArray = json.decode(response.body);
       var dataArray = allArray['data'] as List;
       walletMapMapArray = dataArray.map<Wallet>((j) => Wallet.fromJson(j)).toList();
@@ -72,6 +74,7 @@ class WalletReferralProvider with ChangeNotifier {
 
       komisi = prefs.getString("commission");
 
+
       notifyListeners();
       print("SUM $totalsum");
       print("JUMLAH KOMISI $komisi");
@@ -87,15 +90,22 @@ class WalletReferralProvider with ChangeNotifier {
   }
 
 
+
+
+
+
   var count ;
   var filterSum ;
 
 
   Future<WalletModel> filterWalletData(BuildContext context) async {
+    listWalletData.clear();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     isLoading = true;
     notifyListeners();
-    print("ISLOADING $isLoading");
+    print("TYPE --> $tipeValue");
+
+    print("LIST WALLET DATA --> ${listWalletData.length}");
 
     var url = AppConstants.GET_WALLET_URL;
     var body = json.encode({
@@ -115,10 +125,7 @@ class WalletReferralProvider with ChangeNotifier {
 
     if(response.statusCode == 200){
 
-      //print("RESPONSE BODY GET WALLET: ${response.body}");
-
       var allArray = json.decode(response.body);
-      print("RESPOINSE WALLET ---> $allArray");
       var dataArray = allArray['data'] as List;
       walletMapMapArray = dataArray.map<Wallet>((j) => Wallet.fromJson(j)).toList();
       listWalletData = walletMapMapArray.where((i) => i.status == "Selesai").toList();
@@ -127,7 +134,7 @@ class WalletReferralProvider with ChangeNotifier {
       isLoading = false ;
       isError = false ;
 
-      print("LIST WALLET DATA LWNGHT >>>>>>>>>>> ${listWalletData.length}");
+      print("LIST WALLET DATA AFTER FILTERING >>>>>>>>>>> ${listWalletData.length}");
 
 
       if(listWalletData.length == 0){
@@ -162,7 +169,7 @@ class WalletReferralProvider with ChangeNotifier {
   clearFilter(){
     datefromController.clear();
     datetoController.clear();
-    tipeValue = "Semua Data" ;
+    tipeValue = "Semua Data";
     notifyListeners();
   }
 
@@ -171,6 +178,12 @@ class WalletReferralProvider with ChangeNotifier {
     datetoController.clear();
     notifyListeners();
   }
+
+  //SCROLLING OPTIMIZE
+
+
+
+
 
 
 
@@ -381,7 +394,6 @@ class WalletReferralProvider with ChangeNotifier {
                                   }).toList(),
                                   onChanged: (String value) {
                                     setState(() {
-                                      clearFilter();
                                       _handleRadioValueChange(context, value);
                                     });
                                   },
@@ -442,50 +454,48 @@ class WalletReferralProvider with ChangeNotifier {
   String result;
   List<Wallet> walletlength = [];
 
-
-
   List<String> walletType = ["Semua Data", "Komisi Referral", "Komisi Tim", "Komisi Royalti", "National Sharing", "Penarikan"];
 
   void _handleRadioValueChange(BuildContext context, String value) {
-      tipeValue = value;
-      switch (tipeValue) {
-        case "Semua Data":
-          result = "";
-          getWalletData(context);
-          print("RESULT $result");
-          break;
-        case "Komisi Referral":
-          result = "1";
-          totalsum = "..." ;
-          filterWalletData(context);
-          print("RESULT $result");
-          break;
-        case "Komisi Tim":
-          result = "2";
-          totalsum = "..." ;
-          filterWalletData(context);
-          print("RESULT $result");
-          break;
-        case "Komisi Royalti":
-          result = "3";
-          totalsum = "..." ;
-          filterWalletData(context);
-          print("RESULT $result");
-          break;
-        case "National Sharing":
-          result = "4";
-          totalsum = "..." ;
-          filterWalletData(context);
-          print("RESULT $result");
-          break;
-        case "Penarikan":
-          result = "5";
-          totalsum = "..." ;
-          filterWalletData(context);
-          print("RESULT $result");
-          break;
-      }
-      notifyListeners();
+    tipeValue = value;
+    switch (tipeValue) {
+      case "Semua Data":
+        result = "";
+        getWalletData(context);
+        print("RESULT $result");
+        break;
+      case "Komisi Referral":
+        result = "1";
+        totalsum = "..." ;
+        filterWalletData(context);
+        print("RESULT $result");
+        break;
+      case "Komisi Tim":
+        result = "2";
+        totalsum = "..." ;
+        filterWalletData(context);
+        print("RESULT $result");
+        break;
+      case "Komisi Royalti":
+        result = "3";
+        totalsum = "..." ;
+        filterWalletData(context);
+        print("RESULT $result");
+        break;
+      case "National Sharing":
+        result = "4";
+        totalsum = "..." ;
+        filterWalletData(context);
+        print("RESULT $result");
+        break;
+      case "Penarikan":
+        result = "5";
+        totalsum = "..." ;
+        filterWalletData(context);
+        print("RESULT $result");
+        break;
+    }
+    notifyListeners();
   }
 
   List<Referral> listReferralData = [];
@@ -512,7 +522,6 @@ class WalletReferralProvider with ChangeNotifier {
 
     if(response.statusCode == 200){
 
-      print("RESPONSE BODY GET REFERRAL: ${response.body}");
       var allArray = json.decode(response.body);
       var dataArray = allArray['data'] as List;
       listReferralData = dataArray.map<Referral>((j) => Referral.fromJson(j)).toList();

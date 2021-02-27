@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_klikdna/src/login/providers/login_provider.dart';
+import 'package:new_klikdna/src/mitra/wallets_and_referrals/providers/wallet_referral_provider.dart';
 import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:provider/provider.dart';
@@ -88,7 +89,9 @@ class HeaderWidget extends StatelessWidget {
                 ),
                 child: InkWell(
                   onTap: (){
+                    Provider.of<WalletReferralProvider>(context, listen: false).clearFilter();
                     Navigator.of(context).pushNamed("wallet_referral_page");
+
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),

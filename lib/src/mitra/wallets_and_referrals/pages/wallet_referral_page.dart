@@ -22,8 +22,8 @@ class _WalletsAndReferralPageState extends State<WalletsAndReferralPage> with Si
 
   @override
   void initState() {
-    Provider.of<WalletReferralProvider>(context, listen: false).getWalletData(context);
     Provider.of<WalletReferralProvider>(context, listen: false).getReferralData(context) ;
+    future = Provider.of<WalletReferralProvider>(context, listen: false).getWalletData(context) ;
     controller = new TabController(vsync: this, length: 2);
     super.initState();
   }
@@ -53,10 +53,8 @@ class _WalletsAndReferralPageState extends State<WalletsAndReferralPage> with Si
               size: 20,
             ),
             onPressed: () {
-             // Navigator.of(context).pop();
-              Navigator.of(context).pushReplacementNamed("main_page", arguments: 2);
-              Provider.of<WalletReferralProvider>(context, listen: false).getWalletData(context);
               Provider.of<WalletReferralProvider>(context, listen: false).clearFilter();
+              Navigator.of(context).pushNamedAndRemoveUntil("main_page", (route) => false, arguments: 2);
 
             }),
         bottom: TabBar(
