@@ -30,7 +30,7 @@ class _NewReferralTabViewState extends State<NewReferralTabView> {
       builder: (context, referral, _) {
         return SingleChildScrollView(
             child: Container(
-          color: Colors.white,
+          //color: Colors.white,
           child: Column(
             children: [
               Padding(
@@ -83,51 +83,7 @@ class _NewReferralTabViewState extends State<NewReferralTabView> {
                               ? CupertinoActivityIndicator(radius: 12)
                               : CircularProgressIndicator(strokeWidth: 2)))
                   : referral.listWalletData.length == 0
-                      ? Container(
-                          height: MediaQuery.of(context).size.height / 1.6,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height / 30),
-                              Container(
-                                child: Image.asset(
-                                    "assets/images/no_patient_card.png",
-                                    width: 200),
-                              ),
-                              Container(
-                                width: mediaQuery.size.width > 600
-                                    ? mediaQuery.size.width / 2
-                                    : mediaQuery.size.width / 1,
-                                padding: EdgeInsets.only(
-                                  bottom: 16,
-                                  left: 16,
-                                  right: 16,
-                                ),
-                                decoration: new BoxDecoration(
-                                  color: Colors.transparent,
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize
-                                      .min, // To make the card compact
-                                  children: <Widget>[
-                                    Text(
-                                      "Tidak ada data referral",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontSize: 16.0,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ))
+                      ? noDataWidget(mediaQuery: mediaQuery)
                       : Consumer<WalletReferralProvider>(
                           builder: (child, wallet, _) {
                             return FutureBuilder(
@@ -245,5 +201,59 @@ class _NewReferralTabViewState extends State<NewReferralTabView> {
         ));
       },
     );
+  }
+}
+
+class noDataWidget extends StatelessWidget {
+  const noDataWidget({
+    Key key,
+    @required this.mediaQuery,
+  }) : super(key: key);
+
+  final MediaQueryData mediaQuery;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        height: MediaQuery.of(context).size.height / 1.6,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(height: MediaQuery.of(context).size.height / 30),
+            Container(
+              child:
+              Image.asset("assets/images/no_patient_card.png", width: 200),
+            ),
+            Container(
+              width: mediaQuery.size.width > 600
+                  ? mediaQuery.size.width / 2
+                  : mediaQuery.size.width / 1,
+              padding: EdgeInsets.only(
+                bottom: 16,
+                left: 16,
+                right: 16,
+              ),
+              decoration: new BoxDecoration(
+                color: Colors.transparent,
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min, // To make the card compact
+                children: <Widget>[
+                  Text(
+                    "Tidak ada data referral",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ));
   }
 }

@@ -134,7 +134,7 @@ class _EventWidgetState extends State<EventWidget> {
                                           style: TextStyle(
                                               fontWeight:
                                               FontWeight.bold,
-                                              fontSize: 12),
+                                              fontSize: 13),
                                         ),
                                         SizedBox(height: 9),
                                         Text(
@@ -145,9 +145,9 @@ class _EventWidgetState extends State<EventWidget> {
                                           style: TextStyle(
                                               fontWeight:
                                               FontWeight.normal,
-                                              fontSize: 10),
+                                              fontSize: 12),
                                         ),
-                                        SizedBox(height: 10),
+                                        //SizedBox(height: 10),
                                       ],
                                     ),
                                   )),

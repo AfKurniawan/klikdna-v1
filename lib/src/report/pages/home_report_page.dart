@@ -30,24 +30,25 @@ class _HomeReportPageState extends State<HomeReportPage> {
   @override
   void initState() {
     getAccount();
-    getPersonId();
+
     super.initState();
   }
 
-  getPersonId() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    //Provider.of<ReportProvider>(context, listen: false).getSample(context, prefs.getString("personId"));
-    _future = Provider.of<MemberProvider>(context, listen: false).getMember(context, prefs.getString("personId"));
-    _getSample = Provider.of<ReportProvider>(context, listen: false).getSample(context, prefs.getString("personId"));
-  }
+  // getPersonId() async {
+  //
+  //   Provider.of<ReportProvider>(context, listen: false).getSample(context, prefs.getString("personId"));
+  //
+  //
+  // }
 
-  getAccount() {
+  getAccount() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     Provider.of<AccountProvider>(context, listen: false).getUserAccount(context);
+    _future = Provider.of<MemberProvider>(context, listen: false).getMember(context, prefs.getString("personId"));
   }
 
   @override
   Widget build(BuildContext context) {
-    getAccount();
     var width = MediaQuery.of(context).size.width;
     final prov = Provider.of<MemberProvider>(context);
     return Scaffold(

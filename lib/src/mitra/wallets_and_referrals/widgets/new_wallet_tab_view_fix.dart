@@ -80,14 +80,18 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
     final responseJson = WalletModel.fromJson(json.decode(response.body));
 
     if(response.statusCode == 200){
+      var allArray = json.decode(response.body);
+      var dataArray = allArray['data'] as List;
+
      setState(() {
-       var allArray = json.decode(response.body);
-       var dataArray = allArray['data'] as List;
        walletMapMapArray = dataArray.map<Wallet>((j) => Wallet.fromJson(j)).toList();
        listWalletData = walletMapMapArray.where((i) => i.status == "Selesai").toList();
        isLoading = false ;
-       items.addAll(listWalletData.getRange(present, present + perPage));
-       present = present + perPage;
+       if (listWalletData.length != 0){
+         items.addAll(listWalletData.getRange(present, present + perPage));
+         present = present + perPage;
+       }
+
      });
 
       if(items.length == 0){
@@ -174,9 +178,6 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
         print("SUM FILTER $totalsum");
         print("JUMLAH KOMISI FILTER $komisi");
       });
-
-
-
 
     } else {
 
@@ -526,7 +527,6 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
 
   @override
   Widget build(BuildContext context) {
-    var mediaQuery = MediaQuery.of(context);
     return Consumer<WalletReferralProvider>(
       builder: (context, wallet, _) {
         return NotificationListener<ScrollNotification>(
@@ -552,53 +552,48 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                             : filteredDataSaldoCard(context, wallet)),
                     Padding(
                       padding: const EdgeInsets.only(left: 18.0, right: 18),
-                      child: isLoading == true ? Container()
-                          : Row(
+                      child: Visibility(
+                            visible: listWalletData.length == 0 || items.length == 0 ? false : true,
+                            child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                  child: Text("Transaksi",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold))),
-                              SizedBox(height: 5),
-                              Container(
-                                  child: Text(
-                                      "Total ${listWalletData.length == 0 ? 0 : listWalletData.length} Transaksi"))
-                            ],
-                          ),
-                          InkWell(
-                            onTap: () {
-                              showBottomSheetFilter(context);
-                            },
-                            splashColor: Colors.blueGrey,
-                            child: Container(
-                              color: Colors.transparent,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Image.asset(
-                                  "assets/icons/sorting_wallet_referral.png",
-                                  height: 20,
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                    child: Text("Transaksi",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold))),
+                                SizedBox(height: 5),
+                                Container(
+                                    child: Text(
+                                        "Total ${listWalletData.length == 0 ? 0 : listWalletData.length} Transaksi"))
+                              ],
+                            ),
+                            InkWell(
+                              onTap: () {
+                                showBottomSheetFilter(context);
+                              },
+                              splashColor: Colors.blueGrey,
+                              child: Container(
+                                color: Colors.transparent,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Image.asset(
+                                    "assets/icons/sorting_wallet_referral.png",
+                                    height: 20,
+                                  ),
                                 ),
                               ),
-                            ),
-                          )
+                            )
                         ],
                       ),
+                          ),
                     ),
-                    isLoading == true
-                        ? Container(
-                        height: MediaQuery.of(context).size.height / 1.8,
-                        child: Center(
-                            child: SpinKitDoubleBounce(color: Colors.grey)))
-                        : listWalletData.length == 0
-                        ? noDataWidget(mediaQuery: mediaQuery)
-                        : Consumer<WalletReferralProvider>(
+                        Consumer<WalletReferralProvider>(
                       builder: (child, wallet, _) {
                         return buildFutureBuilder(wallet);
                       },
@@ -765,38 +760,49 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
     print("ITEM LENGHT --> ${items.length}");
     print("PRESENT LENGHT --> $present");
     print("PER PAGE LENGHT --> $perPage");
+    var mediaQuery = MediaQuery.of(context);
     return FutureBuilder(
       future: widget.future,
       builder: (context, snapshot){
-        return ListView.builder(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          itemCount: listWalletData.length < perPage ? listWalletData.length
-              : (present <= listWalletData.length) ? items.length + 1 :listWalletData.length,
-          itemBuilder: (context, index) {
-            var formatTgl = DateFormat('dd MMMM yyyy', "id_ID");
-            var parsedDate =
-            DateTime.parse(listWalletData[index].created).toLocal();
-            String dateCreated = '${formatTgl.format(parsedDate)}';
-            String fnominal = NumberFormat.currency(name: '')
-                .format(listWalletData[index].nominal)
-                .split(".")[0]
-                .replaceAll(",", ".");
-            return (index == items.length ) ?
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
-                    child: SpinKitDoubleBounce(size: 30, color: MyColors.dnaGreen,),
-                  )
-                : Container(
-                color: Color(0xffEDF0F4),
-                padding: EdgeInsets.only(top: 18),
-                child: tipeValue.contains("Semua")
-                    ? allWalletData(
-                    wallet, index, context, dateCreated, fnominal)
-                    : filteredWalledData(
-                    wallet, index, context, dateCreated, fnominal));
-          },
-        );
+        if(snapshot.connectionState == ConnectionState.waiting){
+          return Container(
+              height: MediaQuery.of(context).size.height / 1.8,
+              child: Center(
+                  child: SpinKitDoubleBounce(color: Colors.grey)));
+        } else if(snapshot.hasData || listWalletData.length > 0) {
+          return ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: listWalletData.length < perPage ? listWalletData.length
+                : (present <= listWalletData.length) ? items.length + 1 :listWalletData.length,
+            itemBuilder: (context, index) {
+              var formatTgl = DateFormat('dd MMMM yyyy', "id_ID");
+              var parsedDate =
+              DateTime.parse(listWalletData[index].created).toLocal();
+              String dateCreated = '${formatTgl.format(parsedDate)}';
+              String fnominal = NumberFormat.currency(name: '')
+                  .format(listWalletData[index].nominal)
+                  .split(".")[0]
+                  .replaceAll(",", ".");
+              return (index == items.length ) ?
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: SpinKitDoubleBounce(size: 30, color: MyColors.dnaGreen,),
+              )
+                  : Container(
+                  color: Color(0xffEDF0F4),
+                  padding: EdgeInsets.only(top: 18),
+                  child: tipeValue.contains("Semua")
+                      ? allWalletData(
+                      wallet, index, context, dateCreated, fnominal)
+                      : filteredWalledData(
+                      wallet, index, context, dateCreated, fnominal));
+            },
+          );
+        } else {
+          return noDataWidget(mediaQuery: mediaQuery);
+        }
+
       },
     );
   }

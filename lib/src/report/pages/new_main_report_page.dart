@@ -11,6 +11,8 @@ import 'package:new_klikdna/widgets/dialogs/row_button_pop_dialog_widget.dart';
 import 'package:provider/provider.dart';
 import 'dart:io' show Platform;
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class NewMainReportPage extends StatefulWidget {
   static const String id = "/report_page";
@@ -20,6 +22,19 @@ class NewMainReportPage extends StatefulWidget {
 }
 
 class _NewMainReportPageState extends State<NewMainReportPage> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getSample();
+
+  }
+
+  getSample() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Provider.of<ReportProvider>(context, listen: false).getSample(context, prefs.getString("personId"));
+  }
 
 
   @override

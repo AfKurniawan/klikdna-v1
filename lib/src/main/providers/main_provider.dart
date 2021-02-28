@@ -63,7 +63,6 @@ class MainProvider with ChangeNotifier {
           Provider.of<TokenProvider>(context, listen: false).getApiToken();
           Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken();
           Provider.of<AccountProvider>(context, listen: false).getUserAccount(context);
-          Provider.of<ReportProvider>(context, listen: false).getSample(context, personId);
           break;
 
         case 4 :

@@ -56,8 +56,8 @@ class ReportProvider extends ChangeNotifier {
         var detailArray = dataArray[0]['detail'] as List;
         listDetail = detailArray.map<Detail>((j) => Detail.fromJson(j)).toList();
 
-        var detail2Array = allArray['data'][i]['detail'] as List;
-        listDetail2 = detail2Array.map<Detail>((j) => Detail.fromJson(j)).toList();
+        // var detail2Array = allArray['data'][i]['detail'] as List;
+        // listDetail2 = detail2Array.map<Detail>((j) => Detail.fromJson(j)).toList();
       }
 
 

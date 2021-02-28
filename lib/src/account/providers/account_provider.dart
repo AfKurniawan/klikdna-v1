@@ -79,7 +79,7 @@ class AccountProvider with ChangeNotifier {
       prefs.setString("personId", accountResponse.data.userId);
       print("PERSON ACOUNT___: ${accountResponse.data.userId}");
       nameController.text = accountResponse.data.name;
-      Provider.of<ReportProvider>(context, listen: false).getSample(context, accountResponse.data.userId);
+      //Provider.of<ReportProvider>(context, listen: false).getSample(context, accountResponse.data.userId);
 //      notifyListeners();
 
     } else {
