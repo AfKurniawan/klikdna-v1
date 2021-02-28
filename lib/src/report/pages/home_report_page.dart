@@ -30,20 +30,12 @@ class _HomeReportPageState extends State<HomeReportPage> {
   @override
   void initState() {
     getAccount();
-
     super.initState();
   }
 
-  // getPersonId() async {
-  //
-  //   Provider.of<ReportProvider>(context, listen: false).getSample(context, prefs.getString("personId"));
-  //
-  //
-  // }
-
   getAccount() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    Provider.of<AccountProvider>(context, listen: false).getUserAccount(context);
+    _future = Provider.of<AccountProvider>(context, listen: false).getUserAccount(context);
     _future = Provider.of<MemberProvider>(context, listen: false).getMember(context, prefs.getString("personId"));
   }
 
@@ -222,50 +214,47 @@ class _HomeReportPageState extends State<HomeReportPage> {
   }
 
   Widget buildReportList(double width, ReportProvider sample) {
+    var mediaQuery = MediaQuery.of(context);
     return FutureBuilder(
         future: _getSample,
-        builder: (context, snap) {
-          if (snap.connectionState == ConnectionState.done) {
-            if (sample.listDetail2.length == 0) {
-              return SizedBox(
-                  height: MediaQuery.of(context).size.height / 3,
-                  child: Center(child: Text("Belum ada report")));
-            } else {
-              return  Column(
-                children: [
-                  ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      itemCount: sample.listDetail.length,
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return KitServiceItemWidget(
-                            model: sample.listDetail
-                                .elementAt(index));
-                      }),
-                  SizedBox(height: 20),
-                  ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      itemCount: sample.listDetail2.length,
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return KitService2ItemWidget(
-                            model: sample.listDetail2.elementAt(index));
-                      })
+        builder: (context, snapshot) {
+          if(snapshot.connectionState == ConnectionState.waiting){
+            return Container(
+                height: MediaQuery.of(context).size.height / 1.8,
+                child: Center(
+                    child: SpinKitDoubleBounce(color: Colors.grey)));
+          } else if (sample.listDetail.length > 0 || sample.listDetail2.length > 0) {
+            return  Column(
+              children: [
+                ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    itemCount: sample.listDetail.length,
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return KitServiceItemWidget(
+                          model: sample.listDetail
+                              .elementAt(index));
+                    }),
+                SizedBox(height: 20),
+                ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    itemCount: sample.listDetail2.length,
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return KitService2ItemWidget(
+                          model: sample.listDetail2.elementAt(index));
+                    })
 
-                ],
-              );
-            }
+              ],
+            );
           } else {
-            return  SizedBox(
-              height: MediaQuery.of(context).size.height / 3,
-                child: Center(child: SpinKitDoubleBounce(color: Colors.grey, size: 30)));
+            return noDataWidget(mediaQuery: mediaQuery);
           }
+
         });
   }
-
-
 
   Widget buildListMember(double width, MemberProvider prov) {
     return FutureBuilder(
@@ -295,5 +284,59 @@ class _HomeReportPageState extends State<HomeReportPage> {
             return SizedBox(height: 125);
           }
         });
+  }
+}
+
+class noDataWidget extends StatelessWidget {
+  const noDataWidget({
+    Key key,
+    @required this.mediaQuery,
+  }) : super(key: key);
+
+  final MediaQueryData mediaQuery;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        height: MediaQuery.of(context).size.height / 1.6,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(height: MediaQuery.of(context).size.height / 30),
+            Container(
+              child:
+              Image.asset("assets/images/no_patient_card.png", width: 200),
+            ),
+            Container(
+              width: mediaQuery.size.width > 600
+                  ? mediaQuery.size.width / 2
+                  : mediaQuery.size.width / 1,
+              padding: EdgeInsets.only(
+                bottom: 16,
+                left: 16,
+                right: 16,
+              ),
+              decoration: new BoxDecoration(
+                color: Colors.transparent,
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min, // To make the card compact
+                children: <Widget>[
+                  Text(
+                    "Tidak ada data laporan",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ));
   }
 }

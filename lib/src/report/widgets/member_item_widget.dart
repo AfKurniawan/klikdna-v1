@@ -18,7 +18,7 @@ class MemberItemWidget extends StatelessWidget {
       splashColor: Colors.blue,
       onTap: () {
         print("Widget: ${member.personId}");
-        prov.getSample(context, member.personId);
+        //prov.getSample(context, member.personId);
         mem.getName(context, member.name);
       },
       child: Container(

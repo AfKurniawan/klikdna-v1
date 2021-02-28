@@ -20,14 +20,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class ReportProvider extends ChangeNotifier {
-  List<ReportData> listSample = [];
+  List<ReportData> reportMapArray = [];
   List<Detail> listDetail = [];
   List<Detail> listDetail2 = [];
   bool isLoading;
   bool notfound = false;
 
 
-  Future<List<ReportModel>> getSample(BuildContext context, String personId) async {
+  // FIXING
+  var jsonArray = [];
+
+
+  Future<List<ReportModel>> getSamplexxx(BuildContext context, String personId) async {
     isLoading = true;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String accountId = prefs.getString("personId");
@@ -35,45 +39,44 @@ class ReportProvider extends ChangeNotifier {
     final prov = Provider.of<TokenProvider>(context, listen: false);
 
     String accessToken = prov.accessToken;
+    print("ASES TOKEN: $accessToken");
 
     Map<String, String> ndas = {
       "Accept": "application/json",
       "Authorization": "Bearer $accessToken"
     };
 
-    final request = await http.get(url, headers: ndas);
-    print("SAMPLE RESPONSE CODE: ${request.statusCode}");
+    final response = await http.get(url, headers: ndas);
+    print("SAMPLE RESPONSE CODE: ${response.statusCode}");
 
-    if (request.statusCode == 200) {
+    if (response.statusCode == 200) {
       isLoading = false;
       notfound = false ;
-      var allArray = json.decode(request.body);
 
-      for(int i = 0; i < allArray.length; i++){
-        var dataArray = allArray['data'] as List;
-        listSample = dataArray.map<ReportData>((j) => ReportData.fromJson(j)).toList();
+      var responseJson = json.decode(response.body);
+      jsonArray = responseJson['data'] as List;
 
-        var detailArray = dataArray[0]['detail'] as List;
-        listDetail = detailArray.map<Detail>((j) => Detail.fromJson(j)).toList();
+      for(int i = 0; i < jsonArray.length; i++){
 
-        // var detail2Array = allArray['data'][i]['detail'] as List;
-        // listDetail2 = detail2Array.map<Detail>((j) => Detail.fromJson(j)).toList();
+        var detailArray = jsonArray[0]['detail'] as List;
+         listDetail = detailArray.map<Detail>((j) => Detail.fromJson(j)).toList();
+         print("LIST DETAIL 1 LENGHT ${listDetail.length}");
+
+        var detail2Array = jsonArray[i]['detail'] as List;
+        listDetail2 = detail2Array.map<Detail>((j) => Detail.fromJson(j)).toList();
+        print("LIST DETAIL 2 LENGHT ${listDetail2.length}");
       }
 
-
-
-
-
       notifyListeners();
-    } else if (request.statusCode == 404) {
+    } else if (response.statusCode == 404) {
       print("REPORT Not Found");
-      listSample = [];
+      listDetail = [];
       isLoading = false;
       notfound = true ;
       notifyListeners();
       listDetail.clear();
-    } else if (request.statusCode == 500) {
-      listSample = [];
+    } else if (response.statusCode == 500) {
+      listDetail = [];
       isLoading = false;
       notfound = true ;
       notifyListeners();

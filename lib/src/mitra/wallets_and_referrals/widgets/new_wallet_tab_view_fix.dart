@@ -6,24 +6,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
-import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:new_klikdna/src/mitra/wallets_and_referrals/models/wallet_model.dart';
 import 'package:new_klikdna/src/mitra/wallets_and_referrals/providers/wallet_referral_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
-import 'package:new_klikdna/widgets/button_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class NewWalletTabViewFix extends StatefulWidget {
 
-  const NewWalletTabViewFix({
+  final Future future;
+
+ NewWalletTabViewFix({
     Key key,
-    @required this.future,
+    @required this.future
   }) : super(key: key);
 
-  final Future future;
+
 
   @override
   _NewWalletTabViewFixState createState() => _NewWalletTabViewFixState();
@@ -35,11 +35,6 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
 
   int present = 0;
   int perPage = 4;
-
-  bool isPutur = false ;
-
-
-
 
   @override
   void initState() {
@@ -513,7 +508,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
   void loadMore() async {
     print("LOAD MORE");
     setState(() {
-      if((present + perPage ) > listWalletData.length) {
+      if(listWalletData.length < (present + perPage )) {
         items.addAll(listWalletData.getRange(present, listWalletData.length));
       } else {
         items.addAll(listWalletData.getRange(present, present + perPage));
@@ -593,11 +588,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                       ),
                           ),
                     ),
-                        Consumer<WalletReferralProvider>(
-                      builder: (child, wallet, _) {
-                        return buildFutureBuilder(wallet);
-                      },
-                    ),
+                    buildFutureBuilder(),
                     SizedBox(height: 30),
                   ],
                 ),
@@ -735,19 +726,15 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Consumer<WalletReferralProvider>(
-              builder: (child, prov, _) {
-                return Container(
-                    child: Text(
-                        prov.komisi == null
-                            ? "0"
-                            : "IDR ${prov.komisi.split(".")[0].replaceAll("-", "")}",
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: MyColors.dnaGreen2,
-                            fontWeight: FontWeight.bold)));
-              },
-            ),
+            Container(
+                child: Text(
+                    komisi == null
+                        ? "0"
+                        : "IDR ${komisi.split(".")[0].replaceAll("-", "")}",
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: MyColors.dnaGreen2,
+                        fontWeight: FontWeight.bold))),
             SizedBox(height: 5),
             Text("Saldo Anda"),
           ],
@@ -756,7 +743,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
     );
   }
 
-  Widget buildFutureBuilder(WalletReferralProvider wallet) {
+  Widget buildFutureBuilder() {
     print("ITEM LENGHT --> ${items.length}");
     print("PRESENT LENGHT --> $present");
     print("PER PAGE LENGHT --> $perPage");
@@ -764,9 +751,9 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
     return FutureBuilder(
       future: widget.future,
       builder: (context, snapshot){
-        if(snapshot.connectionState == ConnectionState.waiting){
+        if(isLoading == true){
           return Container(
-              height: MediaQuery.of(context).size.height / 1.8,
+              height: MediaQuery.of(context).size.height / 1.5,
               child: Center(
                   child: SpinKitDoubleBounce(color: Colors.grey)));
         } else if(snapshot.hasData || listWalletData.length > 0) {
@@ -794,9 +781,9 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                   padding: EdgeInsets.only(top: 18),
                   child: tipeValue.contains("Semua")
                       ? allWalletData(
-                      wallet, index, context, dateCreated, fnominal)
+                      index, context, dateCreated, fnominal)
                       : filteredWalledData(
-                      wallet, index, context, dateCreated, fnominal));
+                      index, context, dateCreated, fnominal));
             },
           );
         } else {
@@ -807,7 +794,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
     );
   }
 
-  Widget allWalletData(WalletReferralProvider wallet, int index,
+  Widget allWalletData(int index,
       BuildContext context, String dateCreated, String fnominal) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -836,12 +823,16 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                 topRight: Radius.circular(25),
                 bottomRight: Radius.circular(25)),
           ),
-          child: Center(
-            child: Text(
-                listWalletData[index].type.contains("Withdraw")
-                    ? "Penarikan"
-                    : "${listWalletData[index].type}",
-                style: TextStyle(color: Colors.white, fontSize: 14)),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 18.0),
+              child: Text(
+                  listWalletData[index].type.contains("Withdraw")
+                      ? "Penarikan"
+                      : "${listWalletData[index].type}",
+                  style: TextStyle(color: Colors.white, fontSize: 14)),
+            ),
           ),
         ),
         SizedBox(height: 20),
@@ -904,7 +895,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
     );
   }
 
-  Widget filteredWalledData(WalletReferralProvider wallet, int index,
+  Widget filteredWalledData(int index,
       BuildContext context, String dateCreated, String fnominal) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -933,12 +924,16 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                 topRight: Radius.circular(25),
                 bottomRight: Radius.circular(25)),
           ),
-          child: Center(
-            child: Text(
-               listWalletData[index].type.contains("Withdraw")
-                    ? "Penarikan"
-                    : "${listWalletData[index].type}",
-                style: TextStyle(color: Colors.white, fontSize: 16)),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 18.0),
+              child: Text(
+                 listWalletData[index].type.contains("Withdraw")
+                      ? "Penarikan"
+                      : "${listWalletData[index].type}",
+                  style: TextStyle(color: Colors.white, fontSize: 16)),
+            ),
           ),
         ),
         SizedBox(height: 20),

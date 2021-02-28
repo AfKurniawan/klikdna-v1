@@ -214,7 +214,7 @@ class _PatientCardPageState extends State<PatientCardPage> {
                               SizedBox(height: 10),
                               ListView.builder(
                                   scrollDirection: Axis.vertical,
-                                  itemCount: 1,
+                                  itemCount: prov.listAsuransi.length > 1 ? 1 : 0,
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
                                   itemBuilder: (context, index) {

@@ -65,7 +65,7 @@ class _DetailPromoPageState extends State<DetailPromoPage> {
                 children: [
                   Container(
                     width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height /4,
+                    height: 170,
                     child: Material(
                       color: Colors.transparent,
                       child: InkWell(
@@ -76,8 +76,6 @@ class _DetailPromoPageState extends State<DetailPromoPage> {
                           borderRadius: BorderRadius.circular(0),
                           child: CachedNetworkImage(
                             imageUrl: '${widget.model.image}',
-                            width: 140,
-                            height: MediaQuery.of(context).size.height / 4,
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -130,6 +128,10 @@ class _DetailPromoPageState extends State<DetailPromoPage> {
                         padding: const EdgeInsets.only(left: 12.0, right: 12),
                         child: HtmlWidget("${widget.model.desc}",
                           textStyle: TextStyle(fontSize: 14),
+                          onTapUrl: (url){
+                            print("URL: $url");
+                            prov.handleUrl(url);
+                          },
                         ),
                       )),
 

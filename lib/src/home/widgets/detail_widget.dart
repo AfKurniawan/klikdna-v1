@@ -52,7 +52,7 @@ class DetailWidget extends StatelessWidget {
               //width: size.width - 40,
               fit: BoxFit.fill,
               width: MediaQuery.of(context).size.width,
-              height: mediaquery.size.width < 600 ? size.height / 3 : size.height / 2,
+              height: height,
               // height: 150,
             ),
           ),

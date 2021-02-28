@@ -15,9 +15,6 @@ class NewReferralTabView extends StatefulWidget {
 
   final Future future;
 
-
-
-
   @override
   _NewReferralTabViewState createState() => _NewReferralTabViewState();
 }
@@ -59,15 +56,17 @@ class _NewReferralTabViewState extends State<NewReferralTabView> {
                             children: [
                               Text("Referral Anda",
                                   style: TextStyle(
-                                      fontSize: 16, fontWeight: FontWeight.bold)),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold)),
                               SizedBox(height: 5),
                               Consumer<WalletReferralProvider>(
                                 builder: (child, ref, _) {
-                                  return  Container(
-                                      child: Text(ref.listReferralData.length == 0 ? "Total 0 Referral" : "Total ${ref.listReferralData.length} Referral",
-                                          style: TextStyle(
-                                              fontSize: 16))
-                                  );
+                                  return Container(
+                                      child: Text(
+                                          ref.listReferralData.length == 0
+                                              ? "Total 0 Referral"
+                                              : "Total ${ref.listReferralData.length} Referral",
+                                          style: TextStyle(fontSize: 16)));
                                 },
                               ),
                             ],
@@ -89,109 +88,7 @@ class _NewReferralTabViewState extends State<NewReferralTabView> {
                             return FutureBuilder(
                                 future: widget.future,
                                 builder: (context, snapshot) {
-                                  return ListView.builder(
-                                    shrinkWrap: true,
-                                    physics: NeverScrollableScrollPhysics(),
-                                    itemCount: wallet.listReferralData.length == 0 ? 0
-                                        : wallet.listReferralData.length,
-                                    itemBuilder: (context, index) {
-                                      return Column(
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  SizedBox(height: 20),
-                                                  Container(
-                                                    width: 156,
-                                                    height: 45,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.only(
-                                                          topRight: Radius.circular(25),
-                                                          bottomRight: Radius.circular(25)
-                                                      ),
-                                                      gradient: LinearGradient(
-                                                        colors: wallet.listReferralData[index].rank.contains("Star")
-                                                        ? MyColors.startCardColor
-                                                            : wallet.listReferralData[index].rank.contains("Referral")
-                                                        ? MyColors.startCardColor
-                                                            : wallet.listReferralData[index].type.contains("Royalti")
-                                                        ? MyColors.presidentAndDirectorColor
-                                                            : wallet.listReferralData[index].status.contains("Belum")
-                                                        ? MyColors.tidakAktifColor
-                                                            : MyColors.mitraCardColor,
-                                                      )
-                                                    ),
-                                                    child: wallet.listReferralData[index].status.contains("Selesai")
-
-                                                    ? Padding(
-                                                      padding: const EdgeInsets.only(top: 13.0, left: 10),
-                                                      child: Text(wallet.listReferralData[index].rank == "" || wallet.listReferralData[index].par == ""
-                                                          ? "${wallet.listReferralData[index].type}"
-                                                          : "${wallet.listReferralData[index].rank}", style: TextStyle(
-                                                          color: Colors.white, fontSize: 16
-                                                      )),
-                                                    )
-                                                        : Padding(
-                                                      padding: const EdgeInsets.only(top: 13.0, left: 10),
-                                                      child: Text(wallet.listReferralData[index].rank == "" || wallet.listReferralData[index].par == ""
-                                                          ? "${wallet.listReferralData[index].status}"
-                                                          : "${wallet.listReferralData[index].rank}", style: TextStyle(
-                                                          color: Colors.white, fontSize: 16
-                                                      )),
-                                                    )
-                                                  ),
-                                                  SizedBox(height: 10),
-                                                  Container(
-                                                    width: MediaQuery.of(context).size.width,
-                                                    //height: 100,
-                                                    margin: EdgeInsets.only(bottom: 10, left: 18, right: 18),
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      borderRadius: BorderRadius.circular(10),
-                                                      boxShadow: [
-                                                        BoxShadow(
-                                                          offset: Offset(0, 1),
-                                                          blurRadius: 3,
-                                                          color: Colors.grey[700].withOpacity(0.32),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    child: Padding(
-                                                      padding: const EdgeInsets.all(18.0),
-                                                      child: Column(
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                        mainAxisAlignment: MainAxisAlignment.start,
-                                                        children: [
-                                                          Text("${wallet.listReferralData[index].name}", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
-                                                          SizedBox(height: 10),
-                                                          Row(
-                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                            children: [
-                                                              Text("Posisi"),
-                                                              Text("${wallet.listReferralData[index].position}")
-                                                            ],
-
-                                                          ),
-                                                          SizedBox(height: 10),
-                                                          Row(
-                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                            children: [
-                                                              Text("Kualifikasi Peringkat"),
-                                                              Text(wallet.listReferralData[index].rank == "" || wallet.listReferralData[index].par == ""
-                                                                      ? "${wallet.listReferralData[index].type}"
-                                                                      : "${wallet.listReferralData[index].rank}")
-
-                                                            ],
-
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  )
-
-                                                ],
-                                              );
-                                    },
-                                  );
+                                  return buildListView(wallet);
                                 });
                           },
                         ),
@@ -199,6 +96,124 @@ class _NewReferralTabViewState extends State<NewReferralTabView> {
             ],
           ),
         ));
+      },
+    );
+  }
+
+  ListView buildListView(WalletReferralProvider wallet) {
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemCount: wallet.listReferralData.length == 0
+          ? 0
+          : wallet.listReferralData.length,
+      itemBuilder: (context, index) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 20),
+            Container(
+                width: 156,
+                height: 35,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(25),
+                        bottomRight: Radius.circular(25)),
+                    gradient: LinearGradient(
+                      colors:
+                          wallet.listReferralData[index].rank.contains("Star")
+                              ? MyColors.startCardColor
+                              : wallet.listReferralData[index].rank
+                                      .contains("Referral")
+                                  ? MyColors.startCardColor
+                                  : wallet.listReferralData[index].type
+                                          .contains("Royalti")
+                                      ? MyColors.presidentAndDirectorColor
+                                      : wallet.listReferralData[index].status
+                                              .contains("Belum")
+                                          ? MyColors.tidakAktifColor
+                                          : MyColors.mitraCardColor,
+                    )),
+                child: wallet.listReferralData[index].status.contains("Selesai")
+                    ? Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 18.0),
+                        child: Text(
+                            wallet.listReferralData[index].rank == "" ||
+                                    wallet.listReferralData[index].par == ""
+                                ? "${wallet.listReferralData[index].type}"
+                                : "${wallet.listReferralData[index].rank}",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 16)),
+                      ),
+                    )
+                    : Align(
+                  alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 18.0),
+                        child: Text(
+                            wallet.listReferralData[index].rank == "" ||
+                                    wallet.listReferralData[index].par == ""
+                                ? "${wallet.listReferralData[index].status}"
+                                : "${wallet.listReferralData[index].rank}",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 16)),
+                      ),
+                    )),
+            SizedBox(height: 10),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              //height: 100,
+              margin: EdgeInsets.only(bottom: 10, left: 18, right: 18),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    offset: Offset(0, 1),
+                    blurRadius: 3,
+                    color: Colors.grey[700].withOpacity(0.32),
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      "${wallet.listReferralData[index].name}",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Posisi"),
+                        Text("${wallet.listReferralData[index].position}")
+                      ],
+                    ),
+                    SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Kualifikasi Peringkat"),
+                        Text(wallet.listReferralData[index].rank == "" ||
+                                wallet.listReferralData[index].par == ""
+                            ? "${wallet.listReferralData[index].type}"
+                            : "${wallet.listReferralData[index].rank}")
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        );
       },
     );
   }
@@ -222,7 +237,7 @@ class noDataWidget extends StatelessWidget {
             SizedBox(height: MediaQuery.of(context).size.height / 30),
             Container(
               child:
-              Image.asset("assets/images/no_patient_card.png", width: 200),
+                  Image.asset("assets/images/no_patient_card.png", width: 200),
             ),
             Container(
               width: mediaQuery.size.width > 600

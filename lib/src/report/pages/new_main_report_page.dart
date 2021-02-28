@@ -33,7 +33,8 @@ class _NewMainReportPageState extends State<NewMainReportPage> {
 
   getSample() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    Provider.of<ReportProvider>(context, listen: false).getSample(context, prefs.getString("personId"));
+    print("PERSON ID INIT STATE REPORT -->> ${prefs.getString("personId")}");
+    //Provider.of<ReportProvider>(context, listen: false).getSample(context, prefs.getString("personId"));
   }
 
 
