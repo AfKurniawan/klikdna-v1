@@ -682,19 +682,34 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                                                 fontWeight: FontWeight.bold)))
                                     : Container(child: Text("0", style: TextStyle(fontSize: 16, color: MyColors.dnaBadge, fontWeight: FontWeight.bold))),
                 SizedBox(height: 5),
-                tipeValue.contains("Referral")
-                    ? Text("Komisi Referral")
-                    : tipeValue.contains("Tim")
-                        ? Text("Komisi Tim")
-                        : tipeValue.contains("Royalti")
-                            ? Text("Komisi Royalti")
-                            : tipeValue.contains("National")
-                                ? Text("National Sharing")
-                                : tipeValue.contains("Star Maker")
-                                    ? Text("Star Maker")
-                                    : tipeValue.contains("Penarikan")
-                                        ? Text("Penarikan")
-                                        : "",
+                Text(
+                  tipeValue.contains("Referral")
+                      ? "Komisi Referral"
+                      : tipeValue.contains("Tim")
+                      ? "Komisi Tim"
+                      : tipeValue.contains("Royalti")
+                      ? "Komisi Royalti"
+                      : tipeValue.contains("National")
+                      ? "National Sharing"
+                      : tipeValue.contains("Star")
+                      ? "Bonus Star Maker"
+                      : tipeValue.contains("Penarikan")
+                      ? "Penarikan"
+                      : "-"
+                )
+                // tipeValue.contains("Referral")
+                //     ? Text("Komisi Referral")
+                //     : tipeValue.contains("Tim")
+                //         ? Text("Komisi Tim")
+                //         : tipeValue.contains("Royalti")
+                //             ? Text("Komisi Royalti")
+                //             : tipeValue.contains("National")
+                //                 ? Text("National Sharing")
+                //                 : tipeValue.contains("Star Maker")
+                //                     ? Text("Star Maker")
+                //                     : tipeValue.contains("Penarikan")
+                //                         ? Text("Penarikan")
+                //                         : "",
               ],
             ),
             Container(
