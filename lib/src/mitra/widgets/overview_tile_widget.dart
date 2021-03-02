@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_klikdna/src/login/providers/login_provider.dart';
+import 'package:new_klikdna/src/mitra/providers/mitra_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 
 class OverViewTileWidget extends StatelessWidget {
@@ -8,7 +9,7 @@ class OverViewTileWidget extends StatelessWidget {
     @required this.prov,
   }) : super(key: key);
 
-  final LoginProvider prov;
+  final MitraProvider prov;
 
   @override
   Widget build(BuildContext context) {

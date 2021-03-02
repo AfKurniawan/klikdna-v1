@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_klikdna/src/login/providers/login_provider.dart';
+import 'package:new_klikdna/src/mitra/providers/mitra_provider.dart';
 import 'package:new_klikdna/src/mitra/wallets_and_referrals/providers/wallet_referral_provider.dart';
 import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
@@ -11,7 +12,7 @@ class HeaderWidget extends StatelessWidget {
     @required this.prov,
   }) : super(key: key);
 
-  final LoginProvider prov;
+  final MitraProvider prov;
 
   @override
   Widget build(BuildContext context) {

@@ -9,7 +9,7 @@ class SponsorWidget extends StatefulWidget {
     @required this.prov
   }) : super(key: key);
 
-  final LoginProvider prov;
+  final MitraProvider prov;
 
 
   @override

@@ -9,6 +9,9 @@ import 'package:provider/provider.dart';
 
 class AllEventByCategoriesPage extends StatefulWidget {
 
+  final int model ;
+
+  AllEventByCategoriesPage({Key key, this.model}) : super(key: key);
 
   @override
   _AllEventByCategoriesPageState createState() => _AllEventByCategoriesPageState();
@@ -19,12 +22,13 @@ class _AllEventByCategoriesPageState extends State<AllEventByCategoriesPage> {
 
   @override
   Widget build(BuildContext context) {
+    print("LEMPAR DATA --> ${widget.model}");
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
         title: Text(
-          "Training",
+          widget.model == 10 ? "Training" : "Health Series",
           style: TextStyle(color: MyColors.primaryBlack, fontSize: 16),
         ),
         elevation: 0,

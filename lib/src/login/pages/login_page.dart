@@ -8,6 +8,7 @@ import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:new_klikdna/widgets/button_widget.dart';
 import 'package:new_klikdna/widgets/disable_button_widget.dart';
 import 'package:new_klikdna/widgets/form_widget.dart';
+import 'package:new_klikdna/widgets/loading_widget.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -40,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
             centerTitle: true,
             automaticallyImplyLeading: false,
           ),
-          body: login.isLoading == true ? Center(child: Platform.isIOS ? CupertinoActivityIndicator():CircularProgressIndicator(strokeWidth: 2))
+          body: login.isLoading == true ? LoadingWidget()
               : ListView(
             children: [
               Container(

@@ -1,16 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:new_klikdna/src/home/providers/artikel_provider.dart';
+import 'package:new_klikdna/src/home/providers/home_provider.dart';
 import 'dart:convert';
 
 import 'package:new_klikdna/src/token/models/token_model.dart';
+import 'package:new_klikdna/src/token/providers/token_provider.dart';
+import 'package:provider/provider.dart';
 
 
 class CmsTokenProvider with ChangeNotifier {
 
   String cmsAccessToken= "" ;
 
-  getCmsToken() async {
+  getCmsToken(BuildContext context) async {
 
     print("START GET TOKEN");
 
@@ -24,13 +28,14 @@ class CmsTokenProvider with ChangeNotifier {
 
     if(request.statusCode == 200){
 
-     // print("CMS TOKEN GET TOKEN: ${request.statusCode}");
+
 
       cmsAccessToken = cmsTokenResponse.accessToken;
 
       notifyListeners();
 
-      //print("CMS ASKSES TOKEN $cmsAccessToken");
+      Provider.of<HomeProvider>(context, listen: false).getHomeContents(context);
+
 
     } else {
 

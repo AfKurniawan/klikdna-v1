@@ -10,27 +10,21 @@ import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:new_klikdna/src/mitra/wallets_and_referrals/models/wallet_model.dart';
 import 'package:new_klikdna/src/mitra/wallets_and_referrals/providers/wallet_referral_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
+import 'package:new_klikdna/widgets/loading_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class NewWalletTabViewFix extends StatefulWidget {
-
   final Future future;
 
- NewWalletTabViewFix({
-    Key key,
-    @required this.future
-  }) : super(key: key);
-
-
+  NewWalletTabViewFix({Key key, @required this.future}) : super(key: key);
 
   @override
   _NewWalletTabViewFixState createState() => _NewWalletTabViewFixState();
 }
 
 class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
-
   var items = List<Wallet>();
 
   int present = 0;
@@ -43,14 +37,14 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
   }
 
   List<Wallet> walletMapMapArray = [];
-  List<Wallet> walletArray ;
+  List<Wallet> walletArray;
 
   int sum = 0;
-  var totalFormattedCommision = new NumberFormat.currency(name: "", locale: "en_US");
-  var totalsum ;
+  var totalFormattedCommision =
+      new NumberFormat.currency(name: "", locale: "en_US");
+  var totalsum;
   var komisi = "";
   List<Wallet> listWalletData = [];
-
 
   bool isLoading;
   Future<List<Wallet>> getWalletDatax() async {
@@ -62,9 +56,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
     print("LOADING $isLoading");
 
     var url = AppConstants.GET_WALLET_URL;
-    var body = json.encode({
-      "accesskey" : prefs.getString("accesskey")
-    });
+    var body = json.encode({"accesskey": prefs.getString("accesskey")});
 
     Map<String, String> headers = {
       'Content-type': 'application/json',
@@ -74,27 +66,29 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
     final response = await http.post(url, body: body, headers: headers);
     final responseJson = WalletModel.fromJson(json.decode(response.body));
 
-    if(response.statusCode == 200){
+    if (response.statusCode == 200) {
       var allArray = json.decode(response.body);
       var dataArray = allArray['data'] as List;
 
-     setState(() {
-       walletMapMapArray = dataArray.map<Wallet>((j) => Wallet.fromJson(j)).toList();
-       listWalletData = walletMapMapArray.where((i) => i.status == "Selesai").toList();
-       isLoading = false ;
-       if (listWalletData.length != 0){
-         items.addAll(listWalletData.getRange(present, present + perPage));
-         present = present + perPage;
-       }
+      setState(() {
+        walletMapMapArray =
+            dataArray.map<Wallet>((j) => Wallet.fromJson(j)).toList();
+        listWalletData =
+            walletMapMapArray.where((i) => i.status == "Selesai").toList();
+        isLoading = false;
+        if (listWalletData.length != 0) {
+          items.addAll(listWalletData.getRange(present, present + perPage));
+          present = present + perPage;
+        }
+      });
 
-     });
-
-      if(items.length == 0){
+      if (items.length == 0) {
         sum = 0;
       } else {
-        sum = items.map((e) => e.nominal).reduce((value, element) => value + element);
+        sum = items
+            .map((e) => e.nominal)
+            .reduce((value, element) => value + element);
       }
-
 
       print("Sum : $sum");
 
@@ -103,18 +97,13 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
 
       print("SUM $totalsum");
       print("JUMLAH KOMISI $komisi");
-
-
     } else {
-      isLoading = false ;
-
+      isLoading = false;
     }
-
   }
 
-  var count ;
-  var filterSum ;
-
+  var count;
+  var filterSum;
 
   Future<WalletModel> filterWalletDataxx(BuildContext context) async {
     listWalletData.clear();
@@ -129,10 +118,10 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
 
     var url = AppConstants.GET_WALLET_URL;
     var body = json.encode({
-      "accesskey" : prefs.getString("accesskey"),
+      "accesskey": prefs.getString("accesskey"),
       "type_id": result,
       "datefrom": datefromController.text,
-      "dateto" : datetoController.text
+      "dateto": datetoController.text
     });
 
     Map<String, String> headers = {
@@ -143,26 +132,27 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
     final response = await http.post(url, body: body, headers: headers);
     final responseJson = WalletModel.fromJson(json.decode(response.body));
 
-    if(response.statusCode == 200){
-
+    if (response.statusCode == 200) {
       setState(() {
         var allArray = json.decode(response.body);
         var dataArray = allArray['data'] as List;
-        walletMapMapArray = dataArray.map<Wallet>((j) => Wallet.fromJson(j)).toList();
-        listWalletData = walletMapMapArray.where((i) => i.status == "Selesai").toList();
+        walletMapMapArray =
+            dataArray.map<Wallet>((j) => Wallet.fromJson(j)).toList();
+        listWalletData =
+            walletMapMapArray.where((i) => i.status == "Selesai").toList();
 
+        isLoading = false;
 
-        isLoading = false ;
+        print(
+            "LIST WALLET DATA AFTER FILTERING >>>>>>>>>>> ${listWalletData.length}");
 
-        print("LIST WALLET DATA AFTER FILTERING >>>>>>>>>>> ${listWalletData.length}");
-
-
-        if(listWalletData.length == 0){
+        if (listWalletData.length == 0) {
           sum = 0;
         } else {
-          sum = listWalletData.map((e) => e.nominal).reduce((value, element) => value + element);
+          sum = listWalletData
+              .map((e) => e.nominal)
+              .reduce((value, element) => value + element);
         }
-
 
         print("Sum : $sum");
 
@@ -173,32 +163,40 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
         print("SUM FILTER $totalsum");
         print("JUMLAH KOMISI FILTER $komisi");
       });
-
     } else {
-
-      isLoading = false ;
-
+      isLoading = false;
     }
 
     return responseJson;
   }
 
-  clearFilter(){
+  clearFilter() {
     datefromController.clear();
     datetoController.clear();
     tipeValue = "Semua Data";
   }
 
-  clearDateFilter(){
+  clearDateFilter() {
     datefromController.clear();
     datetoController.clear();
   }
 
+  String datefrom;
+  String dateto;
+
+  // formatDate(){
+  //   var formatTgl = DateFormat('dd MMMM yyyy', "id_ID");
+  //   if(datefromController != null || datetoController != null){
+  //     var parsedDateFrom = DateTime.parse(datefromController.text).toLocal();
+  //     var parsedDateTo = DateTime.parse(datetoController.text).toLocal();
+  //     datefrom = '${formatTgl.format(parsedDateFrom)}';
+  //     dateto = '${formatTgl.format(parsedDateTo)}';
+  //   }
+  // }
 
   TextEditingController datefromController = new TextEditingController();
   TextEditingController datetoController = new TextEditingController();
   String searchDialogSource;
-
 
   showBottomSheetFilter(BuildContext context) {
     final format = DateFormat("yyyy-MM-dd");
@@ -210,7 +208,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
           return BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
             child: StatefulBuilder(
-              builder: (BuildContext context, StateSetter setState){
+              builder: (BuildContext context, StateSetter setState) {
                 return Container(
                   height: MediaQuery.of(context).size.height / 1.4,
                   decoration: BoxDecoration(
@@ -228,8 +226,12 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                             padding: const EdgeInsets.only(left: 20.0),
                             child: Align(
                                 alignment: Alignment.centerLeft,
-                                child: Text("Filter", style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 18),)),
+                                child: Text(
+                                  "Filter",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18),
+                                )),
                           ),
                           Row(
                             children: [
@@ -243,12 +245,9 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                               )
                             ],
                           ),
-
                         ],
                       ),
-
                       SizedBox(height: 20),
-
                       Padding(
                         padding: const EdgeInsets.only(left: 16.0),
                         child: Align(
@@ -277,44 +276,52 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                                 format: format,
                                 controller: datefromController,
                                 decoration: InputDecoration(
-                                    suffixIcon: Icon(Icons.event_note, color: Colors.grey),
+                                    suffixIcon: Icon(Icons.event_note,
+                                        color: Colors.grey),
                                     labelText: "Mulai Tanggal",
                                     labelStyle: TextStyle(color: Colors.grey),
                                     alignLabelWithHint: true,
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                           color: MyColors.dnaGreen, width: 1.5),
-                                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(10)),
                                     ),
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                           color: Colors.grey, width: 1.5),
-                                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(10)),
                                     ),
                                     errorBorder: OutlineInputBorder(
-                                      borderSide:
-                                      BorderSide(color: Colors.red[300], width: 1.5),
-                                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                                      borderSide: BorderSide(
+                                          color: Colors.red[300], width: 1.5),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(10)),
                                     ),
                                     focusedErrorBorder: OutlineInputBorder(
-                                      borderSide:
-                                      BorderSide(color: Colors.red[300], width: 1.5),
-                                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                                      borderSide: BorderSide(
+                                          color: Colors.red[300], width: 1.5),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(10)),
                                     ),
                                     disabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                          color: Colors.transparent, width: 1.5),
-                                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                                          color: Colors.transparent,
+                                          width: 1.5),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(10)),
                                     ),
                                     focusColor: MyColors.dnaGreen,
                                     hintText: "",
-                                    hintStyle:
-                                    TextStyle(color: Colors.white54, fontSize: 12)),
+                                    hintStyle: TextStyle(
+                                        color: Colors.white54, fontSize: 12)),
                                 onShowPicker: (context, currentValue) {
                                   return showDatePicker(
                                       context: context,
                                       firstDate: DateTime(1900),
-                                      initialDate: currentValue ?? DateTime.now(),
+                                      initialDate:
+                                          currentValue ?? DateTime.now(),
                                       lastDate: DateTime(2100));
                                 },
                               ),
@@ -328,44 +335,52 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                                 format: format,
                                 controller: datetoController,
                                 decoration: InputDecoration(
-                                    suffixIcon: Icon(Icons.event_note, color: Colors.grey),
+                                    suffixIcon: Icon(Icons.event_note,
+                                        color: Colors.grey),
                                     labelText: "Sampai Tanggal",
                                     labelStyle: TextStyle(color: Colors.grey),
                                     alignLabelWithHint: true,
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                           color: MyColors.dnaGreen, width: 1.5),
-                                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(15)),
                                     ),
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                           color: Colors.grey, width: 1.5),
-                                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(15)),
                                     ),
                                     errorBorder: OutlineInputBorder(
-                                      borderSide:
-                                      BorderSide(color: Colors.red[300], width: 1.5),
-                                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                                      borderSide: BorderSide(
+                                          color: Colors.red[300], width: 1.5),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(15)),
                                     ),
                                     focusedErrorBorder: OutlineInputBorder(
-                                      borderSide:
-                                      BorderSide(color: Colors.red[300], width: 1.5),
-                                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                                      borderSide: BorderSide(
+                                          color: Colors.red[300], width: 1.5),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(15)),
                                     ),
                                     disabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                          color: Colors.transparent, width: 1.5),
-                                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                                          color: Colors.transparent,
+                                          width: 1.5),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(15)),
                                     ),
                                     focusColor: MyColors.dnaGreen,
                                     hintText: "",
-                                    hintStyle:
-                                    TextStyle(color: Colors.white54, fontSize: 12)),
+                                    hintStyle: TextStyle(
+                                        color: Colors.white54, fontSize: 12)),
                                 onShowPicker: (context, currentValue) {
                                   return showDatePicker(
                                       context: context,
                                       firstDate: DateTime(1900),
-                                      initialDate: currentValue ?? DateTime.now(),
+                                      initialDate:
+                                          currentValue ?? DateTime.now(),
                                       lastDate: DateTime(2100));
                                 },
                               ),
@@ -373,9 +388,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                           ],
                         ),
                       ),
-
                       SizedBox(height: 30),
-
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         height: 60,
@@ -393,8 +406,10 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                                   items: walletType.map((String value) {
                                     return new DropdownMenuItem<String>(
                                       value: value,
-                                      child: new Text(value,
-                                        style: TextStyle(fontWeight: FontWeight.normal),
+                                      child: new Text(
+                                        value,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.normal),
                                       ),
                                     );
                                   }).toList(),
@@ -409,18 +424,19 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                           },
                         ),
                       ),
-
-                      SizedBox(height: MediaQuery.of(context).size.height > 780 ? MediaQuery.of(context).size.height / 4 : MediaQuery.of(context).size.height / 7),
-
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height > 780
+                              ? MediaQuery.of(context).size.height / 4
+                              : MediaQuery.of(context).size.height / 7),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Material(
                           color: MyColors.dnaGreen,
                           borderRadius: BorderRadius.circular(10),
                           child: InkWell(
-                            onTap: (){
+                            onTap: () {
                               filterWalletDataxx(context);
-                              //clearDateFilter();
+                              clearDateFilter();
                               Navigator.of(context).pop();
                             },
                             splashColor: Colors.white,
@@ -429,9 +445,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                               height: 50,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
-                                  color: MyColors.dnaGreen
-
-                              ),
+                                  color: MyColors.dnaGreen),
                               child: Center(
                                 child: Text(
                                   "Tampilkan Hasil",
@@ -451,18 +465,21 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
               },
             ),
           );
-        }
-    );
+        });
   }
 
-
-  String tipeValue = "Semua Data" ;
+  String tipeValue = "Semua Data";
   String result;
   List<Wallet> walletlength = [];
 
-
-
-  List<String> walletType = ["Semua Data", "Komisi Referral", "Komisi Tim", "Komisi Royalti", "National Sharing", "Penarikan"];
+  List<String> walletType = [
+    "Semua Data",
+    "Komisi Referral",
+    "Komisi Tim",
+    "Komisi Royalti",
+    "National Sharing",
+    "Penarikan"
+  ];
 
   void _handleRadioValueChange(BuildContext context, String value) {
     tipeValue = value;
@@ -474,31 +491,31 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
         break;
       case "Komisi Referral":
         result = "1";
-        totalsum = "..." ;
+        totalsum = "...";
         filterWalletDataxx(context);
         print("RESULT $result");
         break;
       case "Komisi Tim":
         result = "2";
-        totalsum = "..." ;
+        totalsum = "...";
         filterWalletDataxx(context);
         print("RESULT $result");
         break;
       case "Komisi Royalti":
         result = "3";
-        totalsum = "..." ;
+        totalsum = "...";
         filterWalletDataxx(context);
         print("RESULT $result");
         break;
       case "National Sharing":
         result = "4";
-        totalsum = "..." ;
+        totalsum = "...";
         filterWalletDataxx(context);
         print("RESULT $result");
         break;
       case "Penarikan":
         result = "5";
-        totalsum = "..." ;
+        totalsum = "...";
         filterWalletDataxx(context);
         print("RESULT $result");
         break;
@@ -508,7 +525,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
   void loadMore() async {
     print("LOAD MORE");
     setState(() {
-      if(listWalletData.length < (present + perPage )) {
+      if (listWalletData.length < (present + perPage)) {
         items.addAll(listWalletData.getRange(present, listWalletData.length));
       } else {
         items.addAll(listWalletData.getRange(present, present + perPage));
@@ -516,9 +533,6 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
       present = present + perPage;
     });
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -539,55 +553,13 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                   children: [
                     Padding(
                         padding:
-                        EdgeInsets.only(left: 18.0, right: 18, top: 20),
+                            EdgeInsets.only(left: 18.0, right: 18, top: 20),
                         child: listWalletData.length == 0
                             ? Container()
                             : tipeValue == "Semua Data"
-                            ? allDataSaldoCard(context)
-                            : filteredDataSaldoCard(context, wallet)),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 18.0, right: 18),
-                      child: Visibility(
-                            visible: listWalletData.length == 0 || items.length == 0 ? false : true,
-                            child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                    child: Text("Transaksi",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold))),
-                                SizedBox(height: 5),
-                                Container(
-                                    child: Text(
-                                        "Total ${listWalletData.length == 0 ? 0 : listWalletData.length} Transaksi"))
-                              ],
-                            ),
-                            InkWell(
-                              onTap: () {
-                                showBottomSheetFilter(context);
-                              },
-                              splashColor: Colors.blueGrey,
-                              child: Container(
-                                color: Colors.transparent,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Image.asset(
-                                    "assets/icons/sorting_wallet_referral.png",
-                                    height: 20,
-                                  ),
-                                ),
-                              ),
-                            )
-                        ],
-                      ),
-                          ),
-                    ),
+                                ? allDataSaldoCard(context)
+                                : filteredDataSaldoCard(context, wallet)),
+                    buildFilterButtonRow(context),
                     buildFutureBuilder(),
                     SizedBox(height: 30),
                   ],
@@ -595,6 +567,52 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
               )),
         );
       },
+    );
+  }
+
+
+  Padding buildFilterButtonRow(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 18.0, right: 18),
+      child: Visibility(
+        visible: listWalletData.length == 0 || items.length == 0 ? false : true,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                    child: Text("Transaksi",
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold))),
+                SizedBox(height: 5),
+                Container(
+                    child: Text(
+                        "Total ${listWalletData.length == 0 ? 0 : listWalletData.length} Transaksi"))
+              ],
+            ),
+            InkWell(
+              onTap: () {
+                showBottomSheetFilter(context);
+              },
+              splashColor: Colors.blueGrey,
+              child: Container(
+                color: Colors.transparent,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.asset(
+                    "assets/icons/sorting_wallet_referral.png",
+                    height: 20,
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 
@@ -614,7 +632,8 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.only(left: 10, right: 10, top: 12, bottom: 12),
+        padding:
+            const EdgeInsets.only(left: 10, right: 10, top: 12, bottom: 12),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -625,56 +644,57 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                 SizedBox(height: 5),
                 tipeValue.contains("Referral")
                     ? Container(
-                    child: Text(totalsum == null ? "0" : "IDR ${totalsum.split(".")[0].replaceAll("-", "")}",
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: MyColors.dnaBadge,
-                            fontWeight: FontWeight.bold)))
+                        child: Text(
+                            totalsum == null
+                                ? "0"
+                                : "IDR ${totalsum.split(".")[0].replaceAll("-", "")}",
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: MyColors.dnaBadge,
+                                fontWeight: FontWeight.bold)))
                     : tipeValue.contains("Royalti")
-                    ? Container(
-                    child: Text(totalsum == null ? "" : "IDR ${totalsum.split(".")[0].replaceAll("-", "")}",
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: MyColors.dnaBadge,
-                            fontWeight: FontWeight.bold)))
-                    : tipeValue.contains("Tim")
-                    ? Container(
-                    child:
-                    Text(totalsum == null ? "" : "IDR ${totalsum.split(".")[0].replaceAll("-", "")}",
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: MyColors.dnaBadge,
-                            fontWeight: FontWeight.bold)))
-                    : tipeValue.contains("Penarikan")
-                    ? Container(
-                    child:
-                    Text(totalsum == null ? "" : "IDR ${totalsum.split(".")[0].replaceAll("-", "")}",
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: MyColors.dnaBadge,
-                            fontWeight: FontWeight.bold)))
-                    : tipeValue.contains("National")
-                    ? Container(
-                    child: Text(totalsum == null ? "" : "IDR ${totalsum.split(".")[0].replaceAll("-", "")}",
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: MyColors.dnaBadge,
-                            fontWeight: FontWeight.bold)))
-                    : Container(child: Text("0", style: TextStyle(fontSize: 16, color: MyColors.dnaBadge, fontWeight: FontWeight.bold))),
+                        ? Container(
+                            child: Text(totalsum == null ? "" : "IDR ${totalsum.split(".")[0].replaceAll("-", "")}",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: MyColors.dnaBadge,
+                                    fontWeight: FontWeight.bold)))
+                        : tipeValue.contains("Tim")
+                            ? Container(
+                                child: Text(totalsum == null ? "" : "IDR ${totalsum.split(".")[0].replaceAll("-", "")}",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: MyColors.dnaBadge,
+                                        fontWeight: FontWeight.bold)))
+                            : tipeValue.contains("Penarikan")
+                                ? Container(
+                                    child: Text(totalsum == null ? "" : "IDR ${totalsum.split(".")[0].replaceAll("-", "")}",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: MyColors.dnaBadge,
+                                            fontWeight: FontWeight.bold)))
+                                : tipeValue.contains("National")
+                                    ? Container(
+                                        child: Text(totalsum == null ? "" : "IDR ${totalsum.split(".")[0].replaceAll("-", "")}",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: MyColors.dnaBadge,
+                                                fontWeight: FontWeight.bold)))
+                                    : Container(child: Text("0", style: TextStyle(fontSize: 16, color: MyColors.dnaBadge, fontWeight: FontWeight.bold))),
                 SizedBox(height: 5),
                 tipeValue.contains("Referral")
                     ? Text("Komisi Referral")
                     : tipeValue.contains("Tim")
-                    ? Text("Komisi Tim")
-                    : tipeValue.contains("Royalti")
-                    ? Text("Komisi Royalti")
-                    : tipeValue.contains("National")
-                    ? Text("National Sharing")
-                    : tipeValue.contains("Star Maker")
-                    ? Text("Star Maker")
-                    : tipeValue.contains("Penarikan")
-                    ? Text("Penarikan")
-                    : "",
+                        ? Text("Komisi Tim")
+                        : tipeValue.contains("Royalti")
+                            ? Text("Komisi Royalti")
+                            : tipeValue.contains("National")
+                                ? Text("National Sharing")
+                                : tipeValue.contains("Star Maker")
+                                    ? Text("Star Maker")
+                                    : tipeValue.contains("Penarikan")
+                                        ? Text("Penarikan")
+                                        : "",
               ],
             ),
             Container(
@@ -748,59 +768,107 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
     print("PRESENT LENGHT --> $present");
     print("PER PAGE LENGHT --> $perPage");
     var mediaQuery = MediaQuery.of(context);
+    WalletReferralProvider wallet;
     return FutureBuilder(
       future: widget.future,
-      builder: (context, snapshot){
-        if(isLoading == true){
+      builder: (context, snapshot) {
+        if (isLoading == true) {
           return Container(
-              height: MediaQuery.of(context).size.height / 1.5,
-              child: Center(
-                  child: SpinKitDoubleBounce(color: Colors.grey)));
-        } else if(snapshot.hasData || listWalletData.length > 0) {
+              height: mediaQuery.size.height / 1.5, child: LoadingWidget());
+        } else if (snapshot.hasData || listWalletData.length > 0) {
           return ListView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
-            itemCount: listWalletData.length < perPage ? listWalletData.length
-                : (present <= listWalletData.length) ? items.length + 1 :listWalletData.length,
+            itemCount: listWalletData.length < perPage
+                ? listWalletData.length
+                : (present <= listWalletData.length)
+                    ? items.length + 1
+                    : listWalletData.length,
             itemBuilder: (context, index) {
               var formatTgl = DateFormat('dd MMMM yyyy', "id_ID");
               var parsedDate =
-              DateTime.parse(listWalletData[index].created).toLocal();
+                  DateTime.parse(listWalletData[index].created).toLocal();
               String dateCreated = '${formatTgl.format(parsedDate)}';
               String fnominal = NumberFormat.currency(name: '')
                   .format(listWalletData[index].nominal)
                   .split(".")[0]
                   .replaceAll(",", ".");
-              return (index == items.length ) ?
-              Padding(
-                padding: const EdgeInsets.only(top: 10.0),
-                child: SpinKitDoubleBounce(size: 30, color: MyColors.dnaGreen,),
-              )
+              return (index == items.length)
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: SpinKitDoubleBounce(
+                        size: 30,
+                        color: MyColors.dnaGreen,
+                      ),
+                    )
                   : Container(
-                  color: Color(0xffEDF0F4),
-                  padding: EdgeInsets.only(top: 18),
-                  child: tipeValue.contains("Semua")
-                      ? allWalletData(
-                      index, context, dateCreated, fnominal)
-                      : filteredWalledData(
-                      index, context, dateCreated, fnominal));
+                      color: Color(0xffEDF0F4),
+                      padding: EdgeInsets.only(top: 18),
+                      child: tipeValue.contains("Semua")
+                          ? allWalletData(index, context, dateCreated, fnominal)
+                          : filteredWalledData(
+                              index, context, dateCreated, fnominal));
             },
           );
         } else {
-          return noDataWidget(mediaQuery: mediaQuery);
+          return Padding(
+            padding: EdgeInsets.only(left: 18.0, right: 18),
+            child: Column(
+              children: [
+                filteredDataSaldoCard(context, wallet),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                            child: Text("Transaksi",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold))),
+                        SizedBox(height: 5),
+                        Container(
+                            child: Text(
+                                "Total ${listWalletData.length == 0 ? 0 : listWalletData.length} Transaksi"))
+                      ],
+                    ),
+                    InkWell(
+                      onTap: () {
+                        showBottomSheetFilter(context);
+                      },
+                      splashColor: Colors.blueGrey,
+                      child: Container(
+                        color: Colors.transparent,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.asset(
+                            "assets/icons/sorting_wallet_referral.png",
+                            height: 20,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                NoDataWidget(
+                  mediaQuery: mediaQuery,
+                  height: MediaQuery.of(context).size.height / 2.5,
+                ),
+              ],
+            ),
+          );
         }
-
       },
     );
   }
 
-  Widget allWalletData(int index,
-      BuildContext context, String dateCreated, String fnominal) {
+  Widget allWalletData(int index, BuildContext context, String dateCreated, String fnominal) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-
         Container(
           width: 156,
           height: 35,
@@ -808,17 +876,18 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
             color: listWalletData[index].type.contains("Tim")
                 ? Color(0xffB5CCD5)
                 : listWalletData[index].type.contains("Referral")
-                ? Color(0xff006971)
-                : listWalletData[index].type.contains("Royalti")
-                ? Color(0xff359389)
-                : listWalletData[index].type.contains("Withdraw")
-                ? Color(0xffD7516A)
-                : listWalletData[index].type.contains("Star")
-                ? Color(0xff006971)
-                : listWalletData[index].type
-                .contains("National")
-                ? Color(0xffFF7D67)
-                : Colors.grey,
+                    ? Color(0xff006971)
+                    : listWalletData[index].type.contains("Royalti")
+                        ? Color(0xff359389)
+                        : listWalletData[index].type.contains("Withdraw")
+                            ? Color(0xffD7516A)
+                            : listWalletData[index].type.contains("Star")
+                                ? Color(0xff006971)
+                                : listWalletData[index]
+                                        .type
+                                        .contains("National")
+                                    ? Color(0xffFF7D67)
+                                    : Colors.grey,
             borderRadius: BorderRadius.only(
                 topRight: Radius.circular(25),
                 bottomRight: Radius.circular(25)),
@@ -857,34 +926,38 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("$dateCreated",
+                listWalletData[index].from == ""
+                    ? Text("$dateCreated",
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 12)),
-                    Text("${listWalletData[index].from}",
-                        style: TextStyle(fontSize: 10))
-                  ],
-                ),
+                            fontWeight: FontWeight.bold, fontSize: 12))
+                    : Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("$dateCreated",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 12)),
+                          Text("${listWalletData[index].from}",
+                              style: TextStyle(fontSize: 10))
+                        ],
+                      ),
                 listWalletData[index].type.contains("Withdraw")
                     ? Row(
-                  children: [
-                    Icon(Icons.arrow_downward,
-                        size: 15, color: Colors.redAccent),
-                    SizedBox(width: 3),
-                    Text("Out", style: TextStyle(color: Colors.redAccent))
-                  ],
-                )
+                        children: [
+                          Icon(Icons.arrow_downward,
+                              size: 15, color: Colors.redAccent),
+                          SizedBox(width: 3),
+                          Text("Out", style: TextStyle(color: Colors.redAccent))
+                        ],
+                      )
                     : Row(
-                  children: [
-                    Icon(Icons.arrow_upward,
-                        size: 15, color: Colors.green),
-                    SizedBox(width: 3),
-                    Text("In", style: TextStyle(color: Colors.green))
-                  ],
-                ),
+                        children: [
+                          Icon(Icons.arrow_upward,
+                              size: 15, color: Colors.green),
+                          SizedBox(width: 3),
+                          Text("In", style: TextStyle(color: Colors.green))
+                        ],
+                      ),
                 Text('IDR $fnominal'.replaceAll("-", ""),
                     style: TextStyle(fontWeight: FontWeight.bold)),
               ],
@@ -895,8 +968,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
     );
   }
 
-  Widget filteredWalledData(int index,
-      BuildContext context, String dateCreated, String fnominal) {
+  Widget filteredWalledData(int index, BuildContext context, String dateCreated, String fnominal) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -908,18 +980,18 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
             color: listWalletData[index].type.contains("Tim")
                 ? Color(0xffB5CCD5)
                 : listWalletData[index].type.contains("Referral")
-                ? Color(0xff29656C)
-                : listWalletData[index].type.contains("Royalti")
-                ? Color(0xff359389)
-                : listWalletData[index].type.contains("Star")
-                ? Color(0xff006971)
-                : listWalletData[index].type
-                .contains("Withdraw")
-                ? Color(0xffD7516A)
-                : listWalletData[index].type
-                .contains("National")
-                ? Color(0xffFF7D67)
-                : Colors.white12,
+                    ? Color(0xff29656C)
+                    : listWalletData[index].type.contains("Royalti")
+                        ? Color(0xff359389)
+                        : listWalletData[index].type.contains("Star")
+                            ? Color(0xff006971)
+                            : listWalletData[index].type.contains("Withdraw")
+                                ? Color(0xffD7516A)
+                                : listWalletData[index]
+                                        .type
+                                        .contains("National")
+                                    ? Color(0xffFF7D67)
+                                    : Colors.white12,
             borderRadius: BorderRadius.only(
                 topRight: Radius.circular(25),
                 bottomRight: Radius.circular(25)),
@@ -929,7 +1001,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
             child: Padding(
               padding: const EdgeInsets.only(left: 18.0),
               child: Text(
-                 listWalletData[index].type.contains("Withdraw")
+                  listWalletData[index].type.contains("Withdraw")
                       ? "Penarikan"
                       : "${listWalletData[index].type}",
                   style: TextStyle(color: Colors.white, fontSize: 16)),
@@ -957,25 +1029,38 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("$dateCreated",
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                listWalletData[index].from == ""
+                    ? Text("$dateCreated",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 12))
+                    : Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("$dateCreated",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 12)),
+                          Text("${listWalletData[index].from}",
+                              style: TextStyle(fontSize: 10))
+                        ],
+                      ),
                 listWalletData[index].type.contains("Withdraw")
                     ? Row(
-                  children: [
-                    Icon(Icons.arrow_downward,
-                        size: 15, color: Colors.redAccent),
-                    SizedBox(width: 3),
-                    Text("Out", style: TextStyle(color: Colors.redAccent))
-                  ],
-                )
+                        children: [
+                          Icon(Icons.arrow_downward,
+                              size: 15, color: Colors.redAccent),
+                          SizedBox(width: 3),
+                          Text("Out", style: TextStyle(color: Colors.redAccent))
+                        ],
+                      )
                     : Row(
-                  children: [
-                    Icon(Icons.arrow_upward,
-                        size: 15, color: Colors.green),
-                    SizedBox(width: 3),
-                    Text("In", style: TextStyle(color: Colors.green))
-                  ],
-                ),
+                        children: [
+                          Icon(Icons.arrow_upward,
+                              size: 15, color: Colors.green),
+                          SizedBox(width: 3),
+                          Text("In", style: TextStyle(color: Colors.green))
+                        ],
+                      ),
                 Text('IDR $fnominal'.replaceAll("-", ""),
                     style: TextStyle(fontWeight: FontWeight.bold)),
               ],
@@ -987,25 +1072,24 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
   }
 }
 
-class noDataWidget extends StatelessWidget {
-  const noDataWidget({
-    Key key,
-    @required this.mediaQuery,
-  }) : super(key: key);
+class NoDataWidget extends StatelessWidget {
+  const NoDataWidget({Key key, @required this.mediaQuery, this.height})
+      : super(key: key);
 
   final MediaQueryData mediaQuery;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: MediaQuery.of(context).size.height / 1.6,
+        height: height,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(height: MediaQuery.of(context).size.height / 30),
             Container(
               child:
-              Image.asset("assets/images/no_patient_card.png", width: 200),
+                  Image.asset("assets/images/no_patient_card.png", width: 200),
             ),
             Container(
               width: mediaQuery.size.width > 600

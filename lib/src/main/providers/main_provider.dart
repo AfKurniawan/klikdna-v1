@@ -38,14 +38,14 @@ class MainProvider with ChangeNotifier {
           currentTitle = "Beranda";
           currenPage = HomePage();
           Provider.of<TokenProvider>(context, listen: false).getApiToken();
-          Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken();
+          Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken(context);
           break;
 
         case 1 :
           currentTitle = "PMR";
           currenPage = PMRPage();
           Provider.of<TokenProvider>(context, listen: false).getApiToken();
-          Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken();
+          Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken(context);
           Provider.of<AccountProvider>(context, listen: false).getUserAccount(context);
 
           break;
@@ -54,14 +54,14 @@ class MainProvider with ChangeNotifier {
           currentTitle = "Mitra";
           currenPage = MitraPage();
           Provider.of<TokenProvider>(context, listen: false).getApiToken();
-          Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken();
+          Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken(context);
           break;
 
         case 3 :
           currentTitle = "Report";
           currenPage = NewMainReportPage();
           Provider.of<TokenProvider>(context, listen: false).getApiToken();
-          Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken();
+          Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken(context);
           Provider.of<AccountProvider>(context, listen: false).getUserAccount(context);
           break;
 
@@ -69,7 +69,7 @@ class MainProvider with ChangeNotifier {
           currentTitle = "Profil";
           currenPage = MainProfilePage();
           Provider.of<TokenProvider>(context, listen: false).getApiToken();
-          Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken();
+          Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken(context);
           break;
       }
 

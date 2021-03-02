@@ -9,7 +9,7 @@ class TreeWebViewWidget extends StatelessWidget {
     @required this.prov,
   }) : super(key: key);
 
-  final LoginProvider prov;
+  final MitraProvider prov;
 
   @override
   Widget build(BuildContext context) {

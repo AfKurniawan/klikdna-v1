@@ -174,7 +174,7 @@ class Routing {
         break;
 
       case "all_event_by_category":
-        return PageTransition(child: AllEventByCategoriesPage(), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
+        return PageTransition(child: AllEventByCategoriesPage(model: settings.arguments), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
         break;
 
 

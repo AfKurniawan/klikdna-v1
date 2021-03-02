@@ -15,6 +15,7 @@ import 'package:new_klikdna/src/home/widgets/podcast_slider.dart';
 import 'package:new_klikdna/src/token/providers/cms_token_provider.dart';
 import 'package:new_klikdna/src/token/providers/token_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
+import 'package:new_klikdna/widgets/loading_widget.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
@@ -33,15 +34,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken();
+    Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken(context);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<ArtikelProvider>(context, listen: false)
-        .getArtikel(context, context.watch<TokenProvider>().accessToken);
-    Provider.of<HomeProvider>(context, listen: false).getHomeContents(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: const SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.light,
@@ -51,7 +49,7 @@ class _HomePageState extends State<HomePage> {
         //appBar:  myApbar(context),
         body: Consumer<HomeProvider>(
           builder: (context, prov, _){
-            return prov.isLoading == true ? Center(child: SpinKitDoubleBounce(color: Colors.grey))
+            return prov.isLoading == true ? LoadingWidget()
                 : SingleChildScrollView(
               child: Column(
                 children: <Widget>[
