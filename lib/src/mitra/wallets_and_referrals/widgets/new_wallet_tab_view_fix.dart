@@ -590,7 +590,8 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                             fontSize: 16, fontWeight: FontWeight.bold))),
                 SizedBox(height: 5),
                 Container(
-                    child: Text(
+                    child: datefromController.text == null ? Text ("KOSONG")
+                    : Text(
                         "Total ${listWalletData.length == 0 ? 0 : listWalletData.length} Transaksi"))
               ],
             ),
