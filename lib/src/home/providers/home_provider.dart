@@ -44,7 +44,8 @@ class HomeProvider extends ChangeNotifier {
   int trainArray = 0 ;
   var status ;
 
-  Future<List<HomeModel>> getHomeContents(BuildContext context) async {
+  Future<HomeModel> getHomeContentsxx(BuildContext context) async {
+    print("GET HOME STARTED");
     isLoading = true ;
     var url = AppConstants.GET_HOME_ARTIKEL;
     final prov = Provider.of<CmsTokenProvider>(context, listen: false);
@@ -54,16 +55,14 @@ class HomeProvider extends ChangeNotifier {
       "Authorization": "Bearer $accessToken"
     };
     final response = await http.get(url, headers: ndas);
+    var responseJson = json.decode(response.body);
 
     if(response.statusCode == 200){
 
-      var responseJson = json.decode(response.body);
       jsonArray = responseJson['data'] as List;
       isLoading = false ;
 
       for (int i = 0; i < jsonArray.length; i++) {
-        promo = Data.fromJson(jsonArray[i]['data']);
-
         bannerMapArray = jsonArray.map((p) => ArrayData.fromJson(p)).toList();
         bannerArray = bannerMapArray.where((i) => i.data.categoryId == 4 && i.data.status == 1).toList();
 
@@ -91,13 +90,15 @@ class HomeProvider extends ChangeNotifier {
         healthEventArray.sort((a, b) => a.data.doDate.compareTo(b.data.doDate));
         healthArray = healthEventArray.length ;
 
-        notifyListeners();
+
 
       }
 
     }
 
-    return null;
+    notifyListeners();
+
+    //return responseJson ;
 
   }
 

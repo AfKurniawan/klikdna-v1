@@ -14,7 +14,7 @@ class CmsTokenProvider with ChangeNotifier {
 
   String cmsAccessToken= "" ;
 
-  getCmsToken(BuildContext context) async {
+  Future<String> getCmsToken (BuildContext context) async {
 
     print("START GET TOKEN");
 
@@ -26,21 +26,18 @@ class CmsTokenProvider with ChangeNotifier {
     final request = await http.post(url, body: body);
     final cmsTokenResponse = TokenModel.fromJson(json.decode(request.body));
 
-    if(request.statusCode == 200){
-
-
+    if(request.statusCode == 200) {
 
       cmsAccessToken = cmsTokenResponse.accessToken;
-
-      notifyListeners();
-
-      Provider.of<HomeProvider>(context, listen: false).getHomeContents(context);
-
+      context.read<HomeProvider>().getHomeContentsxx(context);
 
     } else {
 
+      print("Do nothing");
 
     }
+
+    notifyListeners();
 
   }
 

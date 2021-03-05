@@ -32,8 +32,6 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     Provider.of<MainProvider>(context, listen: false).getPrefs();
     Provider.of<TokenProvider>(context, listen: false).getApiToken();
-    Provider.of<HomeProvider>(context, listen: false).getHomeContents(context);
-    Provider.of<LoginProvider>(context, listen: false).getMitraData();
     context.read<MainProvider>().selectTab(context, widget.currentTab);
     super.initState();
 

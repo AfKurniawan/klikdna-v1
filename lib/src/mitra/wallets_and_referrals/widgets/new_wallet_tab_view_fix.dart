@@ -10,6 +10,7 @@ import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:new_klikdna/src/mitra/wallets_and_referrals/models/wallet_model.dart';
 import 'package:new_klikdna/src/mitra/wallets_and_referrals/providers/wallet_referral_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
+import 'package:new_klikdna/styles/text_styles.dart';
 import 'package:new_klikdna/widgets/loading_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -162,6 +163,17 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
 
         print("SUM FILTER $totalsum");
         print("JUMLAH KOMISI FILTER $komisi");
+
+
+        if(datefromController.text.isNotEmpty || datetoController.text.isNotEmpty){
+          var formatTgl = DateFormat('dd MMMM yyyy', "id_ID");
+          var parsedDateFrom = DateTime.parse(datefromController.text).toLocal();
+          var parsedDateTo = DateTime.parse(datetoController.text).toLocal();
+          datefrom = '${formatTgl.format(parsedDateFrom)}';
+          dateto = '${formatTgl.format(parsedDateTo)}';
+        }
+
+
       });
     } else {
       isLoading = false;
@@ -184,15 +196,9 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
   String datefrom;
   String dateto;
 
-  // formatDate(){
-  //   var formatTgl = DateFormat('dd MMMM yyyy', "id_ID");
-  //   if(datefromController != null || datetoController != null){
-  //     var parsedDateFrom = DateTime.parse(datefromController.text).toLocal();
-  //     var parsedDateTo = DateTime.parse(datetoController.text).toLocal();
-  //     datefrom = '${formatTgl.format(parsedDateFrom)}';
-  //     dateto = '${formatTgl.format(parsedDateTo)}';
-  //   }
-  // }
+  formatDate(){
+
+  }
 
   TextEditingController datefromController = new TextEditingController();
   TextEditingController datetoController = new TextEditingController();
@@ -320,8 +326,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                                   return showDatePicker(
                                       context: context,
                                       firstDate: DateTime(1900),
-                                      initialDate:
-                                          currentValue ?? DateTime.now(),
+                                      initialDate: currentValue ?? DateTime.now(),
                                       lastDate: DateTime(2100));
                                 },
                               ),
@@ -436,7 +441,6 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                           child: InkWell(
                             onTap: () {
                               filterWalletDataxx(context);
-                              clearDateFilter();
                               Navigator.of(context).pop();
                             },
                             splashColor: Colors.white,
@@ -590,7 +594,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                             fontSize: 16, fontWeight: FontWeight.bold))),
                 SizedBox(height: 5),
                 Container(
-                    child: datefromController.text == null ? Text ("KOSONG")
+                    child: datefromController.text.isNotEmpty ? Text("$datefrom - $dateto", style: (TextStyle(fontSize: 12)))
                     : Text(
                         "Total ${listWalletData.length == 0 ? 0 : listWalletData.length} Transaksi"))
               ],

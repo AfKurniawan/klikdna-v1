@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_klikdna/src/account/providers/account_provider.dart';
 import 'package:new_klikdna/src/home/pages/home_page.dart';
+import 'package:new_klikdna/src/home/providers/home_provider.dart';
 import 'package:new_klikdna/src/mitra/pages/mitra_page.dart';
 import 'package:new_klikdna/src/pmr/pages/pmr_page.dart';
 import 'package:new_klikdna/src/profile/pages/main_profile_page.dart';
@@ -37,6 +38,7 @@ class MainProvider with ChangeNotifier {
           currenPage = HomePage();
           Provider.of<TokenProvider>(context, listen: false).getApiToken();
           Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken(context);
+
           break;
 
         case 1 :

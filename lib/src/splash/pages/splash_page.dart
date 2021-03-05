@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_klikdna/src/home/providers/home_provider.dart';
 import 'package:new_klikdna/src/splash/providers/splash_provider.dart';
 import 'package:new_klikdna/src/token/providers/cms_token_provider.dart';
 import 'package:new_klikdna/src/token/providers/token_provider.dart';
@@ -16,7 +17,6 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     context.read<SplashProvider>().getPrefs(context);
     Provider.of<TokenProvider>(context, listen: false).getApiToken();
-    Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken(context);
     super.initState();
   }
   @override

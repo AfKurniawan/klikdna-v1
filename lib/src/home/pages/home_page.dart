@@ -34,9 +34,11 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken(context);
+   // Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken(context);
+    context.read<HomeProvider>().getHomeContentsxx(context);
     super.initState();
   }
+
 
   @override
   Widget build(BuildContext context) {
