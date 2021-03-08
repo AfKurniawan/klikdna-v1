@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:new_klikdna/src/account/models/account_model.dart';
 import 'package:new_klikdna/src/account/providers/account_provider.dart';
 import 'package:new_klikdna/src/login/providers/login_provider.dart';
+import 'package:new_klikdna/src/mitra/providers/mitra_provider.dart';
 import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
 import 'package:new_klikdna/src/profile/providers/profile_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
@@ -78,7 +79,7 @@ class _MainProfilePageState extends State<MainProfilePage> {
                     ),
                   ),
                   SizedBox(width: 20),
-                  Consumer<LoginProvider>(
+                  Consumer<MitraProvider>(
                     builder: (context, model, _) {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -152,7 +153,7 @@ class _MainProfilePageState extends State<MainProfilePage> {
               color: Colors.white,
               child: Padding(
                 padding: const EdgeInsets.all(18.0),
-                child: Consumer<LoginProvider>(
+                child: Consumer<MitraProvider>(
                   builder: (child, model, _){
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

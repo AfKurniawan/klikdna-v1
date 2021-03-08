@@ -169,8 +169,11 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
           var formatTgl = DateFormat('dd MMMM yyyy', "id_ID");
           var parsedDateFrom = DateTime.parse(datefromController.text).toLocal();
           var parsedDateTo = DateTime.parse(datetoController.text).toLocal();
-          datefrom = '${formatTgl.format(parsedDateFrom)}';
-          dateto = '${formatTgl.format(parsedDateTo)}';
+         setState(() {
+           datefrom = '${formatTgl.format(parsedDateFrom)}';
+           dateto = '${formatTgl.format(parsedDateTo)}';
+         });
+
         }
 
 
@@ -601,6 +604,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
             ),
             InkWell(
               onTap: () {
+                clearFilter();
                 showBottomSheetFilter(context);
               },
               splashColor: Colors.blueGrey,
@@ -857,6 +861,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                     InkWell(
                       onTap: () {
                         showBottomSheetFilter(context);
+                        clearFilter();
                       },
                       splashColor: Colors.blueGrey,
                       child: Container(
@@ -875,6 +880,8 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                 NoDataWidget(
                   mediaQuery: mediaQuery,
                   height: MediaQuery.of(context).size.height / 2.5,
+                  datefrom: "$datefrom",
+                  dateto: "$dateto",
                 ),
               ],
             ),
@@ -941,7 +948,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
             ],
           ),
           child: Padding(
-            padding: const EdgeInsets.only(left: 12.0, right: 12),
+            padding: const EdgeInsets.only(left: 15.0, right: 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -1093,11 +1100,13 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
 }
 
 class NoDataWidget extends StatelessWidget {
-  const NoDataWidget({Key key, @required this.mediaQuery, this.height})
+  const NoDataWidget({Key key, @required this.mediaQuery, this.height, this.dateto, this.datefrom})
       : super(key: key);
 
   final MediaQueryData mediaQuery;
   final double height;
+  final String dateto;
+  final String datefrom;
 
   @override
   Widget build(BuildContext context) {
@@ -1137,6 +1146,7 @@ class NoDataWidget extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  Text("$datefrom - $dateto")
                 ],
               ),
             ),

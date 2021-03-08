@@ -17,9 +17,9 @@ class MemberItemWidget extends StatelessWidget {
     return InkWell(
       splashColor: Colors.blue,
       onTap: () {
-        print("Widget: ${member.personId}");
-        //prov.getSample(context, member.personId);
-        mem.getName(context, member.name);
+        print("Widget ====> ${member.personId}");
+        prov.getSamplexx(context, member.personId);
+        mem.getNamexx(context, member.name);
       },
       child: Container(
         margin: EdgeInsets.only(left: 10),

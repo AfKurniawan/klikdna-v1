@@ -12,6 +12,7 @@ import 'package:new_klikdna/src/home/widgets/banner_slider.dart';
 import 'package:new_klikdna/src/home/widgets/event_widget.dart';
 import 'package:new_klikdna/src/home/widgets/pin_widget.dart';
 import 'package:new_klikdna/src/home/widgets/podcast_slider.dart';
+import 'package:new_klikdna/src/mitra/providers/mitra_provider.dart';
 import 'package:new_klikdna/src/token/providers/cms_token_provider.dart';
 import 'package:new_klikdna/src/token/providers/token_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
@@ -35,6 +36,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
    // Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken(context);
+    Provider.of<MitraProvider>(context, listen: false).refreshMitraData();
     context.read<HomeProvider>().getHomeContentsxx(context);
     super.initState();
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_klikdna/src/login/providers/login_provider.dart';
+import 'package:new_klikdna/src/mitra/providers/mitra_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:new_klikdna/styles/my_theme.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +13,7 @@ class CardTypeSatuWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return Consumer<LoginProvider>(
+    return Consumer<MitraProvider>(
       builder: (child, model, _){
         return Container(
           margin: EdgeInsets.only(

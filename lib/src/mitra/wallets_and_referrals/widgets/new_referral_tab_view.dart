@@ -36,7 +36,7 @@ class _NewReferralTabViewState extends State<NewReferralTabView> {
                     ? Container()
                     : Container(
                         width: MediaQuery.of(context).size.width,
-                        margin: EdgeInsets.only(bottom: 30),
+                        margin: EdgeInsets.only(bottom: 10),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10),
@@ -49,7 +49,7 @@ class _NewReferralTabViewState extends State<NewReferralTabView> {
                           ],
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.all(18.0),
+                          padding: const EdgeInsets.only(bottom: 20.0, top: 20),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -92,7 +92,7 @@ class _NewReferralTabViewState extends State<NewReferralTabView> {
                                 });
                           },
                         ),
-              SizedBox(height: 30),
+             // SizedBox(height: 10),
             ],
           ),
         ));
@@ -112,7 +112,7 @@ class _NewReferralTabViewState extends State<NewReferralTabView> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             Container(
                 width: 156,
                 height: 35,
@@ -162,14 +162,14 @@ class _NewReferralTabViewState extends State<NewReferralTabView> {
                                 TextStyle(color: Colors.white, fontSize: 16)),
                       ),
                     )),
-            SizedBox(height: 10),
+            SizedBox(height: 15),
             Container(
               width: MediaQuery.of(context).size.width,
               //height: 100,
               margin: EdgeInsets.only(bottom: 10, left: 18, right: 18),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
                     offset: Offset(0, 1),

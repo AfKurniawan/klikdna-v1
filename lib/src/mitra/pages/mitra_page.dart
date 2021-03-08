@@ -21,12 +21,7 @@ class MitraPage extends StatefulWidget {
 
 class _MitraPageState extends State<MitraPage> {
 
-  final List<Widget> slideCard = [
-    CardTypeSatuWidget(),
-    CardTypeDuaWidget()
-  ];
 
-  int _current = 0;
 
   @override
   void initState() {
@@ -36,7 +31,6 @@ class _MitraPageState extends State<MitraPage> {
 
   @override
   Widget build(BuildContext context) {
-    final prov = Provider.of<LoginProvider>(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
         value: const SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.dark,
@@ -62,7 +56,7 @@ class _MitraPageState extends State<MitraPage> {
                         padding: const EdgeInsets.only(left: 10.0, right: 2),
                         child: Container(
                           child: CarouselSlider(
-                            items: slideCard,
+                            items: mitra.slideCard,
                             options: CarouselOptions(
                                 autoPlay: false,
                                 enlargeCenterPage: false,
@@ -71,7 +65,7 @@ class _MitraPageState extends State<MitraPage> {
                                 aspectRatio: 2.0,
                                 onPageChanged: (index, reason) {
                                   setState(() {
-                                    _current = index;
+                                    mitra.current = index;
                                   });
                                 }),
                           ),
@@ -84,9 +78,9 @@ class _MitraPageState extends State<MitraPage> {
                           child: Center(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: slideCard.map((url) {
-                                int index = slideCard.indexOf(url);
-                                if (_current == index) {
+                              children: mitra.slideCard.map((url) {
+                                int index = mitra.slideCard.indexOf(url);
+                                if (mitra.current == index) {
                                   return Container(
                                     width: 18.0,
                                     height: 8.0,

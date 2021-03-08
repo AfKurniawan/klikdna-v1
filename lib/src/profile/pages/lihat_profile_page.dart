@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:new_klikdna/src/login/providers/login_provider.dart';
+import 'package:new_klikdna/src/mitra/providers/mitra_provider.dart';
 import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
 import 'package:new_klikdna/src/token/providers/token_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
@@ -62,7 +63,7 @@ class _LihatProfilePageState extends State<LihatProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<LoginProvider>(
+    return Consumer<MitraProvider>(
       builder: (context, prov, _){
         return Scaffold(
           key: _scaffoldKey,

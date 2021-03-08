@@ -31,13 +31,23 @@ class ReportProvider extends ChangeNotifier {
   var jsonArray = [];
 
 
-  Future<List<ReportModel>> getSamplexxx(BuildContext context, String personId) async {
+  Future<List<ReportModel>> getSamplexx(BuildContext context, String personId) async {
     isLoading = true;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String accountId = prefs.getString("personId");
-    var url = AppConstants.GET_SAMPLE_URL + '$accountId';
-    final prov = Provider.of<TokenProvider>(context, listen: false);
+    String prefPersonId = prefs.getString("personId");
+    String paramPersonId = "" ;
+    if(personId == "" || personId == null) {
+      paramPersonId = prefPersonId;
+      notifyListeners();
+      print("PARAM PERSON ID = $paramPersonId");
+    } else {
+      paramPersonId = personId;
+      notifyListeners();
+      print("PARAM PERSON ID ELSE = $paramPersonId");
+    }
+    var url = AppConstants.GET_SAMPLE_URL + '$paramPersonId';
 
+    final prov = Provider.of<TokenProvider>(context, listen: false);
     String accessToken = prov.accessToken;
     print("ASES TOKEN: $accessToken");
 
@@ -47,13 +57,14 @@ class ReportProvider extends ChangeNotifier {
     };
 
     final response = await http.get(url, headers: ndas);
-    print("SAMPLE RESPONSE CODE: ${response.statusCode}");
+
 
     if (response.statusCode == 200) {
       isLoading = false;
       notfound = false ;
 
       var responseJson = json.decode(response.body);
+      print("SAMPLE RESPONSE BODY >>> ${response.body}");
       jsonArray = responseJson['data'] as List;
 
       for(int i = 0; i < jsonArray.length; i++){
@@ -71,16 +82,20 @@ class ReportProvider extends ChangeNotifier {
     } else if (response.statusCode == 404) {
       print("REPORT Not Found");
       listDetail = [];
+      listDetail2 = [];
       isLoading = false;
       notfound = true ;
       notifyListeners();
       listDetail.clear();
+      listDetail2.clear();
     } else if (response.statusCode == 500) {
       listDetail = [];
+      listDetail2 = [];
       isLoading = false;
       notfound = true ;
       notifyListeners();
       listDetail.clear();
+      listDetail2.clear();
     }
 
     return null;

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:new_klikdna/src/account/providers/account_provider.dart';
 import 'package:new_klikdna/src/login/providers/login_provider.dart';
+import 'package:new_klikdna/src/mitra/providers/mitra_provider.dart';
 import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +24,7 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
   }
   @override
   Widget build(BuildContext context) {
-    return Consumer<LoginProvider>(
+    return Consumer<MitraProvider>(
       builder: (context, prov, _){
         return Scaffold(
           appBar: AppBar(

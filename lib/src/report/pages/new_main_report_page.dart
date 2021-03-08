@@ -52,52 +52,7 @@ class _NewMainReportPageState extends State<NewMainReportPage> {
             centerTitle: true,
             elevation: 0,
           ),
-          body: report.isLoading == true
-              ? Container(
-                  child: Center(child: SpinKitDoubleBounce(color: Colors.grey)))
-              : report.notfound == true
-              ? Container(
-              child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        child: Image.asset("assets/images/no_patient_card.png" , width: 200),
-                      ),
-                      SizedBox(height: 16),
-                      Container(
-                        width: mediaQuery.size.width > 600 ? mediaQuery.size.width /2 : mediaQuery.size.width / 1,
-                        padding: EdgeInsets.only(
-                          bottom: 16,
-                          left: 16,
-                          right: 16,
-                        ),
-                        decoration: new BoxDecoration(
-                          color: Colors.transparent,
-                          shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min, // To make the card compact
-                          children: <Widget>[
-                            Text(
-                              "Anda belum mempunyai report",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  )
-              )
-          )
-              : Stack(
+          body: Stack(
                 children: <Widget>[
                   Container(
                     height: 80,

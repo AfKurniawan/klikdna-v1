@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_klikdna/src/login/providers/login_provider.dart';
+import 'package:new_klikdna/src/mitra/providers/mitra_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:new_klikdna/styles/my_theme.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +12,7 @@ class CardTypeDuaWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<LoginProvider>(
+    return Consumer<MitraProvider>(
       builder: (child, model, _){
         return Container(
           margin: EdgeInsets.only(
@@ -58,15 +59,15 @@ class CardTypeDuaWidget extends StatelessWidget {
                   child: Image.asset("assets/images/card_logo.png", height: 200),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 16.0, top: 16, right: 16, bottom: 16),
+                  padding: const EdgeInsets.only(left: 16.0, top: 16, right: 16, bottom: 5),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text((model.vhighestrank == "0" || model.vpar == "") ? "${model.vpar}" : "${model.vtype}",
+                      Text("${model.vpar}",
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: 20,
+                              fontSize: 16,
                               fontWeight: FontWeight.bold)),
                       SizedBox(height: 5),
                       Text(model.vhighestrank == "0" || model.vpar == ""
@@ -76,12 +77,12 @@ class CardTypeDuaWidget extends StatelessWidget {
                           : "Kualifikasi Peringkat: ${model.vrank}",
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500)),
+                              fontSize: 10,
+                              fontWeight: FontWeight.w300)),
 
 
                       Container(
-                        margin: EdgeInsets.only(top: 70),
+                        margin: EdgeInsets.only(top: 100),
                         width: MediaQuery.of(context).size.width / 1,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

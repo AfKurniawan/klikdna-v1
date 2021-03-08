@@ -6,6 +6,8 @@ import 'package:intl/intl.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:new_klikdna/src/login/models/login_model.dart';
 import 'package:new_klikdna/src/login/widgets/login_error_widget.dart';
+import 'package:new_klikdna/src/mitra/providers/mitra_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -197,7 +199,6 @@ class LoginProvider with ChangeNotifier{
 
             print("RESPONSE STATUS = ${responseJson.user.message}");
 
-            getMitraData();
 
             Navigator.of(context).pushReplacementNamed("main_page");
 
@@ -229,196 +230,6 @@ class LoginProvider with ChangeNotifier{
                 },
             ));
     }
-
-
-
-
-
-
-    /// USER ID
-    int vuserid;
-    String vprofilEmail;
-    String vreferralUrl;
-
-    ///MEMBER
-    String vnumber;
-    String vfirstname;
-    String vlastname;
-    String vallName ;
-    String vbirthdate;
-    String vgender;
-    String vaddress;
-    String vkelurahan;
-    String vsubdistrict;
-    String vcity;
-    String vprovince;
-    String vzipcode;
-    String vphone;
-    int vleftcv;
-    int vrightcv;
-    int vleftpointreward;
-    int vrightpointreward;
-    var vcommission = ".00";
-    String vrank;
-    String vpar;
-    String vexpired;
-    var vhighestrank;
-    String vtimoneposition;
-    String vtimtwoposition;
-    int vtimone;
-    int vtimtwo;
-    var vtotalcommission;
-    String vtype;
-    String vmonthlycycle;
-    String vdailycycle;
-
-
-
-    ///SPONSOR
-    String vsponsorfirstname;
-    String vsponsorlastname;
-    String vsponsorgender;
-    String vsponsoraddress;
-    String vsponsorkelurahan;
-    String vsponsorsubdistrict;
-    String vsponsorcity;
-    String vsponsorprovince;
-    String vsponsorphone;
-
-    /// WEBVIEWS
-    String vdashboard;
-    String vtree;
-    String vgenerasi;
-    String vreferral;
-    String vcv;
-    String vpointreward;
-    String vkebijakanPrivacy;
-    String vketentuanPengguna;
-
-    /// WALLETS
-    String vmethod;
-    String vwalleturl;
-
-    ///PARAMS
-    String vaccesskey;
-    String vtypeId;
-    String vdatefrom;
-    String vdateto;
-
-
-    String parsedTanggalExpired ;
-    var tglLahir ;
-
-    var formatTgl = DateFormat('dd MMM yyyy', "id_ID");
-    var formatTglLahir = DateFormat('dd MMMM yyyy', "id_ID");
-    var expParsedDate ;
-    String vtglLahir ;
-    String vallAddress ;
-
-    getMitraData() async {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        vnumber = prefs.getString("number");
-        vuserid = prefs.getInt("userid");
-
-        String nulledExpired = prefs.getString("expired") == null ? "-" : prefs.getString("expired");
-
-        if(nulledExpired == "-"){
-            expParsedDate = "-" ;
-            parsedTanggalExpired = "-" ;
-        } else {
-            expParsedDate = DateTime.parse(prefs.getString("expired")).toLocal();
-            parsedTanggalExpired = ('${formatTgl.format(expParsedDate).substring(0, 11)}');
-        }
-
-
-
-        ///MEMBER
-        vfirstname = prefs.getString("firstname");
-        vlastname = prefs.getString("lastname");
-        vallName = prefs.getString('firstname') + " " + prefs.getString('lastname') ;
-        print("LEDGH VALLNAME__: ${vallName.length}");
-        //vbirthdate = prefs.getString("birthdate");
-
-        tglLahir = DateTime.parse(prefs.getString('birthdate')).toLocal();
-
-        vbirthdate = ('${formatTglLahir.format(tglLahir)}');
-
-        vgender = prefs.getString("gender");
-
-        print("GENDER >>>>>>>>>>>>> $vgender");
-
-        vaddress = prefs.getString("address");
-        vkelurahan = prefs.getString("kelurahan");
-        vsubdistrict = prefs.getString("subdistrict");
-        vcity = prefs.get("city");
-        vprovince = prefs.getString("province");
-        vzipcode = prefs.getString("zipcode");
-        vallAddress = "$vaddress, " + "$vkelurahan, " + "$vsubdistrict, " + "$vcity, " + "$vzipcode" ;
-        vphone = prefs.getString("phone");
-        vleftcv = prefs.getInt("leftcv");
-        vrightcv = prefs.getInt("rightcv");
-        vleftpointreward = prefs.getInt("leftpointreward");
-        vrightpointreward = prefs.getInt("rightpointreward");
-        vcommission = prefs.getString("commission");
-        vrank = prefs.getString("rank");
-        print("VRANK ........... $vrank");
-        vpar = prefs.getString("par");
-        print("VPAR >>>>>>>>>>>>>>> $vpar");
-        vexpired = prefs.getString("expired");
-        vhighestrank = prefs.getString("highestrank");
-        print("HIGEST RANK >>>>>>>>>>>>>>> $vhighestrank");
-        vtimone = prefs.getInt("timone");
-        vtimtwo = prefs.getInt("timtwo");
-        vtotalcommission = prefs.getString("totalcommission");
-        vtype = prefs.getString("type");
-        print("VTYPE ------->>>>>> $vtype");
-        vprofilEmail = prefs.getString("profilemail");
-        vreferralUrl = prefs.getString("referralurl");
-        vtimoneposition = prefs.getString("timoneposition");
-        vtimtwoposition = prefs.getString("timtwoposition");
-        vdailycycle = prefs.getString("dailycycle");
-        vmonthlycycle = prefs.getString("monthlycycle");
-
-
-        ///SPONSOR
-        vsponsorfirstname = prefs.getString("sponsorfirstname");
-        vsponsorlastname = prefs.getString("sponsorlastname");
-        vsponsorgender = prefs.getString("sponsorgender");
-        vsponsoraddress = prefs.getString("sponsoraddress");
-        vsponsorkelurahan = prefs.getString("sponsorkelurahan");
-        vsponsorsubdistrict = prefs.getString("sponsorsubdistrict");
-        vsponsorcity = prefs.getString("sponsorcity");
-        vsponsorprovince = prefs.getString("sponsorprovince");
-        vsponsorphone = prefs.getString("sponsorphone");
-
-        ///WEBVIEWS
-        vdashboard = prefs.getString("dashboard");
-        vtree = prefs.getString("tree");
-        vreferral = prefs.getString("referral");
-        vcv = prefs.getString("cv");
-        vpointreward = prefs.getString("pointreward");
-        vkebijakanPrivacy = prefs.getString("kebijakanPrivacy");
-        vketentuanPengguna = prefs.getString("ketentuanPengguna");
-
-        ///WALLETS
-        vmethod = prefs.getString("method");
-        vwalleturl = prefs.getString("walleturl");
-
-        ///PARAMS OPTIONAL
-        vaccesskey = prefs.getString("accesskey");
-        vtypeId = prefs.getString("typeId");
-        vdatefrom = prefs.getString("datefrom");
-        vdateto = prefs.getString("dateto");
-
-
-        notifyListeners();
-
-        print("TIM 1 POS : $vtimoneposition && TIM 2 POS : $vtimtwoposition");
-
-
-    }
-
-
 
 
 }

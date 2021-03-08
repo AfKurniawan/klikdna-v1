@@ -77,10 +77,10 @@ class AccountProvider with ChangeNotifier {
       kdmAccountId = accountResponse.data.kdmAccountId;
       userId = accountResponse.data.userId;
       prefs.setString("personId", accountResponse.data.userId);
-      print("PERSON ACOUNT___: ${accountResponse.data.userId}");
+      print("PERSON ACOUNT___: ${accountResponse.data.userId} AND NAME ==> $name");
       nameController.text = accountResponse.data.name;
-      Provider.of<ReportProvider>(context, listen: false).getSamplexxx(context, accountResponse.data.userId);
-//      notifyListeners();
+      Provider.of<ReportProvider>(context, listen: false).getSamplexx(context, accountResponse.data.userId);
+      notifyListeners();
 
     } else {
 

@@ -10,6 +10,7 @@ import 'package:new_klikdna/src/report/models/detail_report_model.dart';
 import 'package:new_klikdna/src/report/models/report_model.dart';
 import 'package:new_klikdna/src/report/providers/detail_report_provider.dart';
 import 'package:new_klikdna/src/report/widgets/detail_service_item.dart';
+import 'package:new_klikdna/src/token/providers/token_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:provider/provider.dart';
 
@@ -28,8 +29,9 @@ class _DetailReportPageState extends State<DetailReportPage> {
   String name ;
   @override
   void initState() {
+    name = Provider.of<DetailReportProvider>(context, listen: false).name;
+    Provider.of<TokenProvider>(context, listen: false).getApiToken();
     Provider.of<DetailReportProvider>(context, listen: false).getDetailReport(context, widget.model.reportId);
-    name = Provider.of<AccountProvider>(context, listen: false).name;
     super.initState();
   }
 
@@ -73,73 +75,65 @@ class _DetailReportPageState extends State<DetailReportPage> {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.only(
-                        left: 18.0, right: 18),
+                        left: 18.0, right: 18, top: 15),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Consumer<MemberProvider>(
                           builder: (context, account, _) {
-                            return Padding(
-                              padding: const EdgeInsets.only(top: 10.0),
-                              child: Container(
-                                width: MediaQuery.of(context).size.width /1.5,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text("Hello",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w300)),
-                                        SizedBox(width: 5),
-                                        Expanded(
-                                          child: Text(
-                                              account.newMemberName == ""
-                                                  ? name
-                                                  : account.newMemberName,
-                                              overflow: TextOverflow.fade,
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold)),
-                                        ),
+                            return Container(
+                              width: MediaQuery.of(context).size.width /1.5,
+                              height: 94,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text("Hello",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w300)),
+                                      SizedBox(width: 5),
+                                      Text(
+                                          account.newMemberName == ""
+                                              ? name
+                                              : account.newMemberName,
+                                          overflow: TextOverflow.fade,
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold)),
 
-                                      ],
-                                    ),
-                                    SizedBox(height: 5),
-                                    Text("Berikut ini merupakan hasil report DNAku ${widget.model.serviceName} kamu.",
-                                    style: TextStyle(color: Colors.white),
-                                    )
-                                  ],
-                                ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 5),
+                                  Text("Berikut ini merupakan hasil report\nDNAku ${widget.model.serviceName} kamu.",
+                                  style: TextStyle(color: Colors.white, fontSize: 13),
+                                  )
+                                ],
                               ),
                             );
                           },
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
                         Container(
                           height: 94,
-                          child: Center(
-                            child: Consumer<PatientCardProvider>(
-                              builder: (context, model, _) {
-                                return ClipRRect(
-                                    borderRadius: BorderRadius.circular(50),
-                                    child: model.photoView == null ?
-                                    Image.asset("assets/images/no_image.png", height: 62, width: 62, fit: BoxFit.cover)
-                                        : Image.memory(
-                                      model.photoView,
-                                      width: 62,
-                                      fit: BoxFit.cover,
-                                      height: 62,
-                                      // height: 150,
-                                    ));
-                              },
-                            ),
+                          child: Consumer<PatientCardProvider>(
+                            builder: (context, model, _) {
+                              return ClipRRect(
+                                  borderRadius: BorderRadius.circular(50),
+                                  child: model.photoView == null ?
+                                  Image.asset("assets/images/no_image.png", height: 92, width: 92, fit: BoxFit.cover)
+                                      : Image.memory(
+                                    model.photoView,
+                                    width: 92,
+                                    fit: BoxFit.cover,
+                                    height: 92,
+                                    // height: 150,
+                                  ));
+                            },
                           ),
                         )
                       ],
@@ -147,7 +141,7 @@ class _DetailReportPageState extends State<DetailReportPage> {
                   ),
                 ),
                 SingleChildScrollView(
-                  padding: EdgeInsets.only(top: 120),
+                  padding: EdgeInsets.only(top: 125),
                   child: Container(
                     padding: EdgeInsets.only(top: 10),
                     alignment: Alignment.topLeft,
@@ -308,13 +302,18 @@ class _DetailReportPageState extends State<DetailReportPage> {
 
   }
 
-  List<CheckBoxData> checkboxDataList = [
+  List<CheckBoxData> checkboxDataListOne = [
+    new CheckBoxData(id: '1', displayId: 'Alphabet', checked: false, ),
+  ];
+
+  List<CheckBoxData> checkboxDataListTwo = [
     new CheckBoxData(id: '1', displayId: 'Alphabet', checked: false, ),
     new CheckBoxData(id: '2', displayId: 'Resiko', checked: false),
   ];
 
   clearSelectedFilter(){
-    checkboxDataList.clear();
+    checkboxDataListTwo.clear();
+    checkboxDataListTwo.clear();
   }
 
   // Health dan Sport tidak ada filter Resiko selainnya ada filter
@@ -353,10 +352,11 @@ class _DetailReportPageState extends State<DetailReportPage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Column(
+                      child: widget.model.serviceName == "HEALTH" || widget.model.serviceName == "SKIN"
+                          ? Column(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: checkboxDataList.map<Widget>(
+                        children: checkboxDataListOne.map<Widget>(
                           (data) {
                             return Container(
                               child: Column(
@@ -378,7 +378,33 @@ class _DetailReportPageState extends State<DetailReportPage> {
                             );
                           },
                         ).toList(),
-                      ),
+                      )
+                          : Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: checkboxDataListTwo.map<Widget>(
+                              (data) {
+                            return Container(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  CheckboxListTile(
+                                    value: data.checked,
+                                    title: Text(data.displayId),
+                                    onChanged: (bool val) {
+                                      state(() {
+                                        data.checked = !data.checked;
+                                        onCheckedValue(data.id, data.checked);
+                                        Navigator.of(context).pop();
+                                      });
+                                    },
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ).toList(),
+                      )
                     ),
 
                   ],

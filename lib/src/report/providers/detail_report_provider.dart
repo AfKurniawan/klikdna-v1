@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
+import 'package:new_klikdna/src/account/providers/account_provider.dart';
 import 'package:new_klikdna/src/report/models/detail_report_model.dart';
 import 'package:new_klikdna/src/token/providers/token_provider.dart';
 import 'package:provider/provider.dart';
@@ -30,6 +31,7 @@ class DetailReportProvider extends ChangeNotifier {
   var penjelasanIlmiahArray = [];
   var penjelasanDetailArray = [];
   String tahu ;
+  String name = "";
 
   Future<List<Rekomendasi>> getDetailReport(BuildContext context, String reportId) async {
     isLoading = true;
@@ -37,7 +39,7 @@ class DetailReportProvider extends ChangeNotifier {
     String person = prefs.getString("personId");
     var url = AppConstants.GET_REPORT_DETAIL_URL;
     final prov = Provider.of<TokenProvider>(context, listen: false);
-    // prov.getApiToken(context);
+    prov.getApiToken();
     print("PERSON ID: $person");
 
     String accessToken = prov.accessToken;
@@ -58,23 +60,16 @@ class DetailReportProvider extends ChangeNotifier {
 
     if (request.statusCode == 200) {
       isLoading = false;
-
       final reportResponse = DetailReportModel.fromJson(json.decode(request.body));
 
       var responseJson = json.decode(request.body);
 
-
-
-
       print("DETAIL REPORT RESPONSE CODE: ${request.body}");
 
       var dataArray = responseJson['data'];
-
       reportdetailArray = dataArray['report_detail'] as List;
-
-
+      print("REPORT DETAIL ARRAY LENGHT >>> ${reportdetailArray.length}");
       if(reportdetailArray.length == 0){
-
         reportDetail =  [] ;
         listRecomendasi = [];
         penjelasanIlmiah = [] ;

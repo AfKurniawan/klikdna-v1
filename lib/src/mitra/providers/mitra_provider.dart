@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:new_klikdna/src/login/models/login_model.dart';
+import 'package:new_klikdna/src/mitra/widgets/card_type_dua_widget.dart';
+import 'package:new_klikdna/src/mitra/widgets/card_type_satu_widget.dart';
 import 'package:new_klikdna/src/profile/widgets/cupertino_dialog_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -99,6 +101,13 @@ class MitraProvider with ChangeNotifier {
   String vallAddress ;
   var responseJson ;
 
+  List<Widget> slideCard = [];
+
+  int current = 0;
+
+
+
+
   Future<LoginModel> refreshMitraData() async {
     print("== START GET MITRA DATA ==");
     prefs = await SharedPreferences.getInstance();
@@ -121,6 +130,12 @@ class MitraProvider with ChangeNotifier {
 
     if(responseJson.user.code == 200){
       print("RESPONSE BODY: ${response.body}");
+
+      slideCard = [
+        CardTypeSatuWidget(),
+        CardTypeDuaWidget()
+      ];
+
       isLoading = false ;
 
       prefs.setBool('isLogin', true);
@@ -145,6 +160,7 @@ class MitraProvider with ChangeNotifier {
       vrightcv = responseJson.user.member.rightcv;
       vleftpointreward = responseJson.user.member.leftpointreward;
       vrightpointreward = responseJson.user.member.rightpointreward;
+      vallName = vfirstname + " " + vlastname ;
 
       if(responseJson.user.member.commission == null) {
         vcommission = responseJson.user.member.commission.toString();
@@ -155,15 +171,8 @@ class MitraProvider with ChangeNotifier {
 
       vrank = responseJson.user.member.rank;
       vpar = responseJson.user.member.par;
-
-      if(responseJson.user.member.expired == null) {
-        vexpired = "-" ;
-      } else {
-        vexpired = responseJson.user.member.expired;
-      }
+      print("EXPIRED: ==> ${responseJson.user.member.expired}");
       vhighestrank = responseJson.user.member.highestrank.toString();
-      print("${responseJson.user.member.highestrank.toString()}");
-
       vtimoneposition = responseJson.user.member.timoneposition;
       vtimtwoposition = responseJson.user.member.timtwoposition ;
       vtimone = responseJson.user.member.timone;
@@ -209,9 +218,31 @@ class MitraProvider with ChangeNotifier {
 
       vdateto = responseJson.user.jsonData.referrals.params.dateto;
 
-      notifyListeners();
+      if(responseJson.user.member.expired == null) {
+        vexpired = "-" ;
+      } else {
+        vexpired = responseJson.user.member.expired;
+      }
 
-      print("RESPONSE STATUS = ${responseJson.user.message}");
+          String nulledExpired = responseJson.user.member.expired == null ? "-" : responseJson.user.member.expired;
+
+          if(nulledExpired == "-"){
+              expParsedDate = "-" ;
+              parsedTanggalExpired = "-" ;
+          } else {
+              expParsedDate = DateTime.parse(prefs.getString("expired")).toLocal();
+              parsedTanggalExpired = ('${formatTgl.format(expParsedDate).substring(0, 11)}');
+          }
+
+
+      print("MITRA HIGEST RANK >>>>>>>>>>>>>>> $vhighestrank");
+      print("MITRA VRANK ........... $vrank");
+      print("MITRA VTYPE ------->>>>>> $vtype");
+      print("MITRA VPAR >>>>>>>>>>>>>>> $vpar");
+
+
+
+      notifyListeners();
 
 
     } else if(responseJson.user.code == 400) {
