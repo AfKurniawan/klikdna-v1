@@ -81,9 +81,7 @@ class _NewReferralTabViewState extends State<NewReferralTabView> {
                           child: Platform.isIOS
                               ? CupertinoActivityIndicator(radius: 12)
                               : CircularProgressIndicator(strokeWidth: 2)))
-                  : referral.listWalletData.length == 0
-                      ? noDataWidget(mediaQuery: mediaQuery)
-                      : Consumer<WalletReferralProvider>(
+                  : Consumer<WalletReferralProvider>(
                           builder: (child, wallet, _) {
                             return FutureBuilder(
                                 future: widget.future,

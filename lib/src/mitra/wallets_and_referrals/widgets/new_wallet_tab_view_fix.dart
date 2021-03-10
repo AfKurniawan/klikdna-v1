@@ -29,7 +29,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
   var items = List<Wallet>();
 
   int present = 0;
-  int perPage = 4;
+  int perPage = 6;
 
   @override
   void initState() {
@@ -485,7 +485,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
     "Komisi Tim",
     "Komisi Royalti",
     "National Sharing",
-    "Penarikan"
+    "Withdraw"
   ];
 
   void _handleRadioValueChange(BuildContext context, String value) {
@@ -520,7 +520,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
         filterWalletDataxx(context);
         print("RESULT $result");
         break;
-      case "Penarikan":
+      case "Withdraw":
         result = "5";
         totalsum = "...";
         filterWalletDataxx(context);
@@ -675,7 +675,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                                         fontSize: 16,
                                         color: MyColors.dnaBadge,
                                         fontWeight: FontWeight.bold)))
-                            : tipeValue.contains("Penarikan")
+                            : tipeValue.contains("Withdraw")
                                 ? Container(
                                     child: Text(totalsum == null ? "" : "IDR ${totalsum.split(".")[0].replaceAll("-", "")}",
                                         style: TextStyle(
@@ -702,23 +702,10 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                       ? "National Sharing"
                       : tipeValue.contains("Star")
                       ? "Bonus Star Maker"
-                      : tipeValue.contains("Penarikan")
-                      ? "Penarikan"
+                      : tipeValue.contains("Withdraw")
+                      ? "Withdraw"
                       : "-"
                 )
-                // tipeValue.contains("Referral")
-                //     ? Text("Komisi Referral")
-                //     : tipeValue.contains("Tim")
-                //         ? Text("Komisi Tim")
-                //         : tipeValue.contains("Royalti")
-                //             ? Text("Komisi Royalti")
-                //             : tipeValue.contains("National")
-                //                 ? Text("National Sharing")
-                //                 : tipeValue.contains("Star Maker")
-                //                     ? Text("Star Maker")
-                //                     : tipeValue.contains("Penarikan")
-                //                         ? Text("Penarikan")
-                //                         : "",
               ],
             ),
             Container(
@@ -731,9 +718,8 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                    child: Text(
-                        komisi == null
-                            ? ""
+                    child: Text(listWalletData.length == 0
+                            ? "0"
                             : "IDR ${komisi.split(".")[0].replaceAll("-", "")}",
                         style: TextStyle(
                             fontSize: 16,
@@ -772,8 +758,8 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
           children: [
             Container(
                 child: Text(
-                    komisi == null
-                        ? "0"
+                    listWalletData.length == 0
+                        ? "IDR 0"
                         : "IDR ${komisi.split(".")[0].replaceAll("-", "")}",
                     style: TextStyle(
                         fontSize: 16,
@@ -839,7 +825,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
             padding: EdgeInsets.only(left: 18.0, right: 18),
             child: Column(
               children: [
-                filteredDataSaldoCard(context, wallet),
+                allDataSaldoCard(context),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -880,8 +866,8 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                 NoDataWidget(
                   mediaQuery: mediaQuery,
                   height: MediaQuery.of(context).size.height / 2.5,
-                  datefrom: "$datefrom",
-                  dateto: "$dateto",
+                  datefrom: datefrom == null ? "" : "$datefrom",
+                  dateto: dateto == null ? "" : "$dateto",
                 ),
               ],
             ),
@@ -923,10 +909,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
             alignment: Alignment.centerLeft,
             child: Padding(
               padding: const EdgeInsets.only(left: 18.0),
-              child: Text(
-                  listWalletData[index].type.contains("Withdraw")
-                      ? "Penarikan"
-                      : "${listWalletData[index].type}",
+              child: Text("${listWalletData[index].type}",
                   style: TextStyle(color: Colors.white, fontSize: 14)),
             ),
           ),
@@ -1027,10 +1010,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
             alignment: Alignment.centerLeft,
             child: Padding(
               padding: const EdgeInsets.only(left: 18.0),
-              child: Text(
-                  listWalletData[index].type.contains("Withdraw")
-                      ? "Penarikan"
-                      : "${listWalletData[index].type}",
+              child: Text("${listWalletData[index].type}",
                   style: TextStyle(color: Colors.white, fontSize: 16)),
             ),
           ),
@@ -1146,7 +1126,8 @@ class NoDataWidget extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text("$datefrom - $dateto")
+
+                  Text(datefrom == null || dateto == null ? "" : "$datefrom - $dateto")
                 ],
               ),
             ),

@@ -70,7 +70,8 @@ class HomeProvider extends ChangeNotifier {
         pinArray = pinMapArray.where((i) => i.data.categoryId == 11 && i.data.status == 1).toList();
 
         var now = new DateTime.now();
-        var sekarang = now.subtract(Duration(days: 1));
+        var sekarang = now.subtract(Duration(days: 2));
+        print("SEKARANG $sekarang");
         allEventMapArray = jsonArray.map((p) => ArrayData.fromJson(p)).toList();
         allEventArray = allEventMapArray.where((i) => (i.data.categoryId == 10 || i.data.categoryId == 13) && i.data.status == 1).toList();
         allEventArray.removeWhere((el) => DateTime.parse(el.data.doDate).isBefore(sekarang));
@@ -89,6 +90,9 @@ class HomeProvider extends ChangeNotifier {
         healthEventArray.removeWhere((el) => DateTime.parse(el.data.doDate).isBefore(sekarang));
         healthEventArray.sort((a, b) => a.data.doDate.compareTo(b.data.doDate));
         healthArray = healthEventArray.length ;
+
+        print("HEALTH EVENT LENGHT ==>> $healthArray");
+        print("TRAINING EVENT LENGHT ==>> $trainArray");
 
 
 
@@ -112,6 +116,8 @@ class HomeProvider extends ChangeNotifier {
     filterArray = filterMapArray.where((i) => i.data.categoryId == catId && i.data.status == 1).toList();
     filterArray.removeWhere((el) => DateTime.parse(el.data.doDate).isBefore(sekarang) && el.data.status == 1);
     filterArray.sort((a, b) => a.data.doDate.compareTo(b.data.doDate));
+
+    print("LENGHT FILTER ${filterArray.length}");
     Navigator.pushNamed(context, "all_event_by_category", arguments: catId);
 
     notifyListeners();

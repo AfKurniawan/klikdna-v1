@@ -82,7 +82,7 @@ class CardTypeDuaWidget extends StatelessWidget {
 
 
                       Container(
-                        margin: EdgeInsets.only(top: 100),
+                        margin: EdgeInsets.only(top: 80),
                         width: MediaQuery.of(context).size.width / 1,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
