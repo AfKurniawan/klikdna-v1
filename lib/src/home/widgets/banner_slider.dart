@@ -46,14 +46,12 @@ class _BannerSliderState extends State<BannerSlider> {
                 ));
           },
           child: Container(
-            //color: Colors.blue,
             child: CarouselSlider(
               items: getBanner,
               options: CarouselOptions(
                   autoPlay: true,
-                  enlargeCenterPage: true,
-                  height: MediaQuery.of(context).size.width > 600 ? 360
-                      :  170,
+                  enlargeCenterPage: false,
+                  height: 205,
                   viewportFraction: 2,
                   onPageChanged: (index, reason) {
                     setState(() {
@@ -161,28 +159,16 @@ class _BannerSliderState extends State<BannerSlider> {
         ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height - 60));
       },
       blendMode: BlendMode.softLight,
-      child: Container(
-          child: CachedNetworkImage(
-              imageUrl: item, fit: BoxFit.fill))
+      child: CachedNetworkImage(
+          imageUrl: item,
+          width: MediaQuery.of(context).size.width,
+          height: 0,
+          fit: BoxFit.fill)
+      // child: Image.network(
+      //   item,
+      //   fit: BoxFit.cover,
+      //   width: 400,
+      // ),
     );
-
-    // return ShaderMask(
-    //   shaderCallback: (rect) {
-    //     return LinearGradient(
-    //       begin: Alignment.topCenter,
-    //       end: Alignment.bottomCenter,
-    //       colors: [gradientStart, gradientMid, gradientEnd],
-    //     ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height - 50));
-    //   },
-    //   blendMode: BlendMode.softLight,
-    //   child: Container(
-    //     decoration: BoxDecoration(
-    //       image: DecorationImage(
-    //         image: ExactAssetImage(item),
-    //         fit: BoxFit.cover,
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 }

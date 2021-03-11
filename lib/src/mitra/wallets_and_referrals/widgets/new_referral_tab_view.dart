@@ -120,16 +120,19 @@ class _NewReferralTabViewState extends State<NewReferralTabView> {
                         bottomRight: Radius.circular(25)),
                     gradient: LinearGradient(
                       colors:
-                          wallet.listReferralData[index].rank.contains("Star")
+                          wallet.listReferralData[index].par.contains("Star")
                               ? MyColors.startCardColor
-                              : wallet.listReferralData[index].rank
+                              : wallet.listReferralData[index].par
                                       .contains("Referral")
                                   ? MyColors.startCardColor
-                                  : wallet.listReferralData[index].type
-                                          .contains("Royalti")
-                                      ? MyColors.presidentAndDirectorColor
-                                      : wallet.listReferralData[index].status
-                                              .contains("Belum")
+                                  : wallet.listReferralData[index].par
+                                          .contains("Mitra")
+                                      ? MyColors.mitraCardColor
+                                      : wallet.listReferralData[index].par.contains("Producer")
+                                      ? MyColors.producerCardColor
+                                      : wallet.listReferralData[index].par.contains("Leader")
+                                      ? MyColors.leaderCardColor
+                                      : wallet.listReferralData[index].status.contains("Belum")
                                           ? MyColors.tidakAktifColor
                                           : MyColors.mitraCardColor,
                     )),
@@ -142,7 +145,7 @@ class _NewReferralTabViewState extends State<NewReferralTabView> {
                             wallet.listReferralData[index].rank == "" ||
                                     wallet.listReferralData[index].par == ""
                                 ? "${wallet.listReferralData[index].type}"
-                                : "${wallet.listReferralData[index].rank}",
+                                : "${wallet.listReferralData[index].par}",
                             style:
                                 TextStyle(color: Colors.white, fontSize: 16)),
                       ),
@@ -155,7 +158,7 @@ class _NewReferralTabViewState extends State<NewReferralTabView> {
                             wallet.listReferralData[index].rank == "" ||
                                     wallet.listReferralData[index].par == ""
                                 ? "${wallet.listReferralData[index].status}"
-                                : "${wallet.listReferralData[index].rank}",
+                                : "${wallet.listReferralData[index].par}",
                             style:
                                 TextStyle(color: Colors.white, fontSize: 16)),
                       ),
@@ -191,19 +194,45 @@ class _NewReferralTabViewState extends State<NewReferralTabView> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Posisi"),
-                        Text("${wallet.listReferralData[index].position}")
+                        Text("Posisi", style: TextStyle(
+                          color: MyColors.lightblack
+                        )),
+                        wallet.listReferralData[index].status == "Belum Aktif" ? Text("-") :
+                        Text(wallet.listReferralData[index].position == "right" ? "Kanan/Right"
+                            : wallet.listReferralData[index].position == "left" ? "Kiri/Left"
+                            : "${wallet.listReferralData[index].position}",
+                            style: TextStyle(
+                         color: MyColors.lightblack
+                        ))
                       ],
                     ),
                     SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Kualifikasi Peringkat"),
-                        Text(wallet.listReferralData[index].rank == "" ||
-                                wallet.listReferralData[index].par == ""
+                        Text("Kualifikasi Peringkat", style: TextStyle(
+                            color: MyColors.lightblack
+                        )),
+                        wallet.listReferralData[index].status.contains("Belum") ?
+                        Text("Belum Aktif", style: TextStyle(color: Colors.grey))
+                            : Text(wallet.listReferralData[index].rank == "" ||
+                            wallet.listReferralData[index].par == ""
                             ? "${wallet.listReferralData[index].type}"
-                            : "${wallet.listReferralData[index].rank}")
+                            : "${wallet.listReferralData[index].rank}",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    color: wallet.listReferralData[index].rank.contains("Star")
+                                        ? MyColors.starColor
+                                        : wallet.listReferralData[index].rank.contains("Producer")
+                                        ? MyColors.dnaGreen
+                                        : wallet.listReferralData[index].rank.contains("Leader")
+                                        ? MyColors.leaderColor
+                                        : wallet.listReferralData[index].rank.contains("Builder")
+                                        ? MyColors.builderColor
+                                        : wallet.listReferralData[index].type.contains("Mitra")
+                                      ? MyColors.mitraColor
+                                        : MyColors.grey),
+                        )
                       ],
                     ),
                   ],

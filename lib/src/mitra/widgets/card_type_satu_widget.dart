@@ -37,7 +37,7 @@ class CardTypeSatuWidget extends StatelessWidget {
                   : model.vhighestrank.contains("Builder")
                   ? MyColors.builderCardColor
                   : model.vhighestrank.contains("Producer")
-                  ? MyColors.producerColor
+                  ? MyColors.producerCardColor
                   : MyColors.mitraCardColor,
               stops: [0.1, 1],
             ),

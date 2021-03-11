@@ -29,7 +29,7 @@ class MyColors {
 
 
   static const Color black = Color(0xff20262C);
-  static const Color lightblack = Color(0xff5F5F60);
+  static const Color lightblack = Color(0xff737374);
 
   static const kPrimaryColor = Color(0xFFFFC61F);
   static const ksecondaryColor = Color(0xFFB5BFD0);
@@ -56,11 +56,15 @@ class MyColors {
   static const mitraProColor = [Color(0xff848FA5), Color(0xff848FA5)];
   static const imperialLeaderColor = [Color(0xff000000), Color(0xff434343)];
   static const executiveBuilderColor = [Color(0xff0477BF), Color(0xff2885BE)];
-  static const producerColor = [Color(0xff4ECDC4), Color(0xff64D4CD)];
-  static const mitraColor = [Color(0xff7A542E), Color(0xffA38363)];
+  static const producerCardColor = [Color(0xff4ECDC4), Color(0xff64D4CD)];
   static const eliteAndPro = [Color(0xff1D3557), Color(0xff1D3557)];
   static const presidentAndDirectorColor = [Color(0xff05090F), Color(0xff05090F)];
 
+  static const starColor = Color(0xffEE964B);
+  static const mitraColor = Color(0xff848FA5);
+  static const producerColor = Color(0xff4ECDC4);
+  static const leaderColor = Color(0xff38383E);
+  static const builderColor = Color(0xff0477BF);
 
   /// REDESIGN
   static const leaderCardColor = [Color(0xff303036), Color(0xff38383E)];

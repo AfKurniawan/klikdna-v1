@@ -32,7 +32,7 @@ class CardTypeDuaWidget extends StatelessWidget {
                     model.vpar.contains("Builder")
                   ? MyColors.builderCardColor
                         : model.vpar.contains("Producer")
-                        ? MyColors.producerColor
+                        ? MyColors.producerCardColor
                   : model.vhighestrank.contains("Leader")
                   ? MyColors.imperialLeaderColor
                   : model.vpar.contains("Presidential")
