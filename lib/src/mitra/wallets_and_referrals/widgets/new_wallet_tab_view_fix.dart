@@ -29,7 +29,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
   var items = List<Wallet>();
 
   int present = 0;
-  int perPage = 6;
+  int perPage = 4;
 
   @override
   void initState() {
@@ -1127,7 +1127,7 @@ class NoDataWidget extends StatelessWidget {
                     ),
                   ),
 
-                  Text(datefrom == null || dateto == null ? "" : "$datefrom - $dateto")
+                  //Text(datefrom == null || dateto == null ? "" : "$datefrom  $dateto")
                 ],
               ),
             ),

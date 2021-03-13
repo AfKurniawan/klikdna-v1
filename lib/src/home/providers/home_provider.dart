@@ -74,20 +74,19 @@ class HomeProvider extends ChangeNotifier {
         print("SEKARANG $sekarang");
         allEventMapArray = jsonArray.map((p) => ArrayData.fromJson(p)).toList();
         allEventArray = allEventMapArray.where((i) => (i.data.categoryId == 10 || i.data.categoryId == 13) && i.data.status == 1).toList();
-        allEventArray.removeWhere((el) => DateTime.parse(el.data.doDate).isBefore(sekarang));
+        allEventArray.removeWhere((el) => DateTime.parse(el.data.doDate == null ? sekarang : el.data.doDate).isBefore(sekarang));
         allEventArray.sort((a, b) => a.data.doDate.compareTo(b.data.doDate));
         allArray = allEventArray.length;
-
         //
         trainingEventMapArray = jsonArray.map((p) => ArrayData.fromJson(p)).toList();
         trainingEventArray = trainingEventMapArray.where((i) => i.data.categoryId == 10 && i.data.status == 1).toList();
-        trainingEventArray.removeWhere((el) => DateTime.parse(el.data.doDate).isBefore(sekarang));
+        trainingEventArray.removeWhere((el) => DateTime.parse(el.data.doDate == null ? sekarang : el.data.doDate).isBefore(sekarang));
         trainingEventArray.sort((a, b) => a.data.doDate.compareTo(b.data.doDate));
         trainArray = trainingEventArray.length;
         //
         healthEventMapArray = jsonArray.map((p) => ArrayData.fromJson(p)).toList();
         healthEventArray = healthEventMapArray.where((i) => i.data.categoryId == 13 && i.data.status == 1).toList();
-        healthEventArray.removeWhere((el) => DateTime.parse(el.data.doDate).isBefore(sekarang));
+        healthEventArray.removeWhere((el) => DateTime.parse(el.data.doDate == null ? sekarang : el.data.doDate).isBefore(sekarang));
         healthEventArray.sort((a, b) => a.data.doDate.compareTo(b.data.doDate));
         healthArray = healthEventArray.length ;
 
