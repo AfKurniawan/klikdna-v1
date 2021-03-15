@@ -105,6 +105,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
 
   var count;
   var filterSum;
+  bool isFiltered = false;
 
   Future<WalletModel> filterWalletDataxx(BuildContext context) async {
     listWalletData.clear();
@@ -143,6 +144,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
             walletMapMapArray.where((i) => i.status == "Selesai").toList();
 
         isLoading = false;
+        isFiltered = true;
 
         print(
             "LIST WALLET DATA AFTER FILTERING >>>>>>>>>>> ${listWalletData.length}");
@@ -565,7 +567,10 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                             ? Container()
                             : tipeValue == "Semua Data"
                                 ? allDataSaldoCard(context)
-                                : filteredDataSaldoCard(context, wallet)),
+                                : isFiltered == true ?
+                        filteredDataSaldoCard(context, wallet) :
+                            allDataSaldoCard(context)
+                    ),
                     buildFilterButtonRow(context),
                     buildFutureBuilder(),
                     SizedBox(height: 30),
