@@ -43,6 +43,7 @@ class _HomeReportPageState extends State<HomeReportPage> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     final prov = Provider.of<MemberProvider>(context);
+    final acc = Provider.of<AccountProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -58,6 +59,7 @@ class _HomeReportPageState extends State<HomeReportPage> {
             onPressed: () {
               //Navigator.pushReplacementNamed(context, "detail_report_page");
               Navigator.of(context).pop();
+              prov.getNamexx(context, acc.name);
             }),
 
       ),
@@ -82,7 +84,7 @@ class _HomeReportPageState extends State<HomeReportPage> {
                           return Padding(
                             padding: const EdgeInsets.only(top: 10.0),
                             child: Container(
-                              width: MediaQuery.of(context).size.width /1.5,
+                              width: MediaQuery.of(context).size.width /1.6,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,8 +95,8 @@ class _HomeReportPageState extends State<HomeReportPage> {
                                           fontSize: 16,
                                           fontWeight: FontWeight.w300)),
                                   SizedBox(width: 5),
-                                  Text(
-                                      "${account.name}",
+                                  Text( prov.newMemberName == "" ?
+                                      "${account.name}" : "${prov.newMemberName}",
                                       overflow: TextOverflow.fade,
                                       maxLines: 1,
                                       style: TextStyle(
@@ -123,7 +125,7 @@ class _HomeReportPageState extends State<HomeReportPage> {
                               return ClipRRect(
                                   borderRadius: BorderRadius.circular(50),
                                   child: model.photoView == null ?
-                                  Image.asset("assets/images/no_image.png", height: 92, width: 92, fit: BoxFit.cover)
+                                  Image.asset("assets/images/no_image.png", height: 90, width: 90, fit: BoxFit.cover)
                                       : Image.memory(
                                     model.photoView,
                                     width: 92,

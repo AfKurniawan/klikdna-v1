@@ -59,9 +59,9 @@ class CardTypeDuaWidget extends StatelessWidget {
                   child: Image.asset("assets/images/card_logo.png", height: 200),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 16.0, top: 16, right: 16, bottom: 5),
+                  padding: const EdgeInsets.only(left: 16.0, top: 16, right: 16, bottom: 16),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text("${model.vpar}",

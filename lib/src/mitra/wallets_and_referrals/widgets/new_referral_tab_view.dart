@@ -32,9 +32,7 @@ class _NewReferralTabViewState extends State<NewReferralTabView> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 18.0, right: 18, top: 20),
-                child: referral.listReferralData.length == 0
-                    ? Container()
-                    : Container(
+                child: Container(
                         width: MediaQuery.of(context).size.width,
                         margin: EdgeInsets.only(bottom: 10),
                         decoration: BoxDecoration(
@@ -132,6 +130,8 @@ class _NewReferralTabViewState extends State<NewReferralTabView> {
                                       ? MyColors.producerCardColor
                                       : wallet.listReferralData[index].par.contains("Leader")
                                       ? MyColors.leaderCardColor
+                                      : wallet.listReferralData[index].par.contains("Builder")
+                                      ? MyColors.builderCardColor
                                       : wallet.listReferralData[index].status.contains("Belum")
                                           ? MyColors.tidakAktifColor
                                           : MyColors.mitraCardColor,

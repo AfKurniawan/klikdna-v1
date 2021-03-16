@@ -326,7 +326,7 @@ class OverViewTileWidget extends StatelessWidget {
                                   maxLines: 1,
                                   style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 18,
+                                      fontSize: 16,
                                       fontWeight: FontWeight.bold
                                   ),
                                 ),

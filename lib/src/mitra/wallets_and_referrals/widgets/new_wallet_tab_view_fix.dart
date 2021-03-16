@@ -144,10 +144,10 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
             walletMapMapArray.where((i) => i.status == "Selesai").toList();
 
         isLoading = false;
-        isFiltered = true;
+        isFiltered = true ;
 
         print(
-            "LIST WALLET DATA AFTER FILTERING >>>>>>>>>>> ${listWalletData.length}");
+            "LIST WALLET DATA AFTER FILTERING >>>>>>>>>>> ${listWalletData.length} AND STATUS FILTERED >> $isFiltered");
 
         if (listWalletData.length == 0) {
           sum = 0;
@@ -562,15 +562,12 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                   children: [
                     Padding(
                         padding:
-                            EdgeInsets.only(left: 18.0, right: 18, top: 20),
+                        EdgeInsets.only(left: 18.0, right: 18, top: 20),
                         child: listWalletData.length == 0
                             ? Container()
                             : tipeValue == "Semua Data"
-                                ? allDataSaldoCard(context)
-                                : isFiltered == true ?
-                        filteredDataSaldoCard(context, wallet) :
-                            allDataSaldoCard(context)
-                    ),
+                            ? allDataSaldoCard(context)
+                            : isFiltered == true ? filteredDataSaldoCard(context, wallet) : allDataSaldoCard(context)),
                     buildFilterButtonRow(context),
                     buildFutureBuilder(),
                     SizedBox(height: 30),
@@ -830,7 +827,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
             padding: EdgeInsets.only(left: 18.0, right: 18),
             child: Column(
               children: [
-                allDataSaldoCard(context),
+                isFiltered == true ? filteredDataSaldoCard(context, wallet) : allDataSaldoCard(context),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
