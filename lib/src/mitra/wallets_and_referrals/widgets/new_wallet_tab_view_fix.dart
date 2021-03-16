@@ -720,7 +720,10 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                    child: Text(listWalletData.length == 0
+                    child: Text(
+                isFiltered == true
+            ? "IDR ${komisi.split(".")[0].replaceAll("-", "")}"
+                       : listWalletData.length == 0
                             ? "0"
                             : "IDR ${komisi.split(".")[0].replaceAll("-", "")}",
                         style: TextStyle(
