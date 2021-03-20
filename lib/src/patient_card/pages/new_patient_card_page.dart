@@ -1,27 +1,16 @@
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:new_klikdna/src/login/providers/login_provider.dart';
 import 'package:new_klikdna/src/mitra/providers/mitra_provider.dart';
 import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
-import 'package:new_klikdna/src/pmr/providers/pmr_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:provider/provider.dart';
 
-class PMRPage extends StatefulWidget {
-
-
+class NewPatientCardPage extends StatefulWidget {
   @override
-  _PMRPageState createState() => _PMRPageState();
+  _NewPatientCardPageState createState() => _NewPatientCardPageState();
 }
 
-class _PMRPageState extends State<PMRPage> {
+class _NewPatientCardPageState extends State<NewPatientCardPage> {
 
-  @override
-  void initState() {
-    Provider.of<PMRProvider>(context, listen: false).getName();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,48 +34,19 @@ class _PMRPageState extends State<PMRPage> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 16.0, right: 18, top: 20),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
+
                       Container(
-                        margin: EdgeInsets.only(right: 20),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(color: Colors.white, width: 2)),
-                        child: Center(
-                          child: Consumer<PatientCardProvider>(
-                            builder: (context, model, _) {
-                              return ClipRRect(
-                                  borderRadius: BorderRadius.circular(50),
-                                  child: model.photoView == null ?
-                                  Image.asset("assets/images/no_image.png", height: 62, width: 62, fit: BoxFit.cover)
-                                      : Image.memory(
-                                    model.photoView,
-                                    width: 62,
-                                    fit: BoxFit.cover,
-                                    height: 62,
-                                    // height: 150,
-                                  ));
-                            },
+                        child: Text("${prov.vallName}",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500
                           ),
                         ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width / 2,
-                            child: Text("${prov.vallName}",
-                              style: TextStyle(
-                                color: Colors.white,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500
-                              ),
-                            ),
-                          ),
-
-                        ],
+                        color: Colors.blue,
                       ),
                       SizedBox(width: 30),
 
@@ -111,7 +71,7 @@ class _PMRPageState extends State<PMRPage> {
                       children: <Widget>[
                         Text("Personal Medical Report",
                             style: TextStyle(
-                              fontSize: 14
+                                fontSize: 14
                             )),
                         SizedBox(height: 24),
                         Row(
@@ -121,7 +81,7 @@ class _PMRPageState extends State<PMRPage> {
                               children: [
                                 InkWell(
                                   onTap:(){
-                                    Navigator.of(context).pushNamed("new_patient_card_page");
+                                    Navigator.of(context).pushNamed("patient_card_page");
                                   },
                                   child: Container(
                                     height: 86,
@@ -185,7 +145,7 @@ class _PMRPageState extends State<PMRPage> {
                                 SizedBox(height: 20),
                                 Text("Food Meter",
                                   style: TextStyle(
-                                    fontSize: 12
+                                      fontSize: 12
                                   ),
                                 )
                               ],
@@ -201,16 +161,25 @@ class _PMRPageState extends State<PMRPage> {
                 ),
               ),
               Positioned(
-                right: 20,
+                left: 20,
                 top: 70,
                 child: InkWell(
                   onTap: (){
                     Navigator.pushNamed(context, 'health_meter_page');
                   },
-                  child: Icon(
-                    Icons.watch,
-                    color: Colors.white,
-                    size: 30,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white38,
+                      borderRadius: BorderRadius.circular(5)
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(
+                       Icons.arrow_back_ios,
+                        color: Colors.white,
+                        size: 15,
+                      ),
+                    ),
                   ),
                 ),
               )

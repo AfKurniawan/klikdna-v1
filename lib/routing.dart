@@ -19,6 +19,7 @@ import 'package:new_klikdna/src/main/pages/main_page.dart';
 import 'package:new_klikdna/src/mitra/wallets_and_referrals/pages/wallet_referral_page.dart';
 import 'package:new_klikdna/src/onboarding/pages/on_boarding_page.dart';
 import 'package:new_klikdna/src/patient_card/pages/edit_patient_card_page.dart';
+import 'package:new_klikdna/src/patient_card/pages/new_patient_card_page.dart';
 import 'package:new_klikdna/src/patient_card/pages/patient_card_page.dart';
 import 'package:new_klikdna/src/profile/pages/main_profile_page.dart';
 import 'package:new_klikdna/src/profile/pages/lihat_profile_page.dart';
@@ -56,6 +57,10 @@ class Routing {
 
       case "patient_card_page" :
         return PageTransition(child: PatientCardPage(), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
+        break;
+
+      case "new_patient_card_page" :
+        return PageTransition(child: NewPatientCardPage(), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
         break;
 
       case "edit_patient_card_page" :
