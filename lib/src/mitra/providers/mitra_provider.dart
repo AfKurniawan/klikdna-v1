@@ -142,6 +142,7 @@ class MitraProvider with ChangeNotifier {
 
       /// USER
        vuserid = responseJson.user.id;
+       prefs.setInt("mitraID", responseJson.user.id);
 
       ///MEMBER
       vnumber = responseJson.user.member.number;

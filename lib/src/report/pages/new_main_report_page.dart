@@ -27,6 +27,7 @@ class _NewMainReportPageState extends State<NewMainReportPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     getSample();
 
   }
@@ -54,12 +55,37 @@ class _NewMainReportPageState extends State<NewMainReportPage> {
           ),
           body: Stack(
                 children: <Widget>[
-                  Container(
-                    height: 80,
-                    decoration: BoxDecoration(
-                      color: MyColors.dnaGreen,
-                    ),
-                  ),
+                        Container(
+                          height: 140,
+                          decoration: BoxDecoration(
+                              color: MyColors.dnaGreen,
+                              image: DecorationImage(
+                                  fit: BoxFit.fill,
+                                  colorFilter: new ColorFilter.mode(
+                                      MyColors.dnaGreen.withOpacity(0.3),
+                                      BlendMode.dstIn),
+                                  image: AssetImage(
+                                      "assets/images/header_background.png"))),
+
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 18.0, right: 18, top: 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Container(
+                                  child: Text("Kartu Pasien",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500
+                                    ),
+                                  ),
+                                ),
+
+                              ],
+                            ),
+                          ),
+                        ),
                 SingleChildScrollView(
                   padding: EdgeInsets.only(top: 20),
                   child: Column(

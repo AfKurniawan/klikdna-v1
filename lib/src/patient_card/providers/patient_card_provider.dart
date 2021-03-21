@@ -10,6 +10,7 @@ import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:new_klikdna/src/account/providers/account_provider.dart';
 import 'package:new_klikdna/src/patient_card/models/patient_card_model.dart';
 import 'package:new_klikdna/src/patient_card/providers/asuransi_provider.dart';
+import 'package:new_klikdna/src/patient_card/widgets/card_insurance.dart';
 import 'package:new_klikdna/src/patient_card/widgets/custom_dialog_confirm.dart';
 import 'package:new_klikdna/src/patient_card/widgets/dialog_error_patient_card.dart';
 import 'package:new_klikdna/src/profile/widgets/cupertino_dialog_widget.dart';
@@ -44,10 +45,14 @@ class PatientCardProvider with ChangeNotifier {
   bool isMuter ;
   List<Asuransi> listAsuransi = [];
 
+  List<Widget> slideCard = [];
+
 
   String patienCardId = "";
+  int mitraId = 0;
   Future<PatientCardModel>getPatientCard(BuildContext context) async {
 
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     isMuter = true;
     final prov = Provider.of<TokenProvider>(context, listen: false);
 
@@ -56,7 +61,7 @@ class PatientCardProvider with ChangeNotifier {
     patienCardId = getId.lastID;
 
 
-    print("PATIEN CARD PROV LAST ID ___: $patienCardId");
+    print("ACCOUNT ID ___: $patienCardId");
 
     String accessToken = prov.accessToken;
     Map<String, String> ndas = {
@@ -64,7 +69,7 @@ class PatientCardProvider with ChangeNotifier {
       "Authorization": "Bearer $accessToken"
     };
 
-    var url = AppConstants.GET_PATIENT_CARD_URL + '$patienCardId' ;
+    var url = AppConstants.GET_PATIENT_CARD_URL + '$patienCardId';
 
     final request = await http.get(url, headers: ndas);
 
@@ -99,6 +104,11 @@ class PatientCardProvider with ChangeNotifier {
 
       var detailArray = data['data']['detail'] as List;
       listAsuransi = detailArray.map<Asuransi>((j) => Asuransi.fromJson(j)).toList();
+
+      slideCard = [
+        CardInssurance(),
+        CardInssurance()
+      ];
 
       notifyListeners();
 

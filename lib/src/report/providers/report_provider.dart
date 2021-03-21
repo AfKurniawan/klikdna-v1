@@ -64,18 +64,18 @@ class ReportProvider extends ChangeNotifier {
       notfound = false ;
 
       var responseJson = json.decode(response.body);
-      print("SAMPLE RESPONSE BODY >>> ${response.body}");
+    //  print("SAMPLE RESPONSE BODY >>> ${response.body}");
       jsonArray = responseJson['data'] as List;
 
       for(int i = 0; i < jsonArray.length; i++){
 
         var detailArray = jsonArray[0]['detail'] as List;
          listDetail = detailArray.map<Detail>((j) => Detail.fromJson(j)).toList();
-         print("LIST DETAIL 1 LENGHT ${listDetail.length}");
+        // print("LIST DETAIL 1 LENGHT ${listDetail.length}");
 
         var detail2Array = jsonArray[i]['detail'] as List;
         listDetail2 = detail2Array.map<Detail>((j) => Detail.fromJson(j)).toList();
-        print("LIST DETAIL 2 LENGHT ${listDetail2.length}");
+       // print("LIST DETAIL 2 LENGHT ${listDetail2.length}");
       }
 
       notifyListeners();

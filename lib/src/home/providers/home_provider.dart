@@ -71,7 +71,6 @@ class HomeProvider extends ChangeNotifier {
 
         var now = new DateTime.now();
         var sekarang = now.subtract(Duration(days: 2));
-        print("SEKARANG $sekarang");
         allEventMapArray = jsonArray.map((p) => ArrayData.fromJson(p)).toList();
         allEventArray = allEventMapArray.where((i) => (i.data.categoryId == 10 || i.data.categoryId == 13) && i.data.status == 1).toList();
         allEventArray.removeWhere((el) => DateTime.parse(el.data.doDate == null ? sekarang : el.data.doDate).isBefore(sekarang));
@@ -90,8 +89,7 @@ class HomeProvider extends ChangeNotifier {
         healthEventArray.sort((a, b) => a.data.doDate.compareTo(b.data.doDate));
         healthArray = healthEventArray.length ;
 
-        print("HEALTH EVENT LENGHT ==>> $healthArray");
-        print("TRAINING EVENT LENGHT ==>> $trainArray");
+
 
 
 

@@ -742,7 +742,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
 
   Widget allDataSaldoCard(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width,
+
       margin: EdgeInsets.only(bottom: 30),
       decoration: BoxDecoration(
         color: Colors.white,

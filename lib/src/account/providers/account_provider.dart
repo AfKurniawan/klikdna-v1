@@ -24,6 +24,7 @@ class AccountProvider with ChangeNotifier {
   String phone;
   String accountgender;
   String accountdob;
+  String noKtp;
 
   List<PatientCard> listPatentCard = [];
 
@@ -62,13 +63,13 @@ class AccountProvider with ChangeNotifier {
        listPatentCard = detailArray.map<PatientCard>((j) => PatientCard.fromJson(j)).toList();
 
       for(int i = 0 ; i < listPatentCard.length ; i++) {
-        lastID = listPatentCard[i].id.toString();
-        print("ID_______ $lastID");
+        lastID = listPatentCard.first.id.toString();
+        noKtp = listPatentCard.first.noKtp;
+        print("noKTP $noKtp");
         notifyListeners();
       }
 
-      print("PANJANG LIST PATIENT CARD: ${listPatentCard.length}");
-
+      print("BODY Account: ${request.body}");
 
       name = accountResponse.data.name;
       phone = accountResponse.data.phone;
