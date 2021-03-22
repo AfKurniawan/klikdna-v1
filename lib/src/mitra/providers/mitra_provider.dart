@@ -25,6 +25,17 @@ class MitraProvider with ChangeNotifier {
   String vprofilEmail;
   String vreferralUrl;
 
+  ///AGENT
+  String vnik;
+  String vnpwp;
+  String vreligion;
+  String vjob;
+  String vstatus;
+  bool vverified;
+  bool vmaster;
+  bool vstockist;
+
+
   ///MEMBER
   String vnumber;
   String vfirstname;
@@ -143,6 +154,8 @@ class MitraProvider with ChangeNotifier {
       /// USER
        vuserid = responseJson.user.id;
        prefs.setInt("mitraID", responseJson.user.id);
+
+       ///
 
       ///MEMBER
       vnumber = responseJson.user.member.number;

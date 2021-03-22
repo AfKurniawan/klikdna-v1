@@ -73,7 +73,7 @@ class PatientCardProvider with ChangeNotifier {
 
     final request = await http.get(url, headers: ndas);
 
-    print("RESPONSE BODY_______: ${request.body}");
+    //print("PATIEN CARD BODY_______: ${request.body}");
 
 
     if(request.statusCode == 200){
@@ -84,7 +84,7 @@ class PatientCardProvider with ChangeNotifier {
       id = response.data.id;
       nama = response.data.nama;
       accountId = response.data.accountId;
-      noKtp = response.data.noKtp;
+      noKtp = prefs.getString('nik');
       inssuranceCode = response.data.inssuranceCode;
       dob = response.data.dob;
       bloodType = response.data.bloodType;
@@ -116,7 +116,7 @@ class PatientCardProvider with ChangeNotifier {
 
     } else {
       isMuter = false;
-      showDialogError(context);
+      //showDialogError(context);
 
     }
 

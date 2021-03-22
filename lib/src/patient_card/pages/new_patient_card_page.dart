@@ -75,6 +75,30 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                   ),
                 ),
               ),
+              Positioned(
+                left: 20,
+                top: 65,
+                child: InkWell(
+                  onTap: (){
+                    // Navigator.pushNamed(context, 'health_meter_page');
+                    Navigator.of(context).pop();
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5)
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left:12.0, right:8, top: 10, bottom: 10),
+                      child: Icon(
+                        Icons.arrow_back_ios,
+                        color: Colors.black45,
+                        size: 16,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               SingleChildScrollView(
                 padding: EdgeInsets.only(top: 140),
                 child: Container(
@@ -96,8 +120,7 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                           children: [
                             Stack(
                               children: [
-                                Image.asset("assets/images/ellipse_patient_card.png", height: 100),
-
+                                Image.asset("assets/images/ellipse_patient_card.png", height: 85),
                               ],
 
                             ),
@@ -159,14 +182,10 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                               for (int i = 0; i < split.length; i++)
                                 i: split[i]
                             };
-                            print(values);  // {0: grubs, 1:  sheep}
 
                             final value1 = values[0];
                             final value2 = values[1];
                             final value3 = values[2];
-                            print(value1);  // grubs
-                            print(value2);  //  sheep
-                            print(value3);
                             return Padding(
                               padding: const EdgeInsets.only(left: 18.0, right: 18),
                               child: Row(
@@ -201,7 +220,7 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                         SizedBox(
                                           height: 5,
                                         ),
-                                        Text("${card.noKtp}",
+                                        Text(card.noKtp == null ? "-"  : "${card.noKtp}",
                                           overflow: TextOverflow.clip,
                                           maxLines: 1,
                                           style: TextStyle(
@@ -277,13 +296,21 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                     SizedBox(height: 20),
                                     Consumer<PatientCardProvider>(
                                       builder: (context, prov, _){
-                                        return Padding(
+                                        return prov.listAsuransi.length == 0
+                                            ? Container(
+                                          child: Column(
+                                            children: [
+
+                                            ],
+                                          ),
+                                        )
+                                        : Padding(
                                           padding: const EdgeInsets.only(left: 10.0),
                                           child: Container(
                                             height: 200,
                                             child: ListView.builder(
                                                 scrollDirection: Axis.horizontal,
-                                                itemCount: prov.listAsuransi.length,
+                                                itemCount: prov.listAsuransi.length == 0 ? 0 : prov.listAsuransi.length,
                                                 shrinkWrap: true,
                                                 itemBuilder: (context, index) {
                                                   return CardInssurance(
@@ -334,7 +361,7 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                         ),
                                         child: Padding(
                                           padding: const EdgeInsets.all(18.0),
-                                          child: Center(child: Text(pcard.bloodType)),
+                                          child: Center(child: Text(pcard.bloodType == null ? "-" : "${pcard.bloodType}")),
                                         )),
                                     SizedBox(height: 20),
                                     Row(
@@ -377,7 +404,7 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                         ),
                                         child: Padding(
                                           padding: const EdgeInsets.all(18.0),
-                                          child: Center(child: Text(pcard.medicalProfesional)),
+                                          child: Center(child: Text(pcard.medicalProfesional == null ? "-" : "${pcard.medicalProfesional}")),
                                         )),
                                     SizedBox(height: 20),
                                     Row(
@@ -420,7 +447,7 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                         ),
                                         child: Padding(
                                           padding: const EdgeInsets.all(18.0),
-                                          child: Center(child: Text(pcard.emergencyContact)),
+                                          child: Center(child: Text(pcard.emergencyContact == null ? "-" : "${pcard.emergencyContact}")),
                                         )),
                                     SizedBox(height: 20),
                                     Row(
@@ -463,7 +490,7 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                         ),
                                         child: Padding(
                                           padding: const EdgeInsets.all(18.0),
-                                          child: Center(child: Text("${pcard.comorbidity}")),
+                                          child: Center(child: Text(pcard.comorbidity == null ? "-" : "${pcard.comorbidity}")),
                                         )),
                                     SizedBox(height: 20),
 
@@ -478,30 +505,7 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                   ),
                 ),
               ),
-              Positioned(
-                left: 20,
-                top: 65,
-                child: InkWell(
-                  onTap: (){
-                   // Navigator.pushNamed(context, 'health_meter_page');
-                    Navigator.of(context).pop();
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(5)
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left:12.0, right:8, top: 10, bottom: 10),
-                      child: Icon(
-                       Icons.arrow_back_ios,
-                        color: Colors.black45,
-                        size: 16,
-                      ),
-                    ),
-                  ),
-                ),
-              )
+
             ],
           ),
         );

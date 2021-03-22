@@ -63,13 +63,14 @@ class AccountProvider with ChangeNotifier {
        listPatentCard = detailArray.map<PatientCard>((j) => PatientCard.fromJson(j)).toList();
 
       for(int i = 0 ; i < listPatentCard.length ; i++) {
-        lastID = listPatentCard.first.id.toString();
-        noKtp = listPatentCard.first.noKtp;
+        lastID = listPatentCard.last.id.toString();
+        print("LAST ID >>>>> $lastID");
+        noKtp = prefs.getString("nik");
         print("noKTP $noKtp");
         notifyListeners();
       }
 
-      print("BODY Account: ${request.body}");
+     // print("BODY Account: ${request.body}");
 
       name = accountResponse.data.name;
       phone = accountResponse.data.phone;

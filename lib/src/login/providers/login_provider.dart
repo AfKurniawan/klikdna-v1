@@ -67,6 +67,9 @@ class LoginProvider with ChangeNotifier{
             /// USER
             prefs.setInt("userid", responseJson.user.id);
 
+            ///AGENT
+            prefs.setString("nik", responseJson.user.agent.nik);
+
 
             ///MEMBER
 
