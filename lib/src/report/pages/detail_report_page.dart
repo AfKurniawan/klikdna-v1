@@ -91,7 +91,7 @@ class _DetailReportPageState extends State<DetailReportPage> {
                                 children: [
                                   Row(
                                     children: [
-                                      Text("Hello",
+                                      Text("Hai",
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 16,
@@ -119,13 +119,13 @@ class _DetailReportPageState extends State<DetailReportPage> {
                           },
                         ),
                         Container(
-                          height: 94,
+                          height: 84,
                           child: Consumer<PatientCardProvider>(
                             builder: (context, model, _) {
                               return ClipRRect(
                                   borderRadius: BorderRadius.circular(50),
                                   child: model.photoView == null ?
-                                  Image.asset("assets/images/no_image.png", height: 92, width: 92, fit: BoxFit.cover)
+                                  Image.asset("assets/images/no_image.png", height: 82, width: 82, fit: BoxFit.cover)
                                       : Image.memory(
                                     model.photoView,
                                     width: 92,

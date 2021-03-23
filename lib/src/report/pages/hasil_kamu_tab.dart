@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:html/parser.dart';
 import 'package:new_klikdna/src/report/models/detail_report_model.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
@@ -17,12 +18,14 @@ class _HasilKamuState extends State<HasilKamu> {
   @override
   Widget build(BuildContext context) {
     var document;
+    var describe;
     String text;
-    document =
-        parse(widget.model.deskripsi);
-    text = parse(document.body.text)
-        .documentElement
-        .text;
+    String desc;
+    document = parse(widget.model.deskripsiHasil);
+    text = parse(document.body.text).documentElement.text;
+    describe = parse(widget.model.deskripsi);
+    desc = parse(describe.body.text).documentElement.text;
+
     return SingleChildScrollView(
       physics: NeverScrollableScrollPhysics(),
       child: Padding(
@@ -61,8 +64,7 @@ class _HasilKamuState extends State<HasilKamu> {
                       Text("Berikut ini merupakan hasil tes kamu:",
                           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                       SizedBox(height: 20),
-                      Text("$text"),
-                      //Text(widget.model.deskripsiHasil),
+                      HtmlWidget("${widget.model.deskripsiHasil}"),
                       SizedBox(height: 20),
                       Center(
                         child: CachedNetworkImage(
@@ -75,6 +77,12 @@ class _HasilKamuState extends State<HasilKamu> {
                 ),
               ),
               SizedBox(height: 30),
+              Text("Tentang ${widget.model.namaModul}",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: MyColors.dnaGrey)),
+              SizedBox(height: 20),
               Container(
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
@@ -90,7 +98,7 @@ class _HasilKamuState extends State<HasilKamu> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
-                  child: Text("$text"),
+                  child: HtmlWidget("${widget.model.deskripsi}"),
                 ),
               ),
               SizedBox(height: 30)

@@ -742,7 +742,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
 
   Widget allDataSaldoCard(BuildContext context) {
     return Container(
-
+      width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.only(bottom: 30),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -817,7 +817,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                       ),
                     )
                   : Container(
-                      color: Color(0xffEDF0F4),
+                      //color: Color(0xffEDF0F4),
                       padding: EdgeInsets.only(top: 18),
                       child: tipeValue.contains("Semua")
                           ? allWalletData(index, context, dateCreated, fnominal)

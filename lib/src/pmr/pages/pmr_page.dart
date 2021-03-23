@@ -200,20 +200,20 @@ class _PMRPageState extends State<PMRPage> {
                   ),
                 ),
               ),
-              Positioned(
-                right: 20,
-                top: 70,
-                child: InkWell(
-                  onTap: (){
-                    Navigator.pushNamed(context, 'health_meter_page');
-                  },
-                  child: Icon(
-                    Icons.watch,
-                    color: Colors.white,
-                    size: 30,
-                  ),
-                ),
-              )
+              // Positioned(
+              //   right: 20,
+              //   top: 70,
+              //   child: InkWell(
+              //     onTap: (){
+              //       Navigator.pushNamed(context, 'health_meter_page');
+              //     },
+              //     child: Icon(
+              //       Icons.watch,
+              //       color: Colors.white,
+              //       size: 30,
+              //     ),
+              //   ),
+              // )
             ],
           ),
         );

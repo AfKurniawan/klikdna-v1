@@ -105,18 +105,27 @@ class _HasilRekomendasiState extends State<HasilRekomendasi> {
                               Container()
                                   : Container(
                                 // color: Colors.blueGrey,
-                                  child: prov.imgWidth > 600 ?
+                                  child: prov.imgHeight > 400 || prov.imgWidth > 400 ?
                                   Container(
-                                    width: 512,
                                     margin: EdgeInsets.only(left: 40, right: 20),
-                                    child: CachedNetworkImage(
-                                        imageUrl: "${prov.lr[index].gambarRekomendasi}",
-                                        fit: BoxFit.fitHeight),
-                                  ) : Container(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: CachedNetworkImage(
+                                          imageUrl: "${prov.lr[index].gambarRekomendasi}",
+                                          fit: BoxFit.fitWidth, width: MediaQuery.of(context).size.width),
+                                    ),
+                                  )
+                                      : Container(
                                     margin: EdgeInsets.only(left: 40, right: 20),
-                                    child: CachedNetworkImage(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(1.0),
+                                      child: CachedNetworkImage(
                                         imageUrl: "${prov.lr[index].gambarRekomendasi}",
-                                        fit: BoxFit.fitWidth),
+                                        fit: BoxFit.fitWidth,
+                                        width: 170,
+                                        height: 180,
+                                      ),
+                                    ),
                                   )
                               ),
                             ),

@@ -108,6 +108,7 @@ class DataPatient {
 
 class Asuransi {
   int id;
+  String type;
   String nomorAsuransi;
   String nomorPolis;
   String pemegangPolis;
@@ -116,6 +117,7 @@ class Asuransi {
 
   Asuransi(
       {this.id,
+        this.type,
         this.nomorAsuransi,
         this.nomorPolis,
         this.pemegangPolis,
@@ -124,6 +126,7 @@ class Asuransi {
 
   Asuransi.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    type = json['type'];
     nomorAsuransi = json['nomor_asuransi'];
     nomorPolis = json['nomor_polis'];
     pemegangPolis = json['pemegang_polis'];
@@ -134,6 +137,7 @@ class Asuransi {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
+    data['type'] = this.type;
     data['nomor_asuransi'] = this.nomorAsuransi;
     data['nomor_polis'] = this.nomorPolis;
     data['pemegang_polis'] = this.pemegangPolis;

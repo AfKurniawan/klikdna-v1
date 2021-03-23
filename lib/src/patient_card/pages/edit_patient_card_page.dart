@@ -75,7 +75,7 @@ class _EditPatientCardPageState extends State<EditPatientCardPage> {
           FlatButton(
             child: Text("Simpan Perubahan", style: TextStyle(color: MyColors.dnaGreen, fontSize: 12)),
             onPressed: (){
-              prov.updatePatientCard(context, _radioValue);
+              prov.updatePatientCard(context);
             },
           )
         ],

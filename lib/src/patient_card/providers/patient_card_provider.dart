@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:achievement_view/achievement_view.dart';
+import 'package:achievement_view/achievement_widget.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +10,10 @@ import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:new_klikdna/src/account/providers/account_provider.dart';
+import 'package:new_klikdna/src/patient_card/models/asuransi_model.dart';
 import 'package:new_klikdna/src/patient_card/models/patient_card_model.dart';
 import 'package:new_klikdna/src/patient_card/providers/asuransi_provider.dart';
-import 'package:new_klikdna/src/patient_card/widgets/card_insurance.dart';
+import 'package:new_klikdna/src/patient_card/widgets/card_insurance_item.dart';
 import 'package:new_klikdna/src/patient_card/widgets/custom_dialog_confirm.dart';
 import 'package:new_klikdna/src/patient_card/widgets/dialog_error_patient_card.dart';
 import 'package:new_klikdna/src/profile/widgets/cupertino_dialog_widget.dart';
@@ -73,7 +76,7 @@ class PatientCardProvider with ChangeNotifier {
 
     final request = await http.get(url, headers: ndas);
 
-    //print("PATIEN CARD BODY_______: ${request.body}");
+    print("PATIEN CARD BODY_______: ${request.body}");
 
 
     if(request.statusCode == 200){
@@ -106,8 +109,8 @@ class PatientCardProvider with ChangeNotifier {
       listAsuransi = detailArray.map<Asuransi>((j) => Asuransi.fromJson(j)).toList();
 
       slideCard = [
-        CardInssurance(),
-        CardInssurance()
+        CardInssuranceItem(),
+        CardInssuranceItem()
       ];
 
       notifyListeners();
@@ -220,7 +223,7 @@ class PatientCardProvider with ChangeNotifier {
   Uint8List image64Decode ;
 
 
-  Future getImageV2 (BuildContext context) async {
+  Future getImageV2(BuildContext context) async {
     final photo = await picker.getImage(source: ImageSource.camera);
     File image = await FlutterNativeImage.compressImage(photo.path,
         quality: 50, targetWidth: 100, targetHeight: 100);
@@ -231,15 +234,15 @@ class PatientCardProvider with ChangeNotifier {
     if(photo64Encode == ""){
       return image64Decode == photoView;
     }
+    updatePhoto(context);
     notifyListeners();
+
   }
 
-
-
-  Future<void> updatePatientCard(BuildContext context, String jenkel) async {
-
+  Future<void> updatePhoto(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final prov = Provider.of<TokenProvider>(context, listen: false);
+    prov.getApiToken();
     String accessToken = prov.accessToken;
     String gambar = photo64Encode;
     notifyListeners();
@@ -253,7 +256,6 @@ class PatientCardProvider with ChangeNotifier {
       "no_ktp": noKtpController.text,
       "inssurance_code": insuranceCardController.text,
       "nama": namaController.text,
-      "gender": jenkel,
       "dob": dobController.text,
       "blood_type": bloodTypeController.text,
       "medical_profesional": medicalProfController.text,
@@ -272,7 +274,69 @@ class PatientCardProvider with ChangeNotifier {
 
     if(sukses == true){
       print("${request.body}");
-      showDialogSukses(context);
+      showToastUpdatePhoto(context, "Berhasil", "Data berhasil diupdate");
+
+    } else {
+      print("ERRRORRR UPDATE PATEINT CARD");
+      print("${request.body}");
+    }
+
+  }
+
+  void showToastUpdatePhoto(BuildContext ctx, String title, String subtitle) async {
+    bool isCircle = true;
+    await AchievementView(
+      ctx,
+      title: "$title",
+      alignment: Alignment.bottomCenter,
+      color: Colors.lightBlue,
+      subTitle: "$subtitle",
+      isCircle: isCircle,
+      duration: Duration(milliseconds: 1000),
+      listener: (status) {
+        print(status);
+      },
+    )..show();
+
+  }
+
+
+
+  Future<void> updatePatientCard(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final prov = Provider.of<TokenProvider>(context, listen: false);
+    prov.getApiToken();
+    String accessToken = prov.accessToken;
+    String gambar = photo64Encode;
+    notifyListeners();
+
+    print("PHOTO: $gambar");
+    int accountid = prefs.getInt("userid");
+    var url = AppConstants.UPDATE_PATIENT_CARD_URL + patienCardId ;
+
+    var body = {
+      "account_id": accountid,
+      "no_ktp": noKtpController.text,
+      "inssurance_code": insuranceCardController.text,
+      "nama": namaController.text,
+      "dob": dobController.text,
+      "blood_type": bloodTypeController.text,
+      "medical_profesional": medicalProfController.text,
+      "emergency_contact": emergencyContactController.text,
+      "comorbidity": comorbidityController.text,
+      "photo": gambar
+    };
+
+    Map<String, String> ndas = {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $accessToken"
+    };
+
+    final request = await http.put(url, headers: ndas, body: json.encode(body));
+
+
+    if(sukses == true){
+      showToast(context, "Berhasil", "Data berhasil diupdate");
 
     } else {
       print("ERRRORRR UPDATE PATEINT CARD");
@@ -284,7 +348,29 @@ class PatientCardProvider with ChangeNotifier {
   void setRhesus(BuildContext context, String rhesus){
     print("RHESUS : $rhesus");
     bloodTypeController.text = rhesus;
+    updatePatientCard(context);
     notifyListeners();
+  }
+
+
+  void showToast(BuildContext ctx, String title, String subtitle) async {
+    bool isCircle = true;
+    await AchievementView(
+      ctx,
+      title: "$title",
+      alignment: Alignment.bottomCenter,
+      color: Colors.lightBlue,
+      subTitle: "$subtitle",
+      isCircle: isCircle,
+      duration: Duration(milliseconds: 1000),
+      listener: (status) {
+        print(status);
+        if(status == AchievementState.opening){
+          Navigator.of(ctx).pop();
+        }
+      },
+    )..show();
+
   }
 
 

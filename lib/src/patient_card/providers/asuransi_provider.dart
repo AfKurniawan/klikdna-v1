@@ -1,8 +1,11 @@
 import 'dart:convert';
 
+import 'package:achievement_view/achievement_view.dart';
+import 'package:achievement_view/achievement_widget.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
+import 'package:new_klikdna/src/account/providers/account_provider.dart';
 import 'package:new_klikdna/src/patient_card/models/asuransi_model.dart';
 import 'package:new_klikdna/src/patient_card/models/patient_card_model.dart';
 import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
@@ -27,8 +30,10 @@ class AsuransiProvider extends ChangeNotifier {
     isLoading = true;
     final prov = Provider.of<TokenProvider>(context, listen: false);
     final patient = Provider.of<PatientCardProvider>(context, listen: false);
+    patient.getPatientCard(context);
     String accessToken = prov.accessToken;
     patientCardId = patient.id;
+    notifyListeners();
     print("PATOENT CARD ID PAGE ASURANSI: $patientCardId");
 
     var url = AppConstants.GET_ASURANSI_URL + asuranId.toString();
@@ -82,7 +87,7 @@ class AsuransiProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateAsuransi(BuildContext context) async {
+  Future<void> updateAsuransi(BuildContext context, String type) async {
     final prov = Provider.of<TokenProvider>(context, listen: false);
     final patientCardId = Provider.of<PatientCardProvider>(context, listen: false);
     int patientId = patientCardId.id;
@@ -90,7 +95,7 @@ class AsuransiProvider extends ChangeNotifier {
     print("ASURASNI ID: $asuransiId");
 
     String accessToken = prov.accessToken;
-    notifyListeners();
+
 
 
     var url = AppConstants.UPDATE_ASURANSI_URL + asuransiId.toString();
@@ -101,6 +106,7 @@ class AsuransiProvider extends ChangeNotifier {
 
     var body = {
       "patient_card_id": patientId,
+      "type": type,
       "nomor_asuransi": namaAsuransiController.text,
       "nomor_polis": nomorPolisController.text,
       "pemegang_polis": pemegangPolisController.text,
@@ -113,10 +119,11 @@ class AsuransiProvider extends ChangeNotifier {
     print("STATUS CODE: ${request.statusCode}");
 
     if(request.statusCode == 200){
-      showDialog(context);
+      showToast(context, "Berhasil", "Kartu Asuransi berhasil diupdate");
 
-      print("RESPONSE BODY: ${request.body}");
     }
+
+    notifyListeners();
 
   }
 
@@ -129,9 +136,16 @@ class AsuransiProvider extends ChangeNotifier {
 
 
 
-  Future<void> addAsuransi(BuildContext context) async {
+  Future<void> addAsuransi(BuildContext context, String type) async {
     final prov = Provider.of<TokenProvider>(context, listen: false);
     String accessToken = prov.accessToken;
+
+    final getId = Provider.of<AccountProvider>(context, listen: false);
+    getId.getUserAccount(context);
+    patientCardId = int.parse(getId.lastID);
+
+    print("PASIEN ID $patientCardId");
+
     notifyListeners();
 
 
@@ -142,7 +156,8 @@ class AsuransiProvider extends ChangeNotifier {
     };
 
     var body = {
-      "patient_card_id": patientCardId.toString(),
+      "patient_card_id": patientCardId,
+      "type" : type,
       "nomor_asuransi": addNamaAsuransiController.text,
       "nomor_polis": addNomorPolisController.text,
       "pemegang_polis": addPemegangPolisController.text,
@@ -152,10 +167,10 @@ class AsuransiProvider extends ChangeNotifier {
     print("PROSES WITH BODY: $body");
 
     final request = await http.post(url, headers: ndas, body: json.encode(body));
-    print("STATUS CODE: ${request.statusCode}");
+    print("STATUS CODE: ${request.body}");
 
     if(request.statusCode == 200){
-      showDialog(context);
+      showToast(context, "Berhasil", "Kartu Asuransi berhasil diupdate");
       print("RESPONSE BODY: ${request.body}");
       disposal();
     }
@@ -174,7 +189,6 @@ class AsuransiProvider extends ChangeNotifier {
   Future<void> deleteAsuransi(BuildContext context, int insurId) async {
     final prov = Provider.of<TokenProvider>(context, listen: false);
     String accessToken = prov.accessToken;
-    notifyListeners();
 
     var url = AppConstants.DELETE_ASURANSI_URL + insurId.toString() ;
     Map<String, String> ndas = {
@@ -187,7 +201,7 @@ class AsuransiProvider extends ChangeNotifier {
     print("STATUS CODE: ${request.statusCode}");
 
     if(request.statusCode == 200){
-      showDialogDelete(context);
+      showToast(context, "Berhasil", "Kartu Asuransi berhasil dihapus");
 
       print("RESPONSE BODY: ${request.body}");
     }
@@ -196,110 +210,26 @@ class AsuransiProvider extends ChangeNotifier {
 
 
 
-  showDialog(BuildContext ctx){
-    Flushbar(
-      margin: EdgeInsets.all(8),
-      duration: Duration(seconds: 4),
-      borderRadius: 8,
-      backgroundGradient: LinearGradient(
-        colors: [MyColors.dnaGreen, Colors.lightBlueAccent],
-        stops: [0.3, 1],
-      ),
-      boxShadows: [
-        BoxShadow(
-          color: Colors.grey,
-          offset: Offset(3, 3),
-          blurRadius: 3,
-        ),
-      ],
-      flushbarPosition: FlushbarPosition.BOTTOM,
-      dismissDirection: FlushbarDismissDirection.HORIZONTAL,
-      forwardAnimationCurve: Curves.fastLinearToSlowEaseIn,
-      title: 'Sukses...',
-      message: 'Kartu Asuransi berhasil di simpan',
-    )
-      ..onStatusChanged = (FlushbarStatus status) {
-        switch (status) {
-          case FlushbarStatus.SHOWING:
-            {
-              break;
-            }
-          case FlushbarStatus.IS_APPEARING:
-            {
-              print("FLUSHBAR IS APPEARING");
 
-              break;
-            }
-          case FlushbarStatus.IS_HIDING:
-            {
-              print("FLUSHBAR IS HIDING");
-              break;
-            }
-          case FlushbarStatus.DISMISSED:
-            {
-              print("FLUSHBAR IS DISMISSED");
-              Navigator.pushReplacementNamed(ctx, "patient_card_page");
-              break;
-            }
+  void showToast(BuildContext ctxx, String title, String subtitle) async {
+    bool isCircle = true;
+    await AchievementView(
+      ctxx,
+      title: "$title",
+      alignment: Alignment.bottomCenter,
+      color: Colors.lightBlue,
+      subTitle: "$subtitle",
+      isCircle: isCircle,
+      duration: Duration(milliseconds: 1000),
+      listener: (status) {
+        print(status);
+        if(status == AchievementState.closing){
+         // Provider.of<PatientCardProvider>(ctxx, listen: false).getPatientCard(ctxx);
+          Navigator.of(ctxx).pushReplacementNamed("new_patient_card_page");
         }
-      }
-      ..show(ctx);
-  }
+      },
+    )..show();
 
-  Flushbar delflushbar = Flushbar(
-    margin: EdgeInsets.all(8),
-    duration: Duration(seconds: 4),
-    borderRadius: 8,
-    backgroundGradient: LinearGradient(
-      colors: [MyColors.dnaGreen, Colors.lightBlueAccent],
-      stops: [0.3, 1],
-    ),
-    boxShadows: [
-      BoxShadow(
-        color: Colors.grey,
-        offset: Offset(3, 3),
-        blurRadius: 3,
-      ),
-    ],
-    flushbarPosition: FlushbarPosition.BOTTOM,
-    dismissDirection: FlushbarDismissDirection.HORIZONTAL,
-    forwardAnimationCurve: Curves.fastLinearToSlowEaseIn,
-    title: 'Sukses...',
-    message: 'Kartu Asuransi berhasil di hapus',
-  );
-
-
-  Future<Flushbar> showDialogDelete(BuildContext ctx){
-    delflushbar
-      ..onStatusChanged = (FlushbarStatus status) {
-        switch (status) {
-          case FlushbarStatus.SHOWING:
-            {
-              break;
-            }
-          case FlushbarStatus.IS_APPEARING:
-            {
-              print("FLUSHBAR IS APPEARING");
-
-              break;
-            }
-          case FlushbarStatus.IS_HIDING:
-            {
-              print("FLUSHBAR IS HIDING");
-
-              break;
-            }
-          case FlushbarStatus.DISMISSED:
-            {
-              print("FLUSHBAR IS DISMISSED");
-              Navigator.pushReplacementNamed(ctx, "patient_card_page");
-              break;
-            }
-        }
-      }
-      ..show(ctx);
-
-    return null;
   }
 
 

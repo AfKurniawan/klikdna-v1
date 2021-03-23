@@ -60,6 +60,9 @@ class MyColors {
   static const eliteAndPro = [Color(0xff1D3557), Color(0xff1D3557)];
   static const presidentAndDirectorColor = [Color(0xff05090F), Color(0xff05090F)];
 
+  static const asuransiCardGreen = [Color(0xff2DC38D), Color(0xff19BD82)];
+  static const asuransiCardBlue = [Color(0xff197BBD), Color(0xff3391D0)];
+
   static const starColor = Color(0xffEE964B);
   static const mitraColor = Color(0xff848FA5);
   static const producerColor = Color(0xff4ECDC4);

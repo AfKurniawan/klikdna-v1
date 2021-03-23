@@ -36,6 +36,7 @@ class AccountProvider with ChangeNotifier {
   Future<AccountModel> getUserAccount(BuildContext context) async {
     print("START GET ACCOUNT");
     final prov = Provider.of<TokenProvider>(context, listen: false);
+    var getSample = Provider.of<ReportProvider>(context, listen: false);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     isLoading = true;
     notifyListeners();
@@ -64,7 +65,7 @@ class AccountProvider with ChangeNotifier {
 
       for(int i = 0 ; i < listPatentCard.length ; i++) {
         lastID = listPatentCard.last.id.toString();
-        print("LAST ID >>>>> $lastID");
+       // print("LAST ID >>>>> $lastID");
         noKtp = prefs.getString("nik");
         print("noKTP $noKtp");
         notifyListeners();
@@ -81,8 +82,8 @@ class AccountProvider with ChangeNotifier {
       prefs.setString("personId", accountResponse.data.userId);
       print("PERSON ACOUNT___: ${accountResponse.data.userId} AND NAME ==> $name");
       nameController.text = accountResponse.data.name;
-      Provider.of<ReportProvider>(context, listen: false).getSamplexx(context, accountResponse.data.userId);
       notifyListeners();
+      getSample.getSamplexx(context, accountResponse.data.userId);
 
     } else {
 
