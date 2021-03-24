@@ -24,13 +24,11 @@ class _MitraPageState extends State<MitraPage> {
 
   @override
   void initState() {
-    //Provider.of<MitraProvider>(context, listen: false).refreshMitraData();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-   // Provider.of<MitraProvider>(context, listen: false).refreshMitraData();
     return AnnotatedRegion<SystemUiOverlayStyle>(
         value: const SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.dark,

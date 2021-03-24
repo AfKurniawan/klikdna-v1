@@ -28,7 +28,7 @@ class PinWidget extends StatelessWidget {
             )
         )
         : Padding(
-          padding: const EdgeInsets.only(bottom: 18.0),
+          padding: const EdgeInsets.only(bottom: 32.0, left: 0, right: 0),
           child: Container(
             height: 210,
             child: ListView.builder(
@@ -41,7 +41,7 @@ class PinWidget extends StatelessWidget {
                 document = parse(prov.pinArray[index].data.text);
                 text = parse(document.body.text).documentElement.text;
                 return Container(
-                  margin: EdgeInsets.only(left: 10, bottom: 10, top: 10),
+                  margin: EdgeInsets.only(left: 12, bottom: 10, top: 10, ),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
@@ -60,9 +60,8 @@ class PinWidget extends StatelessWidget {
                       DashboardSlider(
                           imgSrc: prov.pinArray[index].imageUrl,
                           title: "",
-                          width: 160,
-                          height: 160,
-                          margin: EdgeInsets.only(right: 0, left: 0),
+                          width: 158,
+                          height: 154,
                           desc: "",
                           press: () {
                             Navigator.pushNamed(context, "detail_pin_page",
@@ -73,7 +72,7 @@ class PinWidget extends StatelessWidget {
                                     prov.pinArray.length
                                 ));
                           }),
-                      SizedBox(height: 9),
+                      SizedBox(height: 12),
                       Container(
                         width: 150,
                         child: Padding(
@@ -83,8 +82,9 @@ class PinWidget extends StatelessWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 12,
+                              fontFamily: "Roboto",
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14,
                             ),
                           ),
                         ),

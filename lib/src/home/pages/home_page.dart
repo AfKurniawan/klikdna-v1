@@ -35,8 +35,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-   // Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken(context);
-    Provider.of<MitraProvider>(context, listen: false).refreshMitraData();
     context.read<HomeProvider>().getHomeContentsxx(context);
     super.initState();
   }
@@ -80,22 +78,24 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(
-                                  left: 10.0, right: 10, top: 20),
+                                  left: 16.0, right: 16, top: 20),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text("Post It Now",
                                       style: TextStyle(
                                         fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Sanomat Grab Web',
+                                        fontFamily: "Roboto",
+                                        fontWeight: FontWeight.w500,
                                         color: MyColors.blackPrimary,
                                       )),
                                   GestureDetector(
                                     child: Text("Lihat Semua",
                                         style: TextStyle(
                                             color: MyColors.dnaGreen,
-                                            fontSize: 14)),
+                                            fontSize: 12,
+                                          fontWeight: FontWeight.w400
+                                        )),
                                     onTap: () {
                                       Navigator.pushNamed(
                                           context, "semua_pin_page");
@@ -109,7 +109,7 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                       ),
-                      SizedBox(height: 6),
+                      SizedBox(height: 10),
                       Container(
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -133,14 +133,14 @@ class _HomePageState extends State<HomePage> {
                                   Text("Event",
                                       style: TextStyle(
                                         fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Sanomat Grab Web',
+                                        fontWeight: FontWeight.w500,
+                                        fontFamily: 'Roboto',
                                         color: MyColors.blackPrimary,
                                       )),
                                   GestureDetector(
                                     child: Text("Lihat Semua",
                                         style: TextStyle(
-                                            color: MyColors.dnaGreen, fontSize: 14)),
+                                            color: MyColors.dnaGreen, fontSize: 12, fontWeight: FontWeight.w400)),
                                     onTap: () {
                                       Navigator.pushNamed(context, "semua_event_page");
                                     },
@@ -153,7 +153,7 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                       ),
-                      SizedBox(height: 6),
+                      SizedBox(height: 10),
                       Container(
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -167,20 +167,20 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
+                          padding: const EdgeInsets.only(left: 16.0),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(right: 10, top: 20),
+                                padding: const EdgeInsets.only(right: 16, top: 20),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text("Podcast",
                                         style: TextStyle(
                                           fontSize: 16,
-                                          fontWeight: FontWeight.bold,
+                                          fontWeight: FontWeight.w400,
                                           fontFamily: 'Sanomat Grab Web',
                                           color: Colors.black,
                                         )),
@@ -195,8 +195,8 @@ class _HomePageState extends State<HomePage> {
                                     PodcastSlider(
                                       imgSrc: "assets/images/netpro_image.png",
                                       title: "",
-                                      width: 130,
-                                      height: 130,
+                                      width: 158,
+                                      height: 152,
                                       margin: EdgeInsets.only(right: 10, bottom: 10),
                                       desc: "",
                                       press: () {
@@ -208,8 +208,8 @@ class _HomePageState extends State<HomePage> {
                                         left: 0,
                                         child: Center(
                                           child: Container(
-                                            height: 130,
-                                            width: 130,
+                                            height: 152,
+                                            width: 158,
                                             decoration: BoxDecoration(
                                               color: Colors.black.withOpacity(0.7),
                                               borderRadius: BorderRadius.circular(10),
@@ -222,8 +222,8 @@ class _HomePageState extends State<HomePage> {
                                   ],
                                 ),
                               ),
-                              Text("Netpro", style: TextStyle(fontWeight: FontWeight.bold)),
-                              Text("Klikdna", style: TextStyle(fontWeight: FontWeight.w200)),
+                              Text("Netpro", style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14)),
+                              Text("Klikdna", style: TextStyle(fontWeight: FontWeight.w300, fontSize: 12)),
                               SizedBox(height: 14),
                             ],
                           ),

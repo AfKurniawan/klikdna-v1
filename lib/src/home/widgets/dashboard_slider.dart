@@ -43,11 +43,10 @@ class DashboardSlider extends StatelessWidget {
         child: InkWell(
           onTap: press,
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(0),
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
             child: CachedNetworkImage(
               imageUrl: imgSrc,
-              width: 165,
-              fit: BoxFit.fill,
+              fit: BoxFit.fitWidth,
             ),
           ),
         ),

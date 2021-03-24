@@ -14,12 +14,6 @@ class BannerSlider extends StatefulWidget {
 
 class _BannerSliderState extends State<BannerSlider> {
 
-  // final List<String> imgAsset = [
-  //   "assets/images/slider_1.png",
-  //   "assets/images/slider_2.png",
-  //   "assets/images/slider_3.png"
-  // ];
-
   int _current = 0;
 
   @override
@@ -27,10 +21,8 @@ class _BannerSliderState extends State<BannerSlider> {
     Size size = MediaQuery.of(context).size;
 
     final porv = Provider.of<HomeProvider>(context, listen: false);
-    //final List<Widget> imageSliders = imgAsset.map((item) => buildContainer(item, size)).toList();
 
     List<Widget> getBanner = porv.bannerArray.map((i) => buildContainer(porv.bannerArray[_current].imageUrl, porv.bannerArray[_current].data.title, porv.bannerArray[_current].data.text, size)).toList();
-    var coba = porv.bannerArray.map((i) => buildContainer(porv.bannerArray[_current].imageUrl, porv.bannerArray[_current].data.title, porv.bannerArray[_current].data.text, size)).toList();
     return Stack(
         children: [
       Container(
@@ -51,7 +43,7 @@ class _BannerSliderState extends State<BannerSlider> {
               options: CarouselOptions(
                   autoPlay: true,
                   enlargeCenterPage: false,
-                  height: 205,
+                  height: 180,
                   viewportFraction: 2,
                   onPageChanged: (index, reason) {
                     setState(() {

@@ -42,22 +42,22 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
           children: [
             SizedBox(height: 30),
             Padding(
-              padding: const EdgeInsets.only(left: 10.0, right: 10),
+              padding: const EdgeInsets.only(left: 16.0, right: 16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("Training",
                       style: TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Sanomat Grab Web',
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'Roboto',
                         color: Colors.black,
                       )),
                   Consumer<HomeProvider>(
                     builder: (context, prov, _){
                       return GestureDetector(
                         child: Text("Lihat Semua",
-                            style: TextStyle(color: MyColors.dnaGreen, fontSize: 14)),
+                            style: TextStyle(color: MyColors.dnaGreen, fontSize: 12, fontWeight: FontWeight.w400)),
                         onTap: (){
                           prov.filteringCategory(context, 10);
                         },
@@ -67,19 +67,19 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
                 ],
               ),
             ),
-            SizedBox(height: 8),
+            SizedBox(height: 13),
             buildTraining(),
             SizedBox(height: 30),
             Padding(
-              padding: const EdgeInsets.only(left: 10.0, right: 10),
+              padding: const EdgeInsets.only(left: 16.0, right: 16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("Health Series",
                       style: TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Sanomat Grab Web',
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'Roboto',
                         color: Colors.black,
                       )),
                   Consumer<HomeProvider>(
@@ -87,7 +87,7 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
                       return GestureDetector(
                         child: Text("Lihat Semua",
                             style:
-                            TextStyle(color: MyColors.dnaGreen, fontSize: 14)),
+                            TextStyle(color: MyColors.dnaGreen, fontSize: 12, fontWeight: FontWeight.w300)),
                         onTap: () {
                           prov.filteringCategory(context, 13);
                         },
@@ -97,7 +97,7 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
                 ],
               ),
             ),
-            SizedBox(height: 8),
+            SizedBox(height: 13),
             buildHealthSeries(),
           ],
         ),
@@ -123,7 +123,7 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
             )
         )
         : Container(
-          height: size.width > 600 ? 670 : 400,
+          height: 341,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
@@ -134,16 +134,17 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
               document = parse(prov.trainingEventArray[index].data.text);
               text = parse(document.body.text).documentElement.text;
               return Padding(
-                padding: const EdgeInsets.only(top:10, bottom: 10, right: 10, left: 10),
+                padding: const EdgeInsets.only(top: 0, bottom: 10, right: 0, left: 10),
                 child: Container(
+                  margin: EdgeInsets.only(right: 15),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
                         offset: Offset(0, 1),
-                        blurRadius: 3,
-                        color: Colors.grey[700].withOpacity(0.32),
+                        blurRadius: 5,
+                        color: Colors.grey[500].withOpacity(0.32),
                       ),
                     ],
                   ),
@@ -168,15 +169,17 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
                             borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
                             child: CachedNetworkImage(
                               imageUrl: "${prov.trainingEventArray[index].imageUrl}",
-                              width: size.width - 20,
-                              fit: BoxFit.fitHeight,
+                              width: 325,
+                              height: 192,
+                              fit: BoxFit.fill,
+                              alignment: Alignment.topCenter,
                             ),
                           ),
                         ),
                       ),
                       SizedBox(height: 11),
                       Padding(
-                        padding: const EdgeInsets.only(left:8.0, top: 8),
+                        padding: const EdgeInsets.only(left: 12.0, top: 10),
                         child: InkWell(
                           onTap: (){
                             print("SHAREEEEE");
@@ -194,7 +197,7 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
                       ),
                       Padding(
                         padding:
-                        const EdgeInsets.only(left: 10.0, top: 10),
+                        const EdgeInsets.only(left: 12.0, top: 10),
                         child: Container(
                             width: MediaQuery.of(context).size.width -50,
                             child: Padding(
@@ -208,8 +211,8 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
                                     "${prov.trainingEventArray[index].data.title}",
                                     style: TextStyle(
                                         fontWeight:
-                                        FontWeight.bold,
-                                        fontSize: 13),
+                                        FontWeight.w400,
+                                        fontSize: 14),
                                   ),
                                   SizedBox(height: 9),
                                   Container(
@@ -220,7 +223,7 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
                                       TextOverflow.ellipsis,
                                       style: TextStyle(
                                           fontWeight:
-                                          FontWeight.normal,
+                                          FontWeight.w300,
                                           fontSize: 12),
                                     ),
                                   ),
@@ -261,15 +264,15 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
             )
         )
         : Container(
-          height: size.width > 600 ? 670 : 400,
+          height: MediaQuery.of(context).size.height /2.09,
           child: ListView.builder(
-            scrollDirection: Axis.horizontal,
+            scrollDirection: Axis.vertical,
             shrinkWrap: true,
-            itemCount: prov.healthEventArray.length,
+            itemCount: prov.filterArray.length,
             itemBuilder: (context, index) {
               var document;
               String text;
-              document = parse(prov.healthEventArray[index].data.text);
+              document = parse(prov.filterArray[index].data.text);
               text = parse(document.body.text).documentElement.text;
               return Padding(
                 padding: const EdgeInsets.only(top:10, bottom: 10, right: 10, left: 10),
@@ -296,17 +299,17 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
                             Navigator.pushNamed(
                                 context, "detail_event_page",
                                 arguments: DummyModel(
-                                    "${prov.healthEventArray[index].data.title}",
-                                    "${prov.healthEventArray[index].data.text}",
-                                    "${prov.healthEventArray[index].imageUrl}",
-                                      prov.healthEventArray.length
+                                    "${prov.filterArray[index].data.title}",
+                                    "${prov.filterArray[index].data.text}",
+                                    "${prov.filterArray[index].imageUrl}",
+                                    prov.filterArray.length
                                 ));
                           },
                           child: ClipRRect(
                             borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
                             child: CachedNetworkImage(
-                              imageUrl: "${prov.healthEventArray[index].imageUrl}",
-                              width: size.width - 20,
+                              imageUrl: "${prov.filterArray[index].imageUrl}",
+                              width: size.width,
                               fit: BoxFit.fitHeight,
                             ),
                           ),
@@ -314,13 +317,13 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
                       ),
                       SizedBox(height: 11),
                       Padding(
-                        padding: const EdgeInsets.only(left:8.0, top: 8),
+                        padding: const EdgeInsets.only(left: 12, top: 8),
                         child: InkWell(
                           onTap: (){
                             print("SHAREEEEE");
                             prov.shareContents(context,
-                                '${prov.healthEventArray[index].imageUrl}',
-                                '${prov.healthEventArray[index].data.title}\n$text');
+                                '${prov.filterArray[index].imageUrl}',
+                                '${prov.filterArray[index].data.title}\n$text');
                           },
                           splashColor: MyColors.dnaGreen,
                           child: Container(
@@ -332,7 +335,7 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
                       ),
                       Padding(
                         padding:
-                        const EdgeInsets.only(left: 10.0, top: 10),
+                        const EdgeInsets.only(left: 12.0, top: 10),
                         child: Container(
                             width: MediaQuery.of(context).size.width -50,
                             child: Padding(
@@ -343,11 +346,11 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
                                 CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "${prov.healthEventArray[index].data.title}",
+                                    "${prov.filterArray[index].data.title}",
                                     style: TextStyle(
                                         fontWeight:
-                                        FontWeight.bold,
-                                        fontSize: 13),
+                                        FontWeight.w400,
+                                        fontSize: 14),
                                   ),
                                   SizedBox(height: 9),
                                   Container(
@@ -358,7 +361,7 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
                                       TextOverflow.ellipsis,
                                       style: TextStyle(
                                           fontWeight:
-                                          FontWeight.normal,
+                                          FontWeight.w300,
                                           fontSize: 12),
                                     ),
                                   ),

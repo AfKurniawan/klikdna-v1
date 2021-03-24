@@ -48,8 +48,8 @@ class _SemuaPinPageState extends State<SemuaPinPage> {
                   physics: NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      crossAxisSpacing: 5,
-                      mainAxisSpacing: 1,
+                      crossAxisSpacing: 2,
+                      mainAxisSpacing: 2,
                       childAspectRatio: size.width < 600 ? 0.78 : 0.85),
                   itemBuilder: (context, index){
                     var document;
@@ -74,8 +74,8 @@ class _SemuaPinPageState extends State<SemuaPinPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            width: size.width < 600 ? size.height / 3.07 : size.height * 1.8,
-                            height: size.width < 600 ? size.height / 4.4 : size.height * 0.95,
+                            width: 152,
+                            height: 150,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.only(
@@ -102,7 +102,7 @@ class _SemuaPinPageState extends State<SemuaPinPage> {
                                   ),
                                   child: CachedNetworkImage(
                                     imageUrl: prov.pinArray[index].imageUrl,
-                                    width: size.width < 600 ? size.width / 4.3 : size.width * 1,
+                                    width: 158,
                                     fit: BoxFit.fill,
                                   ),
                                 ),
@@ -113,13 +113,13 @@ class _SemuaPinPageState extends State<SemuaPinPage> {
                           Container(
                             width: MediaQuery.of(context).size.width -100,
                             child: Padding(
-                              padding: const EdgeInsets.only(left: 10.0),
+                              padding: const EdgeInsets.only(left: 10.0, right: 10),
                               child: Text(
                                 "${prov.pinArray[index].data.title}",
-                                maxLines: size.width < 600 ? 1 : 4,
+                                maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
-                                  fontWeight: FontWeight.normal,
+                                  fontWeight: FontWeight.w300,
                                   fontSize: 12,
                                 ),
                               ),

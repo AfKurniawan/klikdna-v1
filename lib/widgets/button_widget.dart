@@ -37,7 +37,8 @@ class ButtonWidget extends StatelessWidget {
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 14,
-                  fontWeight: FontWeight.bold),
+                  fontFamily: "Roboto",
+                  fontWeight: FontWeight.w700),
             ),
           ),
         ),

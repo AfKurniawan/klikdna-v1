@@ -39,6 +39,7 @@ class MainProvider with ChangeNotifier {
           currenPage = HomePage();
           Provider.of<TokenProvider>(context, listen: false).getApiToken();
           Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken(context);
+          Provider.of<AccountProvider>(context, listen: false).getUserAccount(context);
 
           break;
 
@@ -57,6 +58,7 @@ class MainProvider with ChangeNotifier {
           Provider.of<TokenProvider>(context, listen: false).getApiToken();
           Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken(context);
           context.read<MitraProvider>().refreshMitraData();
+          Provider.of<AccountProvider>(context, listen: false).getUserAccount(context);
           break;
 
         case 3 :

@@ -8,7 +8,8 @@ class DetailWidget extends StatelessWidget {
   final Function press;
   final double width;
   final double height ;
-  final double radius;
+  final double radiusTr;
+  final double radiusTl;
   final EdgeInsetsGeometry margin;
   
   const DetailWidget({
@@ -19,7 +20,8 @@ class DetailWidget extends StatelessWidget {
     this.press,
     this.width,
     this.height,
-    this.radius,
+    this.radiusTl,
+    this.radiusTr,
     this.margin
   }) : super(key: key);
 
@@ -46,12 +48,11 @@ class DetailWidget extends StatelessWidget {
         child: InkWell(
           onTap: press,
           child: ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(radius)),
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(radiusTl), topRight: Radius.circular(radiusTr)),
             child: CachedNetworkImage(
               imageUrl: svgSrc,
-              //width: size.width - 40,
-              fit: BoxFit.fill,
-              width: MediaQuery.of(context).size.width,
+              fit: BoxFit.fitHeight,
+              alignment: Alignment.topLeft,
               height: height,
               // height: 150,
             ),

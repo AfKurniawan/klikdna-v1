@@ -23,13 +23,9 @@ class CardInssuranceItem extends StatelessWidget {
     return Column(
       children: [
         Container(
-          margin: EdgeInsets.only(
-              right: 5,
-              left: 5,
-              bottom: 10
-          ),
          // height: MediaQuery.of(context).size.width < 400 ? MediaQuery.of(context).size.height / 3.5 : MediaQuery.of(context).size.height / 4,
           width:  320,
+          height: 180,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             gradient: LinearGradient(
@@ -50,33 +46,35 @@ class CardInssuranceItem extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 16.0, top: 16, right: 16, bottom: 16),
                   child: Column(
-                    //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text("${model.nomorAsuransi}",
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,
-                              fontWeight: FontWeight.bold)),
-                      SizedBox(height: 5),
+                              fontFamily: "Quicksand",
+                              fontWeight: FontWeight.w700)),
+
                       Text("${model.namaPeserta}",
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 10,
+                              fontFamily: "Lato",
                               fontWeight: FontWeight.w300)),
 
                       Container(
-                        margin: EdgeInsets.only(top: 40),
+                        margin: EdgeInsets.only(top: 25),
                         child: Text("$s",
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 18,
+                                fontSize: 21.49,
                                 fontFamily: 'Quicksand',
-                                fontWeight: FontWeight.bold)),
+                                fontWeight: FontWeight.w500)),
                       ),
 
                       Container(
-                        margin: EdgeInsets.only(top: 48),
+                        margin: EdgeInsets.only(top: 32),
                         width: MediaQuery.of(context).size.width / 1,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -92,10 +90,12 @@ class CardInssuranceItem extends StatelessWidget {
                                     maxLines: 1,
                                     style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: 8,
+                                        fontSize: 7.18,
+                                        fontFamily: "Lato",
                                         fontWeight: FontWeight.w300
                                     ),
                                   ),
+                                  SizedBox(height: 5.33),
 
                                   Text( "${model.pemegangPolis}",
                                     overflow: TextOverflow.clip,
@@ -103,7 +103,8 @@ class CardInssuranceItem extends StatelessWidget {
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 12,
-                                        fontWeight: FontWeight.bold
+                                        fontFamily: "Lato",
+                                        fontWeight: FontWeight.w500
                                     ),
                                   ),
                                 ],
@@ -126,6 +127,7 @@ class CardInssuranceItem extends StatelessWidget {
                                         fontWeight: FontWeight.w300
                                     ),
                                   ),
+                                  SizedBox(height: 5.33),
 
                                   Text( "${model.nomorPolis}",
                                     overflow: TextOverflow.clip,
@@ -133,7 +135,7 @@ class CardInssuranceItem extends StatelessWidget {
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 12,
-                                        fontWeight: FontWeight.bold
+                                        fontWeight: FontWeight.w500
                                     ),
                                   ),
                                 ],

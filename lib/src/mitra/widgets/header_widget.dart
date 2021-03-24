@@ -67,7 +67,7 @@ class HeaderWidget extends StatelessWidget {
                     "Total Komisi",
                     style: TextStyle(
                         color: MyColors.dnaBlack,
-                        fontSize: 12),
+                        fontSize: 12, fontWeight: FontWeight.w300),
                   ),
 
                   SizedBox(height: 2),
@@ -76,13 +76,15 @@ class HeaderWidget extends StatelessWidget {
                     prov.vtotalcommission == null ? "0" : "IDR ${prov.vtotalcommission.split(".")[0]}",
                     style: TextStyle(
                         color: MyColors.dnaBlack,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w700,
                         fontSize: 18),
                   ),
                 ],
               ),
               Spacer(),
               Container(
+                height: 32,
+                width: 32,
                 margin: EdgeInsets.only(right: 16),
                 decoration: BoxDecoration(
                   color: Color(0xffEDF0F4),
@@ -94,8 +96,7 @@ class HeaderWidget extends StatelessWidget {
                     Navigator.of(context).pushNamed("wallet_referral_page");
 
                   },
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
+                  child: Center(
                     child: Icon(Icons.arrow_forward_ios, size: 16),
                   ),
                 ),

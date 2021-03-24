@@ -184,8 +184,11 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                     Container(
                                       child: Column(
                                         children: [
-                                          Text("Nama", style: TextStyle(
-                                            fontSize: 12
+                                          Text("Nama",
+                                              style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w300,
+                                              fontFamily: "Roboto"
                                           )),
                                           SizedBox(
                                             height: 5,
@@ -195,7 +198,8 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                             maxLines: 1,
                                             style: TextStyle(
                                                 fontSize: 14,
-                                                fontWeight: FontWeight.bold
+                                                fontWeight: FontWeight.w400,
+                                                fontFamily: "Roboto"
                                             ),
                                           ),
                                         ],
@@ -204,8 +208,11 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                     Container(
                                       child: Column(
                                         children: [
-                                          Text("Nomor KTP", style: TextStyle(
-                                              fontSize: 12
+                                          Text("Nomor KTP",
+                                              style: TextStyle(
+                                              fontSize: 12,
+                                                  fontWeight: FontWeight.w300,
+                                                  fontFamily: "Roboto"
                                           )),
                                           SizedBox(
                                             height: 5,
@@ -215,7 +222,7 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                             maxLines: 1,
                                             style: TextStyle(
                                                 fontSize: 14,
-                                                fontWeight: FontWeight.bold
+                                                fontWeight: FontWeight.w400
                                             ),
                                           ),
                                         ],
@@ -225,7 +232,9 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                       child: Column(
                                         children: [
                                           Text("Jenis Kelamin", style: TextStyle(
-                                              fontSize: 12
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w300,
+                                              fontFamily: "Roboto"
                                           )),
                                           SizedBox(
                                             height: 5,
@@ -235,7 +244,7 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                             maxLines: 1,
                                             style: TextStyle(
                                                 fontSize: 14,
-                                                fontWeight: FontWeight.bold
+                                                fontWeight: FontWeight.w400
                                             ),
                                           ),
                                         ],
@@ -251,9 +260,9 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                             height: 10,
                             color: Colors.grey[100],
                           ),
-                          SizedBox(height: 20),
+                          SizedBox(height: 10),
                           Padding(
-                            padding: const EdgeInsets.only(right: 10),
+                            padding: const EdgeInsets.only(right: 0),
                             child: Container(
                               child: Consumer<PatientCardProvider>(
                                 builder: (context, pcard, _){
@@ -276,7 +285,7 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                             child: Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
-                                                Text("Kartu Asuransi", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                                                Text("Kartu Asuransi", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400)),
                                                 IconButton(
                                                   icon: Icon(Icons.arrow_forward_ios, color: MyColors.grey, size: 18),
                                                   onPressed: (){
@@ -288,7 +297,7 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                           ),
                                         ),
                                       ),
-                                      SizedBox(height: 20),
+                                      SizedBox(height: 12),
                                       Consumer<PatientCardProvider>(
                                         builder: (context, prov, _){
                                           return prov.listAsuransi.length == 0
@@ -314,28 +323,32 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                             ),
                                           )
                                           : Container(
-                                            height: 230,
-                                            child: ListView.builder(
-                                                scrollDirection: Axis.horizontal,
-                                                itemCount: prov.listAsuransi.length == 0 ? 0 : prov.listAsuransi.length,
-                                                shrinkWrap: true,
-                                                itemBuilder: (context, index) {
-                                                  return Padding(
-                                                    padding: const EdgeInsets.all(3.0),
-                                                    child: CardInssuranceItem(
-                                                        model: prov.listAsuransi[index]),
-                                                  );
-                                                }),
+                                            height: 180,
+                                            child: Center(
+                                              child: ListView.builder(
+                                                  scrollDirection: Axis.horizontal,
+                                                  itemCount: prov.listAsuransi.length == 0 ? 0 : prov.listAsuransi.length,
+                                                  shrinkWrap: true,
+                                                  itemBuilder: (context, index) {
+                                                    return Container(
+                                                      margin: EdgeInsets.only(left: 10, right: 10),
+                                                      child: CardInssuranceItem(
+                                                          model: prov.listAsuransi[index]),
+                                                    );
+                                                  }),
+                                            ),
                                           );
                                         },
                                       ),
-                                      SizedBox(height: 20),
+                                      SizedBox(height: 12),
+                                      Container(height: 10, color: Colors.grey[200]),
+                                      SizedBox(height: 12),
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Container(
                                             alignment: Alignment.centerLeft,
-                                              width: 200,
+                                              width: 171,
                                               height: 35,
                                               decoration: BoxDecoration(
                                                   color: MyColors.dnaGreen,
@@ -344,10 +357,10 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                                 bottomRight: Radius.circular(20))
                                               ),
                                               child: Padding(
-                                                padding: const EdgeInsets.only(left: 8.0),
+                                                padding: const EdgeInsets.only(left: 12.0),
                                                 child: Text("Golongan Darah",
                                                     style: TextStyle(fontSize: 16,
-                                                        fontWeight: FontWeight.bold,
+                                                        fontWeight: FontWeight.w500,
                                                     color: Colors.white)),
                                               )),
                                           IconButton(
@@ -360,32 +373,36 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                         ],
                                       ),
                                       SizedBox(height: 20),
-                                      Container(
-                                          margin: EdgeInsets.only(left: 8.0),
-                                          width: MediaQuery.of(context).size.width,
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.circular(10),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                offset: Offset(0, 1),
-                                                blurRadius: 3,
-                                                color: Colors.grey[700].withOpacity(0.32),
-                                              ),
-                                            ],
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(18.0),
-                                            child: Center(
-                                                child: Text(pcard.bloodTypeController.text == null ? "-" : "${pcard.bloodTypeController.text}")),
-                                          )),
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 16.0, right: 16),
+                                        child: Container(
+                                            width: MediaQuery.of(context).size.width,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.circular(10),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  offset: Offset(0, 1),
+                                                  blurRadius: 3,
+                                                  color: Colors.grey[700].withOpacity(0.32),
+                                                ),
+                                              ],
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(18.0),
+                                              child: Center(
+                                                  child: Text(pcard.bloodTypeController.text == null ? "-" : "${pcard.bloodTypeController.text}")),
+                                            ),
+                                          height: 70,
+                                        ),
+                                      ),
                                       SizedBox(height: 20),
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Container(
                                               alignment: Alignment.centerLeft,
-                                              width: 200,
+                                              width: 171,
                                               height: 35,
                                               decoration: BoxDecoration(
                                                   color: MyColors.dnaGreen,
@@ -394,10 +411,10 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                                       bottomRight: Radius.circular(20))
                                               ),
                                               child: Padding(
-                                                padding: const EdgeInsets.only(left: 8.0),
+                                                padding: const EdgeInsets.only(left: 12.0),
                                                 child: Text("Medical Professional",
                                                     style: TextStyle(fontSize: 16,
-                                                        fontWeight: FontWeight.bold,
+                                                        fontWeight: FontWeight.w500,
                                                         color: Colors.white)),
                                               )),
                                           IconButton(
@@ -410,8 +427,9 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                       ),
                                       SizedBox(height: 20),
                                       Container(
-                                        margin: EdgeInsets.only(left: 8.0),
+                                        margin: EdgeInsets.only(left: 16.0, right: 16),
                                           width: MediaQuery.of(context).size.width,
+                                          height: 70,
                                           decoration: BoxDecoration(
                                             color: Colors.white,
                                             borderRadius: BorderRadius.circular(10),
@@ -424,16 +442,17 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                             ],
                                           ),
                                           child: Padding(
-                                            padding: const EdgeInsets.all(18.0),
+                                            padding: const EdgeInsets.all(28.0),
                                             child: Center(child: Text(pcard.medicalProfController.text == null ? "-" : "${pcard.medicalProfController.text}")),
-                                          )),
+                                          )
+                                      ),
                                       SizedBox(height: 20),
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Container(
                                               alignment: Alignment.centerLeft,
-                                              width: 200,
+                                              width: 171,
                                               height: 35,
                                               decoration: BoxDecoration(
                                                   color: MyColors.dnaGreen,
@@ -442,10 +461,10 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                                       bottomRight: Radius.circular(20))
                                               ),
                                               child: Padding(
-                                                padding: const EdgeInsets.only(left: 8.0),
+                                                padding: const EdgeInsets.only(left: 12.0),
                                                 child: Text("Kontak Darurat",
                                                     style: TextStyle(fontSize: 16,
-                                                        fontWeight: FontWeight.bold,
+                                                        fontWeight: FontWeight.w500,
                                                         color: Colors.white)),
                                               )),
                                           IconButton(
@@ -458,8 +477,9 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                       ),
                                       SizedBox(height: 20),
                                       Container(
-                                          margin: EdgeInsets.only(left: 8.0),
+                                          margin: EdgeInsets.only(left: 12.0, right: 12),
                                           width: MediaQuery.of(context).size.width,
+                                          height: 70,
                                           decoration: BoxDecoration(
                                             color: Colors.white,
                                             borderRadius: BorderRadius.circular(10),
@@ -492,7 +512,7 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                         children: [
                                           Container(
                                               alignment: Alignment.centerLeft,
-                                              width: 200,
+                                              width: 171,
                                               height: 35,
                                               decoration: BoxDecoration(
                                                   color: MyColors.dnaGreen,
@@ -501,10 +521,10 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                                       bottomRight: Radius.circular(20))
                                               ),
                                               child: Padding(
-                                                padding: const EdgeInsets.only(left: 8.0),
+                                                padding: const EdgeInsets.only(left: 12.0),
                                                 child: Text("Komorbiditas",
                                                     style: TextStyle(fontSize: 16,
-                                                        fontWeight: FontWeight.bold,
+                                                        fontWeight: FontWeight.w500,
                                                         color: Colors.white)),
                                               )),
                                           IconButton(
@@ -517,8 +537,9 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                       ),
                                       SizedBox(height: 20),
                                       Container(
-                                          margin: EdgeInsets.only(left: 8.0),
+                                          margin: EdgeInsets.only(left: 12.0, right: 12),
                                           width: MediaQuery.of(context).size.width,
+                                          height: 70,
                                           decoration: BoxDecoration(
                                             color: Colors.white,
                                             borderRadius: BorderRadius.circular(10),

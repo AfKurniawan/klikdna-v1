@@ -141,7 +141,8 @@ class _AsuransiPageState extends State<AsuransiPage> {
                       children: [
                         Text("Kartu Asuransi ${index+1}", style: TextStyle(
                           fontSize: 16,
-                          fontWeight: FontWeight.bold
+                          fontFamily: "Roboto",
+                          fontWeight: FontWeight.w500
                         )),
                         Row(
                           children: [
@@ -170,7 +171,7 @@ class _AsuransiPageState extends State<AsuransiPage> {
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(18.0),
           child: ButtonWidget(
-            height: 60,
+            height: 50,
             btnText: "Tambah Kartu Asuransi",
             color: MyColors.dnaGreen,
             btnAction: (){

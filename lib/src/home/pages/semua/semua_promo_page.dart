@@ -78,6 +78,7 @@ class _SemuaPromoPageState extends State<SemuaPromoPage> {
                           .documentElement
                           .text;
                       return Container(
+                        height: 250,
                         margin: EdgeInsets.only(left: 10, bottom: 10, top: 10, right: 10),
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -99,9 +100,10 @@ class _SemuaPromoPageState extends State<SemuaPromoPage> {
                               "${prov.bannerArray[index].imageUrl}",
                               title: "",
                               width: MediaQuery.of(context).size.width,
-                              height: 160,
+                              height: 200,
                               desc: "",
-                              radius: 10,
+                              radiusTr: 10,
+                              radiusTl: 10,
                               press: () {
                                 Navigator.pushNamed(
                                     context, "detail_promo_page",
@@ -117,12 +119,12 @@ class _SemuaPromoPageState extends State<SemuaPromoPage> {
                             SizedBox(height: 11),
                             Padding(
                               padding:
-                              const EdgeInsets.only(bottom: 12),
+                              const EdgeInsets.only(bottom: 0, top: 8),
                               child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Container(
-                                      width: 80,
+                                      width: 90,
                                       child: Padding(
                                         padding: const EdgeInsets.only(
                                             left: 10, right: 0),
@@ -132,7 +134,8 @@ class _SemuaPromoPageState extends State<SemuaPromoPage> {
                                           overflow: TextOverflow.ellipsis,
                                           textAlign: TextAlign.left,
                                           style: TextStyle(
-                                            fontWeight: FontWeight.bold,
+                                            fontWeight: FontWeight.w400,
+                                            fontFamily: "Roboto",
                                             fontSize: 14,
                                           ),
                                         ),

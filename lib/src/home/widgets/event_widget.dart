@@ -26,9 +26,6 @@ class _EventWidgetState extends State<EventWidget> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-
-
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Consumer<HomeProvider>(
@@ -50,9 +47,9 @@ class _EventWidgetState extends State<EventWidget> {
               )
           )
           : Padding(
-            padding: const EdgeInsets.only(left: 10.0, bottom: 10),
+            padding: const EdgeInsets.only(left: 10.0, bottom: 32),
             child: Container(
-              height: size.width > 600 ? 650 : 370,
+              height: 341,
               child: Row(
                 children: [
                   ListView.builder(
@@ -77,13 +74,12 @@ class _EventWidgetState extends State<EventWidget> {
                             ),
                           ],
                         ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Material(
-                              color: Colors.transparent,
-                              child: InkWell(
+                        child: Container(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              InkWell(
                                 onTap: (){
                                   Navigator.pushNamed(
                                       context, "detail_event_page",
@@ -98,61 +94,60 @@ class _EventWidgetState extends State<EventWidget> {
                                   borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
                                   child: CachedNetworkImage(
                                     imageUrl: "${prov.allEventArray[index].imageUrl}",
-                                    width: size.width - 20,
-                                    fit: BoxFit.fitHeight,
+                                    width: 316,
+                                    height: 192,
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
                               ),
-                            ),
-                            SizedBox(height: 11),
-                            Container(
-                              padding: EdgeInsets.all(2),
-                              alignment: Alignment.center,
-                              child: IconButton(
-                                icon: Icon(Icons.share_outlined, color: Colors.black38),
-                                splashColor: MyColors.dnaGreen,
-                                onPressed: (){
-                                  print("SHAREXXX");
-                                  prov.shareImageAndText('${prov.allEventArray[index].imageUrl}','${prov.allEventArray[index].data.title}\n$text');
-                                },
+
+                              Container(
+                                alignment: Alignment.center,
+                                child: IconButton(
+                                  icon: Icon(Icons.share_outlined, color: Colors.black38),
+                                  splashColor: MyColors.dnaGreen,
+                                  onPressed: (){
+                                    print("SHAREXXX");
+                                    prov.shareImageAndText('${prov.allEventArray[index].imageUrl}','${prov.allEventArray[index].data.title}\n$text');
+                                  },
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding:
-                              const EdgeInsets.only(left: 10.0, top: 10),
-                              child: Container(
-                                  width: MediaQuery.of(context).size.width -50,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 0, right: 10),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "${prov.allEventArray[index].data.title}",
-                                          style: TextStyle(
-                                              fontWeight:
-                                              FontWeight.bold,
-                                              fontSize: 13),
-                                        ),
-                                        SizedBox(height: 9),
-                                        Text(
-                                          "$text",
-                                          maxLines: 3,
-                                          overflow:
-                                          TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                              fontWeight:
-                                              FontWeight.normal,
-                                              fontSize: 12),
-                                        ),
-                                        //SizedBox(height: 10),
-                                      ],
-                                    ),
-                                  )),
-                            ),
-                          ],
+                              Padding(
+                                padding: EdgeInsets.only(left: 12.0, top: 10),
+                                child: Container(
+                                    width: MediaQuery.of(context).size.width -50,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 0, right: 10),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "${prov.allEventArray[index].data.title}",
+                                            style: TextStyle(
+                                                fontWeight:
+                                                FontWeight.w400,
+                                                fontSize: 14),
+                                          ),
+                                          SizedBox(height: 9),
+                                          Text(
+                                            "$text",
+                                            maxLines: 3,
+                                            overflow:
+                                            TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                fontWeight:
+                                                FontWeight.w300,
+                                                fontSize: 12),
+                                          ),
+                                          //SizedBox(height: 10),
+                                        ],
+                                      ),
+                                    )),
+                              ),
+                            ],
+                          ),
                         ),
                       );
                     },

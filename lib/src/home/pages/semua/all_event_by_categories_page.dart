@@ -146,8 +146,8 @@ class _AllEventByCategoriesPageState extends State<AllEventByCategoriesPage> {
                                         "${prov.filterArray[index].data.title}",
                                         style: TextStyle(
                                             fontWeight:
-                                            FontWeight.bold,
-                                            fontSize: 13),
+                                            FontWeight.w400,
+                                            fontSize: 14),
                                       ),
                                       SizedBox(height: 9),
                                       Container(
@@ -158,7 +158,7 @@ class _AllEventByCategoriesPageState extends State<AllEventByCategoriesPage> {
                                           TextOverflow.ellipsis,
                                           style: TextStyle(
                                               fontWeight:
-                                              FontWeight.normal,
+                                              FontWeight.w300,
                                               fontSize: 12),
                                         ),
                                       ),

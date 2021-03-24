@@ -112,3 +112,9 @@ flutter:
     - family: WorkSans
       fonts:
         - asset: assets/fonts/WorkSans.ttf
+    - family: WorkSans
+      fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
+    - family: WorkSans
+      fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
