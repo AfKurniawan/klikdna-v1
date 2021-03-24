@@ -14,7 +14,7 @@ class TreeWebViewWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width,
+      width: 328,
       margin: EdgeInsets.only(top: 10, bottom: 20),
       decoration: BoxDecoration(
         color: Colors.transparent,
@@ -27,21 +27,17 @@ class TreeWebViewWidget extends StatelessWidget {
           ),
         ],
       ),
-      child: Container(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: (){
-            print("TREEE URL ${prov.vtree}");
-            Provider.of<MitraProvider>(context, listen: false).treeWebview(prov.vtree);
-          },
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Image.asset(
-              "assets/images/new_trees.png",
-              fit: BoxFit.cover,
-              width: MediaQuery.of(context).size.width,
-              // height: 150,
-            ),
+      child: InkWell(
+        onTap: (){
+          print("TREEE URL ${prov.vtree}");
+          Provider.of<MitraProvider>(context, listen: false).treeWebview(prov.vtree);
+        },
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Image.asset(
+            "assets/images/tree_image.png",
+            fit: BoxFit.fitWidth,
+            // height: 150,
           ),
         ),
       ),

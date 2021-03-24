@@ -5,6 +5,7 @@ import 'package:new_klikdna/src/home/pages/home_page.dart';
 import 'package:new_klikdna/src/home/providers/home_provider.dart';
 import 'package:new_klikdna/src/login/providers/login_provider.dart';
 import 'package:new_klikdna/src/main/providers/main_provider.dart';
+import 'package:new_klikdna/src/mitra/providers/mitra_provider.dart';
 import 'package:new_klikdna/src/token/providers/token_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:provider/provider.dart';

@@ -2,6 +2,7 @@ import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:new_klikdna/src/patient_card/providers/asuransi_provider.dart';
+import 'package:new_klikdna/src/token/providers/token_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:new_klikdna/widgets/button_widget.dart';
 import 'package:new_klikdna/widgets/form_widget.dart';
@@ -94,6 +95,7 @@ class _AddAsuransiPageState extends State<AddAsuransiPage> {
                   SimpleAutoCompleteTextField(
                     key: key,
                     suggestions: listNamaAsuransi,
+                    controller: prov.addNamaAsuransiController,
                     decoration: InputDecoration(
                         labelText: "Nama Asuransi",
                         alignLabelWithHint: true,
@@ -204,7 +206,9 @@ class _AddAsuransiPageState extends State<AddAsuransiPage> {
             height: 60,
             color: MyColors.dnaGreen,
             btnAction: (){
+
               Provider.of<AsuransiProvider>(context, listen: false).addAsuransi(context, tipeValue);
+
             },
           ),
         )

@@ -3,6 +3,7 @@ import 'package:new_klikdna/src/account/providers/account_provider.dart';
 import 'package:new_klikdna/src/home/pages/home_page.dart';
 import 'package:new_klikdna/src/home/providers/home_provider.dart';
 import 'package:new_klikdna/src/mitra/pages/mitra_page.dart';
+import 'package:new_klikdna/src/mitra/providers/mitra_provider.dart';
 import 'package:new_klikdna/src/pmr/pages/pmr_page.dart';
 import 'package:new_klikdna/src/profile/pages/main_profile_page.dart';
 import 'package:new_klikdna/src/report/pages/new_main_report_page.dart';
@@ -55,6 +56,7 @@ class MainProvider with ChangeNotifier {
           currenPage = MitraPage();
           Provider.of<TokenProvider>(context, listen: false).getApiToken();
           Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken(context);
+          context.read<MitraProvider>().refreshMitraData();
           break;
 
         case 3 :

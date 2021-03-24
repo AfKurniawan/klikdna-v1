@@ -125,12 +125,12 @@ class _HomeReportPageState extends State<HomeReportPage> {
                               return ClipRRect(
                                   borderRadius: BorderRadius.circular(50),
                                   child: model.photoView == null ?
-                                  Image.asset("assets/images/no_image.png", height: 90, width: 90, fit: BoxFit.cover)
+                                  Image.asset("assets/images/no_image.png", height: 72, width: 72, fit: BoxFit.cover)
                                       : Image.memory(
                                     model.photoView,
-                                    width: 92,
+                                    width: 72,
                                     fit: BoxFit.cover,
-                                    height: 92,
+                                    height: 72,
                                     // height: 150,
                                   ));
                             },

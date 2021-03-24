@@ -21,11 +21,11 @@ class OverViewTileWidget extends StatelessWidget {
           Column(
             children: [
               Container(
-                height: 120,
+                height: 110,
+                width: 156,
                 decoration: BoxDecoration(
                     color: MyColors.cvTileColor,
                     borderRadius: BorderRadius.circular(20)),
-                width: MediaQuery.of(context).size.width / 2.2,
                 child: Stack(
                   children: [
                     Positioned(
@@ -34,7 +34,7 @@ class OverViewTileWidget extends StatelessWidget {
                       child: Image.asset("assets/images/lingkaran.png"),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(18),
+                      padding: const EdgeInsets.only(top: 18, bottom: 17, left: 17, right: 19),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,8 +44,8 @@ class OverViewTileWidget extends StatelessWidget {
                             maxLines: 1,
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700
                             ),
                           ),
 
@@ -62,6 +62,7 @@ class OverViewTileWidget extends StatelessWidget {
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 12,
+                                        fontFamily: "Proxima",
                                         fontWeight: FontWeight.w300
                                     ),
                                   ),
@@ -72,6 +73,7 @@ class OverViewTileWidget extends StatelessWidget {
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 18,
+                                        fontFamily: "Proxima",
                                         fontWeight: FontWeight.bold
                                     ),
                                   ),
@@ -86,6 +88,7 @@ class OverViewTileWidget extends StatelessWidget {
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 12,
+                                        fontFamily: "Proxima",
                                         fontWeight: FontWeight.w300
                                     ),
                                   ),
@@ -96,6 +99,7 @@ class OverViewTileWidget extends StatelessWidget {
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 18,
+                                        fontFamily: "Proxima",
                                         fontWeight: FontWeight.bold
                                     ),
                                   ),
@@ -127,11 +131,11 @@ class OverViewTileWidget extends StatelessWidget {
 
   Widget buildTeamTile(BuildContext context) {
     return Container(
-              height: 120,
+              height: 110,
               decoration: BoxDecoration(
                   color: MyColors.teamTileColor,
                   borderRadius: BorderRadius.circular(20)),
-              width: MediaQuery.of(context).size.width / 2.2,
+              width: 156,
               child: Stack(
                 children: [
                   Positioned(
@@ -140,7 +144,7 @@ class OverViewTileWidget extends StatelessWidget {
                     child: Image.asset("assets/images/lingkaran.png"),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(18),
+                    padding: const EdgeInsets.only(top: 18, left: 16, right: 16, bottom: 17),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -150,8 +154,9 @@ class OverViewTileWidget extends StatelessWidget {
                           maxLines: 1,
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500
+                              fontSize: 12,
+                              fontFamily: "Proxima",
+                              fontWeight: FontWeight.w700
                           ),
                         ),
 
@@ -169,7 +174,8 @@ class OverViewTileWidget extends StatelessWidget {
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 12,
-                                      fontWeight: FontWeight.w300
+                                      fontFamily: "Proxima",
+                                      fontWeight: FontWeight.w400
                                   ),
                                 ),
                                 SizedBox(height: 5),
@@ -179,7 +185,8 @@ class OverViewTileWidget extends StatelessWidget {
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 18,
-                                      fontWeight: FontWeight.bold
+                                      fontFamily: "Proxima",
+                                      fontWeight: FontWeight.w700
                                   ),
                                 ),
                               ],
@@ -193,7 +200,8 @@ class OverViewTileWidget extends StatelessWidget {
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 12,
-                                      fontWeight: FontWeight.w300
+                                      fontFamily: "Proxima",
+                                      fontWeight: FontWeight.w400
                                   ),
                                 ),
                                 SizedBox(height: 5),
@@ -203,7 +211,8 @@ class OverViewTileWidget extends StatelessWidget {
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 18,
-                                      fontWeight: FontWeight.bold
+                                      fontFamily: "Proxima",
+                                      fontWeight: FontWeight.w700
                                   ),
                                 ),
                               ],
@@ -222,7 +231,8 @@ class OverViewTileWidget extends StatelessWidget {
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 12,
-                                      fontWeight: FontWeight.w300
+                                      fontFamily: "Proxima",
+                                      fontWeight: FontWeight.w400
                                   ),
                                 ),
                                 SizedBox(height: 5),
@@ -232,7 +242,8 @@ class OverViewTileWidget extends StatelessWidget {
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 18,
-                                      fontWeight: FontWeight.bold
+                                      fontFamily: "Proxima",
+                                      fontWeight: FontWeight.w700
                                   ),
                                 ),
                               ],
@@ -246,7 +257,8 @@ class OverViewTileWidget extends StatelessWidget {
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 12,
-                                      fontWeight: FontWeight.w300
+                                      fontFamily: "Proxima",
+                                      fontWeight: FontWeight.w400
                                   ),
                                 ),
                                 SizedBox(height: 5),
@@ -256,7 +268,8 @@ class OverViewTileWidget extends StatelessWidget {
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 18,
-                                      fontWeight: FontWeight.bold
+                                      fontFamily: "Proxima",
+                                      fontWeight: FontWeight.w700
                                   ),
                                 ),
                               ],
@@ -276,11 +289,11 @@ class OverViewTileWidget extends StatelessWidget {
     return Column(
           children: [
             Container(
-              height: 120,
+              height: 110,
               decoration: BoxDecoration(
                   color: MyColors.pointRewardTileColor,
                   borderRadius: BorderRadius.circular(20)),
-              width: MediaQuery.of(context).size.width / 2.2,
+              width: 156,
               child: Stack(
                 children: [
                   Positioned(
@@ -289,7 +302,7 @@ class OverViewTileWidget extends StatelessWidget {
                     child: Image.asset("assets/images/lingkaran.png"),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(18),
+                    padding: const EdgeInsets.only(top: 18, left: 17, bottom: 17, right: 19),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -299,8 +312,9 @@ class OverViewTileWidget extends StatelessWidget {
                           maxLines: 1,
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500
+                              fontSize: 12,
+                              fontFamily: "Proxima",
+                              fontWeight: FontWeight.bold
                           ),
                         ),
 
@@ -317,6 +331,7 @@ class OverViewTileWidget extends StatelessWidget {
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 12,
+                                      fontFamily: "Proxima",
                                       fontWeight: FontWeight.w300
                                   ),
                                 ),
@@ -326,7 +341,8 @@ class OverViewTileWidget extends StatelessWidget {
                                   maxLines: 1,
                                   style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 16,
+                                      fontSize: 18,
+                                      fontFamily: "Proxima",
                                       fontWeight: FontWeight.bold
                                   ),
                                 ),
@@ -342,6 +358,7 @@ class OverViewTileWidget extends StatelessWidget {
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 12,
+                                      fontFamily: "Proxima",
                                       fontWeight: FontWeight.w300
                                   ),
                                 ),
@@ -352,6 +369,7 @@ class OverViewTileWidget extends StatelessWidget {
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 18,
+                                      fontFamily: "Proxima",
                                       fontWeight: FontWeight.bold
                                   ),
                                 ),
@@ -370,13 +388,13 @@ class OverViewTileWidget extends StatelessWidget {
 
             Material(
               child: Ink(
-                height: 120,
+                height: 110,
                 decoration: BoxDecoration(
                     color: MyColors.totalSaldoTileColor,
                     borderRadius: BorderRadius.circular(20)),
                 width: MediaQuery.of(context).size.width / 2.2,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 18, bottom: 18),
+                  padding: const EdgeInsets.only(left: 18, bottom: 17),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -389,7 +407,8 @@ class OverViewTileWidget extends StatelessWidget {
                             maxLines: 1,
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 14,
+                                fontSize: 12,
+                                fontFamily: "Proxima",
                                 fontWeight: FontWeight.w500
                             ),
                           ),

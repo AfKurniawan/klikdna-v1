@@ -76,7 +76,6 @@ dependencies:
 
 
 
-
   #esys_flutter_share: ^1.0.2
 #  share:
 #    git:
@@ -107,3 +106,9 @@ flutter:
     - family: Quicksand
       fonts:
         - asset: assets/fonts/Quicksand-Regular.ttf
+    - family: Proxima
+      fonts:
+        - asset: assets/fonts/ProximaNova-Regular.ttf
+    - family: WorkSans
+      fonts:
+        - asset: assets/fonts/WorkSans.ttf

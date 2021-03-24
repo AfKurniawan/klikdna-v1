@@ -20,8 +20,7 @@ class CardTypeSatuWidget extends StatelessWidget {
               right: 10,
               left: 2
           ),
-          height: MediaQuery.of(context).size.width < 400 ? MediaQuery.of(context).size.height / 3.5 : MediaQuery.of(context).size.height / 4,
-          width: model.vhighestrank == "0" ? MyTheme.fullWidth(context) / 1 : MyTheme.fullWidth(context) / 1.057,
+          //width: model.vhighestrank == "0" ? MyTheme.fullWidth(context) / 1 : MyTheme.fullWidth(context) / 1.057,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             gradient: LinearGradient(
@@ -51,7 +50,7 @@ class CardTypeSatuWidget extends StatelessWidget {
                   child: Image.asset("assets/images/card_logo.png", height: 200),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 16.0, top: 16, right: 16, bottom: 16),
+                  padding: const EdgeInsets.only(left: 12.0, top: 12, right: 12, bottom: 12),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,6 +59,7 @@ class CardTypeSatuWidget extends StatelessWidget {
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,
+                              fontFamily: "Proxima",
                               fontWeight: FontWeight.bold)),
 
                       Container(
@@ -77,7 +77,8 @@ class CardTypeSatuWidget extends StatelessWidget {
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 14,
-                                    fontWeight: FontWeight.w400
+                                    fontFamily: "Proxima",
+                                    fontWeight: FontWeight.bold
                                 ),
                               ),
                             ),
@@ -96,16 +97,18 @@ class CardTypeSatuWidget extends StatelessWidget {
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 9,
+                                        fontFamily: "WorkSans",
                                         fontWeight: FontWeight.w300
                                     ),
                                   ),
-
+                                  SizedBox(height: 5),
                                   Text(model.parsedTanggalExpired == null ? "-" : "${model.parsedTanggalExpired}",
                                     overflow: TextOverflow.clip,
                                     maxLines: 1,
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 12,
+                                        fontFamily: "Proxima",
                                         fontWeight: FontWeight.bold
                                     ),
                                   ),

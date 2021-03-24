@@ -71,7 +71,7 @@ class _DetailReportPageState extends State<DetailReportPage> {
                 Container(
                   height: 180,
                   decoration: BoxDecoration(
-                      color: MyColors.dnaGreen,
+                    color: MyColors.dnaGreen,
                   ),
                   child: Padding(
                     padding: const EdgeInsets.only(
@@ -82,58 +82,60 @@ class _DetailReportPageState extends State<DetailReportPage> {
                       children: <Widget>[
                         Consumer<MemberProvider>(
                           builder: (context, account, _) {
-                            return Container(
-                              width: MediaQuery.of(context).size.width /1.5,
-                              height: 94,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text("Hai",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w300)),
-                                      SizedBox(width: 5),
-                                      Text(
-                                          account.newMemberName == ""
-                                              ? name
-                                              : account.newMemberName,
-                                          overflow: TextOverflow.fade,
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold)),
+                            return Padding(
+                              padding: const EdgeInsets.only(top: 10.0),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width /1.6,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Hai",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w300)),
+                                    SizedBox(width: 5),
+                                    Text( account.newMemberName == "" ?
+                                    "${account.name}" : "${account.newMemberName}",
+                                        overflow: TextOverflow.fade,
+                                        maxLines: 1,
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold)),
 
-                                    ],
-                                  ),
-                                  SizedBox(height: 5),
-                                  Text("Berikut ini merupakan hasil report\nDNAku ${widget.model.serviceName} kamu.",
-                                  style: TextStyle(color: Colors.white, fontSize: 13),
-                                  )
-                                ],
+                                    SizedBox(height: 5),
+                                    Text("Berikut ini merupakan hasil report\nDNA ${widget.model.serviceName} kamu.",
+                                      style: TextStyle(color: Colors.white, fontSize: 13),
+                                    )
+                                  ],
+                                ),
                               ),
                             );
                           },
                         ),
+                        SizedBox(
+                          height: 10,
+                        ),
                         Container(
-                          height: 84,
-                          child: Consumer<PatientCardProvider>(
-                            builder: (context, model, _) {
-                              return ClipRRect(
-                                  borderRadius: BorderRadius.circular(50),
-                                  child: model.photoView == null ?
-                                  Image.asset("assets/images/no_image.png", height: 82, width: 82, fit: BoxFit.cover)
-                                      : Image.memory(
-                                    model.photoView,
-                                    width: 92,
-                                    fit: BoxFit.cover,
-                                    height: 92,
-                                    // height: 150,
-                                  ));
-                            },
+                          height: 94,
+                          child: Center(
+                            child: Consumer<PatientCardProvider>(
+                              builder: (context, model, _) {
+                                return ClipRRect(
+                                    borderRadius: BorderRadius.circular(50),
+                                    child: model.photoView == null ?
+                                    Image.asset("assets/images/no_image.png", height: 72, width: 72, fit: BoxFit.cover)
+                                        : Image.memory(
+                                      model.photoView,
+                                      width: 72,
+                                      fit: BoxFit.cover,
+                                      height: 72,
+                                      // height: 150,
+                                    ));
+                              },
+                            ),
                           ),
                         )
                       ],

@@ -1,8 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:new_klikdna/src/asuransi/pages/add_asuransi_page.dart';
-import 'package:new_klikdna/src/asuransi/pages/asuransi_page.dart';
-import 'package:new_klikdna/src/asuransi/pages/edit_asuransi_page.dart';
 import 'package:new_klikdna/src/dummy/pages/dummy_chart_page.dart';
 import 'package:new_klikdna/src/foodmeter/pages/detail_food_meter_page.dart';
 import 'package:new_klikdna/src/foodmeter/pages/food_meter_page.dart';
@@ -18,6 +15,9 @@ import 'package:new_klikdna/src/lorem_ipsum/pages/lorem_ipsum_page.dart';
 import 'package:new_klikdna/src/main/pages/main_page.dart';
 import 'package:new_klikdna/src/mitra/wallets_and_referrals/pages/wallet_referral_page.dart';
 import 'package:new_klikdna/src/onboarding/pages/on_boarding_page.dart';
+import 'package:new_klikdna/src/patient_card/asuransi/pages/add_asuransi_page.dart';
+import 'package:new_klikdna/src/patient_card/asuransi/pages/asuransi_page.dart';
+import 'package:new_klikdna/src/patient_card/asuransi/pages/edit_asuransi_page.dart';
 import 'package:new_klikdna/src/patient_card/pages/edit_patient_card_page.dart';
 import 'package:new_klikdna/src/patient_card/pages/new_patient_card_page.dart';
 import 'package:new_klikdna/src/patient_card/pages/patient_card_page.dart';

@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:achievement_view/achievement_view.dart';
 import 'package:achievement_view/achievement_widget.dart';
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:new_klikdna/src/account/providers/account_provider.dart';
@@ -10,7 +9,6 @@ import 'package:new_klikdna/src/patient_card/models/asuransi_model.dart';
 import 'package:new_klikdna/src/patient_card/models/patient_card_model.dart';
 import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
 import 'package:new_klikdna/src/token/providers/token_provider.dart';
-import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
@@ -33,7 +31,7 @@ class AsuransiProvider extends ChangeNotifier {
     patient.getPatientCard(context);
     String accessToken = prov.accessToken;
     patientCardId = patient.id;
-    notifyListeners();
+
     print("PATOENT CARD ID PAGE ASURANSI: $patientCardId");
 
     var url = AppConstants.GET_ASURANSI_URL + asuranId.toString();
@@ -223,9 +221,8 @@ class AsuransiProvider extends ChangeNotifier {
       duration: Duration(milliseconds: 1000),
       listener: (status) {
         print(status);
-        if(status == AchievementState.closing){
-         // Provider.of<PatientCardProvider>(ctxx, listen: false).getPatientCard(ctxx);
-          Navigator.of(ctxx).pushReplacementNamed("new_patient_card_page");
+        if(status == AchievementState.open) {
+          Provider.of<PatientCardProvider>(ctxx, listen: false).getPatientCard(ctxx).then((value) => Navigator.of(ctxx).pop());
         }
       },
     )..show();

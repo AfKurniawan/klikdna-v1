@@ -140,7 +140,6 @@ class MitraProvider with ChangeNotifier {
     final responseJson = LoginModel.fromJson(json.decode(response.body));
 
     if(responseJson.user.code == 200){
-      print("RESPONSE BODY: ${response.body}");
 
       slideCard = [
         CardTypeSatuWidget(),

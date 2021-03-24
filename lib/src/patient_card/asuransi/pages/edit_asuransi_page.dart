@@ -142,13 +142,6 @@ class _EditAsuransiPageState extends State<EditAsuransiPage> {
                       hintText: "",
                       hintStyle: TextStyle(color: Colors.grey[400], fontSize: 12)),
                 ),
-                // FormWidget(
-                //   hint: "",
-                //   obscure: false,
-                //   labelText: "Nama Asuransi",
-                //   textEditingController: prov.namaAsuransiController,
-                //   labelStyle: TextStyle(fontSize: 16),
-                // ),
                 SizedBox(height: 20),
                 Text("Jenis Asuransi"),
                 SizedBox(height: 5),

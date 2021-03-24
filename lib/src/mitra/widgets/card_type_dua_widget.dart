@@ -19,8 +19,8 @@ class CardTypeDuaWidget extends StatelessWidget {
               right: 10,
               left: 2
           ),
-          height: MediaQuery.of(context).size.width < 400 ? MediaQuery.of(context).size.height / 3.5 : MediaQuery.of(context).size.height / 4,
-          width: model.vhighestrank == "0" ? MyTheme.fullWidth(context) / 1 : MyTheme.fullWidth(context) / 1.057,
+          height: 180,
+          width: 328,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             gradient: LinearGradient(
@@ -59,7 +59,7 @@ class CardTypeDuaWidget extends StatelessWidget {
                   child: Image.asset("assets/images/card_logo.png", height: 200),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 16.0, top: 16, right: 16, bottom: 16),
+                  padding: const EdgeInsets.only(left: 12.0, top: 11, right: 12, bottom: 12),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,9 +67,10 @@ class CardTypeDuaWidget extends StatelessWidget {
                       Text("${model.vpar}",
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: 16,
+                              fontSize: 20,
+                              fontFamily: "Proxima",
                               fontWeight: FontWeight.bold)),
-                      SizedBox(height: 5),
+                      //SizedBox(height: 5),
                       Text(model.vhighestrank == "0" || model.vpar == ""
                           ? model.vrank == ""
                           ? "Kualifikasi Peringkat: -"
@@ -82,8 +83,8 @@ class CardTypeDuaWidget extends StatelessWidget {
 
 
                       Container(
-                        margin: EdgeInsets.only(top: 80),
-                        width: MediaQuery.of(context).size.width / 1,
+                        margin: EdgeInsets.only(top: 90),
+                        //width: MediaQuery.of(context).size.width / 1,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.end,
@@ -96,7 +97,8 @@ class CardTypeDuaWidget extends StatelessWidget {
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 14,
-                                    fontWeight: FontWeight.w400
+                                    fontFamily: "Proxima",
+                                    fontWeight: FontWeight.bold
                                 ),
                               ),
                             ),
@@ -114,16 +116,18 @@ class CardTypeDuaWidget extends StatelessWidget {
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 9,
+                                        fontFamily: "WorkSans",
                                         fontWeight: FontWeight.w300
                                     ),
                                   ),
-
+                                  SizedBox(height: 5),
                                   Text(model.parsedTanggalExpired == null ? "-" : "${model.parsedTanggalExpired.substring(0, 11)}",
                                     overflow: TextOverflow.clip,
                                     maxLines: 1,
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 12,
+                                        fontFamily: "Proxima",
                                         fontWeight: FontWeight.bold
                                     ),
                                   ),
