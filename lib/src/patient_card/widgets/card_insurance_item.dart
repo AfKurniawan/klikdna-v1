@@ -24,7 +24,7 @@ class CardInssuranceItem extends StatelessWidget {
       children: [
         Container(
          // height: MediaQuery.of(context).size.width < 400 ? MediaQuery.of(context).size.height / 3.5 : MediaQuery.of(context).size.height / 4,
-          width:  320,
+          width:  MediaQuery.of(context).size.width - 16,
           height: 180,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),

@@ -56,9 +56,12 @@ class _SemuaPromoPageState extends State<SemuaPromoPage> {
                   ),
                 ],
               ),
-              child: Center(child: Text("Semua Promo", style: TextStyle(
-                color: Colors.white, fontSize: 16
-              ),)),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 16.0, top: 8, bottom: 8),
+                child: Text("Semua Promo", style: TextStyle(
+                  color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500
+                ),),
+              ),
             ),
             SizedBox(height: 16),
             Consumer<HomeProvider>(

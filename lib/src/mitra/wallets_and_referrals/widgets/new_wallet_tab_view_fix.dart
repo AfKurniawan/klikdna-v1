@@ -898,7 +898,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          width: 146,
+          width: 126,
           height: 35,
           decoration: BoxDecoration(
             color: listWalletData[index].type.contains("Tim")
@@ -946,7 +946,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
             ],
           ),
           child: Padding(
-            padding: const EdgeInsets.only(left: 16.0, right: 16),
+            padding: const EdgeInsets.only(left: 15.0, right: 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,

@@ -32,7 +32,7 @@ class _PMRPageState extends State<PMRPage> {
           body: Stack(
             children: <Widget>[
               Container(
-                height: 160,
+                height: 110,
                 decoration: BoxDecoration(
                     color: MyColors.dnaGreen,
                     image: DecorationImage(
@@ -43,34 +43,11 @@ class _PMRPageState extends State<PMRPage> {
                         image: AssetImage(
                             "assets/images/header_background.png"))),
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 18, top: 20),
+                  padding: const EdgeInsets.only(left: 16.0, right: 16, top: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(right: 20),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(color: Colors.white, width: 2)),
-                        child: Center(
-                          child: Consumer<PatientCardProvider>(
-                            builder: (context, model, _) {
-                              return ClipRRect(
-                                  borderRadius: BorderRadius.circular(50),
-                                  child: model.photoView == null ?
-                                  Image.asset("assets/images/no_image.png", height: 62, width: 62, fit: BoxFit.cover)
-                                      : Image.memory(
-                                    model.photoView,
-                                    width: 62,
-                                    fit: BoxFit.cover,
-                                    height: 62,
-                                    // height: 150,
-                                  ));
-                            },
-                          ),
-                        ),
-                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -80,8 +57,9 @@ class _PMRPageState extends State<PMRPage> {
                             child: Text("${prov.vallName}",
                               style: TextStyle(
                                 color: Colors.white,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500
+                                  fontSize: 18,
+                                  fontFamily: "Roboto",
+                                  fontWeight: FontWeight.w700
                               ),
                             ),
                           ),
@@ -95,7 +73,7 @@ class _PMRPageState extends State<PMRPage> {
                 ),
               ),
               SingleChildScrollView(
-                padding: EdgeInsets.only(top: 140),
+                padding: EdgeInsets.only(top: 90),
                 child: Container(
                   padding: EdgeInsets.only(top: 20),
                   alignment: Alignment.topLeft,

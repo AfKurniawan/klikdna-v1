@@ -35,7 +35,7 @@ class OutlineButtonWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             border: Border.all(
               color: MyColors.dnaGreen,
-                width: 2
+                width: 1.5
             ),
         ),
         child: Padding(

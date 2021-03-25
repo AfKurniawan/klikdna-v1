@@ -14,7 +14,7 @@ class TreeWebViewWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 328,
+      width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.only(top: 10, bottom: 20),
       decoration: BoxDecoration(
         color: Colors.transparent,
@@ -37,7 +37,7 @@ class TreeWebViewWidget extends StatelessWidget {
           child: Image.asset(
             "assets/images/tree_image.png",
             fit: BoxFit.fitWidth,
-            // height: 150,
+            height: 105,
           ),
         ),
       ),

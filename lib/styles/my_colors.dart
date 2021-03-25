@@ -9,6 +9,8 @@ class MyColors {
   static const Color blackPrimary = Color(0xff433F3F);
   static const Color subTitleTextColor = const Color(0xffb9bfcd);
 
+  static const Color backgroundColor = Color(0xffEAEAEA);
+
   static const Color skyBlue = Color(0xff71b4fb);
   static const Color lightBlue = Color(0xff7fbcfb);
   static const Color extraLightBlue = Color(0xffd9eeff);

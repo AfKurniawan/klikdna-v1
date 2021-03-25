@@ -22,54 +22,7 @@ class AsuransiPage extends StatefulWidget {
 class _AsuransiPageState extends State<AsuransiPage> {
   final globalScaffoldKey = GlobalKey<ScaffoldState>();
   GlobalKey<AutoCompleteTextFieldState<String>> key = new GlobalKey();
-  final _formKey = GlobalKey<FormState>();
 
-  List<String> listNamaAsuransi = [
-    "AIA",
-    "ALLIANZ",
-    "AXA MANDIRI",
-    "CIGNA",
-    "FWD",
-    "GENERALI",
-    "PRUDENTIAL",
-    "MANULIFE",
-    "SEQUIS LIFE",
-    "JIWASRAYA",
-    "SINARMAS",
-    "BNI LIFE",
-    "LIPPO INSURANCE",
-    "AXA",
-    "TAKAFUL",
-    "BUMIPUTERA",
-    "AVRIST",
-    "CHUBB",
-    "ADIRA INSURANCE",
-    "EQUITY",
-    "AIA",
-    "MUG"
-  ];
-
-  List<String> walletType = [
-    "Jiwa",
-    "Kesehatan"
-  ];
-
-  String tipeValue = "Jiwa" ;
-  String result;
-
-  void _handleRadioValueChange(BuildContext context, String value) {
-    tipeValue = value;
-    switch (tipeValue) {
-      case "Jiwa":
-        result = "Jiwa";
-        print("RESULT $result");
-        break;
-      case "Kesehatan":
-        result = "Kesehatan";
-        print("RESULT $result");
-        break;
-    }
-  }
 
   @override
   void initState() {
@@ -87,7 +40,7 @@ class _AsuransiPageState extends State<AsuransiPage> {
           "Asuransi",
           style: TextStyle(color: Colors.grey, fontSize: 16),
         ),
-        elevation: 0,
+        elevation: 0.2,
         backgroundColor: Colors.white,
         leading: IconButton(
             icon: Icon(
@@ -122,21 +75,18 @@ class _AsuransiPageState extends State<AsuransiPage> {
             ),
           ),
         )
-        : ListView.builder(
-            scrollDirection: Axis.vertical,
-            itemCount: prov.listAsuransi.length,
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              int i = 0;
-              if(prov.listAsuransi.length > i){
-               i = index;
-              }
-              return Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(18.0),
-                    child: Row(
+        : Padding(
+          padding: const EdgeInsets.only(left: 15.0, right: 15, top: 18),
+          child: ListView.builder(
+              scrollDirection: Axis.vertical,
+              itemCount: prov.listAsuransi.length,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                return Column(
+                  children: [
+                    SizedBox(height: 16),
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("Kartu Asuransi ${index+1}", style: TextStyle(
@@ -144,6 +94,7 @@ class _AsuransiPageState extends State<AsuransiPage> {
                           fontFamily: "Roboto",
                           fontWeight: FontWeight.w500
                         )),
+
                         Row(
                           children: [
                             GestureDetector(
@@ -161,206 +112,29 @@ class _AsuransiPageState extends State<AsuransiPage> {
                         )
                       ],
                     ),
-                  ),
-                  CardInssuranceItem(
-                      model: prov.listAsuransi[index]),
-                ],
-              );
-            }),
+                    SizedBox(height: 12),
+                    CardInssuranceItem(
+                        model: prov.listAsuransi[index]),
+                  ],
+                );
+              }),
+        ),
       ),
         bottomNavigationBar: Padding(
-          padding: const EdgeInsets.all(18.0),
+          padding: const EdgeInsets.all(15.0),
           child: ButtonWidget(
             height: 50,
             btnText: "Tambah Kartu Asuransi",
             color: MyColors.dnaGreen,
             btnAction: (){
               Provider.of<TokenProvider>(context, listen: false).getApiToken();
-              //Navigator.pushReplacementNamed(context, 'add_asuransi_page');
-              showModalAddInsuranceCard(context);
+              Provider.of<AsuransiProvider>(context, listen: false).showModalAddInsuranceCard(context);
             },
           ),
         )
     );
   }
 
-  void showModalAddInsuranceCard(BuildContext context){
-    var prov = Provider.of<AsuransiProvider>(context, listen: false);
-    final validator = RequiredValidator(errorText: "Form wajib diisi");
-    showModalBottomSheet(
-      isScrollControlled: true,
-      isDismissible: false,
-      context: context,
-      builder: (BuildContext _) {
-        return Container(
-          color: Colors.transparent,
-          height: MediaQuery.of(context).size.height - 25,
-          child: Scaffold(
-            appBar: AppBar(
-              elevation: 0,
-              title: Text("Tambah Asuransi", style: TextStyle(fontSize: 14)),
-              backgroundColor: Colors.white,
-              leading: IconButton(
-                icon: Icon(Icons.arrow_back_ios, size: 20),
-                onPressed: (){
-                  Navigator.of(context).pop();
-                },
-              ),
-            ),
-            body: SingleChildScrollView(
-              child: Container(
-                color: Colors.transparent,
-               margin: EdgeInsets.only(top: 20),
-               // height: MediaQuery.of(context).size.height - 50,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Form(
-                        key: _formKey,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SimpleAutoCompleteTextField(
-                              key: key,
-                              suggestions: listNamaAsuransi,
-                              controller: prov.addNamaAsuransiController,
-                              decoration: InputDecoration(
-                                  labelText: "Nama Asuransi",
-                                  alignLabelWithHint: true,
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: MyColors.dnaGreen, width: 1.5),
-                                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey[400], width: 1.5),
-                                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.red[300], width: 1.5),
-                                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.red[300], width: 1.5),
-                                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                                  ),
-                                  disabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.transparent, width: 1.5),
-                                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                                  ),
-                                  focusColor: MyColors.dnaGreen,
-                                  hintText: "",
-                                  hintStyle: TextStyle(color: Colors.grey[400], fontSize: 12)),
-                            ),
-                            SizedBox(height: 20),
-                            Text("Jenis Asuransi"),
-                            SizedBox(height: 5),
-                            Container(
-                              padding: EdgeInsets.symmetric(horizontal: 0),
-                              height: 60,
-                              child: FormField<String>(
-                                builder: (FormFieldState<String> state) {
-                                  return InputDecorator(
-                                    decoration: InputDecoration(
-                                        border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(10))),
-                                    child: DropdownButtonHideUnderline(
-                                      child: DropdownButton<String>(
-                                        hint: Text(''),
-                                        value: tipeValue,
-                                        underline: Container(),
-                                        items: walletType.map((String value) {
-                                          return new DropdownMenuItem<String>(
-                                            value: value,
-                                            child: new Text(
-                                              value,
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.normal),
-                                            ),
-                                          );
-                                        }).toList(),
-                                        onChanged: (String value) {
-                                          setState(() {
-                                            _handleRadioValueChange(context, value);
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                            SizedBox(height: 20),
-                            FormWidget(
-                              validator: validator,
-                              hint: "",
-                              obscure: false,
-                              labelText: "Nomor Polis",
-                              textEditingController: prov.addNomorPolisController,
-                              keyboardType: TextInputType.number,
-                              labelStyle: TextStyle(fontSize: 16),
-                            ),
-                            SizedBox(height: 20),
-                            FormWidget(
-                              hint: "",
-                              validator: validator,
-                              obscure: false,
-                              labelText: "Pemegang Polis",
-                              textEditingController: prov.addPemegangPolisController,
-                              labelStyle: TextStyle(fontSize: 16),
-                            ),
-                            SizedBox(height: 20),
-                            FormWidget(
-                              hint: "",
-                              obscure: false,
-                              validator: validator,
-                              labelText: "Nama Peserta",
-                              textEditingController: prov.addNamaPesertaController,
-                              labelStyle: TextStyle(fontSize: 16),
-                            ),
-                            SizedBox(height: 20),
-                            FormWidget(
-                              hint: "",
-                              validator: validator,
-                              obscure: false,
-                              labelText: "Nomor Kartu",
-                              keyboardType: TextInputType.number,
-                              textEditingController: prov.addNomorKartuController,
-                              labelStyle: TextStyle(fontSize: 16),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-
-                  ],
-                ),
-              ),
-            ),
-            bottomNavigationBar: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: prov.addNamaAsuransiController.text.isEmpty ?  ButtonWidget(
-                btnText: "Simpan",
-                height: 50,
-                color: MyColors.grey,
-              ) : ButtonWidget(
-                btnText: "Simpan",
-                btnAction: (){
-                  //Provider.of<AsuransiProvider>(context, listen: false).addAsuransi(context, addAsuransi);
-                  if (_formKey.currentState.validate() && prov.addNamaAsuransiController.text.isNotEmpty) {
-                    context.read<AsuransiProvider>().addAsuransi(context, tipeValue);
-                  }
-                },
-                height: 50,
-                color: MyColors.dnaGreen,
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
 
 
   Future<void> showDialogKonfirmasiHapus(BuildContext context, int id) async {

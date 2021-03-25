@@ -23,10 +23,10 @@ class _SponsorWidgetState extends State<SponsorWidget> {
       children: [
         Container(
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height / 7,
+          height: 92,
           margin: EdgeInsets.only(top: 10),
           decoration: BoxDecoration(
-            color: Color(0xff50A1D3),
+            color: Color(0xff54ABE2),
             borderRadius: BorderRadius.circular(10),
             boxShadow: [
               BoxShadow(
@@ -38,6 +38,7 @@ class _SponsorWidgetState extends State<SponsorWidget> {
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                 margin: EdgeInsets.only(left: 15),
@@ -48,8 +49,9 @@ class _SponsorWidgetState extends State<SponsorWidget> {
                   maxLines: 1,
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500
+                      fontSize: 14,
+                      fontFamily: "Proxima",
+                      fontWeight: FontWeight.w700
                   ),
                 ),
               ),
@@ -71,7 +73,7 @@ class _SponsorWidgetState extends State<SponsorWidget> {
                   color: Colors.transparent,
                   child: InkWell(
                     onTap: (){
-                      print("WHATSSAPPP ${widget.prov.vsponsorphone}");
+
                       Provider.of<MitraProvider>(context, listen: false).makePhoneCall(context, widget.prov.vsponsorphone, widget.prov.vsponsorfirstname);
                     },
                     child: Image.asset("assets/icons/phone_icon.png"),
@@ -89,7 +91,6 @@ class _SponsorWidgetState extends State<SponsorWidget> {
                   color: Colors.transparent,
                   child: InkWell(
                     onTap: (){
-                      print("WHATSSAPPP ${widget.prov.vsponsorphone}");
                       Provider.of<MitraProvider>(context, listen: false).openWhatsapp(context, widget.prov.vsponsorphone, widget.prov.vsponsorfirstname);
                     },
                     child: Image.asset("assets/icons/whatsapp_icon.png"),

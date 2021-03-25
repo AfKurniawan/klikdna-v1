@@ -37,12 +37,12 @@ class _NewReferralTabViewState extends State<NewReferralTabView> {
                         margin: EdgeInsets.only(bottom: 10),
                         decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(4),
                           boxShadow: [
                             BoxShadow(
-                              offset: Offset(0, 1),
-                              blurRadius: 3,
-                              color: Colors.grey[700].withOpacity(0.32),
+                              offset: Offset(0, 3),
+                              blurRadius: 5,
+                              color: Colors.grey[500].withOpacity(0.2),
                             ),
                           ],
                         ),
@@ -55,7 +55,8 @@ class _NewReferralTabViewState extends State<NewReferralTabView> {
                               Text("Referral Anda",
                                   style: TextStyle(
                                       fontSize: 16,
-                                      fontWeight: FontWeight.bold)),
+                                      fontFamily: "Roboto",
+                                      fontWeight: FontWeight.w500)),
                               SizedBox(height: 5),
                               Consumer<WalletReferralProvider>(
                                 builder: (child, ref, _) {
@@ -64,7 +65,7 @@ class _NewReferralTabViewState extends State<NewReferralTabView> {
                                           ref.listReferralData.length == 0
                                               ? "Total 0 Referral"
                                               : "Total ${ref.listReferralData.length} Referral",
-                                          style: TextStyle(fontSize: 16)));
+                                          style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300)));
                                 },
                               ),
                             ],
@@ -110,8 +111,8 @@ class _NewReferralTabViewState extends State<NewReferralTabView> {
           children: [
             SizedBox(height: 10),
             Container(
-                width: 156,
-                height: 35,
+                width: 139,
+                height: 34,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
                         topRight: Radius.circular(25),
@@ -140,14 +141,18 @@ class _NewReferralTabViewState extends State<NewReferralTabView> {
                     ? Align(
                       alignment: Alignment.centerLeft,
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 18.0),
+                        padding: const EdgeInsets.only(left: 24.0),
                         child: Text(
                             wallet.listReferralData[index].rank == "" ||
                                     wallet.listReferralData[index].par == ""
                                 ? "${wallet.listReferralData[index].type}"
                                 : "${wallet.listReferralData[index].par}",
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 16)),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                              fontFamily: "Roboto",
+                              fontWeight: FontWeight.w500
+                            )),
                       ),
                     )
                     : Align(
@@ -163,19 +168,19 @@ class _NewReferralTabViewState extends State<NewReferralTabView> {
                                 TextStyle(color: Colors.white, fontSize: 16)),
                       ),
                     )),
-            SizedBox(height: 15),
+            SizedBox(height: 12),
             Container(
               width: MediaQuery.of(context).size.width,
-              //height: 100,
+              height: 96,
               margin: EdgeInsets.only(bottom: 10, left: 18, right: 18),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    offset: Offset(0, 1),
-                    blurRadius: 3,
-                    color: Colors.grey[700].withOpacity(0.32),
+                    offset: Offset(0, 3),
+                    blurRadius: 5,
+                    color: Colors.grey[500].withOpacity(0.2),
                   ),
                 ],
               ),
@@ -187,40 +192,59 @@ class _NewReferralTabViewState extends State<NewReferralTabView> {
                   children: [
                     Text(
                       "${wallet.listReferralData[index].name}",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontFamily: "Roboto",
+                          fontSize: 14),
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 6),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Posisi", style: TextStyle(
-                          color: MyColors.lightblack
+                        Text("Posisi",
+                            style: TextStyle(
+                          color: MyColors.lightblack,
+                              fontWeight: FontWeight.w300,
+                              fontFamily: "Roboto",
+                              fontSize: 12
                         )),
                         wallet.listReferralData[index].status == "Belum Aktif" ? Text("-") :
                         Text(wallet.listReferralData[index].position == "right" ? "Kanan/Right"
                             : wallet.listReferralData[index].position == "left" ? "Kiri/Left"
                             : "${wallet.listReferralData[index].position}",
                             style: TextStyle(
-                         color: MyColors.lightblack
+                            color: MyColors.lightblack,
+                                fontWeight: FontWeight.w300,
+                                fontFamily: "Roboto",
+                                fontSize: 12
                         ))
                       ],
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 6),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Kualifikasi Peringkat", style: TextStyle(
-                            color: MyColors.lightblack
+                        Text("Kualifikasi Peringkat",
+                            style: TextStyle(
+                            color: MyColors.lightblack,
+                              fontWeight: FontWeight.w300,
+                              fontSize: 12
                         )),
                         wallet.listReferralData[index].status.contains("Belum") ?
-                        Text("Belum Aktif", style: TextStyle(color: Colors.grey))
+                        Text("Belum Aktif",
+                            style: TextStyle(
+                                color: Colors.grey,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400
+                            ))
                             : Text(wallet.listReferralData[index].rank == "" ||
                             wallet.listReferralData[index].par == ""
                             ? "${wallet.listReferralData[index].type}"
                             : "${wallet.listReferralData[index].rank}",
                                   style: TextStyle(
-                                    fontWeight: FontWeight.w600,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: "Roboto",
+                                    fontSize: 14,
                                     color: wallet.listReferralData[index].rank.contains("Star")
                                         ? MyColors.starColor
                                         : wallet.listReferralData[index].rank.contains("Producer")

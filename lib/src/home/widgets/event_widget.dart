@@ -46,10 +46,11 @@ class _EventWidgetState extends State<EventWidget> {
                 ),
               )
           )
-          : Padding(
-            padding: const EdgeInsets.only(left: 10.0, bottom: 32),
-            child: Container(
-              height: 341,
+          : Container(
+            height: 341,
+            margin: EdgeInsets.only(bottom: 32),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8.0, top: 8, bottom: 8),
               child: Row(
                 children: [
                   ListView.builder(
@@ -62,7 +63,7 @@ class _EventWidgetState extends State<EventWidget> {
                       document = parse(prov.allEventArray[index].data.text);
                       text = parse(document.body.text).documentElement.text;
                       return Container(
-                        margin: EdgeInsets.only(right: 18),
+                        margin: EdgeInsets.only(left: 6, right: 10),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10),
@@ -94,7 +95,7 @@ class _EventWidgetState extends State<EventWidget> {
                                   borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
                                   child: CachedNetworkImage(
                                     imageUrl: "${prov.allEventArray[index].imageUrl}",
-                                    width: 316,
+                                    width: MediaQuery.of(context).size.width - 32,
                                     height: 192,
                                     fit: BoxFit.cover,
                                   ),

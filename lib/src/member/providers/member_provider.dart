@@ -20,6 +20,7 @@ class MemberProvider with ChangeNotifier {
     isLoading = true;
     final prov = Provider.of<TokenProvider>(context, listen: false);
     String accessToken = prov.accessToken;
+    name = Provider.of<AccountProvider>(context, listen: false).name;
 
     var url = AppConstants.GET_MEMBER_URL + "$person";
 

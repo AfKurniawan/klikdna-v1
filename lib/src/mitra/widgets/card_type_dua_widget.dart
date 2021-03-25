@@ -19,8 +19,6 @@ class CardTypeDuaWidget extends StatelessWidget {
               right: 10,
               left: 2
           ),
-          height: 180,
-          width: 328,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             gradient: LinearGradient(
@@ -81,10 +79,9 @@ class CardTypeDuaWidget extends StatelessWidget {
                               fontSize: 10,
                               fontWeight: FontWeight.w300)),
 
+                      SizedBox(height: 90),
 
                       Container(
-                        margin: EdgeInsets.only(top: 90),
-                        //width: MediaQuery.of(context).size.width / 1,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.end,

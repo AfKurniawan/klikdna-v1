@@ -74,6 +74,7 @@ class MainProvider with ChangeNotifier {
           currenPage = MainProfilePage();
           Provider.of<TokenProvider>(context, listen: false).getApiToken();
           Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken(context);
+          Provider.of<MitraProvider>(context, listen: false).refreshMitraData();
           break;
       }
 

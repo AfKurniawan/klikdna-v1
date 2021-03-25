@@ -59,7 +59,7 @@ class _MitraPageState extends State<MitraPage> {
                                   enlargeCenterPage: false,
                                   enableInfiniteScroll: false,
                                   viewportFraction: 1.0,
-                                  aspectRatio: 1.76,
+                                  //aspectRatio: 2,
                                   onPageChanged: (index, reason) {
                                     setState(() {
                                       mitra.current = index;
@@ -127,8 +127,9 @@ class _MitraPageState extends State<MitraPage> {
                       ),
                     ),
 
-                    Padding(
-                      padding: const EdgeInsets.only(left:10, right: 10),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      margin: EdgeInsets.only(left: 15, right: 15),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
