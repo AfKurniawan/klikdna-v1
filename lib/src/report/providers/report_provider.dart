@@ -149,6 +149,10 @@ class ReportProvider extends ChangeNotifier {
 
 
 
+
+
+
+
   double _progress = 0;
   get downloadProgress => _progress;
   bool downloadState = false;

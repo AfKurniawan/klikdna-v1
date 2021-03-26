@@ -101,6 +101,8 @@ class DetailReportProvider extends ChangeNotifier {
 
           print("Gambar Rekomendasi  ${listRecomendasi[i].gambarRekomendasi}");
 
+          getImageSize(listRecomendasi[0].gambarRekomendasi);
+
           print("IKON Rekomendasi ${listRecomendasi[0].ikonRekomendasi}");
 
           //reportDetail.forEach((item) => print("OPO IKI...${item.rekomendasi[i].judulRekomendasi}"));
@@ -144,6 +146,8 @@ class DetailReportProvider extends ChangeNotifier {
 
   double imgWidth = 0.0 ;
   double imgHeight = 0.0 ;
+
+
   Future<ui.Image> getImageSize(String url) async {
     final Completer<ui.Image> completer = Completer<ui.Image>();
     Image image = url == null || url == "" ? Image.asset("assets/images/no_image.png") : Image.network(url);
@@ -159,6 +163,11 @@ class DetailReportProvider extends ChangeNotifier {
     }));
 
     return completer.future;
+  }
+
+
+  void resizeImage(){
+
   }
 
 

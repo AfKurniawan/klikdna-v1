@@ -204,6 +204,7 @@ class _HasilReportPageState extends State<HasilReportPage>
           children: [
             HasilKamu(model: widget.model),
             HasilRekomendasi(),
+
             // listLinkedAccountPage(context, prov)
           ],
         ),

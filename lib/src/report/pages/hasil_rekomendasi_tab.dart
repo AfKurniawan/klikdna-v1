@@ -18,11 +18,8 @@ class _HasilRekomendasiState extends State<HasilRekomendasi> {
   @override
   void setState(fn) {
 
-    if (mounted) super.setState(fn);
+   // if (mounted) super.setState(fn);
   }
-
-
-
 
 
   @override
@@ -103,31 +100,22 @@ class _HasilRekomendasiState extends State<HasilRekomendasi> {
                               padding: const EdgeInsets.only(left: 20.0, right: 20),
                               child: prov.lr[index].gambarRekomendasi == null ?
                               Container()
-                                  : Container(
-                                // color: Colors.blueGrey,
-                                  child: prov.imgWidth < 890 ?
-                                  Container(
-                                    //margin: EdgeInsets.only(left: 40, right: 20),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: CachedNetworkImage(
-                                          imageUrl: "${prov.lr[index].gambarRekomendasi}",
-                                          fit: BoxFit.fitWidth,
-                                          width: MediaQuery.of(context).size.width / 2),
-                                    ),
-                                  )
-                                      : Container(
+                                  : InkWell(
+                                        onTap:(){
+                                          prov.getImageSize("${prov.lr[index].gambarRekomendasi}");
+                                        },
+                                        child: Container(
                                     margin: EdgeInsets.only(left: 40, right: 20),
                                     child: Padding(
-                                      padding: const EdgeInsets.all(1.0),
-                                      child: CachedNetworkImage(
-                                        imageUrl: "${prov.lr[index].gambarRekomendasi}",
-                                        fit: BoxFit.fitWidth,
-                                      ),
+                                        padding: const EdgeInsets.all(1.0),
+                                        child: Image.network("${prov.lr[index].gambarRekomendasi}",
+                                          width: prov.imgWidth < 800 ? MediaQuery.of(context).size.width/2.5 : MediaQuery.of(context).size.width,
+                                        ),
                                     ),
-                                  )
+                                  ),
                               ),
                             ),
+                            SizedBox(height: 20)
                           ],
                         );
                       }),

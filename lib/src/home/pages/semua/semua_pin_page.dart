@@ -43,21 +43,20 @@ class _SemuaPinPageState extends State<SemuaPinPage> {
                 child: GridView.builder(
                   scrollDirection: Axis.vertical,
                   itemCount: prov.pinArray.length,
-                  //padding: EdgeInsets.all(5),
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       crossAxisSpacing: 2,
                       mainAxisSpacing: 2,
-                      childAspectRatio: size.width < 600 ? 0.78 : 0.85),
+                      childAspectRatio: 0.8),
                   itemBuilder: (context, index){
                     var document;
                     String text;
                     document = parse(prov.pinArray[index].data.text);
                     text = parse(document.body.text).documentElement.text;
                     return Container(
-                      margin: EdgeInsets.only(left: 10, bottom: 10, top: 10, right: 10),
+                      margin: EdgeInsets.only(left: 10, bottom: 10, right: 10),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10),
@@ -74,8 +73,7 @@ class _SemuaPinPageState extends State<SemuaPinPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            width: 152,
-                            height: 150,
+                            height: 185,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.only(
@@ -102,8 +100,9 @@ class _SemuaPinPageState extends State<SemuaPinPage> {
                                   ),
                                   child: CachedNetworkImage(
                                     imageUrl: prov.pinArray[index].imageUrl,
-                                    width: 158,
+                                    width: MediaQuery.of(context).size.width,
                                     fit: BoxFit.fill,
+
                                   ),
                                 ),
                               ),
@@ -116,7 +115,7 @@ class _SemuaPinPageState extends State<SemuaPinPage> {
                               padding: const EdgeInsets.only(left: 10.0, right: 10),
                               child: Text(
                                 "${prov.pinArray[index].data.title}",
-                                maxLines: 2,
+                                maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   fontWeight: FontWeight.w300,
