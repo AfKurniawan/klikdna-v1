@@ -264,9 +264,9 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
             )
         )
         : Container(
-          height: MediaQuery.of(context).size.height /2.09,
+          height: 341,
           child: ListView.builder(
-            scrollDirection: Axis.vertical,
+            scrollDirection: Axis.horizontal,
             shrinkWrap: true,
             itemCount: prov.filterArray.length,
             itemBuilder: (context, index) {
@@ -275,16 +275,17 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
               document = parse(prov.filterArray[index].data.text);
               text = parse(document.body.text).documentElement.text;
               return Padding(
-                padding: const EdgeInsets.only(top:10, bottom: 10, right: 10, left: 10),
+                padding: const EdgeInsets.only(top: 0, bottom: 10, right: 0, left: 10),
                 child: Container(
+                  margin: EdgeInsets.only(right: 15),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
                         offset: Offset(0, 1),
-                        blurRadius: 3,
-                        color: Colors.grey[700].withOpacity(0.32),
+                        blurRadius: 5,
+                        color: Colors.grey[500].withOpacity(0.32),
                       ),
                     ],
                   ),
@@ -309,15 +310,17 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
                             borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
                             child: CachedNetworkImage(
                               imageUrl: "${prov.filterArray[index].imageUrl}",
-                              width: size.width,
-                              fit: BoxFit.fitHeight,
+                              width: 325,
+                              height: 192,
+                              fit: BoxFit.fill,
+                              alignment: Alignment.topCenter,
                             ),
                           ),
                         ),
                       ),
                       SizedBox(height: 11),
                       Padding(
-                        padding: const EdgeInsets.only(left: 12, top: 8),
+                        padding: const EdgeInsets.only(left: 12.0, top: 10),
                         child: InkWell(
                           onTap: (){
                             print("SHAREEEEE");

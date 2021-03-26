@@ -40,6 +40,7 @@ class MainProvider with ChangeNotifier {
           Provider.of<TokenProvider>(context, listen: false).getApiToken();
           Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken(context);
           Provider.of<AccountProvider>(context, listen: false).getUserAccount(context);
+          context.read<MitraProvider>().refreshMitraData();
 
           break;
 
@@ -49,6 +50,7 @@ class MainProvider with ChangeNotifier {
           Provider.of<TokenProvider>(context, listen: false).getApiToken();
           Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken(context);
           Provider.of<AccountProvider>(context, listen: false).getUserAccount(context);
+          context.read<MitraProvider>().refreshMitraData();
 
           break;
 
@@ -67,6 +69,7 @@ class MainProvider with ChangeNotifier {
           Provider.of<TokenProvider>(context, listen: false).getApiToken();
           Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken(context);
           Provider.of<AccountProvider>(context, listen: false).getUserAccount(context);
+          context.read<MitraProvider>().refreshMitraData();
           break;
 
         case 4 :
@@ -75,6 +78,7 @@ class MainProvider with ChangeNotifier {
           Provider.of<TokenProvider>(context, listen: false).getApiToken();
           Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken(context);
           Provider.of<MitraProvider>(context, listen: false).refreshMitraData();
+          Provider.of<AccountProvider>(context, listen: false).getUserAccount(context);
           break;
       }
 

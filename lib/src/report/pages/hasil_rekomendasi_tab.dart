@@ -105,14 +105,15 @@ class _HasilRekomendasiState extends State<HasilRekomendasi> {
                               Container()
                                   : Container(
                                 // color: Colors.blueGrey,
-                                  child: prov.imgHeight > 400 || prov.imgWidth > 400 ?
+                                  child: prov.imgWidth < 890 ?
                                   Container(
-                                    margin: EdgeInsets.only(left: 40, right: 20),
+                                    //margin: EdgeInsets.only(left: 40, right: 20),
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: CachedNetworkImage(
                                           imageUrl: "${prov.lr[index].gambarRekomendasi}",
-                                          fit: BoxFit.fitWidth, width: MediaQuery.of(context).size.width),
+                                          fit: BoxFit.fitWidth,
+                                          width: MediaQuery.of(context).size.width / 2),
                                     ),
                                   )
                                       : Container(
@@ -122,8 +123,6 @@ class _HasilRekomendasiState extends State<HasilRekomendasi> {
                                       child: CachedNetworkImage(
                                         imageUrl: "${prov.lr[index].gambarRekomendasi}",
                                         fit: BoxFit.fitWidth,
-                                        width: 170,
-                                        height: 180,
                                       ),
                                     ),
                                   )
