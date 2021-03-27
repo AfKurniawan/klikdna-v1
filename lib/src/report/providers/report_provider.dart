@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:achievement_view/achievement_view.dart';
 import 'package:achievement_view/achievement_widget.dart';
 import 'package:ext_storage/ext_storage.dart';
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
@@ -39,17 +38,14 @@ class ReportProvider extends ChangeNotifier {
     if(personId == "" || personId == null) {
       paramPersonId = prefPersonId;
       notifyListeners();
-      print("PARAM PERSON ID = $paramPersonId");
     } else {
       paramPersonId = personId;
       notifyListeners();
-      print("PARAM PERSON ID ELSE = $paramPersonId");
     }
     var url = AppConstants.GET_SAMPLE_URL + '$paramPersonId';
 
     final prov = Provider.of<TokenProvider>(context, listen: false);
     String accessToken = prov.accessToken;
-    print("ASES TOKEN: $accessToken");
 
     Map<String, String> ndas = {
       "Accept": "application/json",
@@ -64,23 +60,19 @@ class ReportProvider extends ChangeNotifier {
       notfound = false ;
 
       var responseJson = json.decode(response.body);
-    //  print("SAMPLE RESPONSE BODY >>> ${response.body}");
       jsonArray = responseJson['data'] as List;
 
       for(int i = 0; i < jsonArray.length; i++){
 
         var detailArray = jsonArray[0]['detail'] as List;
          listDetail = detailArray.map<Detail>((j) => Detail.fromJson(j)).toList();
-        // print("LIST DETAIL 1 LENGHT ${listDetail.length}");
 
         var detail2Array = jsonArray[i]['detail'] as List;
         listDetail2 = detail2Array.map<Detail>((j) => Detail.fromJson(j)).toList();
-       // print("LIST DETAIL 2 LENGHT ${listDetail2.length}");
       }
 
       notifyListeners();
     } else if (response.statusCode == 404) {
-      print("REPORT Not Found");
       listDetail = [];
       listDetail2 = [];
       isLoading = false;
@@ -111,10 +103,7 @@ class ReportProvider extends ChangeNotifier {
     String person = prefs.getString("personId");
     var url = AppConstants.GET_REPORT_DETAIL_URL;
     final prov = Provider.of<TokenProvider>(context, listen: false);
-    print("PERSON ID: $person");
-
     String accessToken = prov.accessToken;
-    print("REPORT ID: $reportId");
     Map<String, String> ndas = {
       "Accept": "application/json",
       "Authorization": "Bearer $accessToken"
@@ -126,15 +115,12 @@ class ReportProvider extends ChangeNotifier {
     };
 
     final request = await http.post(url, headers: ndas, body: body);
-    print("DETAIL REPORT RESPONSE CODE: ${request.statusCode}");
 
     if(request.statusCode == 200) {
       final reportResponse = DetailReportModel.fromJson(json.decode(request.body));
       linkPdf = reportResponse.data.linkPdf;
       filename = reportResponse.data.reportId + reportResponse.data.reportId;
       notifyListeners();
-
-      print("LINK PDF $linkPdf");
 
       _downloadFile(context, linkPdf, filename);
 
@@ -151,8 +137,6 @@ class ReportProvider extends ChangeNotifier {
 
 
 
-
-
   double _progress = 0;
   get downloadProgress => _progress;
   bool downloadState = false;
@@ -160,16 +144,12 @@ class ReportProvider extends ChangeNotifier {
 
   Future<File> _downloadFile(BuildContext context, String linkPdf, String filename) async {
     _progress = null;
-    //downloadState = true;
     notifyListeners();
 
     var status = await Permission.storage.status;
     if (!status.isGranted) {
       await Permission.storage.request();
     }
-
-    //String filename = "Hello.pdf";
-    //var url = "https://dnaku.id/kdm/report/export-pdf-lifestyle/USER-2OYILU/WLS_DLHEA1-2665";
 
     Map<String, String> ndas = {
       "Accept": "application/json",
@@ -178,8 +158,6 @@ class ReportProvider extends ChangeNotifier {
     };
 
     final response = await http.get(linkPdf, headers: ndas);
-    print("CONTENT LENGTH: ${response.contentLength}");
-    print("BODY BYTES LENGHT: ${response.bodyBytes.length}");
 
 
     final contentLength = response.contentLength;
@@ -188,8 +166,6 @@ class ReportProvider extends ChangeNotifier {
     _progress = downloadedLength / contentLength * 100;
 
     notifyListeners();
-
-    print("PROGRESS: $_progress");
 
 
     var path;
@@ -200,8 +176,6 @@ class ReportProvider extends ChangeNotifier {
       await dir.create().then((value) {
         File file = new File('${value.path}/REPORT-$filename.pdf');
         file.writeAsBytes(response.bodyBytes);
-        print("FINISH DOWNLOAD");
-        //myDialog(context);
         showToast(context, filename);
         return file;
       });
@@ -210,8 +184,6 @@ class ReportProvider extends ChangeNotifier {
           ExtStorage.DIRECTORY_DOWNLOADS);
       File file = new File('$path/REPORT-$filename.pdf');
       await file.writeAsBytes(response.bodyBytes);
-      print("FINISH DOWNLOAD");
-      //myDialog(context);
       showToast(context, filename);
       return file;
     }
@@ -230,7 +202,6 @@ class ReportProvider extends ChangeNotifier {
         subTitle: "$filename berhasil didownload",
         isCircle: isCircle,
         listener: (status) {
-          print(status);
           if(status == AchievementState.closed){
             Navigator.of(context).pop();
           }
@@ -239,58 +210,6 @@ class ReportProvider extends ChangeNotifier {
 
   }
 
-
-  Future<Flushbar> myDialog(BuildContext ctx){
-    Flushbar(
-      margin: EdgeInsets.all(8),
-      duration: Duration(seconds: 4),
-      borderRadius: 8,
-      backgroundGradient: LinearGradient(
-        colors: [MyColors.dnaGreen, Colors.lightBlueAccent],
-        stops: [0.3, 1],
-      ),
-      boxShadows: [
-        BoxShadow(
-          color: Colors.grey,
-          offset: Offset(3, 3),
-          blurRadius: 3,
-        ),
-      ],
-      flushbarPosition: FlushbarPosition.BOTTOM,
-      dismissDirection: FlushbarDismissDirection.HORIZONTAL,
-      forwardAnimationCurve: Curves.fastLinearToSlowEaseIn,
-      title: 'Sukses...',
-      message: 'File berhasil di download',
-    )
-      ..onStatusChanged = (FlushbarStatus status) {
-        switch (status) {
-          case FlushbarStatus.SHOWING:
-            {
-              break;
-            }
-          case FlushbarStatus.IS_APPEARING:
-            {
-              print("FLUSHBAR IS APPEARING");
-
-              break;
-            }
-          case FlushbarStatus.IS_HIDING:
-            {
-              print("FLUSHBAR IS HIDING");
-
-              break;
-            }
-          case FlushbarStatus.DISMISSED:
-            {
-              print("FLUSHBAR IS DISMISSED");
-              break;
-            }
-        }
-      }
-      ..show(ctx);
-
-    return null ;
-  }
 
   void showProgressDownload(BuildContext ctx){
     showDialog(

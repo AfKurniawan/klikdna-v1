@@ -1,15 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:new_klikdna/src/member/providers/member_provider.dart';
 import 'package:new_klikdna/src/report/providers/report_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
-import 'package:new_klikdna/widgets/button_and_icon_widget.dart';
-import 'package:new_klikdna/widgets/button_widget.dart';
 import 'package:new_klikdna/widgets/dialogs/row_button_pop_dialog_widget.dart';
 import 'package:provider/provider.dart';
-import 'dart:io' show Platform;
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -41,9 +36,6 @@ class _NewMainReportPageState extends State<NewMainReportPage> {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    final prov = Provider.of<MemberProvider>(context);
-    var mediaQuery = MediaQuery.of(context);
     return Consumer<ReportProvider>(
       builder: (context, report, _){
         return Scaffold(

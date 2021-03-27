@@ -11,9 +11,6 @@ class ArtikelProvider with ChangeNotifier {
   String token = "";
   Future<Artikel> getArtikel(BuildContext context, String token) async {
 
-    print("START GET ARTIKEL");
-
-    //src.token = Provider.of<TokenProvider>(context, listen: false).accessToken;
 
     var url = AppConstants.GET_ARTIKEL_URL;
 
@@ -23,7 +20,6 @@ class ArtikelProvider with ChangeNotifier {
     };
 
     final request = await http.get(url, headers: ndas);
-    print("REQUEST ARTIKEL: ${request.statusCode}");
 
     if(request.statusCode == 200){
 
@@ -34,7 +30,7 @@ class ArtikelProvider with ChangeNotifier {
       notifyListeners();
 
     } else {
-      print("ERROR ARTIKEL");
+
     }
 
     return null;

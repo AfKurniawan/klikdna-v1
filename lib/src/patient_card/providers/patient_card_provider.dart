@@ -3,14 +3,12 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:achievement_view/achievement_view.dart';
 import 'package:achievement_view/achievement_widget.dart';
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:new_klikdna/src/account/providers/account_provider.dart';
-import 'package:new_klikdna/src/patient_card/models/asuransi_model.dart';
 import 'package:new_klikdna/src/patient_card/models/patient_card_model.dart';
 import 'package:new_klikdna/src/patient_card/providers/asuransi_provider.dart';
 import 'package:new_klikdna/src/patient_card/widgets/card_insurance_item.dart';
@@ -18,7 +16,6 @@ import 'package:new_klikdna/src/patient_card/widgets/custom_dialog_confirm.dart'
 import 'package:new_klikdna/src/patient_card/widgets/dialog_error_patient_card.dart';
 import 'package:new_klikdna/src/profile/widgets/cupertino_dialog_widget.dart';
 import 'package:new_klikdna/src/token/providers/token_provider.dart';
-import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -64,7 +61,6 @@ class PatientCardProvider with ChangeNotifier {
     patienCardId = getId.lastID;
 
 
-    print("ACCOUNT ID ___: $patienCardId");
 
     String accessToken = prov.accessToken;
     Map<String, String> ndas = {
@@ -75,8 +71,6 @@ class PatientCardProvider with ChangeNotifier {
     var url = AppConstants.GET_PATIENT_CARD_URL + '$patienCardId';
 
     final request = await http.get(url, headers: ndas);
-
-    print("PATIEN CARD BODY_______: ${request.body}");
 
 
     if(request.statusCode == 200){
@@ -96,9 +90,6 @@ class PatientCardProvider with ChangeNotifier {
       emergencyContact = response.data.emergencyContact;
       comorbidity = response.data.comorbidity;
       photo = response.data.photo;
-
-
-      print("GENDER PATIENT CARD: $gender");
 
 
       sukses = response.success;
@@ -209,11 +200,7 @@ class PatientCardProvider with ChangeNotifier {
     emergencyContactController.text = emergencyContact;
     comorbidityController.text = comorbidity;
     dobController.text = dob;
-    //photoView = Base64Decoder().convert(photo);
 
-    print("FOTO FROM JSON: $photo");
-
-    print("HPOTO VIEW: $photoView");
     notifyListeners();
 
   }
@@ -247,7 +234,6 @@ class PatientCardProvider with ChangeNotifier {
     String gambar = photo64Encode;
     notifyListeners();
 
-    print("PHOTO: $gambar");
     int accountid = prefs.getInt("userid");
     var url = AppConstants.UPDATE_PATIENT_CARD_URL + patienCardId ;
 
@@ -273,19 +259,17 @@ class PatientCardProvider with ChangeNotifier {
 
 
     if(sukses == true){
-      print("${request.body}");
       showToastUpdatePhoto(context, "Berhasil", "Data berhasil diupdate");
 
     } else {
-      print("ERRRORRR UPDATE PATEINT CARD");
-      print("${request.body}");
+
     }
 
   }
 
   void showToastUpdatePhoto(BuildContext ctx, String title, String subtitle) async {
     bool isCircle = true;
-    await AchievementView(
+    AchievementView(
       ctx,
       title: "$title",
       alignment: Alignment.bottomCenter,
@@ -294,7 +278,6 @@ class PatientCardProvider with ChangeNotifier {
       isCircle: isCircle,
       duration: Duration(milliseconds: 1000),
       listener: (status) {
-        print(status);
       },
     )..show();
 
@@ -310,7 +293,6 @@ class PatientCardProvider with ChangeNotifier {
     String gambar = photo64Encode;
     notifyListeners();
 
-    print("PHOTO: $gambar");
     int accountid = prefs.getInt("userid");
     var url = AppConstants.UPDATE_PATIENT_CARD_URL + patienCardId ;
 
@@ -339,14 +321,11 @@ class PatientCardProvider with ChangeNotifier {
       showToast(context, "Berhasil", "Data berhasil diupdate");
 
     } else {
-      print("ERRRORRR UPDATE PATEINT CARD");
-      print("${request.body}");
     }
 
   }
 
   void setRhesus(BuildContext context, String rhesus){
-    print("RHESUS : $rhesus");
     bloodTypeController.text = rhesus;
     updatePatientCard(context);
     notifyListeners();
@@ -355,7 +334,7 @@ class PatientCardProvider with ChangeNotifier {
 
   void showToast(BuildContext ctx, String title, String subtitle) async {
     bool isCircle = true;
-    await AchievementView(
+    AchievementView(
       ctx,
       title: "$title",
       alignment: Alignment.bottomCenter,
@@ -364,64 +343,11 @@ class PatientCardProvider with ChangeNotifier {
       isCircle: isCircle,
       duration: Duration(milliseconds: 1000),
       listener: (status) {
-        print(status);
         if(status == AchievementState.opening){
           Navigator.of(ctx).pop();
         }
       },
     )..show();
 
-  }
-
-
-  showDialogSukses(BuildContext ctx){
-    Flushbar(
-      margin: EdgeInsets.all(8),
-      duration: Duration(seconds: 4),
-      borderRadius: 8,
-      backgroundGradient: LinearGradient(
-        colors: [MyColors.dnaGreen, Colors.lightBlueAccent],
-        stops: [0.3, 1],
-      ),
-      boxShadows: [
-        BoxShadow(
-          color: Colors.grey,
-          offset: Offset(3, 3),
-          blurRadius: 3,
-        ),
-      ],
-      flushbarPosition: FlushbarPosition.BOTTOM,
-      dismissDirection: FlushbarDismissDirection.HORIZONTAL,
-      forwardAnimationCurve: Curves.fastLinearToSlowEaseIn,
-      title: 'Sukses...',
-      message: 'Kartu Pasien berhasil di simpan',
-    )
-      ..onStatusChanged = (FlushbarStatus status) {
-        switch (status) {
-          case FlushbarStatus.SHOWING:
-            {
-              break;
-            }
-          case FlushbarStatus.IS_APPEARING:
-            {
-              print("FLUSHBAR IS APPEARING");
-
-              break;
-            }
-          case FlushbarStatus.IS_HIDING:
-            {
-              print("FLUSHBAR IS HIDING");
-
-              break;
-            }
-          case FlushbarStatus.DISMISSED:
-            {
-              print("FLUSHBAR IS DISMISSED");
-              Navigator.pushReplacementNamed(ctx, "patient_card_page");
-              break;
-            }
-        }
-      }
-      ..show(ctx);
   }
 }

@@ -43,7 +43,6 @@ class AccountProvider with ChangeNotifier {
 
     int kdmId = prefs.getInt("userid");
 
-    print("KDM ID: $kdmId");
 
     var url = AppConstants.NEW_GET_ACCOUNT_URL + kdmId.toString();
 
@@ -54,22 +53,12 @@ class AccountProvider with ChangeNotifier {
 
     final request = await http.get(url, headers: ndas);
     final accountResponse = AccountModel.fromJson(json.decode(request.body));
-    print("ACCOUNT RESPONSE: ${request.statusCode}");
 
     if(request.statusCode == 200){
-      // var data = json.decode(request.body);
-      // var detailArray = data['data']['patient_card'] as List;
-      // listPatentCard = detailArray.map<PatientCard>((j) => PatientCard.fromJson(j)).toList();
-
-      print("PATIEN CARD: ${listPatentCard[0].id}");
-
       for(int i = 0 ; i < listPatentCard.length ; i++) {
         lastID = listPatentCard.last.id.toString();
         notifyListeners();
       }
-
-
-
 
       isLoading = false ;
       name = accountResponse.data.name;
@@ -79,15 +68,10 @@ class AccountProvider with ChangeNotifier {
       kdmAccountId = accountResponse.data.kdmAccountId;
       userId = accountResponse.data.userId;
       prefs.setString("personId", accountResponse.data.userId);
-      print("PERSON: ${accountResponse.data.userId}");
       nameController.text = accountResponse.data.name;
       notifyListeners();
 
-      //Provider.of<NewMemberProvider>(context, listen: false).getMember(context, accountResponse.data.userId);
-
-
     } else {
-      print("ERROR GET ACCCOUNT");
       isLoading = false ;
     }
 
@@ -98,7 +82,6 @@ class AccountProvider with ChangeNotifier {
 
 
   void setRhesus(BuildContext context, String rhesus){
-    print("RHESUS : $rhesus");
     rhesusController.text = rhesus;
     notifyListeners();
   }

@@ -1,9 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
-import 'package:new_klikdna/src/home/providers/home_provider.dart';
-import 'package:new_klikdna/src/token/providers/cms_token_provider.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashProvider with ChangeNotifier {

@@ -1,7 +1,6 @@
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:new_klikdna/src/patient_card/models/asuransi_model.dart';
 import 'package:new_klikdna/src/patient_card/models/patient_card_model.dart';
 import 'package:new_klikdna/src/patient_card/providers/asuransi_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
@@ -69,11 +68,9 @@ class _EditAsuransiPageState extends State<EditAsuransiPage> {
     switch (tipeValue) {
       case "Jiwa":
         result = "Jiwa";
-        print("RESULT $result");
         break;
       case "Kesehatan":
         result = "Kesehatan";
-        print("RESULT $result");
         break;
     }
   }
@@ -81,9 +78,6 @@ class _EditAsuransiPageState extends State<EditAsuransiPage> {
 
   @override
   Widget build(BuildContext context) {
-    print("ASURAN ID: ${widget.model.id}");
-    print("TIPE $tipeValue");
-
     final prov = Provider.of<AsuransiProvider>(context);
     return Scaffold(
       appBar: AppBar(

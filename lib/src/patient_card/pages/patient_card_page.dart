@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -204,7 +203,6 @@ class _PatientCardPageState extends State<PatientCardPage> {
                                         onChanged: (value) {
                                           setState(() {
                                             _valProvince = value;
-                                            print("PALU =====> $value");
                                           });
                                         },
                                       ),

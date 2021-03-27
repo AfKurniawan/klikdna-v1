@@ -1,12 +1,7 @@
 import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:new_klikdna/src/login/providers/login_provider.dart';
-import 'package:new_klikdna/src/mitra/providers/mitra_provider.dart';
 import 'package:new_klikdna/src/patient_card/models/patient_card_model.dart';
-import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
-import 'package:new_klikdna/styles/my_theme.dart';
-import 'package:provider/provider.dart';
 
 class CardInssuranceItem extends StatelessWidget {
   final Asuransi model;
@@ -18,8 +13,6 @@ class CardInssuranceItem extends StatelessWidget {
   Widget build(BuildContext context) {
     String s = model.nomorKartu ;
     s = StringUtils.addCharAtPosition(s, " ", 4, repeat: true);
-    final prov = Provider.of<PatientCardProvider>(context);
-    int i = 0;
     return Column(
       children: [
         Container(

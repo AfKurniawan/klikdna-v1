@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:html/parser.dart';
 import 'package:new_klikdna/src/dummy/post_it_now_models.dart';
 import 'package:new_klikdna/src/home/providers/home_provider.dart';
 import 'package:new_klikdna/src/home/widgets/dashboard_slider.dart';
@@ -36,10 +35,6 @@ class PinWidget extends StatelessWidget {
               shrinkWrap: true,
               itemCount: 5,
               itemBuilder: (context, index) {
-                var document;
-                String text;
-                document = parse(prov.pinArray[index].data.text);
-                text = parse(document.body.text).documentElement.text;
                 return Container(
                   margin: EdgeInsets.only(left: 12, bottom: 10, top: 10, ),
                   decoration: BoxDecoration(

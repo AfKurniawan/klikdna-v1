@@ -11,8 +11,6 @@ class ProfileProvider with ChangeNotifier {
   String result;
   final format = DateFormat("yyyy-MM-dd");
 
-
-
   logout(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();
@@ -43,8 +41,6 @@ class ProfileProvider with ChangeNotifier {
 
   void syaratKetentuan(String url) async {
    const url2 = 'https://www.klikdna.com/webviewpages/ketentuanpengguna';
-   // const testUrl = "https://google.com" ;
-    print("URL >>>>>>>>>>>> $url2");
     if (await canLaunch(url2)) {
       await launch(url2,
           forceWebView: true,
@@ -65,18 +61,6 @@ class ProfileProvider with ChangeNotifier {
     }
 
   }
-
-  // void lembarPersetujuan() async {
-  //   const url = 'https://dnaku.id/ketentuan/mobile/lembar_persetujuan';
-  //   if (await canLaunch(url)) {
-  //     await launch(url,
-  //         //forceWebView: true
-  //     );
-  //   } else {
-  //     throw 'Could not launch $url';
-  //   }
-  //
-  // }
 
   void openWhatsapp(BuildContext context) {
     showCupertinoModalPopup(

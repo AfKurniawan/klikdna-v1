@@ -1,10 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:new_klikdna/src/login/providers/login_provider.dart';
 import 'package:new_klikdna/src/mitra/providers/mitra_provider.dart';
-import 'package:new_klikdna/src/mitra/wallets_and_referrals/providers/wallet_referral_provider.dart';
-import 'package:new_klikdna/src/mitra/widgets/card_type_dua_widget.dart';
 import 'package:new_klikdna/src/mitra/widgets/card_type_satu_widget.dart';
 import 'package:new_klikdna/src/mitra/widgets/header_widget.dart';
 import 'package:new_klikdna/src/mitra/widgets/overview_tile_widget.dart';

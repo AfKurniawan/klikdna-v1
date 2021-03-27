@@ -3,25 +3,19 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:new_klikdna/src/dummy/post_it_now_models.dart';
-import 'package:new_klikdna/src/home/providers/artikel_provider.dart';
 import 'package:new_klikdna/src/home/providers/home_provider.dart';
 import 'package:new_klikdna/src/home/widgets/banner_slider.dart';
 import 'package:new_klikdna/src/home/widgets/event_widget.dart';
 import 'package:new_klikdna/src/home/widgets/pin_widget.dart';
 import 'package:new_klikdna/src/home/widgets/podcast_slider.dart';
-import 'package:new_klikdna/src/mitra/providers/mitra_provider.dart';
-import 'package:new_klikdna/src/token/providers/cms_token_provider.dart';
-import 'package:new_klikdna/src/token/providers/token_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:new_klikdna/widgets/loading_widget.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:wc_flutter_share/wc_flutter_share.dart';
 
 class HomePage extends StatefulWidget {
   final DummyModel model;
@@ -271,17 +265,6 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void _shareImageAndText(String image, String text) async {
-    try {
-      await WcFlutterShare.share(
-          sharePopupTitle: 'Share',
-          subject: 'This is subject',
-          text: 'This is text',
-          mimeType: 'text/plain');
-    } catch (e) {
-      print('error: $e');
-    }
-  }
 
   Future<File> shareImage(
       BuildContext context, String path, String desc) async {

@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:new_klikdna/src/mitra/wallets_and_referrals/providers/wallet_referral_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +21,6 @@ class NewReferralTabView extends StatefulWidget {
 class _NewReferralTabViewState extends State<NewReferralTabView> {
   @override
   Widget build(BuildContext context) {
-    var mediaQuery = MediaQuery.of(context);
     return Consumer<WalletReferralProvider>(
       builder: (context, referral, _) {
         return SingleChildScrollView(
@@ -270,8 +268,8 @@ class _NewReferralTabViewState extends State<NewReferralTabView> {
   }
 }
 
-class noDataWidget extends StatelessWidget {
-  const noDataWidget({
+class NoDataWidget extends StatelessWidget {
+  const NoDataWidget({
     Key key,
     @required this.mediaQuery,
   }) : super(key: key);

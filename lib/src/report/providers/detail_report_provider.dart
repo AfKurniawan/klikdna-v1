@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
-import 'package:new_klikdna/src/account/providers/account_provider.dart';
 import 'package:new_klikdna/src/report/models/detail_report_model.dart';
 import 'package:new_klikdna/src/token/providers/token_provider.dart';
 import 'package:provider/provider.dart';
@@ -40,11 +39,9 @@ class DetailReportProvider extends ChangeNotifier {
     var url = AppConstants.GET_REPORT_DETAIL_URL;
     final prov = Provider.of<TokenProvider>(context, listen: false);
     prov.getApiToken();
-    print("PERSON ID: $person");
 
     String accessToken = prov.accessToken;
-    print("AKSES TOKEN: $accessToken");
-    print("REPORT ID====: $reportId");
+
     Map<String, String> ndas = {
       "Accept": "application/json",
       "Authorization": "Bearer $accessToken"
@@ -56,7 +53,6 @@ class DetailReportProvider extends ChangeNotifier {
     };
 
     final request = await http.post(url, headers: ndas, body: body);
-    print("DETAIL REPORT RESPONSE CODE: ${request.statusCode}");
 
     if (request.statusCode == 200) {
       isLoading = false;
@@ -64,11 +60,8 @@ class DetailReportProvider extends ChangeNotifier {
 
       var responseJson = json.decode(request.body);
 
-      print("DETAIL REPORT RESPONSE CODE: ${request.body}");
-
       var dataArray = responseJson['data'];
       reportdetailArray = dataArray['report_detail'] as List;
-      print("REPORT DETAIL ARRAY LENGHT >>> ${reportdetailArray.length}");
       if(reportdetailArray.length == 0){
         reportDetail =  [] ;
         listRecomendasi = [];
@@ -96,46 +89,24 @@ class DetailReportProvider extends ChangeNotifier {
 
         for (int i = 0; i < rekomendasiArray.length; i++) {
 
-
-          // print("Judul Rekomendasi  ${listRecomendasi[i].judulRekomendasi}");
-
-          print("Gambar Rekomendasi  ${listRecomendasi[i].gambarRekomendasi}");
-
           getImageSize(listRecomendasi[0].gambarRekomendasi);
-
-          print("IKON Rekomendasi ${listRecomendasi[0].ikonRekomendasi}");
-
-          //reportDetail.forEach((item) => print("OPO IKI...${item.rekomendasi[i].judulRekomendasi}"));
-
-          print("COBA $reportDetail");
 
           notifyListeners();
 
         }
 
-
-
-
-
         notifyListeners();
-
-        //penjelasanDetail = penjelasanDetailArray.map((p) => PenjelasanDetail.fromJson(p)).toList();
       }
 
 
-
-      print("PANJANG REPORT DETAIL ------------- ${reportDetail.length}");
-
       link = reportResponse.data.linkPdf;
-      print("LINK PDF: $link");
       notifyListeners();
 
     } else if (request.statusCode == 404) {
-      print("REPORT Not Found");
       isLoading = false;
       notifyListeners();
     } else if (request.statusCode == 500) {
-      print("REPORT ERROR 500");
+
     } else if (reportDetail == []) {
 
     }
@@ -157,8 +128,6 @@ class DetailReportProvider extends ChangeNotifier {
       completer.complete(info.image);
         imgWidth = info.image.width.toDouble();
         imgHeight = info.image.height.toDouble();
-        print("IMAGE WIDTH: $imgWidth");
-        print("IMAGE HEIGHT: $imgHeight");
 
     }));
 
@@ -174,7 +143,6 @@ class DetailReportProvider extends ChangeNotifier {
   List<Rekomendasi> lr ;
   bool kosong ;
   getRecomendasi(String text) async {
-    print("TEST $text");
     if (text.isEmpty) {
       notifyListeners();
       return;
@@ -182,16 +150,13 @@ class DetailReportProvider extends ChangeNotifier {
     reportDetail.forEach((item) {
       if (item.namaModul.contains(text)) {
         rekomendasiArray.add(item);
-        print("ITEM REKOMENDASI LENDGHT = ${rekomendasiArray.length}");
         if(item.rekomendasi == null){
-          print("KOSONG");
           kosong = true;
 
         } else {
           kosong = false;
           lr = item.rekomendasi;
           getImageSize(lr[0].gambarRekomendasi);
-          print("Judul REKOMENDASI ${lr[0].judulRekomendasi}");
           }
 
         }
@@ -204,8 +169,6 @@ class DetailReportProvider extends ChangeNotifier {
 
   onCheckedValuexxx(String text) async {
     searchResult.clear();
-
-    print("CHECKED VALUE: $text");
     if (text.isEmpty) {
       return;
     }

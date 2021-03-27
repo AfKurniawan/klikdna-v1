@@ -47,7 +47,6 @@ class AsuransiProvider extends ChangeNotifier {
     final request = await http.get(url, headers: ndas);
     final response = AsuransiModel.fromJson(json.decode(request.body));
 
-    print("ASURANSI: ${request.body}");
 
     if(response.success == true){
       isLoading = false;
@@ -65,7 +64,6 @@ class AsuransiProvider extends ChangeNotifier {
     } else {
       isLoading = false;
       notifyListeners();
-      print("Error Asuransi");
     }
 
     notifyListeners();
@@ -93,12 +91,8 @@ class AsuransiProvider extends ChangeNotifier {
     final prov = Provider.of<TokenProvider>(context, listen: false);
     final patientCardId = Provider.of<PatientCardProvider>(context, listen: false);
     int patientId = patientCardId.id;
-    print("PATIEN CARD ID : $patientId");
-    print("ASURASNI ID: $asuransiId");
 
     String accessToken = prov.accessToken;
-
-
 
     var url = AppConstants.UPDATE_ASURANSI_URL + asuransiId.toString();
     Map<String, String> ndas = {
@@ -115,10 +109,8 @@ class AsuransiProvider extends ChangeNotifier {
       "nama_peserta": namaPesertaController.text,
       "nomor_kartu": nomorKartuController.text,
     };
-    print("PROSES WITH BODY: $body");
 
     final request = await http.put(url, headers: ndas, body: json.encode(body));
-    print("STATUS CODE: ${request.statusCode}");
 
     if(request.statusCode == 200){
       showToast(context, "Berhasil", "Kartu Asuransi berhasil diupdate");
@@ -146,8 +138,6 @@ class AsuransiProvider extends ChangeNotifier {
     getId.getUserAccount(context);
     patientCardId = int.parse(getId.lastID);
 
-    print("PASIEN ID $patientCardId");
-
     notifyListeners();
 
 
@@ -166,14 +156,11 @@ class AsuransiProvider extends ChangeNotifier {
       "nama_peserta": addNamaPesertaController.text,
       "nomor_kartu": addNomorKartuController.text,
     };
-    print("PROSES WITH BODY: $body");
 
     final request = await http.post(url, headers: ndas, body: json.encode(body));
-    print("STATUS CODE: ${request.body}");
 
     if(request.statusCode == 200){
       showToast(context, "Berhasil", "Kartu Asuransi berhasil diupdate");
-      print("RESPONSE BODY: ${request.body}");
       disposal();
     }
 
@@ -200,12 +187,9 @@ class AsuransiProvider extends ChangeNotifier {
 
 
     final request = await http.delete(url, headers: ndas);
-    print("STATUS CODE: ${request.statusCode}");
 
     if(request.statusCode == 200){
       showToast(context, "Berhasil", "Kartu Asuransi berhasil dihapus");
-
-      print("RESPONSE BODY: ${request.body}");
     }
 
   }
@@ -215,7 +199,7 @@ class AsuransiProvider extends ChangeNotifier {
 
   void showToast(BuildContext ctxx, String title, String subtitle) async {
     bool isCircle = true;
-    await AchievementView(
+    AchievementView(
       ctxx,
       title: "$title",
       alignment: Alignment.bottomCenter,
@@ -224,7 +208,6 @@ class AsuransiProvider extends ChangeNotifier {
       isCircle: isCircle,
       duration: Duration(milliseconds: 1000),
       listener: (status) {
-        print(status);
         if(status == AchievementState.open) {
           Provider.of<PatientCardProvider>(ctxx, listen: false).getPatientCard(ctxx).then((value) => Navigator.of(ctxx).pop());
         }
@@ -275,11 +258,9 @@ class AsuransiProvider extends ChangeNotifier {
     switch (tipeValue) {
       case "Jiwa":
         result = "Jiwa";
-        print("RESULT $result");
         break;
       case "Kesehatan":
         result = "Kesehatan";
-        print("RESULT $result");
         break;
     }
   }
@@ -439,6 +420,7 @@ class AsuransiProvider extends ChangeNotifier {
             bottomNavigationBar: Padding(
               padding: const EdgeInsets.all(10.0),
               child: addNamaAsuransiController.text.isEmpty ?  ButtonWidget(
+                btnAction: (){},
                 btnText: "Simpan",
                 height: 50,
                 color: MyColors.grey,

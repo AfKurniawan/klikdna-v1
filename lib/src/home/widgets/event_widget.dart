@@ -1,12 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:html/parser.dart';
-import 'package:native_share/native_share.dart';
 import 'package:new_klikdna/src/dummy/post_it_now_models.dart';
-import 'package:new_klikdna/src/home/models/home_model.dart';
 import 'package:new_klikdna/src/home/providers/home_provider.dart';
-import 'package:new_klikdna/src/home/widgets/event_slider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:provider/provider.dart';
 

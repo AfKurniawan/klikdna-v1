@@ -1,7 +1,5 @@
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:form_field_validator/form_field_validator.dart';
-import 'package:new_klikdna/src/patient_card/models/patient_card_model.dart';
 import 'package:new_klikdna/src/patient_card/providers/asuransi_provider.dart';
 import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
 import 'package:new_klikdna/src/patient_card/widgets/card_insurance_item.dart';
@@ -9,7 +7,6 @@ import 'package:new_klikdna/src/patient_card/widgets/custom_dialog_confirm.dart'
 import 'package:new_klikdna/src/token/providers/token_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:new_klikdna/widgets/button_widget.dart';
-import 'package:new_klikdna/widgets/form_widget.dart';
 import 'package:provider/provider.dart';
 
 class AsuransiPage extends StatefulWidget {

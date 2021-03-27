@@ -120,7 +120,6 @@ class MitraProvider with ChangeNotifier {
 
 
   Future<LoginModel> refreshMitraData() async {
-    print("== START GET MITRA DATA ==");
     prefs = await SharedPreferences.getInstance();
     isLoading = true;
     notifyListeners();
@@ -184,7 +183,6 @@ class MitraProvider with ChangeNotifier {
 
       vrank = responseJson.user.member.rank;
       vpar = responseJson.user.member.par;
-      print("EXPIRED: ==> ${responseJson.user.member.expired}");
       vhighestrank = responseJson.user.member.highestrank.toString();
       vtimoneposition = responseJson.user.member.timoneposition;
       vtimtwoposition = responseJson.user.member.timtwoposition ;
@@ -248,20 +246,12 @@ class MitraProvider with ChangeNotifier {
           }
 
 
-      print("MITRA HIGEST RANK >>>>>>>>>>>>>>> $vhighestrank");
-      print("MITRA VRANK ........... $vrank");
-      print("MITRA VTYPE ------->>>>>> $vtype");
-      print("MITRA VPAR >>>>>>>>>>>>>>> $vpar");
-
 
 
       notifyListeners();
 
 
     } else if(responseJson.user.code == 400) {
-
-      print("ERRORRRRRR 400");
-
       isLoading = false;
       notifyListeners();
 

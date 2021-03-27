@@ -35,7 +35,6 @@ class WalletReferralProvider with ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     isLoading = true;
     notifyListeners();
-    print("LOADING $isLoading");
 
     var url = AppConstants.GET_WALLET_URL;
     var body = json.encode({
@@ -48,11 +47,8 @@ class WalletReferralProvider with ChangeNotifier {
     };
 
     final response = await http.post(url, body: body, headers: headers);
-    final responseJson = WalletModel.fromJson(json.decode(response.body));
 
     if(response.statusCode == 200){
-
-      // print("RESPONSE BODY GET WALLET: ${response.body}");
       var allArray = json.decode(response.body);
       var dataArray = allArray['data'] as List;
       walletMapMapArray = dataArray.map<Wallet>((j) => Wallet.fromJson(j)).toList();
@@ -68,16 +64,9 @@ class WalletReferralProvider with ChangeNotifier {
       }
 
 
-      print("Sum : $sum");
-
       totalsum = totalFormattedCommision.format(sum);
-
       komisi = prefs.getString("commission");
-
-
       notifyListeners();
-      print("SUM $totalsum");
-      print("JUMLAH KOMISI $komisi");
 
 
     } else {
@@ -86,6 +75,8 @@ class WalletReferralProvider with ChangeNotifier {
       notifyListeners();
 
     }
+
+    return listWalletData ;
 
   }
 
@@ -103,9 +94,6 @@ class WalletReferralProvider with ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     isLoading = true;
     notifyListeners();
-    print("TYPE --> $tipeValue");
-
-    print("LIST WALLET DATA --> ${listWalletData.length}");
 
     var url = AppConstants.GET_WALLET_URL;
     var body = json.encode({
@@ -134,9 +122,6 @@ class WalletReferralProvider with ChangeNotifier {
       isLoading = false ;
       isError = false ;
 
-      print("LIST WALLET DATA AFTER FILTERING >>>>>>>>>>> ${listWalletData.length}");
-
-
       if(listWalletData.length == 0){
         sum = 0;
       } else {
@@ -144,15 +129,11 @@ class WalletReferralProvider with ChangeNotifier {
       }
 
 
-      print("Sum : $sum");
-
       totalsum = totalFormattedCommision.format(sum);
 
       komisi = prefs.getString("commission");
 
       notifyListeners();
-      print("SUM FILTER $totalsum");
-      print("JUMLAH KOMISI FILTER $komisi");
 
 
 
@@ -178,15 +159,6 @@ class WalletReferralProvider with ChangeNotifier {
     datetoController.clear();
     notifyListeners();
   }
-
-  //SCROLLING OPTIMIZE
-
-
-
-
-
-
-
 
 
   TextEditingController datefromController = new TextEditingController();
@@ -462,37 +434,31 @@ class WalletReferralProvider with ChangeNotifier {
       case "Semua Data":
         result = "";
         getWalletData(context);
-        print("RESULT $result");
         break;
       case "Komisi Referral":
         result = "1";
         totalsum = "..." ;
         filterWalletData(context);
-        print("RESULT $result");
         break;
       case "Komisi Tim":
         result = "2";
         totalsum = "..." ;
         filterWalletData(context);
-        print("RESULT $result");
         break;
       case "Komisi Royalti":
         result = "3";
         totalsum = "..." ;
         filterWalletData(context);
-        print("RESULT $result");
         break;
       case "National Sharing":
         result = "4";
         totalsum = "..." ;
         filterWalletData(context);
-        print("RESULT $result");
         break;
       case "Penarikan":
         result = "5";
         totalsum = "..." ;
         filterWalletData(context);
-        print("RESULT $result");
         break;
     }
     notifyListeners();

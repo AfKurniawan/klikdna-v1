@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:http/http.dart' as http;
-import 'package:new_klikdna/src/home/providers/artikel_provider.dart';
 import 'package:new_klikdna/src/home/providers/home_provider.dart';
 import 'dart:convert';
 
 import 'package:new_klikdna/src/token/models/token_model.dart';
-import 'package:new_klikdna/src/token/providers/token_provider.dart';
 import 'package:provider/provider.dart';
 
 
@@ -15,9 +13,6 @@ class CmsTokenProvider with ChangeNotifier {
   String cmsAccessToken= "" ;
 
   Future<String> getCmsToken (BuildContext context) async {
-
-    print("START GET TOKEN");
-
     var url = AppConstants.CMS_TOKEN_URL;
     var body = {
       "email": AppConstants.CMS_EMAIL_TOKEN,
@@ -38,6 +33,8 @@ class CmsTokenProvider with ChangeNotifier {
     }
 
     notifyListeners();
+
+    return cmsAccessToken;
 
   }
 

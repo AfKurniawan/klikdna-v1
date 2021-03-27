@@ -1,10 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:html/parser.dart';
 import 'package:new_klikdna/src/dummy/post_it_now_models.dart';
 import 'package:new_klikdna/src/home/providers/home_provider.dart';
-import 'package:new_klikdna/src/home/widgets/dashboard_slider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +14,6 @@ class SemuaPinPage extends StatefulWidget {
 class _SemuaPinPageState extends State<SemuaPinPage> {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -36,7 +33,7 @@ class _SemuaPinPageState extends State<SemuaPinPage> {
               Navigator.of(context).pop();
             }),
       ),
-      body: SingleChildScrollView(
+      body: Container(
         child: Consumer<HomeProvider>(
           builder:(context, prov, _){
             return  Container(
@@ -44,17 +41,12 @@ class _SemuaPinPageState extends State<SemuaPinPage> {
                   scrollDirection: Axis.vertical,
                   itemCount: prov.pinArray.length,
                   shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       crossAxisSpacing: 2,
                       mainAxisSpacing: 2,
-                      childAspectRatio: 0.8),
+                      childAspectRatio: 0.73),
                   itemBuilder: (context, index){
-                    var document;
-                    String text;
-                    document = parse(prov.pinArray[index].data.text);
-                    text = parse(document.body.text).documentElement.text;
                     return Container(
                       margin: EdgeInsets.only(left: 10, bottom: 10, right: 10),
                       decoration: BoxDecoration(

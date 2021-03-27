@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:new_klikdna/src/home/models/home_model.dart';
-import 'package:new_klikdna/src/mitra/providers/mitra_provider.dart';
 import 'package:new_klikdna/src/token/providers/cms_token_provider.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
@@ -46,7 +45,6 @@ class HomeProvider extends ChangeNotifier {
   var status ;
 
   Future<HomeModel> getHomeContentsxx(BuildContext context) async {
-    print("GET HOME STARTED");
     isLoading = true ;
     var url = AppConstants.GET_HOME_ARTIKEL;
     final prov = Provider.of<CmsTokenProvider>(context, listen: false);
@@ -91,16 +89,13 @@ class HomeProvider extends ChangeNotifier {
         healthArray = healthEventArray.length ;
 
 
-
-
-
       }
 
     }
 
     notifyListeners();
 
-    //return responseJson ;
+    return responseJson;
 
   }
 
@@ -115,7 +110,6 @@ class HomeProvider extends ChangeNotifier {
     filterArray.removeWhere((el) => DateTime.parse(el.data.doDate).isBefore(sekarang) && el.data.status == 1);
     filterArray.sort((a, b) => a.data.doDate.compareTo(b.data.doDate));
 
-    print("LENGHT FILTER ${filterArray.length}");
     Navigator.pushNamed(context, "all_event_by_category", arguments: catId);
 
     notifyListeners();
@@ -169,18 +163,8 @@ class HomeProvider extends ChangeNotifier {
 
 
   shareImageAndText(String image, String text) async {
-    // try {
-    //   await WcFlutterShare.share(
-    //       sharePopupTitle: 'Share',
-    //       subject: 'This is subject',
-    //       text: 'This is text',
-    //       mimeType: 'text/plain');
-    // } catch (e) {
-    //   print('error: $e');
-    // }
     try {
       final response = await http.get("$image");
-      final Directory tempo = await getTemporaryDirectory();
       await WcFlutterShare.share(
           sharePopupTitle: 'Share',
           subject: '',
@@ -190,7 +174,7 @@ class HomeProvider extends ChangeNotifier {
           bytesOfFile: response.bodyBytes.buffer.asUint8List()
       );
     } catch (e) {
-      print("EREORER $e");
+
     }
   }
 

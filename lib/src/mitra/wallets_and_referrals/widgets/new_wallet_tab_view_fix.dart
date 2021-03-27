@@ -10,7 +10,6 @@ import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:new_klikdna/src/mitra/wallets_and_referrals/models/wallet_model.dart';
 import 'package:new_klikdna/src/mitra/wallets_and_referrals/providers/wallet_referral_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
-import 'package:new_klikdna/styles/text_styles.dart';
 import 'package:new_klikdna/widgets/loading_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -65,7 +64,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
     };
 
     final response = await http.post(url, body: body, headers: headers);
-    final responseJson = WalletModel.fromJson(json.decode(response.body));
+    //final responseJson = WalletModel.fromJson(json.decode(response.body));
 
     if (response.statusCode == 200) {
       var allArray = json.decode(response.body);
@@ -101,6 +100,8 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
     } else {
       isLoading = false;
     }
+
+    return listWalletData;
   }
 
   var count;

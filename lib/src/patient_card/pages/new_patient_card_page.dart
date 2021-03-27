@@ -38,8 +38,6 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
     setState(() {
       gender = prefs.getString("gender");
     });
-
-    debugPrint("GENDER >>>>>>>>>>>> $gender");
   }
 
   @override
@@ -74,7 +72,6 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
 
                               final value1 = values[0];
                               final value2 = values[1];
-                              final value3 = values[2];
                               return Container(
                                 height: 146,
                                 decoration: BoxDecoration(
@@ -959,7 +956,6 @@ class PhotoPatientCardWidget extends StatelessWidget {
                   return InkWell(
                     onTap: () {
                       context.read<PatientCardProvider>().getImageV2(context);
-                      print("TAKE PHOTO");
                     },
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(50),
@@ -985,7 +981,6 @@ class PhotoPatientCardWidget extends StatelessWidget {
             child: InkWell(
               onTap: () {
                 context.read<PatientCardProvider>().getImageV2(context);
-                print("TAKE PHOTO");
               },
               child: Container(
                   decoration: BoxDecoration(

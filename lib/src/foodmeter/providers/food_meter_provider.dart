@@ -21,8 +21,6 @@ class FoodMeterProvider extends ChangeNotifier {
 
     String accessToken = prov.accessToken;
 
-    print("QUERY: $query");
-
     isLoading = true ;
     notifyListeners();
     var url = AppConstants.GET_FOOD_METER_URL ;
@@ -46,10 +44,9 @@ class FoodMeterProvider extends ChangeNotifier {
       isLoading = false;
       notifyListeners();
 
-      print("LIST FOOD LENGHT: ${listFood.length}");
 
     } else {
-      print("ERERERERERE");
+
     }
 
     notifyListeners();
@@ -69,8 +66,6 @@ class FoodMeterProvider extends ChangeNotifier {
     final prov = Provider.of<TokenProvider>(context, listen: false);
 
     String accessToken = prov.accessToken;
-
-    print("FOOD ID: $foodId");
 
     isLoading = true ;
 
@@ -95,10 +90,9 @@ class FoodMeterProvider extends ChangeNotifier {
       productSize = response.data.productSize;
       notifyListeners();
 
-      print("LIST Nutrition LENGHT: ${mobileNutritions.length}");
 
     } else {
-      print("ERERERERERE");
+
     }
 
     notifyListeners();
@@ -118,7 +112,6 @@ class FoodMeterProvider extends ChangeNotifier {
     listFood.forEach((item) {
       if (item.productName.contains(text) ||
           item.productName.contains(text)) searchListResult.add(item);
-      print("SERACH LIST LENGHT: ${searchListResult.length}");
     });
     notifyListeners();
   }

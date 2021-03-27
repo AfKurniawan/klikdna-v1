@@ -13,7 +13,6 @@ import 'package:new_klikdna/src/report/widgets/kit_list_service_widget.dart';
 import 'package:new_klikdna/src/report/widgets/member_item_widget.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:provider/provider.dart';
-import 'dart:io' show Platform;
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -220,7 +219,7 @@ class _HomeReportPageState extends State<HomeReportPage> {
                 child: Center(
                     child: SpinKitDoubleBounce(color: Colors.grey)));
           } else if (sample.notfound == true) {
-            return noDataWidget(mediaQuery: mediaQuery);
+            return NoDataWidget(mediaQuery: mediaQuery);
           } else {
             return Column(
               children: [
@@ -285,8 +284,8 @@ class _HomeReportPageState extends State<HomeReportPage> {
   }
 }
 
-class noDataWidget extends StatelessWidget {
-  const noDataWidget({
+class NoDataWidget extends StatelessWidget {
+  const NoDataWidget({
     Key key,
     @required this.mediaQuery,
   }) : super(key: key);

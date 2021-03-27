@@ -1,10 +1,8 @@
-import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
-import 'package:new_klikdna/src/login/providers/login_provider.dart';
 import 'package:new_klikdna/src/mitra/providers/mitra_provider.dart';
 import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
 import 'package:new_klikdna/src/token/providers/token_provider.dart';
@@ -40,7 +38,6 @@ class _EditPatientCardPageState extends State<EditPatientCardPage> {
   @override
   void initState() {
     _radioValue = Provider.of<PatientCardProvider>(context, listen: false).gender;
-    print("RADIO VALUE: $_radioValue");
     Provider.of<TokenProvider>(context, listen: false).getApiToken();
     Provider.of<PatientCardProvider>(context, listen: false).getPatientCard(context);
     super.initState();
@@ -129,7 +126,6 @@ class _EditPatientCardPageState extends State<EditPatientCardPage> {
                         onTap: () {
                           context.read<PatientCardProvider>().getImageV2(
                               context);
-                          print("TAKE PHOTO");
                         },
                         child: Container(
                           decoration: BoxDecoration(

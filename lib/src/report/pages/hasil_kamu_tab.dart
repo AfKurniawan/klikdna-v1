@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
-import 'package:html/parser.dart';
 import 'package:new_klikdna/src/report/models/detail_report_model.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 
@@ -17,15 +16,6 @@ class _HasilKamuState extends State<HasilKamu> {
 
   @override
   Widget build(BuildContext context) {
-    var document;
-    var describe;
-    String text;
-    String desc;
-    document = parse(widget.model.deskripsiHasil);
-    text = parse(document.body.text).documentElement.text;
-    describe = parse(widget.model.deskripsi);
-    desc = parse(describe.body.text).documentElement.text;
-
     return SingleChildScrollView(
       physics: NeverScrollableScrollPhysics(),
       child: Padding(

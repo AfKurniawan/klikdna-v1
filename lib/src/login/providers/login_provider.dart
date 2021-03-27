@@ -6,8 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:new_klikdna/src/login/models/login_model.dart';
 import 'package:new_klikdna/src/login/widgets/login_error_widget.dart';
-import 'package:new_klikdna/src/mitra/providers/mitra_provider.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -59,7 +57,7 @@ class LoginProvider with ChangeNotifier{
         final responseJson = LoginModel.fromJson(json.decode(response.body));
 
         if(responseJson.user.code == 200){
-            print("RESPONSE BODY: ${response.body}");
+
             isLoading = false ;
 
             prefs.setBool('isLogin', true);
@@ -125,8 +123,6 @@ class LoginProvider with ChangeNotifier{
 
 
             prefs.setString("highestrank", responseJson.user.member.highestrank.toString());
-
-            print("${responseJson.user.member.highestrank.toString()}");
 
             prefs.setString("timoneposition", responseJson.user.member.timoneposition);
 
@@ -200,7 +196,6 @@ class LoginProvider with ChangeNotifier{
 
             notifyListeners();
 
-            print("RESPONSE STATUS = ${responseJson.user.message}");
 
 
             Navigator.of(context).pushReplacementNamed("main_page");
@@ -209,8 +204,6 @@ class LoginProvider with ChangeNotifier{
 
 
         } else if(responseJson.user.code == 400) {
-
-            print("ERRORRRRRR");
 
             isLoading = false;
             notifyListeners();
