@@ -95,7 +95,6 @@ class HomeProvider extends ChangeNotifier {
 
     notifyListeners();
 
-    return responseJson;
 
   }
 
