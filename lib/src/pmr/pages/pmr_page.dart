@@ -134,7 +134,7 @@ class _PMRPageState extends State<PMRPage> {
                               children: [
                                 InkWell(
                                   onTap: (){
-                                    Navigator.of(context).pushNamed("food_meter_page");
+                                    Navigator.of(context).pushNamed("new_food_meter_page");
                                   },
                                   child: Container(
                                     height: 86,

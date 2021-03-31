@@ -15,6 +15,7 @@ class FormWidget extends StatelessWidget {
   final FormFieldValidator<String> validator;
   final IconButton icon;
   final Widget suffixIcon;
+  final Widget prefixIcon;
   final String labelText;
   final TextStyle labelStyle;
   final bool enabled;
@@ -33,6 +34,7 @@ class FormWidget extends StatelessWidget {
     this.validator,
     this.icon,
     this.suffixIcon,
+    this.prefixIcon,
     this.labelText,
     this.labelStyle,
     this.enabled,
@@ -55,6 +57,7 @@ class FormWidget extends StatelessWidget {
       onFieldSubmitted: onsubmit,
       decoration: InputDecoration(
           suffixIcon: suffixIcon,
+          prefixIcon: prefixIcon,
           labelText: labelText,
           labelStyle: labelStyle,
           alignLabelWithHint: true,

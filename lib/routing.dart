@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:new_klikdna/src/dummy/pages/dummy_chart_page.dart';
 import 'package:new_klikdna/src/foodmeter/pages/detail_food_meter_page.dart';
 import 'package:new_klikdna/src/foodmeter/pages/food_meter_page.dart';
+import 'package:new_klikdna/src/foodmeter/pages/new_foodmeter_page.dart';
 import 'package:new_klikdna/src/home/pages/details/detail_pin_page.dart';
 import 'package:new_klikdna/src/home/pages/details/detail_promo_page.dart';
 import 'package:new_klikdna/src/home/pages/details/detail_event_page.dart';
@@ -100,6 +101,15 @@ class Routing {
           duration: Duration(
             milliseconds: 350
           )
+        );
+
+      case "new_food_meter_page" :
+        return PageTransition(
+            child: NewFoodMeterPage(),
+            type: PageTransitionType.fade,
+            duration: Duration(
+                milliseconds: 350
+            )
         );
 
       case "detail_food_meter_page" :

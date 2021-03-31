@@ -303,8 +303,7 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                                     ),
                                                     SizedBox(height: 16),
                                                     OutlineButtonWidget(
-                                                      btnText:
-                                                          "Tambah Kartu Asuransi",
+                                                      btnText: Text("Tambah Kartu Asuransi"),
                                                       btnAction: () {
                                                         Provider.of<AsuransiProvider>(
                                                                 context,

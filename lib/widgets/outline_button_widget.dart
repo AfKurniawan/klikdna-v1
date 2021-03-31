@@ -3,10 +3,12 @@ import 'package:new_klikdna/styles/my_colors.dart';
 
 class OutlineButtonWidget extends StatelessWidget {
   final VoidCallback btnAction;
-  final String btnText;
-  final Icon myIcon;
-  final Color filledColor;
+  final Widget btnText;
+  final IconData myIcon;
+  final Color iconColor;
+  final Color outlineColor;
   final Color outlineTextColor;
+  final Color btnTextColor;
   final double height;
   final double width;
 
@@ -14,9 +16,11 @@ class OutlineButtonWidget extends StatelessWidget {
     @required this.btnAction,
     @required this.btnText,
     this.myIcon,
-    this.filledColor,
+    this.iconColor,
+    this.outlineColor,
     this.outlineTextColor,
     this.height,
+    this.btnTextColor,
     this.width
   });
 
@@ -26,31 +30,26 @@ class OutlineButtonWidget extends StatelessWidget {
     return InkWell(
       onTap: btnAction,
       splashColor: MyColors.dnaGreen,
-      focusColor: Colors.red,
-      hoverColor: Colors.red,
       child: Container(
         height: height,
         width: width,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(
-              color: MyColors.dnaGreen,
-                width: 1.5
-            ),
+          borderRadius: BorderRadius.circular(4),
+          border: Border.all(
+              color: outlineColor,
+              width: 1.5
+          ),
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Center(
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Text(
-                  btnText,
-                  style: TextStyle(
-                      color: outlineTextColor,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold),
-                ),
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(myIcon, color: iconColor),
+                SizedBox(width: 10),
+                btnText
               ],
             ),
           ),
