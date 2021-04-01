@@ -267,7 +267,7 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
-            itemCount: prov.filterArray.length,
+            itemCount: prov.healthEventArray.length,
             itemBuilder: (context, index) {
               return Container(
                 margin: EdgeInsets.only(bottom: 32),
@@ -278,11 +278,11 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
                       ListView.builder(
                         scrollDirection: Axis.horizontal,
                         shrinkWrap: true,
-                        itemCount: prov.allEventArray.length < 3 ? prov.allEventArray.length : 3,
+                        itemCount: prov.healthEventArray.length,
                         itemBuilder: (context, index) {
                           var document;
                           String text;
-                          document = parse(prov.allEventArray[index].data.text);
+                          document = parse(prov.healthEventArray[index].data.text);
                           text = parse(document.body.text).documentElement.text;
                           return Container(
                             margin: EdgeInsets.only(left: 6, right: 10),
@@ -307,16 +307,16 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
                                       Navigator.pushNamed(
                                           context, "detail_event_page",
                                           arguments: DummyModel(
-                                              "${prov.allEventArray[index].data.title}",
-                                              "${prov.allEventArray[index].data.text}",
-                                              "${prov.allEventArray[index].imageUrl}",
-                                              prov.allEventArray.length
+                                              "${prov.healthEventArray[index].data.title}",
+                                              "${prov.healthEventArray[index].data.text}",
+                                              "${prov.healthEventArray[index].imageUrl}",
+                                              prov.healthEventArray.length
                                           ));
                                     },
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
                                       child: CachedNetworkImage(
-                                        imageUrl: "${prov.allEventArray[index].imageUrl}",
+                                        imageUrl: "${prov.healthEventArray[index].imageUrl}",
                                         width: MediaQuery.of(context).size.width - 32,
                                         height: 192,
                                         fit: BoxFit.cover,
@@ -331,7 +331,7 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
                                       splashColor: MyColors.dnaGreen,
                                       onPressed: (){
                                         print("SHAREXXX");
-                                        prov.shareImageAndText('${prov.allEventArray[index].imageUrl}','${prov.allEventArray[index].data.title}\n$text');
+                                        prov.shareImageAndText('${prov.healthEventArray[index].imageUrl}','${prov.healthEventArray[index].data.title}\n$text');
                                       },
                                     ),
                                   ),
@@ -347,7 +347,7 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
                                             CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                "${prov.allEventArray[index].data.title}",
+                                                "${prov.healthEventArray[index].data.title}",
                                                 style: TextStyle(
                                                     fontWeight:
                                                     FontWeight.w400,

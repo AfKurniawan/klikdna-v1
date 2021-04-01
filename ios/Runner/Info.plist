@@ -43,30 +43,12 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
-	<key>NSAppleMusicUsageDescription</key>
-	<string>We need to share my content</string>
-	<key>NSCalendarsUsageDescription</key>
-	<string>We need to filtering data</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Camera permission is required for barcode scanning.</string>
-	<key>NSContactsUsageDescription</key>
-	<string>We will to make a call from number assigned</string>
 	<key>NSHealthShareUsageDescription</key>
 	<string>We will sync your data with the Apple Health app to give you better insights</string>
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>We will sync your data with the Apple Health app to give you better insights</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>We will to get location for get event detail info</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>we will to get location for event detail</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Enable myApp to access mic to record your voice</string>
-	<key>NSMotionUsageDescription</key>
-	<string>We will sync data step to get health</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Need to upload image</string>
-	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>We will use to voices search</string>
 	<key>UIBackgroundModes</key>
 	<array/>
 	<key>UIFileSharingEnabled</key>
@@ -75,10 +57,7 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
-	<key>UIRequiredDeviceCapabilities</key>
-	<array>
-		<string>armv7</string>
-	</array>
+
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
