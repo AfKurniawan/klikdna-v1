@@ -4,7 +4,7 @@ class CustomShadowCardWidget extends StatelessWidget {
   final Widget child;
   final double width;
   final double height;
-  final double paddingAll;
+  final EdgeInsetsGeometry paddingAll;
   final EdgeInsetsGeometry margin;
   const CustomShadowCardWidget({
     this.child,
@@ -31,15 +31,12 @@ class CustomShadowCardWidget extends StatelessWidget {
           ),
         ],
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(18.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            child
-          ],
-        ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          child
+        ],
       ),
     );
   }

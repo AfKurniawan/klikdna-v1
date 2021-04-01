@@ -92,6 +92,22 @@ class MyColors {
 
   static const totalSaldoTileColor = Color(0xffB5CCD5);
 
+  static const drinkIconColor = Color(0xffAAE6FF);
+
+  static const burgerIconColor = Color(0xffA5FFB9);
+
+  static const restoranIconColor = Color(0xffFFA3A3);
+
+  static const kkalColor = Color(0xffFFD6A5);
+
+  static const proteinColor = Color(0xffFCFF9B);
+
+  static const fatColor = Color(0xff9BF6FF);
+
+  static const carboColor = Color(0xffFFADAD);
+
+  static const iconArrowColor = Color(0xff666666);
+
   //static const primaryBlack = Color(0xff433F3F);
 
 

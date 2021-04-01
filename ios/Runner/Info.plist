@@ -59,14 +59,13 @@
 	<string>We will to get location for get event detail info</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>we will to get location for event detail</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Enable myApp to access mic to record your voice</string>
+
 	<key>NSMotionUsageDescription</key>
 	<string>We will sync data step to get health</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Need to upload image</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>We will use to voices search</string>
+	<string>We need to access your Speech to give you better insight</string>
 	<key>UIBackgroundModes</key>
 	<array/>
 	<key>UIFileSharingEnabled</key>
@@ -75,6 +74,10 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+
+
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We need to access your mic to give you better insight</string>
 
 	<key>UISupportedInterfaceOrientations</key>
 	<array>

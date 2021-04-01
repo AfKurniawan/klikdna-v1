@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:new_klikdna/src/foodmeter/models/food_meter_model.dart';
 import 'package:new_klikdna/src/foodmeter/providers/food_meter_provider.dart';
+import 'package:new_klikdna/src/foodmeter/widgets/food_meter_search_item.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:provider/provider.dart';
 
@@ -98,7 +99,7 @@ class _FoodMeterPageState extends State<FoodMeterPage> {
                 shrinkWrap: true,
                 itemCount: prov.listFood.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return FoodItemWidget(model: prov.listFood[index]);
+                  return FoodItemSearchWidget(model: prov.listFood[index]);
                 },
               ),
             )
@@ -110,24 +111,4 @@ class _FoodMeterPageState extends State<FoodMeterPage> {
   }
 }
 
-class FoodItemWidget extends StatefulWidget {
-  final Food model;
-  FoodItemWidget({Key key, this.model,}) : super(key: key);
 
-
-  @override
-  _FoodItemWidgetState createState() => _FoodItemWidgetState();
-}
-
-class _FoodItemWidgetState extends State<FoodItemWidget> {
-
-  @override
-  Widget build(BuildContext context) {
-    return new ListTile(
-      title: new Text(widget.model.productName),
-      onTap: (){
-        Navigator.of(context).pushNamed("detail_food_meter_page", arguments: widget.model);
-      },
-    );
-  }
-}
