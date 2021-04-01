@@ -75,88 +75,85 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
               ),
               SizedBox(height: 20),
               CustomShadowCardWidget(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 16, right: 16, top: 20, bottom: 21),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        children: [
-                          Container(
-                            height: 60,
-                            width: 60,
-                            decoration: BoxDecoration(
-                            color: Color(0xffA5FFB9),
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(14.0),
-                                child: Center(
-                                    child: Image.asset("assets/icons/burger_icon.png", height: 32)),
-                              )),
-                          SizedBox(height: 8),
-                          Text("Makanan",
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontFamily: "Roboto",
-                                fontWeight: FontWeight.w400
-                            ),
-                          )
-                        ],
-                      ),
-                      SizedBox(width: 58),
-                      Column(
-                        children: [
-                          Container(
-                              height: 60,
-                              width: 60,
-                              decoration: BoxDecoration(
-                                color: Color(0xffAAE6FF),
-                                borderRadius: BorderRadius.circular(50),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(14.0),
-                                child: Center(
-                                    child: Image.asset("assets/icons/drinks_icon.png", height: 32)),
-                              )),
-                          SizedBox(height: 8),
-                          Text("Minuman",
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontFamily: "Roboto",
-                                fontWeight: FontWeight.w400
-                            ),
-                          )
-                        ],
-                      ),
-                      SizedBox(width: 58),
-                      Column(
-                        children: [
-                          Container(
-                              height: 60,
-                              width: 60,
-                              decoration: BoxDecoration(
-                                color: Color(0xffFFA3A3),
-                                borderRadius: BorderRadius.circular(50),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(14.0),
-                                child: Center(
-                                    child: Image.asset("assets/icons/drinks_icon.png", height: 32)),
-                              )),
-                          SizedBox(height: 8),
-                          Text("Restaurant",
-                            style: TextStyle(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      children: [
+                        Container(
+                          height: 60,
+                          width: 60,
+                          decoration: BoxDecoration(
+                          color: Color(0xffA5FFB9),
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(14.0),
+                              child: Center(
+                                  child: Image.asset("assets/icons/burger_icon.png", height: 32)),
+                            )),
+                        SizedBox(height: 8),
+                        Text("Makanan",
+                          style: TextStyle(
                               fontSize: 12,
                               fontFamily: "Roboto",
                               fontWeight: FontWeight.w400
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(width: 58),
+                    Column(
+                      children: [
+                        Container(
+                            height: 60,
+                            width: 60,
+                            decoration: BoxDecoration(
+                              color: Color(0xffAAE6FF),
+                              borderRadius: BorderRadius.circular(50),
                             ),
-                          )
-                        ],
-                      ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(14.0),
+                              child: Center(
+                                  child: Image.asset("assets/icons/drinks_icon.png", height: 32)),
+                            )),
+                        SizedBox(height: 8),
+                        Text("Minuman",
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontFamily: "Roboto",
+                              fontWeight: FontWeight.w400
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(width: 58),
+                    Column(
+                      children: [
+                        Container(
+                            height: 60,
+                            width: 60,
+                            decoration: BoxDecoration(
+                              color: Color(0xffFFA3A3),
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(14.0),
+                              child: Center(
+                                  child: Image.asset("assets/icons/drinks_icon.png", height: 32)),
+                            )),
+                        SizedBox(height: 8),
+                        Text("Restaurant",
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontFamily: "Roboto",
+                            fontWeight: FontWeight.w400
+                          ),
+                        )
+                      ],
+                    ),
 
-                    ],
-                  ),
+                  ],
                 ),
               ),
               SizedBox(height: 27),
@@ -183,29 +180,41 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
                         children: [
                           Text("Indomie Goreng"),
                           SizedBox(height: 4),
-                          Row(
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Container(
-                                height: 10,
-                                width: 10,
-                                decoration: BoxDecoration(
-                                  color: Color(0xffFFD6A5),
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
+                              Row(
+                                children: [
+                                  Container(
+                                    height: 10,
+                                    width: 10,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xffFFD6A5),
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                  ),
+                                  SizedBox(width: 6),
+                                  Text("kkal",
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                  )),
+                                  SizedBox(width: 16),
+                                  Container(
+                                    height: 10,
+                                    width: 10,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xffFCFF9B),
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                  ),
+                                  SizedBox(width: 6),
+                                  Text("Protein",
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                      ))
+                                ],
                               ),
-                              SizedBox(width: 6),
-                              Text("kkal"),
-                              SizedBox(width: 32),
-                              Container(
-                                height: 10,
-                                width: 10,
-                                decoration: BoxDecoration(
-                                  color: Color(0xffFCFF9B),
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                              ),
-                              SizedBox(width: 6),
-                              Text("Protein")
+
                             ],
                           )
                         ],
