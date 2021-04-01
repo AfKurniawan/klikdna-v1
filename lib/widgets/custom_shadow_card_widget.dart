@@ -2,14 +2,24 @@ import 'package:flutter/material.dart';
 
 class CustomShadowCardWidget extends StatelessWidget {
   final Widget child;
+  final double width;
+  final double height;
+  final double paddingAll;
+  final EdgeInsetsGeometry margin;
   const CustomShadowCardWidget({
-    this.child
+    this.child,
+    this.width,
+    this.height,
+    this.paddingAll,
+    this.margin
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width,
+      width: width,
+      height: height,
+      margin: margin,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),

@@ -38,6 +38,7 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
         child: Padding(
           padding: const EdgeInsets.only(left: 16.0, right: 16, top: 24),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               FormWidget(
                 hint: "Cari makanan, minuman atau restauran",
@@ -156,6 +157,61 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
 
                     ],
                   ),
+                ),
+              ),
+              SizedBox(height: 27),
+              Text("Terakhir Dilihat",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: "Roboto"
+                )
+              ),
+              SizedBox(height: 14),
+              Container(
+                height: 100,
+                child: ListView.builder(
+                  itemCount: 3,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index){
+                    return CustomShadowCardWidget(
+                      width: MediaQuery.of(context).size.width /2.5,
+                      height: 93,
+                      margin: EdgeInsets.only(right: 16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Indomie Goreng"),
+                          SizedBox(height: 4),
+                          Row(
+                            children: [
+                              Container(
+                                height: 10,
+                                width: 10,
+                                decoration: BoxDecoration(
+                                  color: Color(0xffFFD6A5),
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                              ),
+                              SizedBox(width: 6),
+                              Text("kkal"),
+                              SizedBox(width: 32),
+                              Container(
+                                height: 10,
+                                width: 10,
+                                decoration: BoxDecoration(
+                                  color: Color(0xffFCFF9B),
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                              ),
+                              SizedBox(width: 6),
+                              Text("Protein")
+                            ],
+                          )
+                        ],
+                      ),
+                    );
+                  },
                 ),
               )
             ],
