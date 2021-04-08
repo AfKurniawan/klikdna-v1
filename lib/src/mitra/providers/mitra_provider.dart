@@ -229,6 +229,8 @@ class MitraProvider with ChangeNotifier {
 
       vdateto = responseJson.user.jsonData.referrals.params.dateto;
 
+      vallAddress = "$vaddress, $vkelurahan, $vsubdistrict, $vcity, $vprovince" ;
+
       if(responseJson.user.member.expired == null) {
         vexpired = "-" ;
       } else {

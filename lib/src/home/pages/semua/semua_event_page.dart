@@ -125,7 +125,7 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
-            itemCount: prov.trainingEventArray.length,
+            itemCount: 1,
             itemBuilder: (context, index) {
               return Container(
                 margin: EdgeInsets.only(bottom: 32),
@@ -330,7 +330,7 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
                                       splashColor: MyColors.dnaGreen,
                                       onPressed: (){
                                         print("SHAREXXX");
-                                        prov.shareImageAndText('${prov.healthEventArray[index].imageUrl}','${prov.allEventArray[index].data.title}\n$text');
+                                        prov.shareImageAndText('${prov.healthEventArray[index].imageUrl}','${prov.healthEventArray[index].data.title}\n$text');
                                       },
                                     ),
                                   ),

@@ -53,6 +53,8 @@ class _KitServiceItemWidgetState extends State<KitServiceItemWidget> {
                             ? MyColors.dietGreen
                             : widget.model.serviceName == "SKIN"
                             ? MyColors.skinPink
+                            : widget.model.serviceName.contains("CANCER")
+                            ? Color(0xffff69f2)
                             : Colors.white,
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(50),
@@ -80,6 +82,8 @@ class _KitServiceItemWidgetState extends State<KitServiceItemWidget> {
                                 ? "Diet"
                                 : widget.model.serviceName == "SKIN"
                                 ? "Skin"
+                                : widget.model.serviceName.contains("CANCER")
+                                ? "Cancer Marker"
                                 : widget.model.serviceName,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -88,6 +92,7 @@ class _KitServiceItemWidgetState extends State<KitServiceItemWidget> {
                                     : widget.model.serviceName == "SPORT" ? MyColors.sportBlue
                                     : widget.model.serviceName == "DIET" ? MyColors.dietGreen
                                     : widget.model.serviceName == "SKIN" ? MyColors.skinPink
+                                    : widget.model.serviceName.contains("CANCER") ? Color(0xffff69f2)
                                     : MyColors.dnaGreen
                             )),
                         Container(
@@ -218,6 +223,35 @@ class _KitServiceItemWidgetState extends State<KitServiceItemWidget> {
                           color: Colors.white,
                           image: AssetImage(
                               "assets/images/skin.png"),
+                        ),
+                      ),
+                    )
+
+                        : widget.model.serviceName.contains("CANCER")
+                        ? Container(
+                      height: 70,
+                      width: 70,
+                      decoration: BoxDecoration(
+                        color: Color(0xffff91f5),
+                        borderRadius:
+                        BorderRadius.circular(50),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black45
+                                .withOpacity(0.1),
+                            spreadRadius: 0.1,
+                            blurRadius: 5,
+                            offset: Offset(0,
+                                3), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Image(
+                          color: Colors.white,
+                          image: AssetImage(
+                              "assets/images/cancer.png"),
                         ),
                       ),
                     )

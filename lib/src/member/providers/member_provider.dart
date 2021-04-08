@@ -51,4 +51,18 @@ class MemberProvider with ChangeNotifier {
     newMemberName = memberName;
     notifyListeners();
   }
+
+  resetMember(){
+    print("Reset member executed");
+    newMemberName = "" ;
+    notifyListeners();
+  }
+
+  String member = "" ;
+  getMemberId(String memberId) {
+    member = memberId;
+    print("MEMBER ==> $member");
+    notifyListeners();
+
+  }
 }

@@ -20,14 +20,18 @@ import 'package:http/http.dart' as http;
 
 class ReportProvider extends ChangeNotifier {
   List<ReportData> reportMapArray = [];
-  List<Detail> listDetail = [];
+  List<Detail> listDetailArray = [];
   List<Detail> listDetail2 = [];
   bool isLoading;
   bool notfound = false;
 
 
   // FIXING
-  var jsonArray = [];
+  var dataArray = [];
+
+  var cobaArray = [];
+
+  int listLength = 0 ;
 
 
   Future<List<ReportModel>> getSamplexx(BuildContext context, String personId) async {
@@ -58,35 +62,65 @@ class ReportProvider extends ChangeNotifier {
     if (response.statusCode == 200) {
       isLoading = false;
       notfound = false ;
+     // print("REPORT RESPONSE BODY ===> ${response.body}");
 
       var responseJson = json.decode(response.body);
-      jsonArray = responseJson['data'] as List;
 
-      for(int i = 0; i < jsonArray.length; i++){
+      dataArray = responseJson['data'] as List;
+      print("DATA ARRAY2 --> ${dataArray.length}");
 
-        var detailArray = jsonArray[0]['detail'] as List;
-         listDetail = detailArray.map<Detail>((j) => Detail.fromJson(j)).toList();
 
-        var detail2Array = jsonArray[i]['detail'] as List;
-        listDetail2 = detail2Array.map<Detail>((j) => Detail.fromJson(j)).toList();
+      var detail1Array = dataArray[0]['detail'] as List;
+
+      if (detail1Array.length > 1) {
+        var detail2Array = dataArray[1]['detail'] as List;
+        print("DETAIL ARRAY2 --> ${detail2Array.length}");
+        var combined = detail1Array..addAll(detail2Array);
+        listDetail2 =
+            combined.map<Detail>((j) => Detail.fromJson(j)).toList();
+        notifyListeners();
+      } else {
+        listDetail2 =
+            detail1Array.map<Detail>((j) => Detail.fromJson(j)).toList();
+        notifyListeners();
       }
+
+
+      for(int i = 0 ; i < dataArray.length; i++) {}
+
+
+
+
+
+
+      // for(int i = 0 ; i < dataArray.length; i++){
+      //
+      //   detail1Array.addAll(detail2Array);
+      //
+      //   print("DETAIL ARRAY 1 --> ${detail1Array}");
+      //
+      //   print("DETAIL ARRAY 2 --> ${detail2Array}");
+      // }
+
+
+
 
       notifyListeners();
     } else if (response.statusCode == 404) {
-      listDetail = [];
+      listDetailArray = [];
       listDetail2 = [];
       isLoading = false;
       notfound = true ;
       notifyListeners();
-      listDetail.clear();
+      listDetailArray.clear();
       listDetail2.clear();
     } else if (response.statusCode == 500) {
-      listDetail = [];
+      listDetailArray = [];
       listDetail2 = [];
       isLoading = false;
       notfound = true ;
       notifyListeners();
-      listDetail.clear();
+      listDetailArray.clear();
       listDetail2.clear();
     }
 
@@ -280,12 +314,12 @@ class ReportProvider extends ChangeNotifier {
                         children: [
                           ListView.builder(
                               scrollDirection: Axis.vertical,
-                              itemCount: listDetail.length,
+                              itemCount: listDetail2.length,
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
                               itemBuilder: (context, index) {
                                 return BottomSheetItemWidget(
-                                    model: listDetail[index]);
+                                    model: listDetail2[index]);
                               }),
 
                         ],

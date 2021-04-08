@@ -168,8 +168,6 @@ class Routing {
       //   return PageTransition(child: PostItNowPage(), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
       //   break;
 
-
-
       case "detail_promo_page":
         return PageTransition(child: DetailPromoPage(model: settings.arguments), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
         break;

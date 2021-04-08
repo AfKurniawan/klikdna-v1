@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
+import 'package:new_klikdna/src/member/providers/member_provider.dart';
 import 'package:new_klikdna/src/profile/widgets/cupertino_dialog_widget.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -15,6 +17,7 @@ class ProfileProvider with ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();
     Navigator.pushReplacementNamed(context, "/");
+    Provider.of<MemberProvider>(context, listen: false).resetMember();
     notifyListeners();
   }
 

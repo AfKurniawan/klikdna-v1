@@ -54,6 +54,7 @@ class MyColors {
   static const Color healthGreen = Color(0xff17A2AC);
   static const Color dietGreen = Color(0xff80C792);
   static const Color skinPink = Color(0xffF8BAB8);
+  static const Color cancerPink = Color(0xffff69f2);
 
   static const mitraProColor = [Color(0xff848FA5), Color(0xff848FA5)];
   static const imperialLeaderColor = [Color(0xff000000), Color(0xff434343)];
