@@ -44,8 +44,8 @@ class _SemuaPinPageState extends State<SemuaPinPage> {
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       crossAxisSpacing: 2,
-                      mainAxisSpacing: 2,
-                      childAspectRatio: 0.73),
+                      mainAxisSpacing: 20,
+                      childAspectRatio: 0.88),
                   itemBuilder: (context, index){
                     return Container(
                       margin: EdgeInsets.only(left: 10, bottom: 10, right: 10),
@@ -65,7 +65,7 @@ class _SemuaPinPageState extends State<SemuaPinPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            height: 185,
+                            height: 165,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.only(
@@ -107,7 +107,7 @@ class _SemuaPinPageState extends State<SemuaPinPage> {
                               padding: const EdgeInsets.only(left: 10.0, right: 10),
                               child: Text(
                                 "${prov.pinArray[index].data.title}",
-                                maxLines: 3,
+                                maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   fontWeight: FontWeight.w300,
