@@ -10,14 +10,18 @@ class FormWidget extends StatelessWidget {
   final bool obscure;
   final TextInputType keyboardType;
   final ValueChanged<String> onsubmit;
+  final VoidCallback oncomplete;
   final ValueChanged<String> onchange;
   final TextInputAction textInputAction;
   final FormFieldValidator<String> validator;
   final IconButton icon;
   final Widget suffixIcon;
+  final Widget prefixIcon;
   final String labelText;
   final TextStyle labelStyle;
   final bool enabled;
+  final bool readonly;
+  final bool autofocus;
   final GestureTapCallback onTap;
 
   FormWidget({
@@ -29,13 +33,17 @@ class FormWidget extends StatelessWidget {
     this.focusNode,
     this.onsubmit,
     this.onchange,
+    this.oncomplete,
     this.textInputAction,
     this.validator,
     this.icon,
     this.suffixIcon,
+    this.prefixIcon,
     this.labelText,
     this.labelStyle,
     this.enabled,
+    this.readonly,
+    this.autofocus,
     this.onTap
 
   });
@@ -43,9 +51,10 @@ class FormWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      enabled: enabled,
       validator: validator,
       onChanged: onchange,
+      readOnly: readonly == null ? false : readonly,
+      autofocus: autofocus == null ? false : autofocus,
       controller: textEditingController,
       keyboardType: keyboardType,
       textInputAction: TextInputAction.done,
@@ -53,8 +62,10 @@ class FormWidget extends StatelessWidget {
       focusNode: focusNode,
       initialValue: initialvalue,
       onFieldSubmitted: onsubmit,
+      onEditingComplete: oncomplete,
       decoration: InputDecoration(
           suffixIcon: suffixIcon,
+          prefixIcon: prefixIcon,
           labelText: labelText,
           labelStyle: labelStyle,
           alignLabelWithHint: true,

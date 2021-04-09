@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_klikdna/src/member/models/member_model.dart';
 import 'package:new_klikdna/src/member/providers/member_provider.dart';
+import 'package:new_klikdna/src/report/providers/detail_report_provider.dart';
 import 'package:new_klikdna/src/report/providers/report_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -12,6 +13,7 @@ class MemberItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final prov = Provider.of<ReportProvider>(context);
+    final detailprov = Provider.of<DetailReportProvider>(context);
     var width = MediaQuery.of(context).size.width;
     final mem = Provider.of<MemberProvider>(context);
     return InkWell(
@@ -20,6 +22,7 @@ class MemberItemWidget extends StatelessWidget {
         print("Widget ====> ${member.personId}");
         prov.getSamplexx(context, member.personId);
         mem.getNamexx(context, member.name);
+        mem.getMemberId(member.personId);
       },
       child: Container(
         margin: EdgeInsets.only(left: 10),

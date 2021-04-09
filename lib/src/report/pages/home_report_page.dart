@@ -80,7 +80,8 @@ class _HomeReportPageState extends State<HomeReportPage> {
                     children: <Widget>[
                       Consumer<AccountProvider>(
                         builder: (context, account, _) {
-                          return Padding(
+                          return account.verifyAccessReport == 0 ? Container()
+                          : Padding(
                             padding: const EdgeInsets.only(top: 10.0),
                             child: Container(
                               width: MediaQuery.of(context).size.width /1.6,
@@ -91,21 +92,27 @@ class _HomeReportPageState extends State<HomeReportPage> {
                                   Text("Hello,",
                                       style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: 16,
+                                          fontSize: 14,
+                                          fontFamily: "Roboto",
                                           fontWeight: FontWeight.w300)),
                                   SizedBox(width: 5),
-                                  Text( prov.newMemberName == "" ?
+                                  Text(prov.newMemberName == "" ?
                                       "${account.name}" : "${prov.newMemberName}",
                                       overflow: TextOverflow.fade,
                                       maxLines: 1,
                                       style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold)),
+                                          fontSize: 16,
+                                          fontFamily: "Roboto",
+                                          fontWeight: FontWeight.w700)),
 
                                   SizedBox(height: 5),
                                   Text("Ini Dashboard report\nDNA kamu.",
-                                    style: TextStyle(color: Colors.white, fontSize: 13),
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 13,
+                                        fontFamily: "Roboto",
+                                        fontWeight: FontWeight.w300),
                                   )
                                 ],
                               ),
@@ -121,7 +128,8 @@ class _HomeReportPageState extends State<HomeReportPage> {
                         child: Center(
                           child: Consumer<PatientCardProvider>(
                             builder: (context, model, _) {
-                              return ClipRRect(
+                              return acc.verifyAccessReport == 0 ? Container()
+                              : ClipRRect(
                                   borderRadius: BorderRadius.circular(50),
                                   child: model.photoView == null ?
                                   Image.asset("assets/images/no_image.png", height: 72, width: 72, fit: BoxFit.cover)
@@ -144,7 +152,6 @@ class _HomeReportPageState extends State<HomeReportPage> {
                 padding: EdgeInsets.only(top: 125),
                 child: Container(
                     padding: EdgeInsets.only(top: 20),
-                    //alignment: Alignment.topLeft,
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
@@ -152,7 +159,25 @@ class _HomeReportPageState extends State<HomeReportPage> {
                             topRight: Radius.circular(20))),
                     child: Consumer<ReportProvider>(
                       builder: (context, sample, _) {
-                        return Column(
+                        return acc.verifyAccessReport == 0 ? Container(padding: EdgeInsets.only(top: 40),
+                            height: MediaQuery.of(context).size.height / 1.7,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(20),
+                                    topRight: Radius.circular(20))),
+                          child: Center(
+                            child: Text("Harap menghubungi Support Genetics Indonesia\nuntuk menampilkan Report kamu",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontFamily: "Roboto",
+                                fontWeight: FontWeight.w300
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        )
+                          : Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Padding(
@@ -225,26 +250,26 @@ class _HomeReportPageState extends State<HomeReportPage> {
               children: [
                 ListView.builder(
                     scrollDirection: Axis.vertical,
-                    itemCount: sample.listDetail.length,
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return sample.notfound ? Container()
-                       : KitServiceItemWidget(
-                          model: sample.listDetail
-                              .elementAt(index));
-                    }),
-                SizedBox(height: 20),
-                ListView.builder(
-                    scrollDirection: Axis.vertical,
                     itemCount: sample.listDetail2.length,
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
-                      return sample.listDetail2.length > 2 ? Container()
-                      : KitService2ItemWidget(
-                          model: sample.listDetail2.elementAt(index));
-                    })
+                      return KitServiceItemWidget(
+                          model: sample.listDetail2
+                              .elementAt(index));
+                    }),
+                SizedBox(height: 20),
+                // ListView.builder(
+                //     scrollDirection: Axis.vertical,
+                //     itemCount: sample.listDetail2.length,
+                //     shrinkWrap: true,
+                //     physics: NeverScrollableScrollPhysics(),
+                //     itemBuilder: (context, index) {
+                //       return sample.listDetail2.length > 1
+                //           ? Container()
+                //           : KitService2ItemWidget(
+                //              model: sample.listDetail2.elementAt(index));
+                //     })
 
               ],
             );

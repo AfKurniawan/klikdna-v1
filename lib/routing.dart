@@ -2,7 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:new_klikdna/src/dummy/pages/dummy_chart_page.dart';
 import 'package:new_klikdna/src/foodmeter/pages/detail_food_meter_page.dart';
+import 'package:new_klikdna/src/foodmeter/pages/dummy_tts_page.dart';
 import 'package:new_klikdna/src/foodmeter/pages/food_meter_page.dart';
+import 'package:new_klikdna/src/foodmeter/pages/foodmeter_search_page.dart';
+import 'package:new_klikdna/src/foodmeter/pages/new_foodmeter_page.dart';
 import 'package:new_klikdna/src/home/pages/details/detail_pin_page.dart';
 import 'package:new_klikdna/src/home/pages/details/detail_promo_page.dart';
 import 'package:new_klikdna/src/home/pages/details/detail_event_page.dart';
@@ -102,6 +105,35 @@ class Routing {
           )
         );
 
+      case "new_food_meter_page" :
+        return PageTransition(
+            child: NewFoodMeterPage(),
+            type: PageTransitionType.fade,
+            duration: Duration(
+                milliseconds: 350
+            )
+        );
+
+      case "food_meter_search_page" :
+        return PageTransition(
+            child: FoodMeterSearchPage(),
+            type: PageTransitionType.fade,
+            duration: Duration(
+                milliseconds: 350
+            )
+        );
+
+      case "dummy_tts_page" :
+        return PageTransition(
+            child: DummyTtsPage(),
+            type: PageTransitionType.fade,
+            duration: Duration(
+                milliseconds: 350
+            )
+        );
+
+
+
       case "detail_food_meter_page" :
         return PageTransition(
             child: DetailFoodMeterPage(food: settings.arguments),
@@ -135,8 +167,6 @@ class Routing {
       // case "post_it_now_page":
       //   return PageTransition(child: PostItNowPage(), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
       //   break;
-
-
 
       case "detail_promo_page":
         return PageTransition(child: DetailPromoPage(model: settings.arguments), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));

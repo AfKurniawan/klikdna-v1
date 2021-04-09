@@ -25,6 +25,7 @@ class AccountProvider with ChangeNotifier {
   String accountgender;
   String accountdob;
   String noKtp;
+  int verifyAccessReport = 0 ;
 
   List<PatientCard> listPatentCard = [];
 
@@ -54,6 +55,8 @@ class AccountProvider with ChangeNotifier {
     final request = await http.get(url, headers: ndas);
     final accountResponse = AccountModel.fromJson(json.decode(request.body));
 
+    print("AKUN RESPONSE BOGY --> ${request.body}");
+
     if(accountResponse.success == true){
       isLoading = false ;
       isError = false ;
@@ -75,6 +78,7 @@ class AccountProvider with ChangeNotifier {
       userId = accountResponse.data.userId;
       prefs.setString("personId", accountResponse.data.userId);
       nameController.text = accountResponse.data.name;
+      verifyAccessReport = accountResponse.data.verifykdmAccessReport;
       notifyListeners();
       getSample.getSamplexx(context, accountResponse.data.userId);
 

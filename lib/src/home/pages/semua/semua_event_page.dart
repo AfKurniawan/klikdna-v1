@@ -121,11 +121,11 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
             )
         )
         : Container(
-          height: 390,
+          height: 430,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
-            itemCount: prov.trainingEventArray.length,
+            itemCount: 1,
             itemBuilder: (context, index) {
               return Container(
                 margin: EdgeInsets.only(bottom: 32),
@@ -136,7 +136,7 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
                       ListView.builder(
                         scrollDirection: Axis.horizontal,
                         shrinkWrap: true,
-                        itemCount: prov.trainingEventArray.length < 3 ? prov.trainingEventArray.length : 3,
+                        itemCount: prov.trainingEventArray.length,
                         itemBuilder: (context, index) {
                           var document;
                           String text;
@@ -176,7 +176,7 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
                                       child: CachedNetworkImage(
                                         imageUrl: "${prov.trainingEventArray[index].imageUrl}",
                                         width: MediaQuery.of(context).size.width - 32,
-                                        fit: BoxFit.cover,
+                                        fit: BoxFit.fill,
                                       ),
                                     ),
                                   ),
@@ -263,7 +263,7 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
             )
         )
         : Container(
-          height: 390,
+          height: 420,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
@@ -318,8 +318,7 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
                                       child: CachedNetworkImage(
                                         imageUrl: "${prov.healthEventArray[index].imageUrl}",
                                         width: MediaQuery.of(context).size.width - 32,
-                                        height: 192,
-                                        fit: BoxFit.cover,
+                                        fit: BoxFit.fill,
                                       ),
                                     ),
                                   ),

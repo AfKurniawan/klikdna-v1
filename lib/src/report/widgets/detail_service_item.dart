@@ -2,13 +2,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:new_klikdna/src/report/models/detail_report_model.dart';
 import 'package:new_klikdna/src/report/models/report_model.dart';
+import 'package:new_klikdna/src/report/providers/detail_report_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
+import 'package:provider/provider.dart';
 
 class DetailServiceItem extends StatefulWidget {
   final ReportDetail model;
   final Detail detail;
+  final Rekomendasi rekomendasi;
 
-  DetailServiceItem({Key key, this.model, this.detail}) : super(key: key);
+  DetailServiceItem({Key key, this.model, this.detail, this.rekomendasi}) : super(key: key);
 
   @override
   _DetailServiceItemState createState() => _DetailServiceItemState();
@@ -35,6 +38,7 @@ class _DetailServiceItemState extends State<DetailServiceItem> {
           splashColor: Colors.blue,
           onTap: () {
             Navigator.of(context).pushNamed('hasil_report_page', arguments: widget.model);
+
           },
           child: Stack(
             children: [

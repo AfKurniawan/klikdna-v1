@@ -10,8 +10,9 @@ import 'package:provider/provider.dart';
 
 class HasilReportPage extends StatefulWidget {
   final ReportDetail model;
+  final Rekomendasi rekomendasi;
 
-  HasilReportPage({Key key, this.model}) : super(key: key);
+  HasilReportPage({Key key, this.model, this.rekomendasi}) : super(key: key);
 
   _HasilReportPageState createState() => _HasilReportPageState();
 }
@@ -203,7 +204,7 @@ class _HasilReportPageState extends State<HasilReportPage>
           controller: _tabController,
           children: [
             HasilKamu(model: widget.model),
-            HasilRekomendasi(),
+            HasilRekomendasi(model: widget.rekomendasi),
 
             // listLinkedAccountPage(context, prov)
           ],

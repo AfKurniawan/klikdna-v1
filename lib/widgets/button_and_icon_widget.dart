@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ButtonAndIconWidget extends StatelessWidget {
   final VoidCallback btnAction;
   final String btnText;
-  final IconData myIcon;
+  final Widget myIcon;
   final Color color;
   final double height;
   final double widht;
@@ -27,8 +27,9 @@ class ButtonAndIconWidget extends StatelessWidget {
       splashColor: Colors.white,
       child: Container(
         height: height,
+        width: widht,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(6),
+            borderRadius: BorderRadius.circular(4),
             color: color
         ),
         child: Padding(
@@ -37,6 +38,8 @@ class ButtonAndIconWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                myIcon,
+                SizedBox(width: 20),
                 Text(
                   btnText,
                   style: TextStyle(
@@ -44,8 +47,8 @@ class ButtonAndIconWidget extends StatelessWidget {
                       fontSize: 14,
                       fontWeight: FontWeight.bold),
                 ),
-                SizedBox(width: 30),
-                Icon(myIcon, color: iconColor)
+
+
               ],
             ),
           ),

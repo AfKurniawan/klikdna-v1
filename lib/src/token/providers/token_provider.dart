@@ -10,7 +10,9 @@ class TokenProvider with ChangeNotifier {
 
   String accessToken= "" ;
 
+
   getApiToken() async {
+    print("START GET TOKEN");
     var url = AppConstants.API_TOKEN_URL;
     var body = {
       "email": AppConstants.EMAIL_TOKEN,
@@ -21,6 +23,7 @@ class TokenProvider with ChangeNotifier {
 
     if(request.statusCode == 200){
 
+      print("GET TOKEN ${request.body}");
       accessToken = apiTokenResponse.accessToken;
 
       notifyListeners();

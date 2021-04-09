@@ -15,6 +15,8 @@ class FoodMeterProvider extends ChangeNotifier {
 
 
   bool isLoading;
+  bool dashboardVisible = true ;
+
   Future<FoodMeterModel> getFoodsData(BuildContext context, String query) async {
 
     final prov = Provider.of<TokenProvider>(context, listen: false);
@@ -28,7 +30,7 @@ class FoodMeterProvider extends ChangeNotifier {
       "Content-Type": "application/json",
       "Authorization": "Bearer $accessToken"
     };
-    var body ={
+    var body = {
       "product_name": "$query"
     };
 
@@ -36,7 +38,8 @@ class FoodMeterProvider extends ChangeNotifier {
     final response = FoodMeterModel.fromJson(json.decode(request.body));
 
     if(response.success == true){
-
+      dashboardVisible = false ;
+      print("${request.body}");
       var data = json.decode(request.body);
 
       var detailArray = data['data'] as List;

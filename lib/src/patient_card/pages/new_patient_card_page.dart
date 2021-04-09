@@ -9,6 +9,7 @@ import 'package:new_klikdna/src/token/providers/token_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:new_klikdna/widgets/button_widget.dart';
 import 'package:new_klikdna/widgets/form_widget.dart';
+import 'package:new_klikdna/widgets/loading_widget.dart';
 import 'package:new_klikdna/widgets/outline_button_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -270,7 +271,11 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                     SizedBox(height: 12),
                                     Consumer<PatientCardProvider>(
                                       builder: (context, prov, _) {
-                                        return prov.listAsuransi.length == 0
+                                        return prov.isMuter == true ?
+                                        Container(
+                                          height: 100,
+                                            child: LoadingWidget())
+                                          : prov.listAsuransi.length == 0
                                             ? Padding(
                                                 padding:
                                                     const EdgeInsets.all(10.0),
@@ -303,8 +308,8 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                                     ),
                                                     SizedBox(height: 16),
                                                     OutlineButtonWidget(
-                                                      btnText:
-                                                          "Tambah Kartu Asuransi",
+                                                      outlineColor: Colors.transparent ,
+                                                      btnText: Text("Tambah Kartu Asuransi"),
                                                       btnAction: () {
                                                         Provider.of<AsuransiProvider>(
                                                                 context,
