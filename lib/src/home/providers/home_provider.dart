@@ -103,10 +103,10 @@ class HomeProvider extends ChangeNotifier {
   List<ArrayData> filterArray = [] ;
   filteringCategory(BuildContext context, int catId) {
     var now = new DateTime.now();
-    var sekarang = now.subtract(Duration(days: 0));
+    var sekarang = now.subtract(Duration(days: 1));
     filterMapArray = jsonArray.map((p) => ArrayData.fromJson(p)).toList();
     filterArray = filterMapArray.where((i) => i.data.categoryId == catId && i.data.status == 1).toList();
-    filterArray.removeWhere((el) => DateTime.parse(el.data.doDate).isBefore(sekarang) && el.data.status == 1);
+   // filterArray.removeWhere((el) => DateTime.parse(el.data.doDate).isBefore(sekarang) && el.data.status == 1);
     filterArray.sort((a, b) => a.data.doDate.compareTo(b.data.doDate));
 
     Navigator.pushNamed(context, "all_event_by_category", arguments: catId);
