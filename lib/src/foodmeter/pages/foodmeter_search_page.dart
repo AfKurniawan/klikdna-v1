@@ -26,6 +26,7 @@ class FoodMeterSearchPage extends StatefulWidget {
 
 class _FoodMeterSearchPageState extends State<FoodMeterSearchPage> {
 
+  /// SPEECH
   bool _hasSpeech = false;
   double level = 0.0;
   double minSoundLevel = 50000;
