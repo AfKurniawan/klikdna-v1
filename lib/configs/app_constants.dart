@@ -6,7 +6,7 @@ class AppConstants {
   static const CMS_PASSWORD_TOKEN = "gis2020!";
 
   static const BASE_URL_DNAKU = "https://apiku.dnaku.id/api/v1/" ;
-  static const BASE_URL_KLIKDNA = "https://www.klikdna.com/" ;
+  static const BASE_URL_KLIKDNA = "https://staging.klikdna.com/" ;
   static const BASE_URL_CMS = "https://cms.klikdna.com/api/v1/" ;
 
 

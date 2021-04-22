@@ -6,6 +6,7 @@ import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:new_klikdna/widgets/button_and_icon_widget.dart';
 import 'package:new_klikdna/widgets/custom_shadow_card_widget.dart';
 import 'package:new_klikdna/widgets/form_widget.dart';
+import 'package:new_klikdna/widgets/outline_and_icon_button_widget.dart';
 import 'package:new_klikdna/widgets/outline_button_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/provider.dart';
@@ -98,7 +99,7 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  OutlineButtonWidget(
+                  OutlineAndIconButtonWidget(
                       btnAction: (){},
                       height: 40,
                       outlineColor: MyColors.dnaGreen,
