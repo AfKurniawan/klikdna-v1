@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
+import 'package:new_klikdna/src/account/providers/account_provider.dart';
 import 'package:new_klikdna/src/member/providers/member_provider.dart';
 import 'package:new_klikdna/src/report/models/detail_report_model.dart';
 import 'package:new_klikdna/src/token/providers/token_provider.dart';
@@ -35,26 +36,31 @@ class DetailReportProvider extends ChangeNotifier {
   String person = "" ;
 
   Future<List<Rekomendasi>> getDetailReport(BuildContext context, String reportId) async {
-    print("DETAIL RESPONSE REPORT STARTED using data $reportId");
+
+    reportDetail =  [] ;
+    listRecomendasi = [];
+    penjelasanIlmiah = [] ;
+
     isLoading = true;
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     var url = AppConstants.GET_REPORT_DETAIL_URL;
     final prov = Provider.of<TokenProvider>(context, listen: false);
-    final member = Provider.of<MemberProvider>(context, listen: false);
     prov.getApiToken();
 
     String accessToken = prov.accessToken;
+    String id = Provider.of<AccountProvider>(context, listen: false).userId;
+
 
 
     /// BUG ISSUE: REPORT DETAIL TIDAK SESUAI
-    if(member.member == ""){
-      person = prefs.getString("personId");
-    } else {
-      person = member.member;
-    }
+    // if(member.member == ""){
+    //   person = id ;
+    // } else {
+    //   person = member.member;
+    // }
 
-    print("DETAIL RESPONSE REPORT STARTED using data $reportId, $person");
+    print("GET DETAIL REPORT using data $reportId, $id");
 
     Map<String, String> ndas = {
       "Accept": "application/json",
@@ -62,16 +68,18 @@ class DetailReportProvider extends ChangeNotifier {
     };
 
     var body = {
-      "person_id": "$person",
+      "person_id": "$id",
       "report_id": "$reportId"
     };
 
     final request = await http.post(url, headers: ndas, body: body);
 
+    print("Response Code ${request.statusCode}");
+
     if (request.statusCode == 200) {
       isLoading = false;
       final reportResponse = DetailReportModel.fromJson(json.decode(request.body));
-      print("DETAIL RESPONSE REPORT ==>> ${request.statusCode}");
+      print("DETAIL RESPONSE REPORT ==>> ${request.body}");
       var responseJson = json.decode(request.body);
 
       var dataArray = responseJson['data'];
@@ -89,6 +97,98 @@ class DetailReportProvider extends ChangeNotifier {
 
 
        // penjelasanIlmiahArray = reportdetailArray[1]['penjelasan_ilmiah'] as List;
+
+        // penjelasanDetailArray = penjelasanIlmiahArray[1]['penjelasan_detail'];
+        //
+        // penjelasanIlmiah = penjelasanIlmiahArray.map((p) => PenjelasanIlmiah.fromJson(p)).toList();
+
+
+        rekomendasiArray = reportdetailArray[0]['rekomendasi'] as List;
+        listRecomendasi = rekomendasiArray.map((p) => Rekomendasi.fromJson(p)).toList();
+
+        for (int i = 0; i < rekomendasiArray.length; i++) {
+
+          calculateImageDimension(listRecomendasi[i].gambarRekomendasi).then((value) => print("IMAGE SIZE $value"));
+
+          notifyListeners();
+
+        }
+
+        notifyListeners();
+      }
+
+
+      link = reportResponse.data.linkPdf;
+      notifyListeners();
+
+    } else if (request.statusCode == 404) {
+      isLoading = false;
+      notifyListeners();
+    } else if (request.statusCode == 500) {
+
+    } else if (reportDetail == []) {
+
+    }
+  }
+
+  Future<List<Rekomendasi>> getDetailMemberReport(BuildContext context, String reportId, String memberid) async {
+
+    isLoading = true;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    var url = AppConstants.GET_REPORT_DETAIL_URL;
+    final prov = Provider.of<TokenProvider>(context, listen: false);
+    prov.getApiToken();
+
+    String accessToken = prov.accessToken;
+    String id = Provider.of<AccountProvider>(context, listen: false).userId;
+
+
+
+    /// BUG ISSUE: REPORT DETAIL TIDAK SESUAI
+    // if(member.member == ""){
+    //   person = id ;
+    // } else {
+    //   person = member.member;
+    // }
+
+    print("GET DETAIL REPORT using data $reportId, $memberid");
+
+    Map<String, String> ndas = {
+      "Accept": "application/json",
+      "Authorization": "Bearer $accessToken"
+    };
+
+    var body = {
+      "person_id": "$memberid",
+      "report_id": "$reportId"
+    };
+
+    final request = await http.post(url, headers: ndas, body: body);
+
+    print("Response Body ${request.body}");
+
+    if (request.statusCode == 200) {
+      isLoading = false;
+      final reportResponse = DetailReportModel.fromJson(json.decode(request.body));
+      print("DETAIL RESPONSE REPORT ==>> ${request.body}");
+      var responseJson = json.decode(request.body);
+
+      var dataArray = responseJson['data'];
+      reportdetailArray = dataArray['report_detail'] as List;
+      if(reportdetailArray.length == 0){
+        reportDetail =  [] ;
+        listRecomendasi = [];
+        penjelasanIlmiah = [] ;
+
+      } else {
+
+
+        reportDetail = reportdetailArray.map((p) => ReportDetail.fromJson(p)).toList();
+
+
+
+        // penjelasanIlmiahArray = reportdetailArray[1]['penjelasan_ilmiah'] as List;
 
         // penjelasanDetailArray = penjelasanIlmiahArray[1]['penjelasan_detail'];
         //

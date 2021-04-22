@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 
 class FormWidget extends StatelessWidget {
@@ -23,6 +24,7 @@ class FormWidget extends StatelessWidget {
   final bool readonly;
   final bool autofocus;
   final GestureTapCallback onTap;
+  List<TextInputFormatter> inputFormatters;
 
   FormWidget({
     this.textEditingController,
@@ -44,6 +46,7 @@ class FormWidget extends StatelessWidget {
     this.enabled,
     this.readonly,
     this.autofocus,
+    this.inputFormatters,
     this.onTap
 
   });
@@ -63,6 +66,7 @@ class FormWidget extends StatelessWidget {
       initialValue: initialvalue,
       onFieldSubmitted: onsubmit,
       onEditingComplete: oncomplete,
+      inputFormatters: inputFormatters,
       decoration: InputDecoration(
           suffixIcon: suffixIcon,
           prefixIcon: prefixIcon,

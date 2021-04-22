@@ -53,29 +53,20 @@
 	<string>We need to get it for give you best insight</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We will use a contents to give you better insights</string>
-
 	<key>NSMotionUsageDescription</key>
 	<string>We will use a contents to give you better insights</string>
-
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We will share a contents to give you better insights</string>
-
 	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>We need to access your Speech to give you better insight</string>
-
+	<string>We need your speech recognition to searching over your voice</string>
 	<key>UIBackgroundModes</key>
 	<array/>
 	<key>UIFileSharingEnabled</key>
-	<false/>
+	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
-
-
-	<key>NSMicrophoneUsageDescription</key>
-	<string>We need to access your mic to give you better insight</string>
-
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

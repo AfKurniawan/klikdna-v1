@@ -25,6 +25,7 @@ class LoginProvider with ChangeNotifier{
     TextEditingController passwordController = new TextEditingController();
     SharedPreferences prefs;
     String buttonText = "Masuk";
+    int userId;
 
 
     var formattedCommission = new NumberFormat.currency(name: "", locale: "en_US".toString());
@@ -64,6 +65,7 @@ class LoginProvider with ChangeNotifier{
 
             /// USER
             prefs.setInt("userid", responseJson.user.id);
+            userId = responseJson.user.id;
 
             ///AGENT
             prefs.setString("nik", responseJson.user.agent.nik);

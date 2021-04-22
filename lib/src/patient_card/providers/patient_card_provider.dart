@@ -58,6 +58,7 @@ class PatientCardProvider with ChangeNotifier {
 
     final getId = Provider.of<AccountProvider>(context, listen: false);
     getId.getUserAccount(context);
+
     patienCardId = getId.lastID;
 
 
@@ -88,6 +89,7 @@ class PatientCardProvider with ChangeNotifier {
       gender = response.data.gender;
       medicalProfesional = response.data.medicalProfesional;
       emergencyContact = response.data.emergencyContact;
+      print("EMERGENSI KONTAK $emergencyContact");
       comorbidity = response.data.comorbidity;
       photo = response.data.photo;
 
@@ -235,7 +237,7 @@ class PatientCardProvider with ChangeNotifier {
     notifyListeners();
 
     int accountid = prefs.getInt("userid");
-    var url = AppConstants.UPDATE_PATIENT_CARD_URL + patienCardId ;
+    var url = AppConstants.UPDATE_PATIENT_CARD_URL + "$patienCardId" ;
 
     var body = {
       "account_id": accountid,
@@ -293,8 +295,10 @@ class PatientCardProvider with ChangeNotifier {
     String gambar = photo64Encode;
     notifyListeners();
 
+    print("PASI ID ==> $patienCardId");
+
     int accountid = prefs.getInt("userid");
-    var url = AppConstants.UPDATE_PATIENT_CARD_URL + patienCardId ;
+    var url = AppConstants.UPDATE_PATIENT_CARD_URL + '$patienCardId' ;
 
     var body = {
       "account_id": accountid,
@@ -315,6 +319,8 @@ class PatientCardProvider with ChangeNotifier {
     };
 
     final request = await http.put(url, headers: ndas, body: json.encode(body));
+
+    print("Status ==> ${request.statusCode}");
 
 
     if(sukses == true){

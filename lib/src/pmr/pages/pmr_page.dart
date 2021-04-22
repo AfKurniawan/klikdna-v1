@@ -85,7 +85,7 @@ class _PMRPageState extends State<PMRPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text("Personal Medical Report",
+                        Text("Personal Medical Records",
                             style: TextStyle(
                               fontSize: 14
                             )),
@@ -134,7 +134,7 @@ class _PMRPageState extends State<PMRPage> {
                               children: [
                                 InkWell(
                                   onTap: (){
-                                    Navigator.of(context).pushNamed("new_food_meter_page");
+                                    Navigator.of(context).pushNamed("food_meter_page");
                                   },
                                   child: Container(
                                     height: 86,

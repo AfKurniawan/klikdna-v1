@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:new_klikdna/src/member/models/member_model.dart';
+import 'package:new_klikdna/src/member/providers/member_provider.dart';
 import 'package:new_klikdna/src/report/models/report_model.dart';
+import 'package:new_klikdna/src/report/providers/detail_report_provider.dart';
+import 'package:new_klikdna/src/report/providers/report_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
+import 'package:provider/provider.dart';
 
 class KitServiceItemWidget extends StatefulWidget {
   final Detail model;
@@ -33,8 +37,9 @@ class _KitServiceItemWidgetState extends State<KitServiceItemWidget> {
         child: InkWell(
           splashColor: Colors.blue,
           onTap: () {
-            Navigator.of(context)
-                .pushNamed('detail_report_page', arguments: widget.model);
+            Navigator.of(context).pushNamed('detail_report_page', arguments: widget.model);
+            Provider.of<DetailReportProvider>(context, listen: false).getDetailMemberReport(context, widget.model.reportId, Provider.of<MemberProvider>(context, listen: false).member);
+            print("MEMBER WIDGET ${Provider.of<MemberProvider>(context, listen: false).member}");
           },
           child: Stack(
             children: [

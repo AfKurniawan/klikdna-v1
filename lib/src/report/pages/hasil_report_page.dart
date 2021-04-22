@@ -26,8 +26,10 @@ class _HasilReportPageState extends State<HasilReportPage>
   void initState() {
     _tabController = TabController(length: 2, vsync: this);
     Provider.of<DetailReportProvider>(context, listen: false).getRecomendasi(widget.model.namaModul);
+    Provider.of<DetailReportProvider>(context, listen: false).calculateImageDimension(Provider.of<DetailReportProvider>(context, listen: false).listRecomendasi[0].gambarRekomendasi).then((value) => print("IMAGE SIZE $value --> ${Provider.of<DetailReportProvider>(context, listen: false).listRecomendasi[0].gambarRekomendasi}"));
     super.initState();
   }
+
 
 
 

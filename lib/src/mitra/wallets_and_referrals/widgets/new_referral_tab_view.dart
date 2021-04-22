@@ -169,7 +169,7 @@ class _NewReferralTabViewState extends State<NewReferralTabView> {
             SizedBox(height: 12),
             Container(
               width: MediaQuery.of(context).size.width,
-              height: 96,
+              height: 100,
               margin: EdgeInsets.only(bottom: 10, left: 18, right: 18),
               decoration: BoxDecoration(
                 color: Colors.white,

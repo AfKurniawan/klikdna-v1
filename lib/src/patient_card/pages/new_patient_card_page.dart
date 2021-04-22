@@ -23,14 +23,16 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
   bool isExpanded = false;
   String choice;
   String gender;
+  String pcardName;
+  String pcardKtp;
 
   @override
   void initState() {
     getPrefs();
-    Provider.of<AccountProvider>(context, listen: false)
-        .getUserAccount(context);
-    Provider.of<PatientCardProvider>(context, listen: false)
-        .getPatientCard(context);
+    Provider.of<AccountProvider>(context, listen: false).getUserAccount(context);
+    Provider.of<PatientCardProvider>(context, listen: false).getPatientCard(context);
+    Provider.of<MitraProvider>(context, listen: false).refreshMitraData();
+    Provider.of<AsuransiProvider>(context, listen: false).checkLastId(context);
     super.initState();
   }
 
@@ -38,6 +40,8 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       gender = prefs.getString("gender");
+      pcardName = Provider.of<MitraProvider>(context, listen: false).vallName;
+      pcardKtp = Provider.of<MitraProvider>(context, listen: false).vnik;
     });
   }
 
@@ -62,9 +66,9 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                               topRight: Radius.circular(20))),
                       child: Column(
                         children: [
-                          Consumer<AccountProvider>(
+                          Consumer<PatientCardProvider>(
                             builder: (context, card, _) {
-                              final name = '${card.name}';
+                              final name = '$pcardName';
                               final split = name.split(' ');
                               final Map<int, String> values = {
                                 for (int i = 0; i < split.length; i++)
@@ -172,9 +176,9 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                                 height: 5,
                                               ),
                                               Text(
-                                                card.noKtp == null
+                                                pcardKtp == null
                                                     ? "-"
-                                                    : "${card.noKtp}",
+                                                    : "$pcardKtp",
                                                 overflow: TextOverflow.clip,
                                                 maxLines: 1,
                                                 style: TextStyle(
@@ -199,7 +203,7 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                                 height: 5,
                                               ),
                                               Text(
-                                                card.accountgender == "male"
+                                                card.gender == "male"
                                                     ? "Laki-Laki"
                                                     : "Perempuan",
                                                 overflow: TextOverflow.clip,
@@ -308,20 +312,26 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                                     ),
                                                     SizedBox(height: 16),
                                                     OutlineButtonWidget(
-                                                      outlineColor: Colors.transparent ,
-                                                      btnText: Text("Tambah Kartu Asuransi"),
+                                                      outlineColor: MyColors.dnaGreen,
+                                                      btnText: Text("Tambah Kartu Asuransi",
+                                                          style: TextStyle(
+                                                              color: MyColors.dnaGreen,
+                                                            fontWeight: FontWeight.w400,
+                                                            fontSize: 14
+                                                          )),
                                                       btnAction: () {
-                                                        Provider.of<AsuransiProvider>(
-                                                                context,
-                                                                listen: false)
-                                                            .showModalAddInsuranceCard(
-                                                                context);
+                                                        // Provider.of<AsuransiProvider>(
+                                                        //         context,
+                                                        //         listen: false)
+                                                        //     .showModalAddInsuranceCard(
+                                                        //         context);
+                                                        Navigator.pushNamed(context, "add_asuransi_page");
                                                       },
                                                       outlineTextColor:
                                                           MyColors.dnaGreen,
                                                       height: 46,
                                                     ),
-                                                    SizedBox(height: 20),
+                                                    SizedBox(height: 10),
                                                   ],
                                                 ),
                                               )
@@ -331,21 +341,15 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                                   child: ListView.builder(
                                                       scrollDirection:
                                                           Axis.horizontal,
-                                                      itemCount: prov
-                                                                  .listAsuransi
-                                                                  .length ==
-                                                              0
+                                                      itemCount: prov.listAsuransi.length == 0
                                                           ? 0
-                                                          : prov.listAsuransi
-                                                              .length,
+                                                          : prov.listAsuransi.length,
                                                       shrinkWrap: true,
                                                       itemBuilder:
                                                           (context, index) {
                                                         return Container(
                                                           width: MediaQuery.of(
-                                                                  context)
-                                                              .size
-                                                              .width,
+                                                                  context).size.width,
                                                           child: CardInssuranceItem(
                                                               model:
                                                                   prov.listAsuransi[
@@ -382,7 +386,7 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                               Container(
                                                   alignment: Alignment
                                                       .centerLeft,
-                                                  width: 175,
+                                                  width: 180,
                                                   height: 35,
                                                   decoration: BoxDecoration(
                                                       color: MyColors.dnaGreen,
@@ -401,7 +405,7 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                                     child: Text(
                                                         "Golongan Darah",
                                                         style: TextStyle(
-                                                            fontSize: 16,
+                                                            fontSize: 15,
                                                             fontWeight:
                                                                 FontWeight.w500,
                                                             color:
@@ -449,7 +453,7 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                                         .bloodTypeController
                                                         .text ==
                                                     null
-                                                ? "-"
+                                                ? "Tambahkan disini.."
                                                 : "${pcard.bloodTypeController.text}")),
                                       ),
                                       height: 70,
@@ -461,7 +465,7 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                       children: [
                                         Container(
                                             alignment: Alignment.centerLeft,
-                                            width: 175,
+                                            width: 180,
                                             height: 34,
                                             decoration: BoxDecoration(
                                                 color: MyColors.dnaGreen,
@@ -476,7 +480,7 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                               child: Text(
                                                   "Medical Professional",
                                                   style: TextStyle(
-                                                      fontSize: 16,
+                                                      fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.w500,
                                                       color: Colors.white)),
@@ -520,11 +524,8 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                         child: Padding(
                                           padding: const EdgeInsets.all(28.0),
                                           child: Center(
-                                              child: Text(pcard
-                                                          .medicalProfController
-                                                          .text ==
-                                                      null
-                                                  ? "-"
+                                              child: Text(pcard.medicalProfController.text == null
+                                                  ? "Tambahkan disini.."
                                                   : "${pcard.medicalProfController.text}")),
                                         )),
                                     SizedBox(height: 20),
@@ -534,7 +535,7 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                       children: [
                                         Container(
                                             alignment: Alignment.centerLeft,
-                                            width: 175,
+                                            width: 180,
                                             height: 35,
                                             decoration: BoxDecoration(
                                                 color: MyColors.dnaGreen,
@@ -548,7 +549,7 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                                   left: 12.0),
                                               child: Text("Kontak Darurat",
                                                   style: TextStyle(
-                                                      fontSize: 16,
+                                                      fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.w500,
                                                       color: Colors.white)),
@@ -594,12 +595,11 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                           padding: const EdgeInsets.all(18.0),
                                           child: GestureDetector(
                                             child: Center(
-                                                child: Text(
-                                              pcard.emergencyContactController
-                                                          .text ==
-                                                      null
-                                                  ? "-"
-                                                  : "${pcard.emergencyContactController.text}",
+                                                child: pcard.emergencyContactController.text == null || pcard.emergencyContact == null ?
+                                                Text("Tambahkan disini..", style: TextStyle(
+                                                  color: Colors.black38
+                                                ))
+                                                  : Text ("${pcard.emergencyContactController.text}",
                                               style: TextStyle(
                                                   decoration:
                                                       TextDecoration.underline,
@@ -624,7 +624,7 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                       children: [
                                         Container(
                                             alignment: Alignment.centerLeft,
-                                            width: 175,
+                                            width: 180,
                                             height: 35,
                                             decoration: BoxDecoration(
                                                 color: MyColors.dnaGreen,
@@ -686,7 +686,7 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                                           .comorbidityController
                                                           .text ==
                                                       null
-                                                  ? "-"
+                                                  ? "Tambahkan disini.."
                                                   : "${pcard.comorbidityController.text}")),
                                         )),
                                     SizedBox(height: 20),
@@ -778,54 +778,63 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
       context: context,
       builder: (BuildContext _) {
         return Container(
-          color: Colors.blue,
-          height: MediaQuery.of(context).size.height - 25,
-          child: Scaffold(
-            appBar: AppBar(
-              elevation: 0,
-              title: Text("$appbarTitle", style: TextStyle(fontSize: 14)),
-              backgroundColor: Colors.white,
-              leading: IconButton(
-                icon: Icon(Icons.arrow_back_ios, size: 20),
-                onPressed: (){
-                  Navigator.of(context).pop();
-                },
-              ),
-            ),
-            body: Container(
-              child: Container(
-                height: MediaQuery.of(context).size.height - 50,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(18.0),
-                      child: FormWidget(
-                        hint: "$hint",
-                        obscure: false,
-                        textEditingController: textController,
-                        keyboardType: inputType,
+          height: MediaQuery.of(context).size.height / 1,
+          decoration: BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(24),
+                  topRight: Radius.circular(24))),
+          child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 30),
+                  Row(
+                    //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        icon: Icon(Icons.arrow_back_ios, size: 20),
                       ),
+
+                      Text(
+                        "$appbarTitle",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 14),
+                      ),
+
+                    ],
+                  ),
+                  SizedBox(height: 40),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10.0, right: 10),
+                    child: FormWidget(
+                      hint: "$hint",
+                      obscure: false,
+                      textEditingController: textController,
+                      keyboardType: inputType,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 18.0),
-                      child: Text("$maxChar"),
-                    )
-                  ],
-                ),
+                  ),
+                  SizedBox(height: 30),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 18.0),
+                    child: Text("$maxChar"),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: ButtonWidget(
+                      btnText: "Simpan",
+                      btnAction: () {
+                        prov.updatePatientCard(context);
+                      },
+                      height: 50,
+                      color: MyColors.dnaGreen,
+                    ),
+                  ),
+                ],
               ),
-            ),
-            bottomNavigationBar: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: ButtonWidget(
-                btnText: "Simpan",
-                btnAction: () {
-                  prov.updatePatientCard(context);
-                },
-                height: 50,
-                color: MyColors.dnaGreen,
-              ),
-            ),
           ),
         );
       },

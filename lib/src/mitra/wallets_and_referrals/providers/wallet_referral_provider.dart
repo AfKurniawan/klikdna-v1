@@ -6,9 +6,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
+import 'package:new_klikdna/src/mitra/providers/mitra_provider.dart';
 import 'package:new_klikdna/src/mitra/wallets_and_referrals/models/referral_model.dart';
 import 'package:new_klikdna/src/mitra/wallets_and_referrals/models/wallet_model.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http ;
 
@@ -47,7 +49,7 @@ class WalletReferralProvider with ChangeNotifier {
     };
 
     final response = await http.post(url, body: body, headers: headers);
-
+    Provider.of<MitraProvider>(context, listen: false).refreshMitraData();
     if(response.statusCode == 200){
       var allArray = json.decode(response.body);
       var dataArray = allArray['data'] as List;

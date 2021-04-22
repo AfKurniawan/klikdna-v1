@@ -47,7 +47,8 @@ class OutlineButtonWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(myIcon, color: iconColor),
+                // OJO DIKEKI ICON NDAK RA CENTER
+                //Icon(myIcon, color: iconColor),
                 SizedBox(width: 10),
                 btnText
               ],

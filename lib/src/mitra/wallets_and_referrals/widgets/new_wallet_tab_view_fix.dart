@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
+import 'package:new_klikdna/src/mitra/providers/mitra_provider.dart';
 import 'package:new_klikdna/src/mitra/wallets_and_referrals/models/wallet_model.dart';
 import 'package:new_klikdna/src/mitra/wallets_and_referrals/providers/wallet_referral_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
@@ -25,7 +26,8 @@ class NewWalletTabViewFix extends StatefulWidget {
 }
 
 class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
-  var items = List<Wallet>();
+
+  List<Wallet> items = [];
 
   int present = 0;
   int perPage = 4;
@@ -43,7 +45,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
   var totalFormattedCommision =
       new NumberFormat.currency(name: "", locale: "en_US");
   var totalsum;
-  var komisi = "";
+  var komisixx = "";
   List<Wallet> listWalletData = [];
 
   bool isLoading;
@@ -93,10 +95,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
       print("Sum : $sum");
 
       totalsum = totalFormattedCommision.format(sum);
-      komisi = prefs.getString("commission");
 
-      print("SUM $totalsum");
-      print("JUMLAH KOMISI $komisi");
     } else {
       isLoading = false;
     }
@@ -108,8 +107,8 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
   var filterSum;
   bool isFiltered = false;
 
-  Future<WalletModel> filterWalletDataxx(BuildContext context) async {
-    listWalletData.clear();
+  Future<WalletModel> filterWalletDataxx(BuildContext context, String val) async {
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       isLoading = true;
@@ -122,7 +121,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
     var url = AppConstants.GET_WALLET_URL;
     var body = json.encode({
       "accesskey": prefs.getString("accesskey"),
-      "type_id": result,
+      "type_id": "$val",
       "datefrom": datefromController.text,
       "dateto": datetoController.text
     });
@@ -162,10 +161,8 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
 
         totalsum = totalFormattedCommision.format(sum);
 
-        komisi = prefs.getString("commission");
 
         print("SUM FILTER $totalsum");
-        print("JUMLAH KOMISI FILTER $komisi");
 
 
         if(datefromController.text.isNotEmpty || datetoController.text.isNotEmpty){
@@ -191,7 +188,11 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
   clearFilter() {
     datefromController.clear();
     datetoController.clear();
-    tipeValue = "Semua Data";
+    setState(() {
+      tipeValue = "Semua Data";
+      result = "0";
+    });
+
   }
 
   clearDateFilter() {
@@ -212,6 +213,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
 
   showBottomSheetFilter(BuildContext context) {
     final format = DateFormat("yyyy-MM-dd");
+    clearFilter();
     showModalBottomSheet(
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
@@ -447,9 +449,9 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                           borderRadius: BorderRadius.circular(10),
                           child: InkWell(
                             onTap: () {
-                              filterWalletDataxx(context);
+                              filterWalletDataxx(context, "$result");
                               Navigator.of(context).pop();
-                              print("VALUEEEE $tipeValue");
+                              print("VALUEEEE $result");
                             },
                             splashColor: Colors.white,
                             child: Ink(
@@ -497,39 +499,39 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
     tipeValue = value;
     switch (tipeValue) {
       case "Semua Data":
-        result = "";
-        getWalletDatax();
-        filterWalletDataxx(context);
+        result = "0";
+        clearFilter();
+        filterWalletDataxx(context, "0");
         print("RESULT $result");
         break;
       case "Komisi Referral":
         result = "1";
         totalsum = "...";
-        filterWalletDataxx(context);
+        filterWalletDataxx(context, "$result");
         print("RESULT $result");
         break;
       case "Komisi Tim":
         result = "2";
         totalsum = "...";
-        filterWalletDataxx(context);
+        filterWalletDataxx(context, "$result");
         print("RESULT $result");
         break;
       case "Komisi Royalti":
         result = "3";
         totalsum = "...";
-        filterWalletDataxx(context);
+        filterWalletDataxx(context, "$result");
         print("RESULT $result");
         break;
       case "National Sharing":
         result = "4";
         totalsum = "...";
-        filterWalletDataxx(context);
+        filterWalletDataxx(context, "$result");
         print("RESULT $result");
         break;
       case "Withdraw":
         result = "5";
         totalsum = "...";
-        filterWalletDataxx(context);
+        filterWalletDataxx(context, "$result");
         print("RESULT $result");
         break;
     }
@@ -539,11 +541,11 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
     print("LOAD MORE");
     setState(() {
       if (listWalletData.length < (present + perPage)) {
-        items.addAll(listWalletData.getRange(present, listWalletData.length));
+        items.addAll(listWalletData.getRange(present, perPage));
       } else {
         items.addAll(listWalletData.getRange(present, present + perPage));
       }
-      present = present + perPage;
+      present = listWalletData.length + present;
     });
   }
 
@@ -602,7 +604,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
             itemCount: listWalletData.length < perPage
                 ? listWalletData.length
                 : (present <= listWalletData.length)
-                ? items.length + 1
+                ? items.length
                 : listWalletData.length,
             itemBuilder: (context, index) {
               var formatTgl = DateFormat('dd MMMM yyyy', "id_ID");
@@ -613,7 +615,7 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                   .format(listWalletData[index].nominal)
                   .split(".")[0]
                   .replaceAll(",", ".");
-              return (index == items.length)
+              return (index == listWalletData.length)
                   ? Padding(
                 padding: const EdgeInsets.only(top: 10.0),
                 child: SpinKitDoubleBounce(
@@ -836,15 +838,19 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: 5),
-                Container(
-                    child: Text(isFiltered == true ? "IDR ${komisi.split(".")[0].replaceAll("-", "")}"
-                       : listWalletData.length == 0
+                Consumer<MitraProvider>(
+                  builder: (context, mitra, _){
+                    return Container(
+                        child: Text(isFiltered == true ? "IDR ${mitra.vcommission.split(".")[0].replaceAll("-", "")}"
+                            : listWalletData.length == 0
                             ? "0"
-                            : "IDR ${komisi.split(".")[0].replaceAll("-", "")}",
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: MyColors.dnaGreen2,
-                            fontWeight: FontWeight.w500))),
+                            : "IDR ${mitra.vcommission.split(".")[0].replaceAll("-", "")}",
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: MyColors.dnaGreen2,
+                                fontWeight: FontWeight.w500)));
+                  },
+                ),
                 SizedBox(height: 8),
                 Text("Saldo Anda", style: TextStyle(fontWeight: FontWeight.w300, fontSize: 12)),
               ],
@@ -876,15 +882,19 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-                child: Text(
-                    listWalletData.length == 0
-                        ? "IDR 0"
-                        : "IDR ${komisi.split(".")[0].replaceAll("-", "")}",
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: MyColors.dnaGreen2,
-                        fontWeight: FontWeight.w500))),
+            Consumer<MitraProvider>(
+              builder: (context, mitra, _){
+                return  Container(
+                    child: Text(
+                        listWalletData.length == 0
+                            ? "IDR 0"
+                            : "IDR ${mitra.vcommission.split(".")[0].replaceAll("-", "")}",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: MyColors.dnaGreen2,
+                            fontWeight: FontWeight.w500)));
+              }
+            ),
             SizedBox(height: 5),
             Text("Saldo Anda", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300),),
           ],

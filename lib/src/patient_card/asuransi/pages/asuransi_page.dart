@@ -61,11 +61,27 @@ class _AsuransiPageState extends State<AsuransiPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    child: Image.asset("assets/images/no_patient_card.png",
-                        width: MediaQuery.of(context).size.width / 1.5),
+                    height: 150,
+                    child: Image.asset(
+                        "assets/images/no_patient_card.png"),
                   ),
-                  Text("Belum ada Kartu Asuransi tersimpan",
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                  Text(
+                      "Belum ada Kartu Asuransi tersimpan",
+                      style: TextStyle(
+                          fontWeight:
+                          FontWeight.bold,
+                          fontSize: 14)),
+                  SizedBox(height: 12),
+                  Text(
+                    "Yuk, tambah kartu asuransi kamu agar lebih mudah saat melihat data yang disimpan",
+                    textAlign:
+                    TextAlign.center,
+                    style: TextStyle(
+                        fontWeight:
+                        FontWeight.w300,
+                        fontSize: 12),
+                  ),
+                  SizedBox(height: 16),
                   SizedBox(height: 20),
                 ],
               ),
@@ -125,7 +141,8 @@ class _AsuransiPageState extends State<AsuransiPage> {
             color: MyColors.dnaGreen,
             btnAction: (){
               Provider.of<TokenProvider>(context, listen: false).getApiToken();
-              Provider.of<AsuransiProvider>(context, listen: false).showModalAddInsuranceCard(context);
+              //Provider.of<AsuransiProvider>(context, listen: false).showModalAddInsuranceCard(context);
+              Navigator.pushReplacementNamed(context, "add_asuransi_page");
             },
           ),
         )

@@ -12,6 +12,7 @@ import 'package:new_klikdna/src/report/widgets/kit_list_service2_widget.dart';
 import 'package:new_klikdna/src/report/widgets/kit_list_service_widget.dart';
 import 'package:new_klikdna/src/report/widgets/member_item_widget.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
+import 'package:new_klikdna/widgets/loading_widget.dart';
 import 'package:provider/provider.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,9 +34,8 @@ class _HomeReportPageState extends State<HomeReportPage> {
   }
 
   getAccount() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
     _future = Provider.of<AccountProvider>(context, listen: false).getUserAccount(context);
-    _future = Provider.of<MemberProvider>(context, listen: false).getMember(context, prefs.getString("personId"));
+     _future = Provider.of<MemberProvider>(context, listen: false).getMember(context, Provider.of<AccountProvider>(context, listen: false).userId);
   }
 
   @override
@@ -58,7 +58,7 @@ class _HomeReportPageState extends State<HomeReportPage> {
             onPressed: () {
               //Navigator.pushReplacementNamed(context, "detail_report_page");
               Navigator.of(context).pop();
-              prov.getNamexx(context, acc.name);
+              prov.getNamexx(context, acc.name, acc.userId);
             }),
 
       ),
@@ -243,7 +243,7 @@ class _HomeReportPageState extends State<HomeReportPage> {
                 height: MediaQuery.of(context).size.height / 1.8,
                 child: Center(
                     child: SpinKitDoubleBounce(color: Colors.grey)));
-          } else if (sample.notfound == true) {
+          } else if (sample.listDetail2.length == 0) {
             return NoDataWidget(mediaQuery: mediaQuery);
           } else {
             return Column(
@@ -259,17 +259,6 @@ class _HomeReportPageState extends State<HomeReportPage> {
                               .elementAt(index));
                     }),
                 SizedBox(height: 20),
-                // ListView.builder(
-                //     scrollDirection: Axis.vertical,
-                //     itemCount: sample.listDetail2.length,
-                //     shrinkWrap: true,
-                //     physics: NeverScrollableScrollPhysics(),
-                //     itemBuilder: (context, index) {
-                //       return sample.listDetail2.length > 1
-                //           ? Container()
-                //           : KitService2ItemWidget(
-                //              model: sample.listDetail2.elementAt(index));
-                //     })
 
               ],
             );
@@ -292,7 +281,9 @@ class _HomeReportPageState extends State<HomeReportPage> {
                 height: width * 0.33,
                 child: prov.listMember.length == 0
                     ? Center(child: Text("Belum ada member"))
-                    : ListView.builder(
+                    : prov.isLoading == true ? LoadingWidget()
+
+                : ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: prov.listMember.length,
                         shrinkWrap: true,
@@ -302,6 +293,16 @@ class _HomeReportPageState extends State<HomeReportPage> {
                         }),
               );
             }
+          } else if(snap.connectionState == ConnectionState.waiting) {
+            return Column(
+              children: [
+                Container(
+                  height: 125,
+                  child: Center(
+                      child: CupertinoActivityIndicator(radius: 10)),
+                ),
+              ],
+            );
           } else {
             return SizedBox(height: 125);
           }

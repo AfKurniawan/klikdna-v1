@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-class AccountProvider with ChangeNotifier {
+class AccountProviderLogin with ChangeNotifier {
   int kdmAccountId;
   String userId;
   String name;
@@ -20,7 +20,7 @@ class AccountProvider with ChangeNotifier {
   bool isLoading ;
 
 
-  AccountProvider(BuildContext context){
+  AccountProviderLogin(BuildContext context){
     getAccount(context);
   }
 
@@ -67,6 +67,7 @@ class AccountProvider with ChangeNotifier {
       gender = accountResponse.data.gender;
       kdmAccountId = accountResponse.data.kdmAccountId;
       userId = accountResponse.data.userId;
+      print("USER ID NE PIRO INI $userId");
       prefs.setString("personId", accountResponse.data.userId);
       nameController.text = accountResponse.data.name;
       notifyListeners();

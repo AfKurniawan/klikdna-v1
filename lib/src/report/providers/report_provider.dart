@@ -7,6 +7,7 @@ import 'package:ext_storage/ext_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
+import 'package:new_klikdna/src/account/providers/account_provider.dart';
 import 'package:new_klikdna/src/report/models/detail_report_model.dart';
 import 'package:new_klikdna/src/report/models/report_model.dart';
 import 'package:new_klikdna/src/report/widgets/bottom_sheet_item_widget.dart';
@@ -35,18 +36,13 @@ class ReportProvider extends ChangeNotifier {
   int listLength = 0 ;
 
 
-  Future<List<ReportModel>> getSamplexx(BuildContext context, String personId) async {
+
+  Future<List<ReportModel>> getFirstSample(BuildContext context) async {
     isLoading = true;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String prefPersonId = prefs.getString("personId");
-    String paramPersonId = "" ;
-    if(personId == "" || personId == null) {
-      paramPersonId = prefPersonId;
-      notifyListeners();
-    } else {
-      paramPersonId = personId;
-      notifyListeners();
-    }
+    String paramPersonId = Provider.of<AccountProvider>(context, listen: false).userId ;
+    print("PERSON ID = $paramPersonId");
+    memberID = paramPersonId;
+
     var url = AppConstants.GET_SAMPLE_URL + '$paramPersonId';
 
     final prov = Provider.of<TokenProvider>(context, listen: false);
@@ -65,7 +61,6 @@ class ReportProvider extends ChangeNotifier {
     if (response.statusCode == 200) {
       isLoading = false;
       notfound = false ;
-     // print("REPORT RESPONSE BODY ===> ${response.body}");
 
       var responseJson = json.decode(response.body);
 
@@ -95,46 +90,84 @@ class ReportProvider extends ChangeNotifier {
 
 
 
-      // if (dataArray.length <= 3 ) {
-      //   listDetail2 = detail1Array.map<Detail>((j) => Detail.fromJson(j)).toList();
-      //   notifyListeners();
-      // } else {
-      //
-      //   for(int i = 0 ; i < dataArray.length; i++) {
-      //     var detail2Array = dataArray[i]['detail'] as List;
-      //     print("DETAIL ARRAY 2 --> $detail2Array");
-      //     var combined = detail1Array + detail2Array;
-      //     listDetail2 = combined.map<Detail>((j) => Detail.fromJson(j)).toList();
-      //     notifyListeners();
-      //   }
-      //
-      //
-      // }
-
-
-
-
-
-
-
-
-
-
-
-
-      // for(int i = 0 ; i < dataArray.length; i++){
-      //
-      //   detail1Array.addAll(detail2Array);
-      //
-      //   print("DETAIL ARRAY 1 --> ${detail1Array}");
-      //
-      //   print("DETAIL ARRAY 2 --> ${detail2Array}");
-      // }
-
-
 
 
       notifyListeners();
+    } else if (response.statusCode == 404) {
+      listDetail1 = [];
+      listDetail2 = [];
+      isLoading = false;
+      notfound = true ;
+      notifyListeners();
+      listDetail1.clear();
+      listDetail2.clear();
+    } else if (response.statusCode == 500) {
+      listDetail1 = [];
+      listDetail2 = [];
+      isLoading = false;
+      notfound = true ;
+      notifyListeners();
+      listDetail1.clear();
+      listDetail2.clear();
+    }
+
+    return null;
+  }
+
+  String memberID;
+  Future<List<ReportModel>> getMemberSample(BuildContext context, String id) async {
+    isLoading = true;
+
+    var url = AppConstants.GET_SAMPLE_URL + '$id';
+    memberID = id;
+
+    final prov = Provider.of<TokenProvider>(context, listen: false);
+    String accessToken = prov.accessToken;
+
+    Map<String, String> ndas = {
+      "Accept": "application/json",
+      "Authorization": "Bearer $accessToken"
+    };
+
+    final response = await http.get(url, headers: ndas);
+
+    ///  NOTE
+    /// "verifykdm_access_report": 1, jika nila 1 bisa liat report, klo nilai != 1 keluar text harap menghubungi (Seperti android)
+
+    if (response.statusCode == 200) {
+      isLoading = false;
+      notfound = false ;
+      // print("REPORT RESPONSE BODY ===> ${response.body}");
+
+      var responseJson = json.decode(response.body);
+
+      dataArray = responseJson['data'] as List;
+      print("DATA ARRAY --> ${dataArray.length}");
+
+
+      if(dataArray.length > 1){
+        for(int i = 1 ; i < dataArray.length; i++) {
+          var detail1Array = dataArray[0]['detail'] as List;
+          var detail2Array = dataArray[i]['detail'] as List;
+          print("DETAIL ARRAY $i --> $detail2Array");
+          var combined = detail1Array..addAll(detail2Array);
+          listDetail2 = combined.map<Detail>((j) => Detail.fromJson(j)).toList();
+          notifyListeners();
+        }
+      } else {
+        for(int i = 0 ; i < dataArray.length; i++) {
+          //var detail1Array = dataArray[0]['detail'] as List;
+          var detail2Array = dataArray[i]['detail'] as List;
+          print("DETAIL ARRAY $i --> $detail2Array");
+          //var combined = detail1Array..addAll(detail2Array);
+          listDetail2 = detail2Array.map<Detail>((j) => Detail.fromJson(j)).toList();
+          notifyListeners();
+        }
+      }
+
+
+      notifyListeners();
+
     } else if (response.statusCode == 404) {
       listDetail1 = [];
       listDetail2 = [];
@@ -163,7 +196,7 @@ class ReportProvider extends ChangeNotifier {
 
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String person = prefs.getString("personId");
+
     var url = AppConstants.GET_REPORT_DETAIL_URL;
     final prov = Provider.of<TokenProvider>(context, listen: false);
     String accessToken = prov.accessToken;
@@ -172,12 +205,15 @@ class ReportProvider extends ChangeNotifier {
       "Authorization": "Bearer $accessToken"
     };
 
+    print("DOWNLOAD DATA USING $memberID");
+
     var body = {
-      "person_id": "$person",
+      "person_id": "$memberID",
       "report_id": "$reportId"
     };
 
     final request = await http.post(url, headers: ndas, body: body);
+    print("DOWNLOAD STATUS ==> ${request.statusCode}");
 
     if(request.statusCode == 200) {
       final reportResponse = DetailReportModel.fromJson(json.decode(request.body));
@@ -210,6 +246,7 @@ class ReportProvider extends ChangeNotifier {
     notifyListeners();
 
     var status = await Permission.storage.status;
+
     if (!status.isGranted) {
       await Permission.storage.request();
     }
@@ -221,6 +258,9 @@ class ReportProvider extends ChangeNotifier {
     };
 
     final response = await http.get(linkPdf, headers: ndas);
+
+    print("LINK PDF $linkPdf");
+    print("STATUS DOWNLOAD ${response.body}");
 
 
     final contentLength = response.contentLength;
@@ -236,10 +276,12 @@ class ReportProvider extends ChangeNotifier {
       Navigator.of(context).pop();
       Directory docDirectory = await getApplicationDocumentsDirectory();
       final dir = Directory(docDirectory.path + "/report");
+      print("DIRECTORY $dir");
       await dir.create().then((value) {
         File file = new File('${value.path}/REPORT-$filename.pdf');
         file.writeAsBytes(response.bodyBytes);
         showToast(context, filename);
+        print("$file");
         return file;
       });
     } else {

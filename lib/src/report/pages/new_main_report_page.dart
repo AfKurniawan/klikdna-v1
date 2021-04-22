@@ -10,7 +10,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class NewMainReportPage extends StatefulWidget {
-  static const String id = "/report_page";
 
   @override
   _NewMainReportPageState createState() => _NewMainReportPageState();
@@ -23,14 +22,6 @@ class _NewMainReportPageState extends State<NewMainReportPage> {
     // TODO: implement initState
     super.initState();
 
-    getSample();
-
-  }
-
-  getSample() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    print("PERSON ID INIT STATE REPORT -->> ${prefs.getString("personId")}");
-    //Provider.of<ReportProvider>(context, listen: false).getSample(context, prefs.getString("personId"));
   }
 
 

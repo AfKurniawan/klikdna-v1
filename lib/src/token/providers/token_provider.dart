@@ -23,7 +23,7 @@ class TokenProvider with ChangeNotifier {
 
     if(request.statusCode == 200){
 
-      print("GET TOKEN ${request.body}");
+     // print("GET TOKEN ${request.body}");
       accessToken = apiTokenResponse.accessToken;
 
       notifyListeners();

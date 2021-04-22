@@ -117,9 +117,8 @@ class MitraProvider with ChangeNotifier {
   int current = 0;
 
 
-
-
   Future<LoginModel> refreshMitraData() async {
+    print("Refresh Mitra Data Started");
     prefs = await SharedPreferences.getInstance();
     isLoading = true;
     notifyListeners();
@@ -151,7 +150,10 @@ class MitraProvider with ChangeNotifier {
 
       /// USER
        vuserid = responseJson.user.id;
+       print("USER ID $vuserid");
        prefs.setInt("mitraID", responseJson.user.id);
+       vnik = responseJson.user.agent.nik;
+       print("VNIK $vnik");
 
        ///
 
@@ -176,8 +178,10 @@ class MitraProvider with ChangeNotifier {
 
       if(responseJson.user.member.commission == null) {
         vcommission = responseJson.user.member.commission.toString();
+        print("KOMISI WHEN NULL --> $vcommission");
       } else {
         vcommission = formattedCommission.format(responseJson.user.member.commission);
+        print("KOMISI WHEN NOT NULL --> $vcommission");
       }
 
 
@@ -228,6 +232,11 @@ class MitraProvider with ChangeNotifier {
       vdatefrom = responseJson.user.jsonData.referrals.params.datefrom;
 
       vdateto = responseJson.user.jsonData.referrals.params.dateto;
+
+      print("VPAR == $vpar");
+      print("HIGESTRANK == $vhighestrank");
+      print("TYPE == $vtype");
+
 
       vallAddress = "$vaddress, $vkelurahan, $vsubdistrict, $vcity, $vprovince" ;
 

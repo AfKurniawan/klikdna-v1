@@ -6,7 +6,7 @@ class AppConstants {
   static const CMS_PASSWORD_TOKEN = "gis2020!";
 
   static const BASE_URL_DNAKU = "https://apiku.dnaku.id/api/v1/" ;
-  static const BASE_URL_KLIKDNA = "https://staging.klikdna.com/" ;
+  static const BASE_URL_KLIKDNA = "https://www.klikdna.com/" ;
   static const BASE_URL_CMS = "https://cms.klikdna.com/api/v1/" ;
 
 
@@ -19,6 +19,7 @@ class AppConstants {
   static const String GET_ACCOUNT_URL = BASE_URL_DNAKU + "userAccounts/";
   static const String GET_PATIENT_CARD_URL = BASE_URL_DNAKU + "userPatientCards/";
   static const String UPDATE_PATIENT_CARD_URL = BASE_URL_DNAKU + "userPatientCards/";
+  static const String POST_NEW_PATIENT_CARD_URL = BASE_URL_DNAKU + "userPatientCards";
   static const String GET_ASURANSI_URL = BASE_URL_DNAKU + "userPatientCardAssurances/";
   static const String SAVE_ASURANSI_URL = BASE_URL_DNAKU + "userPatientCardAssurances";
   static const String DELETE_ASURANSI_URL = BASE_URL_DNAKU + "userPatientCardAssurances/";
