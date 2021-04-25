@@ -73,5 +73,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We need use you microphone to searching use your voice</string>
 </dict>
 </plist>

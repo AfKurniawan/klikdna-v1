@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:new_klikdna/src/foodmeter/providers/food_meter_provider.dart';
+import 'package:new_klikdna/src/foodmeter/providers/last_seen_foodmeter_provider.dart';
 import 'package:new_klikdna/src/report/widgets/button_icon_widget.dart';
 import 'package:new_klikdna/src/token/providers/token_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:new_klikdna/widgets/button_and_icon_widget.dart';
 import 'package:new_klikdna/widgets/custom_shadow_card_widget.dart';
 import 'package:new_klikdna/widgets/form_widget.dart';
+import 'package:new_klikdna/widgets/loading_widget.dart';
 import 'package:new_klikdna/widgets/outline_and_icon_button_widget.dart';
 import 'package:new_klikdna/widgets/outline_button_widget.dart';
 import 'package:provider/provider.dart';
@@ -30,6 +32,7 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
   @override
   void initState() {
     Provider.of<TokenProvider>(context, listen: false).getApiToken();
+    Provider.of<LastSeenFoodMeterProvider>(context, listen: false).getLastSeenFood(context);
     super.initState();
   }
 
@@ -233,96 +236,112 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
                       height: 120,
                       child: Padding(
                         padding: const EdgeInsets.only(top: 10, bottom: 10, left: 16),
-                        child: ListView.builder(
-                          itemCount: 3,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index){
-                            return CustomShadowCardWidget(
-                              width: MediaQuery.of(context).size.width /2.5,
-                              margin: EdgeInsets.only(right: 16, bottom: 10),
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 12, top: 0, right: 12),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("Indomie Goreng"),
-                                    SizedBox(height: 16),
-                                    Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
+                        child: Consumer<LastSeenFoodMeterProvider>(
+                          builder: (context, food, _){
+                            return food.isLoading == true ? LoadingWidget()
+                            : ListView.builder(
+                              itemCount: 5,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index){
+                                int i = index;
+                                return food.lastSeenFood[index].product == null ? Container() : CustomShadowCardWidget(
+                                  width: MediaQuery.of(context).size.width /2.5,
+                                  margin: EdgeInsets.only(right: 16, bottom: 10),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 12, top: 0, right: 12),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.end,
+                                        Text("${food.lastSeenFood[index].product.productName}",
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontFamily: "Roboto",
+                                          fontSize: 14,
+                                        ),),
+                                        SizedBox(height: 16),
+                                        Consumer<FoodMeterProvider>(
+                                          builder: (context, detail, _){
+                                            var list = detail.mobileNutritionsList.where((i) => (i.productId == food.lastSeenFood[index].id)).toList();
+                                            return Column(
+                                              mainAxisAlignment: MainAxisAlignment.start,
                                               children: [
                                                 Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   children: [
-                                                    Container(
-                                                      height: 10,
-                                                      width: 10,
-                                                      decoration: BoxDecoration(
-                                                        color: MyColors.kkalColor,
-                                                        borderRadius: BorderRadius.circular(50),
-                                                      ),
+                                                    Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                                      children: [
+                                                        Row(
+                                                          children: [
+                                                            Container(
+                                                              height: 10,
+                                                              width: 10,
+                                                              decoration: BoxDecoration(
+                                                                color: MyColors.kkalColor,
+                                                                borderRadius: BorderRadius.circular(50),
+                                                              ),
+                                                            ),
+                                                            SizedBox(width: 6),
+                                                            Text("xx",
+                                                                style: TextStyle(
+                                                                    fontSize: 10,
+                                                                    fontFamily: "Roboto",
+                                                                    fontWeight: FontWeight.w300
+                                                                )),
+                                                          ],
+                                                        ),
+                                                        Text("000 kkal",
+                                                            style: TextStyle(
+                                                                fontSize: 12,
+                                                                fontWeight: FontWeight.w400,
+                                                                fontFamily: "Roboto"
+                                                            )),
+                                                      ],
                                                     ),
-                                                    SizedBox(width: 6),
-                                                    Text("Kalori",
-                                                        style: TextStyle(
-                                                            fontSize: 10,
-                                                            fontFamily: "Roboto",
-                                                            fontWeight: FontWeight.w300
-                                                        )),
-                                                  ],
-                                                ),
-                                                Text("147 kkal",
-                                                    style: TextStyle(
-                                                        fontSize: 12,
-                                                        fontWeight: FontWeight.w400,
-                                                        fontFamily: "Roboto"
-                                                    )),
-                                              ],
-                                            ),
-                                            SizedBox(width: 10),
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.end,
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    Container(
-                                                      height: 10,
-                                                      width: 10,
-                                                      decoration: BoxDecoration(
-                                                        color: Color(0xffFCFF9B),
-                                                        borderRadius: BorderRadius.circular(50),
-                                                      ),
+                                                    SizedBox(width: 10),
+                                                    Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                                      children: [
+                                                        Row(
+                                                          children: [
+                                                            Container(
+                                                              height: 10,
+                                                              width: 10,
+                                                              decoration: BoxDecoration(
+                                                                color: Color(0xffFCFF9B),
+                                                                borderRadius: BorderRadius.circular(50),
+                                                              ),
+                                                            ),
+                                                            SizedBox(width: 6),
+                                                            Text("Protein",
+                                                                style: TextStyle(
+                                                                  fontSize: 10,
+                                                                ))
+                                                          ],
+                                                        ),
+                                                        Text("1.2 g",
+                                                            style: TextStyle(
+                                                                fontSize: 12,
+                                                                fontWeight: FontWeight.w400,
+                                                                fontFamily: "Roboto"
+                                                            )),
+                                                      ],
                                                     ),
-                                                    SizedBox(width: 6),
-                                                    Text("Protein",
-                                                        style: TextStyle(
-                                                          fontSize: 10,
-                                                        ))
-                                                  ],
-                                                ),
-                                                Text("1.2 g",
-                                                    style: TextStyle(
-                                                        fontSize: 12,
-                                                        fontWeight: FontWeight.w400,
-                                                        fontFamily: "Roboto"
-                                                    )),
-                                              ],
-                                            ),
 
 
-                                          ],
-                                        ),
+                                                  ],
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        )
                                       ],
-                                    )
-                                  ],
-                                ),
-                              ),
+                                    ),
+                                  ),
+                                );
+                              },
                             );
-                          },
+                          }
                         ),
                       ),
                     ),

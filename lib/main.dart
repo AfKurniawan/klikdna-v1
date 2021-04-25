@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:new_klikdna/configs/localization.dart';
 import 'package:new_klikdna/routing.dart';
 import 'package:new_klikdna/src/foodmeter/providers/food_meter_provider.dart';
+import 'package:new_klikdna/src/foodmeter/providers/last_seen_foodmeter_provider.dart';
 import 'package:new_klikdna/src/home/providers/artikel_provider.dart';
 import 'package:new_klikdna/src/home/providers/home_provider.dart';
 import 'package:new_klikdna/src/login/providers/login_provider.dart';
@@ -55,7 +56,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => MemberProvider()),
         ChangeNotifierProvider(create: (_) => WalletReferralProvider()),
         ChangeNotifierProvider(create: (_) => HomeProvider()),
-        ChangeNotifierProvider(create: (_) => CmsTokenProvider())
+        ChangeNotifierProvider(create: (_) => CmsTokenProvider()),
+        ChangeNotifierProvider(create: (_) => LastSeenFoodMeterProvider())
 
       ],
       child: MaterialApp(

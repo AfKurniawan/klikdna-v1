@@ -1,0 +1,202 @@
+{
+  "success": true,
+  "data": {
+    "id": 3038,
+    "brand_id": 545,
+    "category_id": "1",
+    "product_name": "Ketupat",
+    "product_uom": "g",
+    "product_size": "788.0000",
+    "image_location": null,
+    "created_at": "2021-04-16T09:20:40.000000Z",
+    "updated_at": "2021-04-16T09:20:40.000000Z",
+    "deleted_at": null,
+    "account_id": "14",
+    "status": 1,
+    "nutritions": [
+      {
+        "id": 0,
+        "product_id": 3038,
+        "nutrition_name": "Kalori",
+        "nutrition_uom": "kkal",
+        "nutrition_size": "666.0000",
+        "created_at": "2021-04-16T09:20:40.000000Z",
+        "updated_at": "2021-04-16T09:20:40.000000Z",
+        "deleted_at": null
+      },
+      {
+        "id": 0,
+        "product_id": 3038,
+        "nutrition_name": "Protein",
+        "nutrition_uom": "g",
+        "nutrition_size": "55.0000",
+        "created_at": "2021-04-16T09:20:40.000000Z",
+        "updated_at": "2021-04-16T09:20:40.000000Z",
+        "deleted_at": null
+      },
+      {
+        "id": 0,
+        "product_id": 3038,
+        "nutrition_name": "Lemak",
+        "nutrition_uom": "g",
+        "nutrition_size": "55.0000",
+        "created_at": "2021-04-16T09:20:40.000000Z",
+        "updated_at": "2021-04-16T09:20:40.000000Z",
+        "deleted_at": null
+      },
+      {
+        "id": 0,
+        "product_id": 3038,
+        "nutrition_name": "Karbohidrat",
+        "nutrition_uom": "g",
+        "nutrition_size": "78.0000",
+        "created_at": "2021-04-16T09:20:40.000000Z",
+        "updated_at": "2021-04-16T09:20:40.000000Z",
+        "deleted_at": null
+      },
+      {
+        "id": 0,
+        "product_id": 3038,
+        "nutrition_name": "Lemakjenuh",
+        "nutrition_uom": "g",
+        "nutrition_size": "89.0000",
+        "created_at": "2021-04-16T09:20:40.000000Z",
+        "updated_at": "2021-04-16T09:20:40.000000Z",
+        "deleted_at": null
+      },
+      {
+        "id": 0,
+        "product_id": 3038,
+        "nutrition_name": "Kolestrol",
+        "nutrition_uom": "mg",
+        "nutrition_size": "99.0000",
+        "created_at": "2021-04-16T09:20:40.000000Z",
+        "updated_at": "2021-04-16T09:20:40.000000Z",
+        "deleted_at": null
+      },
+      {
+        "id": 0,
+        "product_id": 3038,
+        "nutrition_name": "Serat",
+        "nutrition_uom": "kkal",
+        "nutrition_size": "55.0000",
+        "created_at": "2021-04-16T09:20:40.000000Z",
+        "updated_at": "2021-04-16T09:20:40.000000Z",
+        "deleted_at": null
+      },
+      {
+        "id": 0,
+        "product_id": 3038,
+        "nutrition_name": "Energi",
+        "nutrition_uom": "g",
+        "nutrition_size": "6.0000",
+        "created_at": "2021-04-16T09:20:40.000000Z",
+        "updated_at": "2021-04-16T09:20:40.000000Z",
+        "deleted_at": null
+      },
+      {
+        "id": 0,
+        "product_id": 3038,
+        "nutrition_name": "Sodium",
+        "nutrition_uom": "g",
+        "nutrition_size": "6.0000",
+        "created_at": "2021-04-16T09:20:40.000000Z",
+        "updated_at": "2021-04-16T09:20:40.000000Z",
+        "deleted_at": null
+      }
+    ],
+    "m_nutritions": [
+      {
+        "id": 0,
+        "product_id": 3038,
+        "nutrition_name": "Kalori",
+        "nutrition_uom": "kkal",
+        "nutrition_size": "666.0000",
+        "created_at": "2021-04-16T09:20:40.000000Z",
+        "updated_at": "2021-04-16T09:20:40.000000Z",
+        "deleted_at": null
+      },
+      {
+        "id": 0,
+        "product_id": 3038,
+        "nutrition_name": "Protein",
+        "nutrition_uom": "g",
+        "nutrition_size": "55.0000",
+        "created_at": "2021-04-16T09:20:40.000000Z",
+        "updated_at": "2021-04-16T09:20:40.000000Z",
+        "deleted_at": null
+      },
+      {
+        "id": 0,
+        "product_id": 3038,
+        "nutrition_name": "Lemak",
+        "nutrition_uom": "g",
+        "nutrition_size": "55.0000",
+        "created_at": "2021-04-16T09:20:40.000000Z",
+        "updated_at": "2021-04-16T09:20:40.000000Z",
+        "deleted_at": null
+      },
+      {
+        "id": 0,
+        "product_id": 3038,
+        "nutrition_name": "Karbohidrat",
+        "nutrition_uom": "g",
+        "nutrition_size": "78.0000",
+        "created_at": "2021-04-16T09:20:40.000000Z",
+        "updated_at": "2021-04-16T09:20:40.000000Z",
+        "deleted_at": null
+      },
+      {
+        "id": 0,
+        "product_id": 3038,
+        "nutrition_name": "Lemakjenuh",
+        "nutrition_uom": "g",
+        "nutrition_size": "89.0000",
+        "created_at": "2021-04-16T09:20:40.000000Z",
+        "updated_at": "2021-04-16T09:20:40.000000Z",
+        "deleted_at": null
+      },
+      {
+        "id": 0,
+        "product_id": 3038,
+        "nutrition_name": "Kolestrol",
+        "nutrition_uom": "mg",
+        "nutrition_size": "99.0000",
+        "created_at": "2021-04-16T09:20:40.000000Z",
+        "updated_at": "2021-04-16T09:20:40.000000Z",
+        "deleted_at": null
+      },
+      {
+        "id": 0,
+        "product_id": 3038,
+        "nutrition_name": "Serat",
+        "nutrition_uom": "kkal",
+        "nutrition_size": "55.0000",
+        "created_at": "2021-04-16T09:20:40.000000Z",
+        "updated_at": "2021-04-16T09:20:40.000000Z",
+        "deleted_at": null
+      },
+      {
+        "id": 0,
+        "product_id": 3038,
+        "nutrition_name": "Energi",
+        "nutrition_uom": "g",
+        "nutrition_size": "6.0000",
+        "created_at": "2021-04-16T09:20:40.000000Z",
+        "updated_at": "2021-04-16T09:20:40.000000Z",
+        "deleted_at": null
+      },
+      {
+        "id": 0,
+        "product_id": 3038,
+        "nutrition_name": "Sodium",
+        "nutrition_uom": "g",
+        "nutrition_size": "6.0000",
+        "created_at": "2021-04-16T09:20:40.000000Z",
+        "updated_at": "2021-04-16T09:20:40.000000Z",
+        "deleted_at": null
+      }
+    ]
+  },
+  "message": "Page Food Product retrieved successfully"
+}

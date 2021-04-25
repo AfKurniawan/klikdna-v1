@@ -31,6 +31,9 @@ class AppConstants {
   static const String GET_MEMBER_URL = BASE_URL_DNAKU + "userPeople/";
   static const String NEW_GET_ACCOUNT_URL = BASE_URL_DNAKU + "userAccounts/";
 
+  //NEW FOOD
+  static const String LAST_SEEN_FOOD_URL = BASE_URL_DNAKU + "pageFoodProducts/last_seen/" ;
+
   //STAGING
   static const String LOGIN_URL = BASE_URL_KLIKDNA + "apilogin.json";
   static const String GET_WALLET_URL = BASE_URL_KLIKDNA + "wallets/apilist.json";

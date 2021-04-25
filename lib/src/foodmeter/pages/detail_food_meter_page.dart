@@ -121,10 +121,10 @@ class _DetailFoodMeterPageState extends State<DetailFoodMeterPage> {
                           padding: const EdgeInsets.only(left: 10.0, right: 10),
                           child: ListView.separated(
                             physics: NeverScrollableScrollPhysics(),
-                            itemCount: prov.mobileNutritions.length,
+                            itemCount: prov.mobileNutritionsList.length,
                             shrinkWrap: true,
                             itemBuilder: (context, index){
-                              return NutritionItemWidget(nutritions: prov.mobileNutritions[index],
+                              return NutritionItemWidget(nutritions: prov.mobileNutritionsList[index],
                               );
                             },
                             separatorBuilder: (context, index){

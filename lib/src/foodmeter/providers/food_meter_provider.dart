@@ -12,8 +12,6 @@ class FoodMeterProvider extends ChangeNotifier {
   List<Food> listFood = [];
   List<Food> searchListResult = [];
 
-
-
   bool isLoading;
   bool dashboardVisible = true ;
 
@@ -59,10 +57,12 @@ class FoodMeterProvider extends ChangeNotifier {
   }
 
 
-  List<MobileNutritions> mobileNutritions = [];
+  List<MobileNutritions> mobileNutritionsList = [];
+  List<MobileNutritions> newMobilenutritionList = [];
   String productName;
   String productUom;
   String productSize;
+  var detailArray ;
 
   Future<FoodMeterModel> getDetailFoodMeter(BuildContext context, int foodId) async {
 
@@ -80,18 +80,36 @@ class FoodMeterProvider extends ChangeNotifier {
 
     final request = await http.get(url, headers: ndas);
     final response = DetailFoodMeterModel.fromJson(json.decode(request.body));
+    //print("response get detail product ==> ${request.statusCode}");
 
     if(response.success == true){
+      isLoading = false;
 
       var data = json.decode(request.body);
+      // print("response get detail product ==> ${request.body}");
 
-      var detailArray = data['data']['mobile_nutritions'] as List;
-      mobileNutritions = detailArray.map<MobileNutritions>((j) => MobileNutritions.fromJson(j)).toList();
-      isLoading = false;
-      productName = response.data.productName;
-      productUom = response.data.productUom;
-      productSize = response.data.productSize;
+      //var dataArray = data['data'] as List ;
+
+      detailArray = data['data']['mobile_nutritions'] as List;
+      mobileNutritionsList = detailArray.map<MobileNutritions>((j) => MobileNutritions.fromJson(j)).toList();
+      newMobilenutritionList = mobileNutritionsList.where((i) => (i.productId == foodId)).toList();
+
+
+      // productName = response.data.productName;
+      // productUom = response.data.productUom;
+      // productSize = response.data.productSize;
+      //
+      // print("detail product ==> $productName, $productSize, $productUom");
+
+
       notifyListeners();
+
+      for(int i = 0; i < mobileNutritionsList.length; i++){
+
+        print("${newMobilenutritionList[i].nutritionName} ${newMobilenutritionList[i].nutritionSize}");
+
+      }
+
 
 
     } else {
