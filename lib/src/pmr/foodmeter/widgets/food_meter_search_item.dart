@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_klikdna/src/foodmeter/models/food_meter_model.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/models/food_meter_model.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 
 class FoodItemSearchWidget extends StatefulWidget {

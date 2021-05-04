@@ -3,8 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:new_klikdna/configs/localization.dart';
 import 'package:new_klikdna/routing.dart';
-import 'package:new_klikdna/src/foodmeter/providers/food_meter_provider.dart';
-import 'package:new_klikdna/src/foodmeter/providers/last_seen_foodmeter_provider.dart';
 import 'package:new_klikdna/src/home/providers/artikel_provider.dart';
 import 'package:new_klikdna/src/home/providers/home_provider.dart';
 import 'package:new_klikdna/src/login/providers/login_provider.dart';
@@ -15,6 +13,9 @@ import 'package:new_klikdna/src/mitra/providers/mitra_provider.dart';
 import 'package:new_klikdna/src/mitra/wallets_and_referrals/providers/wallet_referral_provider.dart';
 import 'package:new_klikdna/src/patient_card/providers/asuransi_provider.dart';
 import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/providers/favourite_food_meter_provider.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/providers/food_meter_provider.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/providers/last_seen_foodmeter_provider.dart';
 import 'package:new_klikdna/src/pmr/providers/pmr_provider.dart';
 import 'package:new_klikdna/src/profile/providers/profile_provider.dart';
 import 'package:new_klikdna/src/report/providers/detail_report_provider.dart';
@@ -57,7 +58,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => WalletReferralProvider()),
         ChangeNotifierProvider(create: (_) => HomeProvider()),
         ChangeNotifierProvider(create: (_) => CmsTokenProvider()),
-        ChangeNotifierProvider(create: (_) => LastSeenFoodMeterProvider())
+        ChangeNotifierProvider(create: (_) => LastSeenFoodMeterProvider()),
+        ChangeNotifierProvider(create: (_) => FavouriteFoodMeterProvider())
 
       ],
       child: MaterialApp(

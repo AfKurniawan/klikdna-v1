@@ -153,7 +153,6 @@ class MitraProvider with ChangeNotifier {
        print("USER ID $vuserid");
        prefs.setInt("mitraID", responseJson.user.id);
        vnik = responseJson.user.agent.nik;
-       print("VNIK $vnik");
 
        ///
 
@@ -233,9 +232,9 @@ class MitraProvider with ChangeNotifier {
 
       vdateto = responseJson.user.jsonData.referrals.params.dateto;
 
-      print("VPAR == $vpar");
-      print("HIGESTRANK == $vhighestrank");
-      print("TYPE == $vtype");
+      // print("VPAR == $vpar");
+      // print("HIGESTRANK == $vhighestrank");
+      // print("TYPE == $vtype");
 
 
       vallAddress = "$vaddress, $vkelurahan, $vsubdistrict, $vcity, $vprovince" ;

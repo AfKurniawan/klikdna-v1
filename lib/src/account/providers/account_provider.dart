@@ -70,7 +70,7 @@ class AccountProvider with ChangeNotifier {
 
       for(int i = 0 ; i < listPatentCard.length ; i++) {
         lastID = listPatentCard.last.id.toString();
-        print("LAST ID ==> $lastID");
+       // print("LAST ID ==> $lastID");
         noKtp = prefs.getString("nik");
         notifyListeners();
       }

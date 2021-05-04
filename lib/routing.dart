@@ -1,10 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:new_klikdna/src/dummy/pages/dummy_chart_page.dart';
-import 'package:new_klikdna/src/foodmeter/pages/detail_food_meter_page.dart';
-import 'package:new_klikdna/src/foodmeter/pages/food_meter_page.dart';
-import 'package:new_klikdna/src/foodmeter/pages/foodmeter_search_page.dart';
-import 'package:new_klikdna/src/foodmeter/pages/new_foodmeter_page.dart';
 import 'package:new_klikdna/src/home/pages/details/detail_pin_page.dart';
 import 'package:new_klikdna/src/home/pages/details/detail_promo_page.dart';
 import 'package:new_klikdna/src/home/pages/details/detail_event_page.dart';
@@ -23,6 +19,12 @@ import 'package:new_klikdna/src/patient_card/asuransi/pages/edit_asuransi_page.d
 import 'package:new_klikdna/src/patient_card/pages/edit_patient_card_page.dart';
 import 'package:new_klikdna/src/patient_card/pages/new_patient_card_page.dart';
 import 'package:new_klikdna/src/patient_card/pages/patient_card_page.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/pages/detail_food_meter_page.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/pages/detail_nutrition_page.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/pages/food_meter_by_kategori_page.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/pages/food_meter_page.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/pages/foodmeter_search_page.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/pages/new_foodmeter_page.dart';
 import 'package:new_klikdna/src/profile/pages/main_profile_page.dart';
 import 'package:new_klikdna/src/profile/pages/lihat_profile_page.dart';
 import 'package:new_klikdna/src/report/pages/detail_report_page.dart';
@@ -127,6 +129,24 @@ class Routing {
       case "detail_food_meter_page" :
         return PageTransition(
             child: DetailFoodMeterPage(food: settings.arguments),
+            type: PageTransitionType.fade,
+            duration: Duration(
+                milliseconds: 350
+            )
+        );
+
+      case "detail_nutrition_page" :
+        return PageTransition(
+            child: DetailNutritionPage(model: settings.arguments),
+            type: PageTransitionType.fade,
+            duration: Duration(
+                milliseconds: 350
+            )
+        );
+
+      case "food_meter_by_kategori_page" :
+        return PageTransition(
+            child: FoodMeterByKategoryPage(),
             type: PageTransitionType.fade,
             duration: Duration(
                 milliseconds: 350

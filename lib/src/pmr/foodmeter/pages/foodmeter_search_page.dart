@@ -3,8 +3,8 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:new_klikdna/src/foodmeter/providers/food_meter_provider.dart';
-import 'package:new_klikdna/src/foodmeter/widgets/food_meter_search_item.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/providers/food_meter_provider.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/widgets/food_meter_search_item.dart';
 import 'package:new_klikdna/src/report/widgets/button_icon_widget.dart';
 import 'package:new_klikdna/src/token/providers/token_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
