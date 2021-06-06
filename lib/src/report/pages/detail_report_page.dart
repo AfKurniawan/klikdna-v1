@@ -354,8 +354,7 @@ class _DetailReportPageState extends State<DetailReportPage> {
                     ),
                     Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: widget.model.serviceName == "HEALTH" ||
-                                widget.model.serviceName == "SKIN"
+                        child: widget.model.serviceName == "HEALTH" || widget.model.serviceName == "SKIN"
                             ? Column(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -409,7 +408,8 @@ class _DetailReportPageState extends State<DetailReportPage> {
                                     );
                                   },
                                 ).toList(),
-                              )),
+                              )
+                    ),
                   ],
                 ),
               ),

@@ -5,6 +5,7 @@ import 'package:new_klikdna/src/pmr/foodmeter/models/detail_food_meter_model.dar
 import 'package:new_klikdna/src/pmr/foodmeter/models/favourite_food_model.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/models/food_meter_model.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/models/list_food_model.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/models/resto_model_data.dart';
 import 'package:new_klikdna/src/token/providers/token_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
@@ -14,10 +15,9 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
 
   List<DrinkFood> listFood = [];
 
-  List<Data3> listMakanan = [];
   List<Food> searchListResult = [];
 
-  bool isLoading;
+  bool isLoadingFood;
   bool dashboardVisible = true ;
 
   bool isLoadingDetail ;
@@ -129,16 +129,71 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
   String kategori3 = "";
   String kategori4 = "";
 
+  List items;
+  List<Data3> dataMakanan;
+  String lastItemId = '0';
+
+  List<Data3> listMakanan = [];
+  List<Data3> newItems = [];
+  List dataPageList ;
+  String nextPage = "" ;
+
+  Future<List> getMoreDataMakanan(BuildContext context, String nextUrl)  async {
+    try {
+
+      final prov = Provider.of<TokenProvider>(context, listen: false);
+
+      print("GET MORE DATA == > $nextUrl");
+      String accessToken = prov.accessToken;
+
+      Map<String, String> ndas = {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $accessToken"
+      };
 
 
-  Future<ListFoodModel> getListFood(BuildContext context) async {
+      final response = await http.get(nextUrl, headers: ndas);
+
+      if (response.statusCode == 200) {
+
+        var jsonResponse = jsonDecode(response.body);
+          List newItems = jsonResponse['data']['data']['data'];
+          if (dataMakanan == null) {
+            listMakanan = newItems.map<Data3>((j) => Data3.fromJson(j)).toList();
+          } else {
+            dataMakanan.addAll(listMakanan);
+          }
+
+          //lastItemId = data.last['id'].toString();
+          isLoadingFood = false;
+
+        print("Data Makanan ----- >>  ${dataMakanan.toString()}");
+        print("lastItemId --> $lastItemId");
+        return dataMakanan;
+
+      } else {
+        print("Request failed with status: ${response.statusCode}.");
+      }
+    } on Exception catch (error) {
+      debugPrint(error.toString());
+    }
+  }
+
+
+
+
+  int perPage = 1020 ;
+  int present = 0 ;
+
+  Future<ListFoodModel> getListFood(BuildContext context, String url) async {
 
     final prov = Provider.of<TokenProvider>(context, listen: false);
 
+    print("LIST FOOD");
     String accessToken = prov.accessToken;
+    isLoadingFood = true ;
 
-    isLoading = true ;
-    var url = AppConstants.LIST_FOOD_URL ;
+
     Map<String, String> ndas = {
       "Content-Type": "application/json",
       "Authorization": "Bearer $accessToken"
@@ -149,10 +204,90 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
 
     if(request.statusCode == 200){
       var data = json.decode(request.body);
-      print("$data");
       var detailArray = data['data']['data']['data'] as List;
+
       listMakanan = detailArray.map<Data3>((j) => Data3.fromJson(j)).toList();
-      isLoading = false;
+
+
+
+      print("ini data New Item $newItems");
+      isLoadingFood = false;
+
+      notifyListeners();
+
+
+    } else {
+
+    }
+
+    notifyListeners();
+
+    return null ;
+
+  }
+
+  List<Data3> listMinuman = [];
+  Future<ListFoodModel> getListMinuman(BuildContext context, String filter) async {
+
+
+    print("LIST FOOD Minuman");
+    final prov = Provider.of<TokenProvider>(context, listen: false);
+
+    String accessToken = prov.accessToken;
+
+    isLoadingFood = true ;
+    var url = AppConstants.LIST_FOOD_URL + '$filter' ;
+    Map<String, String> ndas = {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $accessToken"
+    };
+
+
+    final request = await http.get(url, headers: ndas);
+
+    if(request.statusCode == 200){
+      var data = json.decode(request.body);
+      var detailArray = data['data']['data']['data'] as List;
+      listMinuman = detailArray.map<Data3>((j) => Data3.fromJson(j)).toList();
+      isLoadingFood = false;
+
+      notifyListeners();
+
+
+    } else {
+
+    }
+
+    notifyListeners();
+
+    return null ;
+
+  }
+
+  List<Datum> listRestaurant = [];
+  Future<ModelDataResto> getListRestaurant(BuildContext context, String filter) async {
+
+    print("LIST FORESTOD");
+    final prov = Provider.of<TokenProvider>(context, listen: false);
+
+    String accessToken = prov.accessToken;
+
+    isLoadingFood = true ;
+    var url = AppConstants.LIST_FOOD_URL + '$filter' ;
+
+    Map<String, String> ndas = {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $accessToken"
+    };
+
+
+    final request = await http.get(url, headers: ndas);
+
+    if(request.statusCode == 200){
+      var data = json.decode(request.body);
+      var detailArray = data['data']['data']['data'] as List;
+      listRestaurant = detailArray.map<Datum>((j) => Datum.fromJson(j)).toList();
+      isLoadingFood = false;
 
       notifyListeners();
 
@@ -168,13 +303,15 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
   }
 
 
+
+
   Future<FavouriteFoodModel> getFavouriteData(BuildContext context) async {
 
     final prov = Provider.of<TokenProvider>(context, listen: false);
 
     String accessToken = prov.accessToken;
 
-    isLoading = true ;
+    isLoadingFood = true ;
     var url = AppConstants.IS_FAVOURITE_FOOD_URL ;
     Map<String, String> ndas = {
       "Content-Type": "application/json",
@@ -186,34 +323,35 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
     final response = FavouriteFoodModel.fromJson(json.decode(request.body));
 
     if(request.statusCode == 200){
+
       var data = json.decode(request.body);
       var detailArray = data['drink_food']['data'] as List;
       listFood = detailArray.map<DrinkFood>((j) => DrinkFood.fromJson(j)).toList();
-      isLoading = false;
+      isLoadingFood = false;
 
 
       id0 = json.decode(request.body)['drink_food']['data'][0]['id'];
-       print("ID 0 => $id0");
+      // print("ID 0 => $id0");
       id1 = json.decode(request.body)['drink_food']['data'][1]['id'];
-       print("ID 1 => $id1");
+      // print("ID 1 => $id1");
       id2 = json.decode(request.body)['drink_food']['data'][2]['id'];
-       print("ID 2 => $id2");
+      // print("ID 2 => $id2");
       id3 = json.decode(request.body)['drink_food']['data'][3]['id'];
-       print("ID 3 => $id3");
+     //  print("ID 3 => $id3");
       id4 = json.decode(request.body)['drink_food']['data'][4]['id'];
-       print("ID 4 => $id4");
+      // print("ID 4 => $id4");
 
       // Prod
       food0 = json.decode(request.body)['drink_food']['data'][0]['product_name'];
-      print("Food 0 => $food0");
+     // print("Food 0 => $food0");
       food1 = json.decode(request.body)['drink_food']['data'][1]['product_name'];
-      print("Food 1 => $food1");
+     // print("Food 1 => $food1");
       food2 = json.decode(request.body)['drink_food']['data'][2]['product_name'];
-      print("Food 2 => $food2");
+     // print("Food 2 => $food2");
       food3 = json.decode(request.body)['drink_food']['data'][3]['product_name'];
-      print("Food 3 => $food3");
+     // print("Food 3 => $food3");
       food4 = json.decode(request.body)['drink_food']['data'][4]['product_name'];
-      print("Food 4 => $food4");
+     // print("Food 4 => $food4");
 
 
       getDetailFavouriteFood(context);
@@ -265,18 +403,18 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
     var response4 = json.decode(r4.body);
 
 
-    if(r0.statusCode == 200){
+    if(r4.statusCode == 200){
 
       kategori0 = response0['data']['category_id'];
-      print("Kategory $kategori0");
+      //print("Kategory $kategori0");
       kategori1 = response1['data']['category_id'];
-      print("Kategory $kategori1");
+      //print("Kategory $kategori1");
       kategori2 = response2['data']['category_id'];
-      print("Kategory $kategori2");
+      //print("Kategory $kategori2");
       kategori3 = response3['data']['category_id'];
-      print("Kategory $kategori3");
+      //print("Kategory $kategori3");
       kategori4 = response4['data']['category_id'];
-      print("Kategory $kategori4");
+      //print("Kategory $kategori4");
 
 
 

@@ -35,7 +35,9 @@ class AppConstants {
   static const String LAST_SEEN_FOOD_URL = BASE_URL_DNAKU + "pageFoodProducts/last_seen/" ;
   static const String IS_FAVOURITE_FOOD_URL = BASE_URL_DNAKU + "pageFoodProducts/filter/1/1/1/1" ;
 
-  static const String LIST_FOOD_URL = BASE_URL_DNAKU + "pageFoodProducts/filter/1/1/0/0" ;
+  static const String LIST_FOOD_URL = BASE_URL_DNAKU + "pageFoodProducts/filter/" ;
+
+  //static const String LIST_DRINK_URL = BASE_URL_DNAKU + "pageFoodProducts/filter/1/1/0/0" ;
 
   //STAGING
   static const String LOGIN_URL = BASE_URL_KLIKDNA + "apilogin.json";

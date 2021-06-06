@@ -47,7 +47,6 @@ class LastSeenFoodMeterProvider with ChangeNotifier {
 
     final prov = Provider.of<TokenProvider>(context, listen: false);
     var id = Provider.of<MitraProvider>(context, listen: false).vuserid;
-    print("user id to get last seen food is --> $id");
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     final detail = Provider.of<FoodMeterProvider>(context, listen: false);
@@ -68,48 +67,58 @@ class LastSeenFoodMeterProvider with ChangeNotifier {
 
       var responseJson = json.decode(request.body);
 
-      myArray = responseJson['data']['data']as List;
+      myArray = responseJson['data']['data'] as List;
 
-      //print("jason Response => $myArray");
+
 
       var array2 = myArray[0]['data'];
       dataArray = myArray.map<DataArray>((j) => DataArray.fromJson(j)).toList();
       isLoadingLastSeen = false;
-      lastSeenFood = myArray.map<DataArray>((j) => DataArray.fromJson(j)).toList();
-      //lastSeenFood.sort((b, a) => b.product.createdAt.compareTo(a.product.createdAt));
-
-      print("lenght => ${lastSeenFood.length}");
-
-       id0 = json.decode(request.body)['data']['data'][0]['product']['id'];
-     // print("ID 0 => $id0");
-       id1 = json.decode(request.body)['data']['data'][1]['product']['id'];
-     // print("ID 1 => $id1");
-       id2 = json.decode(request.body)['data']['data'][2]['product']['id'];
-     // print("ID 2 => $id2");
-       id3 = json.decode(request.body)['data']['data'][3]['product']['id'];
-     // print("ID 3 => $id3");
-       id4 = json.decode(request.body)['data']['data'][4]['product']['id'];
-     // print("ID 4 => $id4");
-
-      // Prod
-      food0 = json.decode(request.body)['data']['data'][0]['product']['product_name'].toString();
-      // print("ID 0 => $id0");
-      food1 = json.decode(request.body)['data']['data'][1]['product']['product_name'].toString();
-      // print("ID 1 => $id1");
-      food2 = json.decode(request.body)['data']['data'][2]['product']['product_name'].toString();
-      // print("ID 2 => $id2");
-      food3 = json.decode(request.body)['data']['data'][3]['product']['product_name'].toString();
-      // print("ID 3 => $id3");
-      food4 = json.decode(request.body)['data']['data'][4]['product']['product_name'].toString();
-
-      Provider.of<FoodMeterProvider>(context, listen: false).getDetailFoodMeter(context);
 
 
-      for(int i = 0 ; i < dataArray.length; i++){
+      // var product1 = responseJson['data']['data'][0]['product'];
+      // print("product 1 => $product1");
+      //
+      // var product2 = responseJson['data']['data'][2]['product'];
+      // print("product 2 => $product2");
+      //
+      // var product3 = responseJson['data']['data'][3]['product'];
+      // print("product 3 => $product3");
+      //
+      // var product4 = responseJson['data']['data'][4]['product'];
+      // print("product 4 => $product4");
 
-        if(lastSeenFood[i].product != null) {
-          //print("Last seen ${lastSeenFood[i].product.id}");
-          //Provider.of<FoodMeterProvider>(context, listen: false).getDetailFoodMeter(context, lastSeenFood[i].product.id);
+
+
+
+
+      for(int i = 0 ; i < myArray.length; i++){
+
+        if(responseJson['data']['data'][i]['product'] != null){
+
+          lastSeenFood = myArray.map<DataArray>((j) => DataArray.fromJson(j)).toList();
+         // lastSeenFood.removeWhere((value) => value.product == null);
+          print("Last Seen Length ${lastSeenFood.length}");
+          Provider.of<FoodMeterProvider>(context, listen: false).getDetailFoodMeter(context, lastSeenFood[i].product.id);
+
+          // id0 = lastSeenFood[0].product.id;
+          // id1 = lastSeenFood[1].product.id;
+          // id2 = lastSeenFood[2].product.id;
+          // id3 = lastSeenFood[3].product.id;
+          // id4 = lastSeenFood[4].product.id;
+
+          // food0 = lastSeenFood[0].product.productName;
+          // food0 = lastSeenFood[1].product.productName;
+          // food0 = lastSeenFood[2].product.productName;
+          // food0 = lastSeenFood[3].product.productName;
+          // food0 = lastSeenFood[4].product.productName;
+
+
+          print("id --> $id0, $id1, $id2, $id3, $id4, ${lastSeenFood[i].product.productName}");
+
+
+        } else {
+
         }
 
       }

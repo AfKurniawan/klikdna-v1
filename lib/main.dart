@@ -14,6 +14,7 @@ import 'package:new_klikdna/src/mitra/wallets_and_referrals/providers/wallet_ref
 import 'package:new_klikdna/src/patient_card/providers/asuransi_provider.dart';
 import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/providers/favourite_food_meter_provider.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/providers/filter_food_provider.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/providers/food_meter_provider.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/providers/last_seen_foodmeter_provider.dart';
 import 'package:new_klikdna/src/pmr/providers/pmr_provider.dart';
@@ -59,7 +60,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => HomeProvider()),
         ChangeNotifierProvider(create: (_) => CmsTokenProvider()),
         ChangeNotifierProvider(create: (_) => LastSeenFoodMeterProvider()),
-        ChangeNotifierProvider(create: (_) => FavouriteFoodMeterProvider())
+        ChangeNotifierProvider(create: (_) => FavouriteFoodMeterProvider()),
+        ChangeNotifierProvider(create: (_) => FilterFood())
 
       ],
       child: MaterialApp(

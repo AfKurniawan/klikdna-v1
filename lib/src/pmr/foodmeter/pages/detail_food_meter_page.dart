@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/models/detail_food_meter_model.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/models/food_meter_model.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/models/pagination_model_data.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/providers/food_meter_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:provider/provider.dart';
 
 class DetailFoodMeterPage extends StatefulWidget {
 
-  final Food food;
+  final Datum food;
 
   DetailFoodMeterPage({Key key, this.food}) : super(key: key);
 
@@ -117,24 +118,24 @@ class _DetailFoodMeterPageState extends State<DetailFoodMeterPage> {
                           child: Text("Nutrition Fact", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
                         ),
                         Container(height: 1, color: Colors.grey),
-                        // Padding(
-                        //   padding: const EdgeInsets.only(left: 10.0, right: 10),
-                        //   child: ListView.separated(
-                        //     physics: NeverScrollableScrollPhysics(),
-                        //     itemCount: prov.mobileNutrition.length,
-                        //     shrinkWrap: true,
-                        //     itemBuilder: (context, index){
-                        //       return NutritionItemWidget(nutritions: prov.mobileNutrition[index],
-                        //       );
-                        //     },
-                        //     separatorBuilder: (context, index){
-                        //       return Container(
-                        //         height: 1,
-                        //         color: Colors.grey,
-                        //       );
-                        //     },
-                        //   ),
-                        // )
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0, right: 10),
+                          child: ListView.separated(
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: prov.newMobilenutritionList.length,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index){
+                              return NutritionItemWidget(nutritions: prov.newMobilenutritionList[index],
+                              );
+                            },
+                            separatorBuilder: (context, index){
+                              return Container(
+                                height: 1,
+                                color: Colors.grey,
+                              );
+                            },
+                          ),
+                        )
                       ],
                     ),
 
@@ -170,6 +171,7 @@ class _NutritionItemWidgetState extends State<NutritionItemWidget> {
   @override
   void initState() {
     sat = widget.nutritions.nutritionSize.substring(0, widget.nutritions.nutritionSize.indexOf('.'));
+
     super.initState();
   }
   @override

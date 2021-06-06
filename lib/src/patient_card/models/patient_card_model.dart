@@ -30,6 +30,8 @@ class DataPatient {
   String nama;
   String gender;
   String dob;
+  String height;
+  String weight;
   String bloodType;
   String medicalProfesional;
   String emergencyContact;
@@ -48,6 +50,8 @@ class DataPatient {
         this.nama,
         this.gender,
         this.dob,
+        this.height,
+        this.weight,
         this.bloodType,
         this.medicalProfesional,
         this.emergencyContact,
@@ -66,6 +70,8 @@ class DataPatient {
     nama = json['nama'];
     gender = json['gender'];
     dob = json['dob'];
+    height = json['height'];
+    weight = json['weight'];
     bloodType = json['blood_type'];
     medicalProfesional = json['medical_profesional'];
     emergencyContact = json['emergency_contact'];
@@ -91,6 +97,8 @@ class DataPatient {
     data['nama'] = this.nama;
     data['gender'] = this.gender;
     data['dob'] = this.dob;
+    data['height'] = this.height;
+    data['weight'] = this.weight;
     data['blood_type'] = this.bloodType;
     data['medical_profesional'] = this.medicalProfesional;
     data['emergency_contact'] = this.emergencyContact;

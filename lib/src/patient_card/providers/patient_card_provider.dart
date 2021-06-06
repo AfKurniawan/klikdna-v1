@@ -38,6 +38,8 @@ class PatientCardProvider with ChangeNotifier {
   String updatedAt;
   String deletedAt;
   String photo = "" ;
+  String bb = "0";
+  String tb = "0";
   bool sukses;
 
 
@@ -61,6 +63,7 @@ class PatientCardProvider with ChangeNotifier {
 
     patienCardId = getId.lastID;
 
+    print("PatienCard ID --> $patienCardId");
 
 
     String accessToken = prov.accessToken;
@@ -68,6 +71,7 @@ class PatientCardProvider with ChangeNotifier {
       "Accept": "application/json",
       "Authorization": "Bearer $accessToken"
     };
+    print("ACCESS TOKERN --> $accessToken");
 
     var url = AppConstants.GET_PATIENT_CARD_URL + '$patienCardId';
 
@@ -85,6 +89,8 @@ class PatientCardProvider with ChangeNotifier {
       noKtp = prefs.getString('nik');
       inssuranceCode = response.data.inssuranceCode;
       dob = response.data.dob;
+      bb = response.data.weight;
+      tb = response.data.height;
       bloodType = response.data.bloodType;
       gender = response.data.gender;
       medicalProfesional = response.data.medicalProfesional;
@@ -92,7 +98,6 @@ class PatientCardProvider with ChangeNotifier {
       print("EMERGENSI KONTAK $emergencyContact");
       comorbidity = response.data.comorbidity;
       photo = response.data.photo;
-
 
       sukses = response.success;
 
@@ -313,17 +318,58 @@ class PatientCardProvider with ChangeNotifier {
       "photo": gambar
     };
 
-    Map<String, String> ndas = {
+    Map<String, String> header = {
       "Content-Type": "application/json",
       "Authorization": "Bearer $accessToken"
     };
 
-    final request = await http.put(url, headers: ndas, body: json.encode(body));
+    final request = await http.put(url, headers: header, body: json.encode(body));
 
     print("Status ==> ${request.statusCode}");
 
 
     if(sukses == true){
+      showToast(context, "Berhasil", "Data berhasil diupdate");
+
+    } else {
+    }
+
+  }
+
+  Future<void> updateBeratBadan(BuildContext context, String height, String weight) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final prov = Provider.of<TokenProvider>(context, listen: false);
+    prov.getApiToken();
+    String accessToken = prov.accessToken;
+    notifyListeners();
+
+    print("PASI ID ==> $patienCardId");
+
+    int accountid = prefs.getInt("userid");
+    print("account id untuk update patientcard $patienCardId, $accountId, $height, $weight");
+    var url = AppConstants.UPDATE_PATIENT_CARD_URL + '$patienCardId' ;
+
+    var body = {
+      // "account_id": 14,
+      // "height": "0",
+      // "weight": "0"
+      "account_id": accountid,
+      "height": height,
+      "weight": weight
+
+    };
+
+    Map<String, String> header = {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $accessToken"
+    };
+
+    final response = await http.put(url, headers: header, body: json.encode(body));
+
+    print("Status ==> ${response.body}");
+
+
+    if(response.statusCode == 200){
       showToast(context, "Berhasil", "Data berhasil diupdate");
 
     } else {

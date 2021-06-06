@@ -56,7 +56,7 @@ class Data2 {
   String nextPageUrl;
   String path;
   int perPage;
-  Null prevPageUrl;
+  String prevPageUrl;
   int to;
   int total;
 
@@ -121,11 +121,11 @@ class Data3 {
   String productName;
   String productUom;
   String productSize;
-  Null imageLocation;
+  String imageLocation;
   String createdAt;
   String updatedAt;
-  Null deletedAt;
-  Null accountId;
+  String deletedAt;
+  String accountId;
   int status;
   int detailsCount;
 
@@ -147,7 +147,7 @@ class Data3 {
   Data3.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     brandId = json['brand_id'];
-    categoryId = json['category_id'];
+    //categoryId = json['category_id'];
     productName = json['product_name'];
     productUom = json['product_uom'];
     productSize = json['product_size'];

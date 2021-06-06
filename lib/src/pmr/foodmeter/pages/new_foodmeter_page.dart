@@ -1,4 +1,9 @@
+import 'dart:ui';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:new_klikdna/src/account/providers/account_provider.dart';
+import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/models/dummy_nutrisi_desc.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/providers/favourite_food_meter_provider.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/providers/food_meter_provider.dart';
@@ -16,6 +21,20 @@ import 'package:new_klikdna/widgets/outline_button_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/provider.dart';
 
+/*
+Akun data berat badan
+siska.siska@gmail.com
+dian.dian@gmail.com
+
+ANDROID:
+tito.tito@gmail.com
+dodi.dodi@gmail.com
+fachmi.fachmi@gmail.com
+desi.desi@gmail.com
+
+Password : sukses2020
+*/
+
 class NewFoodMeterPage extends StatefulWidget {
   @override
   _NewFoodMeterPageState createState() => _NewFoodMeterPageState();
@@ -23,6 +42,10 @@ class NewFoodMeterPage extends StatefulWidget {
 
 class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
   bool visible = true;
+  int _selectedValue = 0;
+  int _selectedValueTb = 0;
+
+
   void toggle() {
     setState(() {
       visible = !visible;
@@ -30,27 +53,362 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
   }
 
   TextEditingController searchController = new TextEditingController();
+  Future _futureLastScreen;
+  TextEditingController bbController = new TextEditingController();
+  TextEditingController tbController = new TextEditingController();
+
+  final items = List<String>.generate(10, (i) => "Item $i");
+
+  FixedExtentScrollController tbSelectController;
+  FixedExtentScrollController bbSelectController;
 
   @override
   void initState() {
     Provider.of<TokenProvider>(context, listen: false).getApiToken();
-    Provider.of<LastSeenFoodMeterProvider>(context, listen: false)
-        .getLastSeenFood(context);
-    Provider.of<FavouriteFoodMeterProvider>(context, listen: false)
-        .getFavouriteData(context);
+    _futureLastScreen = Provider.of<LastSeenFoodMeterProvider>(context, listen: false).getLastSeenFood(context);
+    Provider.of<LastSeenFoodMeterProvider>(context, listen: false).getLastSeenFood(context);
+    Provider.of<PatientCardProvider>(context, listen: false).getPatientCard(context);
+    Provider.of<FavouriteFoodMeterProvider>(context, listen: false).getFavouriteData(context);
+    Provider.of<AccountProvider>(context, listen: false).getUserAccount(context);
+    WidgetsBinding.instance.addPostFrameCallback((_) => getBb());
+    print('$items');
+
+    tbSelectController = FixedExtentScrollController(initialItem: 0);
+    bbSelectController = FixedExtentScrollController(initialItem: 0);
+
     super.initState();
   }
+
 
   @override
   void dispose() {
     searchController.dispose();
+    tbSelectController.dispose();
+    bbSelectController.dispose();
     super.dispose();
   }
+
+
+
+  getBb(){
+    final pcard = Provider.of<PatientCardProvider>(context, listen: false);
+    if(pcard.bb == "0" || pcard.tb == "0"){
+      dialogBbTb(context);
+    } else if(pcard.bb == null || pcard.tb == null){
+      dialogBbTb(context);
+    } else {
+
+    }
+  }
+
+  maning(){
+    showDialog(
+      context: context,
+      builder: (BuildContext ctx) {
+        return AlertDialog(
+          title: Text('Berat'),
+          content: Container(
+            height: 350,
+            width: 350.0,
+            child: Column(
+              children: <Widget>[
+                Text('Kilogram'),
+                Container(
+                  height: MediaQuery.of(context).size.height / 3.5,
+                  color: Colors.transparent,
+                  child: CupertinoPicker(
+                    backgroundColor: Colors.white,
+                    itemExtent: 30,
+                    magnification: 1,
+                    useMagnifier: true,
+                    diameterRatio: 1,
+                    scrollController: bbSelectController,
+                    children: List<Widget>.generate(131, (int index) {
+                      int i = index+20 ;
+                      return Center(
+                        child: Text("$i"),
+                      );
+                    }),
+                    onSelectedItemChanged: (i) {
+                      setState(() {
+                        _selectedValue = i+20;
+                      });
+                    },
+
+                  ),
+                ),
+                SizedBox(height: 50),
+                CupertinoButton(
+                  child: Text('OK'),
+                  onPressed: (){
+                    setState(() {
+                      bbController.text = _selectedValue.toString();
+                      print("VALUE ${bbController.text}");
+                      Navigator.of(ctx).pop();
+                    });
+                  },
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  tbDialog(){
+    showDialog(
+      context: context,
+      builder: (BuildContext ctx) {
+        return AlertDialog(
+          title: Text('Tinggi Badan'),
+          content: Container(
+            height: 350,
+            width: 350.0,
+            child: Column(
+              children: <Widget>[
+                Text('Centimeter'),
+                Container(
+                  height: MediaQuery.of(context).size.height / 3.5,
+                  color: Colors.transparent,
+                  child: CupertinoPicker(
+                    backgroundColor: Colors.white,
+                    itemExtent: 30,
+                    magnification: 1,
+                    useMagnifier: true,
+                    diameterRatio: 1,
+                    scrollController: tbSelectController,
+                    children: List<Widget>.generate(150, (int index) {
+                      int i = index+100 ;
+                      return Center(
+                        child: Text("$i"),
+                      );
+                    }),
+                      onSelectedItemChanged: (i) {
+                        setState(() {
+                          _selectedValueTb = i+100;
+                        });
+                      },
+                  ),
+                ),
+                SizedBox(height: 50),
+                CupertinoButton(
+                  child: Text('OK'),
+                  onPressed: (){
+                    setState(() {
+                      tbController.text = _selectedValueTb.toString();
+                      print("VALUE ${bbController.text}");
+                      Navigator.of(ctx).pop();
+                    });
+                  },
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+
 
   String lemakdesc = "Lemak ialah salah satu komponen makronutrien yang berfungsi sebagai cadangan energi jangka waktu panjang, dan juga mambantu penyerapan beberapa jenis vitamin dalam tubuh, seperti vitamin A, D, E dan K. Hanya saja, seringkali lebihnya kadar lemak justrut tidak lagi bermanfaat, dan menjadi faktor resiko berbagai penyakit. Secara umum, lemak dapat dibagi menjadi asam lemak jenuh, asam lemak tidak jenuh, serta lemak trans. Asam lemak jenuh dan lemak trans tidak baik banyak dikonsumsi karena dapat menimbulkan penyumbatan pembuluh darah. Asupan lemak per hari menurut AKG adalah sekitar 10-25% dari total kalori per hari. Batas ini berkisar 30 gram asupan lemak jenuh per hari untuk laki-laki, 20 gram per hari untuk perempuan. Sementara lemak trans, batasnya sekitar 5 gram per hari" ;
   String garamdesc = "Garam, yang biasanya disebut sebagai Natrium atau Sodium, berperan dalam keseimbangan cairan dan ion dalam tubuh, serta menjaga kestabilan tekanan darah. Meskipun penting, namun rekomendasi asupan garam tidaklah banyak, yaitu 2400 mg, atau sekitar 1 sendok teh garam per harinya. akan tetapi, kelebihan asupan garam justru yang banyak terjadi belakangan ini, dan dapat menyebabkan hipertensi atau tekanan darah tinggi yang dapat menimbulkan berbagai penyakit lainnya lagi. Tingginya kadar garam dalam suatu makanan berperan dalam hal ini. Sementara itu, apabila tubuh kekurangan garam dapat menimbulkan gangguan keseimbangan cariran tubuh, membuat bengkak tubuh, badan lemas, dan lain sebagainya";
   String proteinDesc = "Protein merupakan kumpulan asam amino yang berperan penting dalam keseimbangan fungsi sel tubuh. Mulai dari fungsinya menjadi struktur penyusun sel tubuh, menjaga daya tahan tubuh, media transportasi sel, menjalankan fungsi enzim, menyampaikan pesan sel, menjadikan protein salah satu komponen vital yang jangan sampai kekurangan. Menurut AKG, asupan keseharian protein sekitar 10-15% dari keseluruhan kalori per hari. Hal ini berkisar 56-59 gram per hari untuk perempuan dan 62-66 gram per harinya untuk laki-laki. Kekurangan protein dapat berakibat pada berbagai macam gangguan fungsi tubuh, seperti malnutrisi, bengkak (edema), hilangnya massa otot, rentan terhadap infeksi akibat menurunnya daya tahan tubuh, masalah yang nampak pada kulit, rambut, kuku, dan lain sebagainya. Sementara itu, kelebihan protein dapat membuat penumpukan zat keton dalam tubuh (ketosis), gangguan fungsi ginjal, kurangnya kalsium dalam tubuh, serta resiko peningkatan berat badan. ";
   String karboDesc = "Karbohidrat adalah kumpulan senyawa yang menyediakan energi bagi tubuh kita dalam bentuk kalori. Fungsi karbohidrat adalah sebagai sumber energi utama dalam tubuh kita. Karbohidrat banyak ditemukan dalam bentuk gula, pati, buah dan sayur, susu, dan lain sebagainya. Jumlah asupan karbohidrat per hari seseorang berbeda-beda, ditentukan oleh jenis kelamin, usia, aktivitas, dan kondisi kesehatan.  Namun secara umum, menurut Angka Kecukupan Gizi (AKG) yang dibuat oleh Kementrian Kesehatan, batasan konsumsi harian karbohidrat adalah sekitar 60-75% dari jumlah asupan kalori per hari, yakni sekitar 350-390 gram untuk laki-laki, dan 300-320 gram untuk wanita. Ketika kekurangan karbohidrat dalam tubuh, seseorang dapat merasa lemah, pusing, mual, pandangan berkunang-kunang hingga sulit beraktivitas. Efek jangka panjang ketika seseorang kekurangan karbohidrat adalah malnutrisi, gangguan daya tahan tubuh, dan lainnya. Namun dewasa ini, hal yang lebih sering terjadi adalah kelebihan asupan karbohidrat sehari-hari. Hal ini dapat mengakibatkan resiko obesitas, penyakit kardiovaskuler, diabetes melitus tipe 2, dan penyakit tidak menular lainnya. ";
+
+
+  void dialogBbTb(BuildContext context){
+    showModalBottomSheet(
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        context: context,
+        builder: (context) {
+          return BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState){
+                return Container(
+                  height: MediaQuery.of(context).size.height / 2,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(24),
+                          topRight: Radius.circular(24))),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 10),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 16.0, top: 24),
+                            child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text("Isi Berat dan Tinggi Kamu", style: TextStyle(
+                                    fontWeight: FontWeight.w500, fontSize: 18, fontFamily: "Roboto"))),
+                          ),
+
+                          Padding(
+                            padding: const EdgeInsets.only(left: 16.0, top: 10),
+                            child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text("Isilah berat dan tinggi kamu dengan benar untuk mendapatkan\nhasil rekomendasi pada food meter", style: TextStyle(
+                                    fontWeight: FontWeight.w300, fontSize: 12, fontFamily: "Roboto"))),
+                          ),
+
+                        ],
+                      ),
+
+                      SizedBox(height: 19),
+
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16.0, right: 16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width / 2.3,
+                              child: TextFormField(
+                                style: TextStyle(
+                                  color: MyColors.dnaBlack,
+                                ),
+                                controller: bbController,
+                                readOnly: true,
+                                onTap: (){
+                                  //_showBBPicker(context);
+                                  maning();
+                                },
+                                decoration: InputDecoration(
+                                    suffixIcon: Icon(Icons.arrow_drop_down_sharp, color: Colors.grey),
+                                    labelText: "Berat",
+                                    labelStyle: TextStyle(color: Colors.grey),
+                                    alignLabelWithHint: true,
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: MyColors.dnaGreen, width: 1.5),
+                                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.grey, width: 1.5),
+                                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide:
+                                      BorderSide(color: Colors.red[300], width: 1.5),
+                                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide:
+                                      BorderSide(color: Colors.red[300], width: 1.5),
+                                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    ),
+                                    disabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.transparent, width: 1.5),
+                                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    ),
+                                    focusColor: MyColors.dnaGreen,
+                                    hintText: "",
+                                    hintStyle:
+                                    TextStyle(color: Colors.white54, fontSize: 12)),
+
+                              ),
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width / 2.3,
+                              child: TextFormField(
+                                style: TextStyle(
+                                  color: MyColors.dnaBlack,
+                                ),
+                                onTap: (){
+                                  tbDialog();
+                                },
+                                readOnly: true,
+                                controller: tbController,
+                                decoration: InputDecoration(
+                                    suffixIcon: Icon(Icons.arrow_drop_down_sharp, color: Colors.grey),
+                                    labelText: "Tinggi",
+                                    labelStyle: TextStyle(color: Colors.grey),
+                                    alignLabelWithHint: true,
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: MyColors.dnaGreen, width: 1.5),
+                                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.grey, width: 1.5),
+                                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide:
+                                      BorderSide(color: Colors.red[300], width: 1.5),
+                                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide:
+                                      BorderSide(color: Colors.red[300], width: 1.5),
+                                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    ),
+                                    disabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.transparent, width: 1.5),
+                                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    ),
+                                    focusColor: MyColors.dnaGreen,
+                                    hintText: "",
+                                    hintStyle:
+                                    TextStyle(color: Colors.white54, fontSize: 12)),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      SizedBox(height: 70),
+
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Material(
+                          color: MyColors.dnaGreen,
+                          borderRadius: BorderRadius.circular(10),
+                          child: InkWell(
+                            onTap: (){
+                              Provider.of<PatientCardProvider>(context, listen: false).updateBeratBadan(context, tbController.text, bbController.text);
+                            },
+                            splashColor: Colors.white,
+                            child: Ink(
+                              width: MediaQuery.of(context).size.width,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: MyColors.dnaGreen
+
+                              ),
+                              child: Center(
+                                child: Text(
+                                  "Simpan",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          );
+        }
+    );
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -164,12 +522,12 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
                                           padding: const EdgeInsets.all(14.0),
                                           child: Center(
                                               child: Image.asset(
-                                                  "assets/icons/food_apple_icon.png",
+                                                  "assets/icons/burger_icon.png",
                                                   height: 32)),
                                         )),
                                     splashColor: Colors.grey,
                                     onTap: (){
-                                      Navigator.pushNamed(context, "food_meter_by_kategori_page");
+                                      Navigator.pushNamed(context, "food_meter_by_kategori_page", arguments: 0);
                                     },
                                   ),
                                   SizedBox(height: 8),
@@ -185,20 +543,26 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
                               SizedBox(width: 58),
                               Column(
                                 children: [
-                                  Container(
-                                      height: 60,
-                                      width: 60,
-                                      decoration: BoxDecoration(
-                                        color: MyColors.drinkIconColor,
-                                        borderRadius: BorderRadius.circular(50),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(14.0),
-                                        child: Center(
-                                            child: Image.asset(
-                                                "assets/icons/drinks_icon.png",
-                                                height: 32)),
-                                      )),
+                                  InkWell(
+                                    child: Container(
+                                        height: 60,
+                                        width: 60,
+                                        decoration: BoxDecoration(
+                                          color: MyColors.drinkIconColor,
+                                          borderRadius: BorderRadius.circular(50),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(14.0),
+                                          child: Center(
+                                              child: Image.asset(
+                                                  "assets/icons/drinks_icon.png",
+                                                  height: 32)),
+                                        )),
+                                    splashColor: Colors.grey,
+                                    onTap: (){
+                                      Navigator.pushNamed(context, "food_meter_by_kategori_page", arguments: 1);
+                                    },
+                                  ),
                                   SizedBox(height: 8),
                                   Text(
                                     "Minuman",
@@ -212,20 +576,26 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
                               SizedBox(width: 58),
                               Column(
                                 children: [
-                                  Container(
-                                      height: 60,
-                                      width: 60,
-                                      decoration: BoxDecoration(
-                                        color: MyColors.restoranIconColor,
-                                        borderRadius: BorderRadius.circular(50),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(14.0),
-                                        child: Center(
-                                            child: Image.asset(
-                                                "assets/icons/resto_icon.png",
-                                                height: 32)),
-                                      )),
+                                  InkWell(
+                                    child: Container(
+                                        height: 60,
+                                        width: 60,
+                                        decoration: BoxDecoration(
+                                          color: MyColors.restoranIconColor,
+                                          borderRadius: BorderRadius.circular(50),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(14.0),
+                                          child: Center(
+                                              child: Image.asset(
+                                                  "assets/icons/resto_icon.png",
+                                                  height: 32)),
+                                        )),
+                                    splashColor: Colors.grey,
+                                    onTap: (){
+                                      Navigator.pushNamed(context, "food_meter_by_kategori_page", arguments: 2);
+                                    },
+                                  ),
                                   SizedBox(height: 8),
                                   Text(
                                     "Restaurant",
@@ -251,18 +621,30 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
                               fontFamily: "Roboto")),
                     ),
                     SizedBox(height: 14),
-                    Container(
-                      height: 120,
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            top: 10, bottom: 10, left: 16),
-                        child: Consumer<FoodMeterProvider>(
-                            builder: (context, food, _) {
-                          return food.isLoadingDetail == true
-                              ? LoadingWidget()
-                              : buildSingleChildScrollViewLastSeen();
-                        }),
-                      ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          top: 10, bottom: 10, left: 16),
+                      child: Consumer<FavouriteFoodMeterProvider>(
+                          builder: (context, food, _) {
+                            //return buildSingleChildScrollViewLastSeen();
+                           return FutureBuilder(
+                             future: _futureLastScreen,
+                              builder: (context, snapshot){
+                                if(snapshot.connectionState == ConnectionState.waiting){
+                                  return LoadingWidget();
+                                } else if (snapshot.connectionState == ConnectionState.done){
+                                  return Container(
+                                    height: 120,
+                                      child: buildListViewBuilderLastSeen());
+                                } else if(food.isLoadingFood == true){
+                                  return LoadingWidget();
+                                } else {
+                                  return Container();
+                                }
+
+                              },
+                            );
+                      }),
                     ),
                     SizedBox(height: 27),
                     Padding(
@@ -304,7 +686,7 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 16.0, top: 14),
+                        padding: const EdgeInsets.only(left: 16.0, top: 14, right: 16),
                         child: Row(
                           children: [
                             InkWell(
@@ -316,7 +698,7 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Image.asset("assets/images/kacang.png",
-                                            height: 129, fit: BoxFit.fill),
+                                            height: 129, width: 165, fit: BoxFit.fill),
                                         SizedBox(height: 7),
                                         Padding(
                                           padding: const EdgeInsets.only(left: 12),
@@ -350,7 +732,7 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Image.asset("assets/images/nasi.png",
-                                            height: 129, fit: BoxFit.fill),
+                                            height: 129, width: 165, fit: BoxFit.fill),
                                         SizedBox(height: 7),
                                         Padding(
                                           padding: const EdgeInsets.only(left: 12),
@@ -379,7 +761,7 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Image.asset("assets/images/protein.png",
-                                            width: 150, height: 129, fit: BoxFit.fill),
+                                            width: 165, height: 129, fit: BoxFit.fill),
                                         SizedBox(height: 7),
                                         Padding(
                                           padding: const EdgeInsets.only(left: 12),
@@ -407,7 +789,7 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Image.asset("assets/images/garam.png",
-                                            width: 150, height: 129, fit: BoxFit.fill),
+                                            width: 155, height: 129, fit: BoxFit.fill),
                                         SizedBox(height: 7),
                                         Padding(
                                           padding: const EdgeInsets.only(left: 12),
@@ -436,27 +818,143 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
     );
   }
 
-  SingleChildScrollView buildSingleChildScrollViewLastSeen() {
+  SingleChildScrollView buildSingleChildScrollViewLastSeenx() {
     var lastSeen = Provider.of<LastSeenFoodMeterProvider>(context, listen: false);
     var details = Provider.of<FoodMeterProvider>(context, listen: false);
+
+
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
-          LastSeenItem(food: lastSeen.food0, kal: details.kal0, kalSize: details.kalSize0, prot: details.prot0, protSize: details.protSize0),
-          LastSeenItem(food: lastSeen.food1, kal: details.kal1, kalSize: details.kalSize1, prot: details.prot1, protSize: details.protSize1),
-          LastSeenItem(food: lastSeen.food2, kal: details.kal2, kalSize: details.kalSize2, prot: details.prot2, protSize: details.protSize2),
-          LastSeenItem(food: lastSeen.food3, kal: details.kal3, kalSize: details.kalSize3, prot: details.prot3, protSize: details.protSize3),
-          LastSeenItem(food: lastSeen.food4, kal: details.kal4, kalSize: details.kalSize4, prot: details.prot4, protSize: details.protSize4)
-
+          LastSeenItem(food: lastSeen.lastSeenFood[0].product.productName, kal: details.kal0, kalSize: details.kalSize0, prot: details.prot0, protSize: details.protSize0),
+          LastSeenItem(food: lastSeen.lastSeenFood[1].product.productName, kal: details.kal1, kalSize: details.kalSize1, prot: details.prot1, protSize: details.protSize1),
+          LastSeenItem(food: lastSeen.lastSeenFood[2].product.productName, kal: details.kal2, kalSize: details.kalSize2, prot: details.prot2, protSize: details.protSize2),
+          LastSeenItem(food: lastSeen.lastSeenFood[3].product.productName, kal: details.kal3, kalSize: details.kalSize3, prot: details.prot3, protSize: details.protSize3),
+          LastSeenItem(food: lastSeen.lastSeenFood[4].product.productName, kal: details.kal4, kalSize: details.kalSize4, prot: details.prot4, protSize: details.protSize4)
         ],
       ),
     );
   }
 
+  Widget buildListViewBuilderLastSeen() {
+    var lastSeen = Provider.of<LastSeenFoodMeterProvider>(context, listen: false);
+    var details = Provider.of<FoodMeterProvider>(context, listen: false);
+    return ListView.builder(
+      itemCount: lastSeen.lastSeenFood.length,
+      scrollDirection: Axis.horizontal,
+      itemBuilder: (context, i){
+        List splittedSize = details.kaloriList[i].nutritionSize.toString().split(".");
+        List splittedProteinSize = details.proteinList[i].nutritionSize.toString().split(".");
+        if (lastSeen.lastSeenFood[i].product == null || lastSeen.lastSeenFood[i].product.id == 0) {
+          return Container();
+        } else {
+          return CustomShadowCardWidget(
+          width: MediaQuery.of(context).size.width / 2,
+          margin: EdgeInsets.only(right: 16, bottom: 10),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 12, top: 0, right: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("${lastSeen.lastSeenFood[i].product.productName}",
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontFamily: "Roboto",
+                    fontSize: 14,
+                  ),
+                ),
+                SizedBox(height: 16),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment:
+                      MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  height: 10,
+                                  width: 10,
+                                  decoration: BoxDecoration(
+                                    color: MyColors.kkalColor,
+                                    borderRadius:
+                                    BorderRadius.circular(50),
+                                  ),
+                                ),
+                                SizedBox(width: 6),
+                                Text("Kalori",
+                                    style: TextStyle(
+                                        fontSize: 10,
+                                        fontFamily: "Roboto",
+                                        fontWeight: FontWeight.w300)),
+                              ],
+                            ),
+                            Text("${splittedSize[0]} kkal",
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: "Roboto")),
+                          ],
+                        ),
+                        SizedBox(width: 10),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  height: 10,
+                                  width: 10,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xffFCFF9B),
+                                    borderRadius:
+                                    BorderRadius.circular(50),
+                                  ),
+                                ),
+                                SizedBox(width: 6),
+                                Text("Protein",
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                    ))
+                              ],
+                            ),
+                            Text("${splittedProteinSize[0]} g",
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: "Roboto")),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        );
+        }
+      },
+      // child: Row(
+      //   children: [
+      //     LastSeenItem(food: lastSeen.food0, kal: details.kal0, kalSize: details.kalSize0, prot: details.prot0, protSize: details.protSize0),
+      //     LastSeenItem(food: lastSeen.food1, kal: details.kal1, kalSize: details.kalSize1, prot: details.prot1, protSize: details.protSize1),
+      //     LastSeenItem(food: lastSeen.food2, kal: details.kal2, kalSize: details.kalSize2, prot: details.prot2, protSize: details.protSize2),
+      //     LastSeenItem(food: lastSeen.food3, kal: details.kal3, kalSize: details.kalSize3, prot: details.prot3, protSize: details.protSize3),
+      //     LastSeenItem(food: lastSeen.food4, kal: details.kal4, kalSize: details.kalSize4, prot: details.prot4, protSize: details.protSize4)
+      //
+      //   ],
+      // ),
+    );
+  }
+
   SingleChildScrollView buildSingleChildScrollViewFavourite() {
     var fav = Provider.of<FavouriteFoodMeterProvider>(context, listen: false);
-
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(

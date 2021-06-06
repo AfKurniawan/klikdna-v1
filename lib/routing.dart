@@ -24,6 +24,7 @@ import 'package:new_klikdna/src/pmr/foodmeter/pages/detail_nutrition_page.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/pages/food_meter_by_kategori_page.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/pages/food_meter_page.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/pages/foodmeter_search_page.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/pages/new_detail_food_meter_page.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/pages/new_foodmeter_page.dart';
 import 'package:new_klikdna/src/profile/pages/main_profile_page.dart';
 import 'package:new_klikdna/src/profile/pages/lihat_profile_page.dart';
@@ -39,6 +40,7 @@ class Routing {
     return <String, WidgetBuilder>{
 
       "/": (_) => SplashPage(),
+      // "/": (_) => NewDetailFoodMeterPage(),
 
     };
   }
@@ -135,6 +137,15 @@ class Routing {
             )
         );
 
+      case "new_detail_food_meter_page" :
+        return PageTransition(
+            child: NewDetailFoodMeterPage(food: settings.arguments),
+            type: PageTransitionType.fade,
+            duration: Duration(
+                milliseconds: 350
+            )
+        );
+
       case "detail_nutrition_page" :
         return PageTransition(
             child: DetailNutritionPage(model: settings.arguments),
@@ -146,7 +157,7 @@ class Routing {
 
       case "food_meter_by_kategori_page" :
         return PageTransition(
-            child: FoodMeterByKategoryPage(),
+            child: FoodMeterByKategoryPage(currentTab: settings.arguments),
             type: PageTransitionType.fade,
             duration: Duration(
                 milliseconds: 350
