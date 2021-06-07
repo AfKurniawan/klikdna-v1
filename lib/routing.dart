@@ -26,6 +26,7 @@ import 'package:new_klikdna/src/pmr/foodmeter/pages/food_meter_page.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/pages/foodmeter_search_page.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/pages/new_detail_food_meter_page.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/pages/new_foodmeter_page.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/pages/restaurant_detail_page.dart';
 import 'package:new_klikdna/src/profile/pages/main_profile_page.dart';
 import 'package:new_klikdna/src/profile/pages/lihat_profile_page.dart';
 import 'package:new_klikdna/src/report/pages/detail_report_page.dart';
@@ -139,7 +140,16 @@ class Routing {
 
       case "new_detail_food_meter_page" :
         return PageTransition(
-            child: NewDetailFoodMeterPage(food: settings.arguments),
+            child: NewDetailFoodMeterPage(),
+            type: PageTransitionType.fade,
+            duration: Duration(
+                milliseconds: 350
+            )
+        );
+
+      case "restaurant_detail_page" :
+        return PageTransition(
+            child: RestoranDetailPage(id: settings.arguments),
             type: PageTransitionType.fade,
             duration: Duration(
                 milliseconds: 350

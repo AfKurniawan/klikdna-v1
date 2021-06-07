@@ -1,13 +1,13 @@
 class DetailFoodMeterModel {
   bool success;
-  Detail data;
+  DetailFood data;
   String message;
 
   DetailFoodMeterModel({this.success, this.data, this.message});
 
   DetailFoodMeterModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
-    data = json['data'] != null ? new Detail.fromJson(json['data']) : null;
+    data = json['data'] != null ? new DetailFood.fromJson(json['data']) : null;
     message = json['message'];
   }
 
@@ -22,7 +22,7 @@ class DetailFoodMeterModel {
   }
 }
 
-class Detail {
+class DetailFood {
   int id;
   int brandId;
   String productName;
@@ -35,7 +35,7 @@ class Detail {
   List<Nutritions> nutritions;
   List<MobileNutritions> mobileNutritions;
 
-  Detail(
+  DetailFood(
       {this.id,
         this.brandId,
         this.productName,
@@ -48,7 +48,7 @@ class Detail {
         this.nutritions,
         this.mobileNutritions});
 
-  Detail.fromJson(Map<String, dynamic> json) {
+  DetailFood.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     brandId = json['brand_id'];
     productName = json['product_name'];

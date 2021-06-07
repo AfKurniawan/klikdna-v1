@@ -23,6 +23,8 @@ class FormWidget extends StatelessWidget {
   final bool enabled;
   final bool readonly;
   final bool autofocus;
+  final bool filled;
+  final Color fillColor;
   final GestureTapCallback onTap;
   List<TextInputFormatter> inputFormatters;
 
@@ -46,6 +48,8 @@ class FormWidget extends StatelessWidget {
     this.enabled,
     this.readonly,
     this.autofocus,
+    this.filled,
+    this.fillColor,
     this.inputFormatters,
     this.onTap
 
@@ -68,6 +72,8 @@ class FormWidget extends StatelessWidget {
       onEditingComplete: oncomplete,
       inputFormatters: inputFormatters,
       decoration: InputDecoration(
+        filled: filled,
+          fillColor: fillColor,
           suffixIcon: suffixIcon,
           prefixIcon: prefixIcon,
           labelText: labelText,

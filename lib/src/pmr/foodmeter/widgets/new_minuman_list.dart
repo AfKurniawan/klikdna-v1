@@ -8,8 +8,10 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_paginator/flutter_paginator.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/models/pagination_model_data.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/providers/food_meter_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:new_klikdna/widgets/loading_widget.dart';
+import 'package:provider/provider.dart';
 
 
 
@@ -146,7 +148,9 @@ class NewMinumanListState extends State<NewMinumanList> {
 
                   SizedBox(width: 20),
                   InkWell(
-                    onTap: (){},
+                    onTap: (){
+                      Provider.of<FoodMeterProvider>(context, listen: false).getSpecificFoodMeter(context, item.id);
+                    },
                     splashColor: Colors.white,
                     child: Container(
                       height: 30,

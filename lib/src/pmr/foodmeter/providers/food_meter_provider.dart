@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/models/detail_food_meter_model.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/models/food_meter_model.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/models/pagination_model_data.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/providers/last_seen_foodmeter_provider.dart';
 import 'package:new_klikdna/src/token/providers/token_provider.dart';
 import 'package:provider/provider.dart';
@@ -62,6 +63,9 @@ class FoodMeterProvider extends ChangeNotifier {
 
 
   List<MobileNutritions> newMobilenutritionList = [];
+  List<MobileNutritions> newMobilenutritionListx = [];
+  List<MobileNutritions> newMobilenutritionListz = [];
+
   List<MobileNutritions> newMobilenutritionList0 = [];
   List<MobileNutritions> newMobilenutritionList1 = [];
   List<MobileNutritions> newMobilenutritionList2 = [];
@@ -69,6 +73,10 @@ class FoodMeterProvider extends ChangeNotifier {
   List<MobileNutritions> newMobilenutritionList4 = [];
 
   List<MobileNutritions> newMobilenutritionMapList = [];
+  List<MobileNutritions> newMobilenutritionMapListx = [];
+  List<MobileNutritions> newMobilenutritionMapListz = [];
+
+
   List<MobileNutritions> newMobilenutritionMapList0 = [];
   List<MobileNutritions> newMobilenutritionMapList1 = [];
   List<MobileNutritions> newMobilenutritionMapList2 = [];
@@ -169,7 +177,6 @@ class FoodMeterProvider extends ChangeNotifier {
 
     if(r.statusCode == 200){
 
-      print("NUTRISSI ===>> ${r.body}");
 
       var nutritionArray = response['data']['mobile_nutritions'] as List;
 
@@ -177,6 +184,8 @@ class FoodMeterProvider extends ChangeNotifier {
 
 
         newMobilenutritionList = newMobilenutritionMapList.where((i) => ("${i.productId}" == "$id")).toList();
+
+      newMobilenutritionListx = newMobilenutritionMapList.where((i) => ("${i.productId}" == "$id")).toList();
 
 
         for(int i = 0 ; i < nutritionArray.length; i++) {
@@ -321,6 +330,70 @@ class FoodMeterProvider extends ChangeNotifier {
 
     }
      notifyListeners();
+  }
+
+  List<FoodMeterModel> fm = [];
+
+  String namaProduk = "" ;
+  String sizeProduk = "" ;
+  String prodUom = "" ;
+
+  Future<List> getSpecificFoodMeter(BuildContext context, int id) async {
+    isLoadingDetail = true;
+
+    print("Start get Specific Food");
+
+    final prov = Provider.of<TokenProvider>(context, listen: false);
+    String accessToken = prov.accessToken;
+
+    Map<String, String> ndas = {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $accessToken"
+    };
+
+    var url = AppConstants.GET_DETAIL_FOOD_METER_URL + "$id" ;
+
+
+    var r =  await http.get(url, headers: ndas);
+
+
+    var response = json.decode(r.body);
+
+
+    if(r.statusCode == 200){
+
+      print("Specific ===>> ${r.body}");
+
+      var nutritionArray = response['data']['mobile_nutritions'] as List;
+      var foodData = response['data'];
+
+      final foodResponse = DetailFood.fromJson(foodData);
+
+      //fm = foodData.map<FoodMeterModel>((j) => FoodMeterModel.fromJson(j)).toList();
+
+      print("NAMAMSMSMA ${foodResponse.productName}");
+
+      namaProduk = foodResponse.productName;
+      sizeProduk = foodResponse.productSize;
+      prodUom = foodResponse.productUom ;
+
+      newMobilenutritionMapListx = nutritionArray.map<MobileNutritions>((j) => MobileNutritions.fromJson(j)).toList();
+      newMobilenutritionListx = newMobilenutritionMapListx.where((i) => ("${i.productId}" == "$id")).toList();
+
+      newMobilenutritionMapListz = nutritionArray.map<MobileNutritions>((j) => MobileNutritions.fromJson(j)).toList();
+      newMobilenutritionListz = newMobilenutritionMapListz.where((i) => ("${i.productId}" == "$id")).toList();
+
+      Navigator.of(context).pushNamed("new_detail_food_meter_page");
+
+
+
+
+    } else {
+
+      print("Something wrong");
+
+    }
+    notifyListeners();
   }
 
 

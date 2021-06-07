@@ -36,9 +36,10 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
 
   @override
   Widget build(BuildContext context) {
-    List splittedSize = widget.food.productSize.toString().split(".");
+    //
     final prov = Provider.of<FoodMeterProvider>(context);
-    prov.newMobilenutritionList.removeWhere((e) => e.nutritionName == "Kalori");
+
+    List splittedSize = prov.sizeProduk.toString().split(".");
 
     return Scaffold(
       appBar: AppBar(
@@ -82,12 +83,12 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                 Padding(
                   padding: const EdgeInsets.only(right: 16.0),
                   child: FormWidget(
-                    readonly: true,
-                    autofocus: true,
+                    readonly: false,
+                    autofocus: false,
                     textEditingController: serachController,
-                    hint: "Cari makanan, minuman atau restauran",
+                    hint: "Cari makanan, minuman atau restoran",
                     obscure: false,
-                    labelText: "Cari makanan, minuman atau restauran",
+                    labelText: "Cari makanan, minuman atau restoran",
                     prefixIcon: Icon(Icons.search),
                   ),
                 ),
@@ -122,13 +123,13 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                   ),
                 ),
                 SizedBox(height: 20),
-                Text("${widget.food.productName}",
+                Text("${prov.namaProduk}",
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                         fontFamily: "Roboto")),
                 SizedBox(height: 4),
-                Text("1 Porsi ${splittedSize[0]} ${widget.food.productUom}",
+                Text("1 Porsi ${splittedSize[0]} ${prov.prodUom}",
                     style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w300,
@@ -154,30 +155,10 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                         }),
                   ],
                 ),
-
-
-                buildTileNutritionKalorie(prov),
-
+                buildTileNutrition(prov),
                 SizedBox(height: 15),
                 isExpanded == true
-                    ? Padding(
-                    padding: const EdgeInsets.only(left: 10.0, right: 10),
-                    child: ListView.separated(
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: prov.newMobilenutritionList.length,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index){
-                        return NutritionItemWidget(nutritions: prov.newMobilenutritionList[index],
-                        );
-                      },
-                      separatorBuilder: (context, index){
-                        return Container(
-                          height: 1,
-                          color: Colors.grey,
-                        );
-                      },
-                    )
-                )
+                    ? buildListBuilderNutritions(prov)
                     : Container(),
                 SizedBox(height: 24),
                 Container(
@@ -188,59 +169,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                           fontFamily: "Roboto")),
                 ),
                 SizedBox(height: 12),
-                Row(
-                  children: [
-                    Stack(
-                      children: [
-                        Container(
-                          height: 110,
-                          width: 110,
-                          decoration: BoxDecoration(
-                              color: MyColors.kkalColor,
-                              borderRadius: BorderRadius.circular(60)),
-                        ),
-                        Positioned(
-                          right: 12,
-                          top: 12,
-                          left: 12,
-                          bottom: 12,
-                          child: Container(
-                            height: 50,
-                            width: 50,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(60)),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("51",
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w400,
-                                        fontFamily: "Roboto")),
-                                Text('Kkal',
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w300,
-                                        fontFamily: "Roboto"))
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                    SizedBox(width: 20),
-                    Container(
-                      width: 210,
-                      child: Text(
-                          "Aktifitas yang dapat kamu lakukan untuk membakar 147 kalori",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: "Roboto")),
-                    )
-                  ],
-                ),
+                buildRekomendasiOlahRaga(prov),
                 SizedBox(height: 24),
                 Padding(
                   padding: const EdgeInsets.only(right: 16.0),
@@ -264,7 +193,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                                 children: [
                                   Row(
                                     children: [
-                                      Text("9",
+                                      Text("0",
                                           style: TextStyle(
                                               fontFamily: "Montserrat",
                                               fontSize: 24,
@@ -305,7 +234,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                                 children: [
                                   Row(
                                     children: [
-                                      Text("6",
+                                      Text("0",
                                           style: TextStyle(
                                               fontFamily: "Montserrat",
                                               fontSize: 24,
@@ -355,7 +284,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                                 children: [
                                   Row(
                                     children: [
-                                      Text("6",
+                                      Text("0",
                                           style: TextStyle(
                                               fontFamily: "Montserrat",
                                               fontSize: 24,
@@ -396,7 +325,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                                 children: [
                                   Row(
                                     children: [
-                                      Text("4",
+                                      Text("0",
                                           style: TextStyle(
                                               fontFamily: "Montserrat",
                                               fontSize: 24,
@@ -445,7 +374,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                                 children: [
                                   Row(
                                     children: [
-                                      Text("18",
+                                      Text("0",
                                           style: TextStyle(
                                               fontFamily: "Montserrat",
                                               fontSize: 24,
@@ -485,7 +414,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                                 children: [
                                   Row(
                                     children: [
-                                      Text("7",
+                                      Text("0",
                                           style: TextStyle(
                                               fontFamily: "Montserrat",
                                               fontSize: 24,
@@ -521,59 +450,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                           fontFamily: "Roboto")),
                 ),
                 SizedBox(height: 12),
-                Row(
-                  children: [
-                    Stack(
-                      children: [
-                        Container(
-                          height: 110,
-                          width: 110,
-                          decoration: BoxDecoration(
-                              color: MyColors.kkalColor,
-                              borderRadius: BorderRadius.circular(60)),
-                        ),
-                        Positioned(
-                          right: 12,
-                          top: 12,
-                          left: 12,
-                          bottom: 12,
-                          child: Container(
-                            height: 50,
-                            width: 50,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(60)),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("51",
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w400,
-                                        fontFamily: "Roboto")),
-                                Text('Kkal',
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w300,
-                                        fontFamily: "Roboto"))
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                    SizedBox(width: 20),
-                    Container(
-                      width: 210,
-                      child: Text(
-                          "Aktifitas lainnya yang dapat kamu lakukan untuk membakar 147 kalori",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: "Roboto")),
-                    )
-                  ],
-                ),
+                buildAktifitasLainnya(prov),
                 SizedBox(height: 24),
                 Padding(
                   padding: const EdgeInsets.only(right: 16.0),
@@ -597,7 +474,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                                 children: [
                                   Row(
                                     children: [
-                                      Text("15",
+                                      Text("0",
                                           style: TextStyle(
                                               fontFamily: "Montserrat",
                                               fontSize: 24,
@@ -638,7 +515,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                                 children: [
                                   Row(
                                     children: [
-                                      Text("18",
+                                      Text("0",
                                           style: TextStyle(
                                               fontFamily: "Montserrat",
                                               fontSize: 24,
@@ -674,165 +551,167 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
     );
   }
 
-  Container buildListTileExpandItem(FoodMeterProvider prov) {
-    List<MobileNutritions> gula =
+  Row buildAktifitasLainnya(FoodMeterProvider prov) {
+    List<MobileNutritions> kalori =
     Provider.of<FoodMeterProvider>(context, listen: false)
-        .newMobilenutritionList
-        .where((e) => (e.nutritionName.contains("gula")))
-        .toList();
-    List<MobileNutritions> sodium =
-    Provider.of<FoodMeterProvider>(context, listen: false)
-        .newMobilenutritionList
-        .where((e) => (e.nutritionName.contains("Sodium")))
-        .toList();
-    List<MobileNutritions> kj =
-    Provider.of<FoodMeterProvider>(context, listen: false)
-        .newMobilenutritionList
-        .where((e) => (e.nutritionName.contains("Kilojoule")))
-        .toList();
-    List<MobileNutritions> jenuh =
-    Provider.of<FoodMeterProvider>(context, listen: false)
-        .newMobilenutritionList
-        .where((e) => (e.nutritionName.contains("Jenuh")))
-        .toList();
-    List<MobileNutritions> serat =
-    Provider.of<FoodMeterProvider>(context, listen: false)
-        .newMobilenutritionList
-        .where((e) => (e.nutritionName.contains("Jenuh")))
+        .newMobilenutritionListz
+        .where((e) => (e.nutritionName.contains("Kalori")))
         .toList();
 
-    // for(int i = 0; prov.newMobilenutritionList.length > 0; i++){
-    //   print("GULAAAA ===> ${prov.newMobilenutritionList[i].nutritionName}");
-    // }
-
-
-    //List gulaSize = gula[0].nutritionSize.toString().split(".");
-    List sodiumSize = sodium[0].nutritionSize.toString().split(".");
-    List kjSize = kj[0].nutritionSize.toString().split(".");
-    List jenuhSize = jenuh[0].nutritionSize.toString().split(".");
-    List seratSize = serat[0].nutritionSize.toString().split(".");
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 16.0, right: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    List kaloriSize =
+    kalori.isEmpty ? "0.0".split(".") : kalori[0].nutritionSize.split(".");
+    return Row(
+      children: [
+        Stack(
           children: [
             Container(
-              margin: EdgeInsets.only(bottom: 15, top: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("GULA", style: TextStyle(fontSize: 14)),
-                  Row(
-                    children: [
-                      Text("0", style: TextStyle(fontSize: 14)),
-                      SizedBox(width: 5),
-                      Text("g", style: TextStyle(fontSize: 14)),
-                    ],
-                  ),
-                ],
-              ),
+              height: 110,
+              width: 110,
+              decoration: BoxDecoration(
+                  color: MyColors.kkalColor,
+                  borderRadius: BorderRadius.circular(60)),
             ),
-            Divider(),
-            Container(
-              margin: EdgeInsets.only(bottom: 15, top: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Sodium", style: TextStyle(fontSize: 14)),
-                  Row(
-                    children: [
-                      Text("210", style: TextStyle(fontSize: 14)),
-                      SizedBox(width: 5),
-                      Text("mg", style: TextStyle(fontSize: 14)),
-                    ],
-                  ),
-                ],
+            Positioned(
+              right: 12,
+              top: 12,
+              left: 12,
+              bottom: 12,
+              child: Container(
+                height: 50,
+                width: 50,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(60)),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("${kaloriSize[0]}",
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: "Roboto")),
+                    Text('Kkal',
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w300,
+                            fontFamily: "Roboto"))
+                  ],
+                ),
               ),
-            ),
-            Divider(),
-            Container(
-              margin: EdgeInsets.only(bottom: 15, top: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Kilojoule", style: TextStyle(fontSize: 14)),
-                  Row(
-                    children: [
-                      Text("213", style: TextStyle(fontSize: 14)),
-                      SizedBox(width: 5),
-                      Text("kj", style: TextStyle(fontSize: 14)),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Divider(),
-            Container(
-              margin: EdgeInsets.only(bottom: 15, top: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Lemak Jenuh", style: TextStyle(fontSize: 14)),
-                  Row(
-                    children: [
-                      Text("0", style: TextStyle(fontSize: 14)),
-                      SizedBox(width: 5),
-                      Text("g", style: TextStyle(fontSize: 14)),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Divider(),
-            Container(
-              margin: EdgeInsets.only(bottom: 15, top: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Serat", style: TextStyle(fontSize: 14)),
-                  Row(
-                    children: [
-                      Text("1.6000", style: TextStyle(fontSize: 14)),
-                      SizedBox(width: 5),
-                      Text("g", style: TextStyle(fontSize: 14)),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Divider(),
+            )
           ],
         ),
-      ),
+        SizedBox(width: 20),
+        Container(
+          width: 210,
+          child: Text(
+              "Aktifitas lainnya yang dapat kamu lakukan untuk membakar ${kaloriSize[0]} Kkal",
+              style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: "Roboto")),
+        )
+      ],
     );
   }
 
-  Widget buildTileNutritionKalorie(FoodMeterProvider prov) {
+  Widget buildRekomendasiOlahRaga(FoodMeterProvider prov) {
     List<MobileNutritions> kalori =
         Provider.of<FoodMeterProvider>(context, listen: false)
-            .newMobilenutritionList
+            .newMobilenutritionListz
+            .where((e) => (e.nutritionName.contains("Kalori")))
+            .toList();
+
+    List kaloriSize =
+        kalori.isEmpty ? "0.0".split(".") : kalori[0].nutritionSize.split(".");
+
+    return Row(
+      children: [
+        Stack(
+          children: [
+            Container(
+              height: 110,
+              width: 110,
+              decoration: BoxDecoration(
+                  color: MyColors.kkalColor,
+                  borderRadius: BorderRadius.circular(60)),
+            ),
+            Positioned(
+              right: 12,
+              top: 12,
+              left: 12,
+              bottom: 12,
+              child: Container(
+                height: 50,
+                width: 50,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(60)),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("${kaloriSize[0]}",
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: "Roboto")),
+                    Text('Kkal',
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w300,
+                            fontFamily: "Roboto"))
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+        SizedBox(width: 20),
+        Container(
+          width: 210,
+          child: Text(
+              "Aktifitas yang dapat kamu lakukan untuk membakar ${kaloriSize[0]} kkal",
+              style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: "Roboto")),
+        )
+      ],
+    );
+  }
+
+  Widget buildTileNutrition(FoodMeterProvider prov) {
+    List<MobileNutritions> kalori =
+        Provider.of<FoodMeterProvider>(context, listen: false)
+            .newMobilenutritionListz
             .where((e) => (e.nutritionName.contains("Kalori")))
             .toList();
     List<MobileNutritions> protein =
         Provider.of<FoodMeterProvider>(context, listen: false)
-            .newMobilenutritionList
+            .newMobilenutritionListz
             .where((e) => (e.nutritionName.contains("Protein")))
             .toList();
     List<MobileNutritions> lemak =
         Provider.of<FoodMeterProvider>(context, listen: false)
-            .newMobilenutritionList
+            .newMobilenutritionListz
             .where((e) => (e.nutritionName.contains("Lemak")))
             .toList();
     List<MobileNutritions> karbo =
         Provider.of<FoodMeterProvider>(context, listen: false)
-            .newMobilenutritionList
+            .newMobilenutritionListz
             .where((e) => (e.nutritionName.contains("Karbo")))
             .toList();
-    List splittedKaloriSize = kalori[0].nutritionSize.toString().split(".");
-    List splittedProteinSize = protein[0].nutritionSize.toString().split(".");
-    List splittedLemakSize = lemak[0].nutritionSize.toString().split(".");
-    List splittedKarboSize = karbo[0].nutritionSize.toString().split(".");
+
+    List kaloriSize =
+        kalori.isEmpty ? "0.0".split(".") : kalori[0].nutritionSize.split(".");
+    List proteinSize = protein.isEmpty
+        ? "0.0".split(".")
+        : protein[0].nutritionSize.split(".");
+    List lemakSize =
+        lemak.isEmpty ? "0.0".split(".") : lemak[0].nutritionSize.split(".");
+    List karboSize =
+        karbo.isEmpty ? "0.0".split(".") : karbo[0].nutritionSize.split(".");
+
     return Padding(
       padding: const EdgeInsets.only(right: 16.0),
       child: Container(
@@ -851,12 +730,12 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("${kalori[0].nutritionName}",
+                  Text("Kalori",
                       style: TextStyle(
                           fontWeight: FontWeight.w300,
                           fontFamily: "Roboto",
                           fontSize: 12)),
-                  Text("${splittedKaloriSize[0]} ${kalori[0].nutritionUom}",
+                  Text(kalori.isEmpty ? "0 Kkal" : "${kaloriSize[0]} Kkal",
                       style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontFamily: "Roboto",
@@ -874,12 +753,12 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("${protein[0].nutritionName}",
+                  Text("Protein",
                       style: TextStyle(
                           fontWeight: FontWeight.w300,
                           fontFamily: "Roboto",
                           fontSize: 12)),
-                  Text("${splittedProteinSize[0]} ${protein[0].nutritionUom}",
+                  Text("${proteinSize[0]} g",
                       style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontFamily: "Roboto",
@@ -897,12 +776,12 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("${lemak[0].nutritionName}",
+                  Text("Lemak",
                       style: TextStyle(
                           fontWeight: FontWeight.w300,
                           fontFamily: "Roboto",
                           fontSize: 12)),
-                  Text("${splittedLemakSize[0]} ${lemak[0].nutritionUom}",
+                  Text("${lemakSize[0]} g",
                       style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontFamily: "Roboto",
@@ -920,12 +799,12 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("${karbo[0].nutritionName}",
+                  Text("Karbo",
                       style: TextStyle(
                           fontWeight: FontWeight.w300,
                           fontFamily: "Roboto",
                           fontSize: 12)),
-                  Text("${splittedKarboSize[0]} ${karbo[0].nutritionUom}",
+                  Text("${karboSize[0]} g",
                       style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontFamily: "Roboto",
@@ -938,5 +817,56 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
       ),
     );
   }
-}
 
+  Widget buildListBuilderNutritions(FoodMeterProvider prov) {
+    prov.newMobilenutritionListx.removeWhere((e) =>
+        e.nutritionName.contains("Kalori") ||
+        e.nutritionName.contains("Protein") ||
+        e.nutritionName == "Lemak" ||
+        e.nutritionName.contains("Karbo"));
+    return Padding(
+        padding: const EdgeInsets.only(right: 16),
+        child: ListView.separated(
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: prov.newMobilenutritionListx.length,
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            List splitSize = prov.newMobilenutritionListx[index].nutritionSize
+                .toString()
+                .split(".");
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: EdgeInsets.only(bottom: 15, top: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                          "${prov.newMobilenutritionListx[index].nutritionName}",
+                          style: TextStyle(fontSize: 14)),
+                      Row(
+                        children: [
+                          Text("${splitSize[0]}",
+                              style: TextStyle(fontSize: 14)),
+                          SizedBox(width: 5),
+                          Text(
+                              "${prov.newMobilenutritionListx[index].nutritionUom}",
+                              style: TextStyle(fontSize: 14)),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
+          separatorBuilder: (context, index) {
+            return Container(
+              height: 1,
+              color: Colors.grey,
+            );
+          },
+        ));
+  }
+}

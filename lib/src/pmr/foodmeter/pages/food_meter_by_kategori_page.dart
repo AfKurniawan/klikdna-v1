@@ -87,6 +87,7 @@ class _FoodMeterByKategoryPageState extends State<FoodMeterByKategoryPage> with 
     return Scaffold(
       //backgroundColor: Colors.grey[200],
       appBar: CustomAppBar(
+        title: "Food Meter",
       height: 190,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

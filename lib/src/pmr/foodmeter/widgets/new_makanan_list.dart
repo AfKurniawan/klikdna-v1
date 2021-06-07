@@ -9,6 +9,7 @@ import 'package:flutter_paginator/flutter_paginator.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/models/pagination_model_data.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/providers/filter_food_provider.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/providers/food_meter_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:new_klikdna/widgets/loading_widget.dart';
 import 'package:provider/provider.dart';
@@ -153,7 +154,8 @@ class NewMakananListState extends State<NewMakananList> {
                   InkWell(
                     onTap: (){
                       print("${item.id}");
-                      Navigator.of(context).pushNamed("new_detail_food_meter_page", arguments: item);
+                      //Navigator.of(context).pushNamed("new_detail_food_meter_page", arguments: item);
+                      Provider.of<FoodMeterProvider>(context, listen: false).getSpecificFoodMeter(context, item.id);
                     },
                     splashColor: Colors.white,
                     child: Container(

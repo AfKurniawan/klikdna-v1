@@ -4,8 +4,9 @@ import 'package:new_klikdna/styles/my_colors.dart';
 class CustomAppBar extends PreferredSize {
   final Widget child;
   final double height;
+  final String title ;
 
-  CustomAppBar({@required this.child, this.height = kToolbarHeight});
+  CustomAppBar({@required this.child, this.title ,this.height = kToolbarHeight});
 
   @override
   Size get preferredSize => Size.fromHeight(height);
@@ -27,7 +28,7 @@ class CustomAppBar extends PreferredSize {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          "Food Meter",
+          "$title",
           style: TextStyle(
               fontFamily: "Roboto",
               color: MyColors.blackPrimary,

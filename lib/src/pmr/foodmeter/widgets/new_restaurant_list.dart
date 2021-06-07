@@ -8,8 +8,11 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_paginator/flutter_paginator.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/models/resto_model_data.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/providers/food_brands_provider.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/providers/food_meter_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:new_klikdna/widgets/loading_widget.dart';
+import 'package:provider/provider.dart';
 
 
 
@@ -134,7 +137,11 @@ class NewRestaurantListState extends State<NewRestaurantList> {
 
                   SizedBox(width: 20),
                   InkWell(
-                    onTap: (){},
+                    onTap: (){
+                      print("${item.id}");
+                      Provider.of<FoodBrandsProvider>(context, listen: false).getRestoDetailzz(context, item.id);
+                      //Navigator.of(context).pushNamed("restaurant_detail_page", arguments: item.id);
+                    },
                     splashColor: Colors.white,
                     child: Container(
                       height: 30,
