@@ -198,36 +198,6 @@ class _RestoranDetailPageState extends State<RestoranDetailPage> with SingleTick
                                       child: Center(child: Text("Belum ada product")))
                                       : FoodBrandMinumanList(),
 
-
-                                  // FutureBuilder(
-                                  //   future: _futureMakanan,
-                                  //   builder: (context, snapshot) {
-                                  //     if (snapshot.connectionState ==
-                                  //         ConnectionState.waiting) {
-                                  //       return LoadingWidget();
-                                  //     } else if (snapshot.connectionState == ConnectionState.done) {
-                                  //       return FoodBrandMakananList();
-                                  //     } else {
-                                  //       return Container();
-                                  //     }
-                                  //   },
-                                  // ),
-                                  // FutureBuilder(
-                                  //   future: _futureMinuman,
-                                  //   builder: (context, snapshot) {
-                                  //     if (snapshot.connectionState ==
-                                  //         ConnectionState.waiting) {
-                                  //       return LoadingWidget();
-                                  //     } else if (snapshot.connectionState ==
-                                  //         ConnectionState.done) {
-                                  //       return NewMinumanList();
-                                  //     } else {
-                                  //       return Container();
-                                  //     }
-                                  //   },
-                                  // ),
-
-
                                 ],
                                 controller: _tabController,
                               ),
