@@ -76,6 +76,7 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
     tbSelectController = FixedExtentScrollController(initialItem: 0);
     bbSelectController = FixedExtentScrollController(initialItem: 0);
 
+
     super.initState();
   }
 
@@ -91,14 +92,16 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
 
 
   getBb(){
+    //dialogBbTb(context);
     final pcard = Provider.of<PatientCardProvider>(context, listen: false);
-    if(pcard.bb == "0" || pcard.tb == "0"){
-      dialogBbTb(context);
-    } else if(pcard.bb == null || pcard.tb == null){
-      dialogBbTb(context);
-    } else {
-
-    }
+    print("TINGGI BAdaan ${pcard.tb} -- BeraT Badan ${pcard.bb}");
+    // if(pcard.bb == "0" || pcard.tb == "0"){
+    //   dialogBbTb(context);
+    // } else if(pcard.bb == null || pcard.tb == null){
+    //   dialogBbTb(context);
+    // } else {
+    //
+    // }
   }
 
   maning(){
@@ -223,6 +226,7 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
         context: context,
+        isDismissible: false,
         builder: (context) {
           return BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
@@ -412,7 +416,7 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
 
   @override
   Widget build(BuildContext context) {
-    final prov = Provider.of<FoodMeterProvider>(context);
+    final prov = Provider.of<LastSeenFoodMeterProvider>(context);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -611,16 +615,6 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 27),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16.0),
-                      child: Text("Terakhir Dilihat",
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              fontFamily: "Roboto")),
-                    ),
-                    SizedBox(height: 14),
                     Padding(
                       padding: const EdgeInsets.only(
                           top: 10, bottom: 10, left: 16),
@@ -633,9 +627,7 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
                                 if(snapshot.connectionState == ConnectionState.waiting){
                                   return LoadingWidget();
                                 } else if (snapshot.connectionState == ConnectionState.done){
-                                  return Container(
-                                    height: 120,
-                                      child: buildListViewBuilderLastSeen());
+                                  return buildListViewBuilderLastSeen();
                                 } else if(food.isLoadingFood == true){
                                   return LoadingWidget();
                                 } else {
@@ -840,116 +832,145 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
   Widget buildListViewBuilderLastSeen() {
     var lastSeen = Provider.of<LastSeenFoodMeterProvider>(context, listen: false);
     var details = Provider.of<FoodMeterProvider>(context, listen: false);
-    return ListView.builder(
-      itemCount: lastSeen.lastSeenFood.length,
-      scrollDirection: Axis.horizontal,
-      itemBuilder: (context, i){
-        List splittedSize = details.kaloriList[i].nutritionSize.toString().split(".");
-        List splittedProteinSize = details.proteinList[i].nutritionSize.toString().split(".");
-        if (lastSeen.lastSeenFood[i].product == null || lastSeen.lastSeenFood[i].product.id == 0) {
-          return Container();
-        } else {
-          return CustomShadowCardWidget(
-          width: MediaQuery.of(context).size.width / 2,
-          margin: EdgeInsets.only(right: 16, bottom: 10),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 12, top: 0, right: 12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("${lastSeen.lastSeenFood[i].product.productName}",
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontFamily: "Roboto",
-                    fontSize: 14,
+    print("last length = ==> ${lastSeen.lastSeenFood.length}");
+    return lastSeen.lastSeenFood.length == 0
+    ? Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 14),
+        Text("Terakhir dilihat",
+            style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                fontFamily: "Roboto")),
+        Container(),
+      ],
+    )
+    : Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 14),
+        Text("Terakhir dilihat",
+            style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                fontFamily: "Roboto")),
+        SizedBox(height: 27),
+        Container(
+          height: 120,
+          child: ListView.builder(
+            itemCount: lastSeen.lastSeenFood.length,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, i){
+              List splittedSize = details.kaloriList[i].nutritionSize.toString().split(".");
+              List splittedProteinSize = details.proteinList[i].nutritionSize.toString().split(".");
+              if (lastSeen.lastSeenFood[i].product == null || lastSeen.lastSeenFood.length == 0 ) {
+                return Container();
+              } else {
+                return CustomShadowCardWidget(
+                width: MediaQuery.of(context).size.width / 2,
+                margin: EdgeInsets.only(right: 16, bottom: 10),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 12, top: 0, right: 12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("${lastSeen.lastSeenFood[i].product.productName}",
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontFamily: "Roboto",
+                          fontSize: 14,
+                        ),
+                      ),
+                      SizedBox(height: 16),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment:
+                            MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Container(
+                                        height: 10,
+                                        width: 10,
+                                        decoration: BoxDecoration(
+                                          color: MyColors.kkalColor,
+                                          borderRadius:
+                                          BorderRadius.circular(50),
+                                        ),
+                                      ),
+                                      SizedBox(width: 6),
+                                      Text("Kalori",
+                                          style: TextStyle(
+                                              fontSize: 10,
+                                              fontFamily: "Roboto",
+                                              fontWeight: FontWeight.w300)),
+                                    ],
+                                  ),
+                                  Text("${splittedSize[0]} kkal",
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: "Roboto")),
+                                ],
+                              ),
+                              SizedBox(width: 10),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Container(
+                                        height: 10,
+                                        width: 10,
+                                        decoration: BoxDecoration(
+                                          color: Color(0xffFCFF9B),
+                                          borderRadius:
+                                          BorderRadius.circular(50),
+                                        ),
+                                      ),
+                                      SizedBox(width: 6),
+                                      Text("Protein",
+                                          style: TextStyle(
+                                            fontSize: 10,
+                                          ))
+                                    ],
+                                  ),
+                                  Text("${splittedProteinSize[0]} g",
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: "Roboto")),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      )
+                    ],
                   ),
                 ),
-                SizedBox(height: 16),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment:
-                      MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Row(
-                              children: [
-                                Container(
-                                  height: 10,
-                                  width: 10,
-                                  decoration: BoxDecoration(
-                                    color: MyColors.kkalColor,
-                                    borderRadius:
-                                    BorderRadius.circular(50),
-                                  ),
-                                ),
-                                SizedBox(width: 6),
-                                Text("Kalori",
-                                    style: TextStyle(
-                                        fontSize: 10,
-                                        fontFamily: "Roboto",
-                                        fontWeight: FontWeight.w300)),
-                              ],
-                            ),
-                            Text("${splittedSize[0]} kkal",
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: "Roboto")),
-                          ],
-                        ),
-                        SizedBox(width: 10),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Row(
-                              children: [
-                                Container(
-                                  height: 10,
-                                  width: 10,
-                                  decoration: BoxDecoration(
-                                    color: Color(0xffFCFF9B),
-                                    borderRadius:
-                                    BorderRadius.circular(50),
-                                  ),
-                                ),
-                                SizedBox(width: 6),
-                                Text("Protein",
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                    ))
-                              ],
-                            ),
-                            Text("${splittedProteinSize[0]} g",
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: "Roboto")),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                )
-              ],
-            ),
+              );
+              }
+            },
+            // child: Row(
+            //   children: [
+            //     LastSeenItem(food: lastSeen.food0, kal: details.kal0, kalSize: details.kalSize0, prot: details.prot0, protSize: details.protSize0),
+            //     LastSeenItem(food: lastSeen.food1, kal: details.kal1, kalSize: details.kalSize1, prot: details.prot1, protSize: details.protSize1),
+            //     LastSeenItem(food: lastSeen.food2, kal: details.kal2, kalSize: details.kalSize2, prot: details.prot2, protSize: details.protSize2),
+            //     LastSeenItem(food: lastSeen.food3, kal: details.kal3, kalSize: details.kalSize3, prot: details.prot3, protSize: details.protSize3),
+            //     LastSeenItem(food: lastSeen.food4, kal: details.kal4, kalSize: details.kalSize4, prot: details.prot4, protSize: details.protSize4)
+            //
+            //   ],
+            // ),
           ),
-        );
-        }
-      },
-      // child: Row(
-      //   children: [
-      //     LastSeenItem(food: lastSeen.food0, kal: details.kal0, kalSize: details.kalSize0, prot: details.prot0, protSize: details.protSize0),
-      //     LastSeenItem(food: lastSeen.food1, kal: details.kal1, kalSize: details.kalSize1, prot: details.prot1, protSize: details.protSize1),
-      //     LastSeenItem(food: lastSeen.food2, kal: details.kal2, kalSize: details.kalSize2, prot: details.prot2, protSize: details.protSize2),
-      //     LastSeenItem(food: lastSeen.food3, kal: details.kal3, kalSize: details.kalSize3, prot: details.prot3, protSize: details.protSize3),
-      //     LastSeenItem(food: lastSeen.food4, kal: details.kal4, kalSize: details.kalSize4, prot: details.prot4, protSize: details.protSize4)
-      //
-      //   ],
-      // ),
+        ),
+      ],
     );
   }
 

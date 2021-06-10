@@ -75,18 +75,9 @@ class LastSeenFoodMeterProvider with ChangeNotifier {
       dataArray = myArray.map<DataArray>((j) => DataArray.fromJson(j)).toList();
       isLoadingLastSeen = false;
 
+      print("Last Seen Length ${lastSeenFood.length}");
 
-      // var product1 = responseJson['data']['data'][0]['product'];
-      // print("product 1 => $product1");
-      //
-      // var product2 = responseJson['data']['data'][2]['product'];
-      // print("product 2 => $product2");
-      //
-      // var product3 = responseJson['data']['data'][3]['product'];
-      // print("product 3 => $product3");
-      //
-      // var product4 = responseJson['data']['data'][4]['product'];
-      // print("product 4 => $product4");
+      print("Response api body last --> ${request.body}");
 
 
 
@@ -97,8 +88,8 @@ class LastSeenFoodMeterProvider with ChangeNotifier {
         if(responseJson['data']['data'][i]['product'] != null){
 
           lastSeenFood = myArray.map<DataArray>((j) => DataArray.fromJson(j)).toList();
-         // lastSeenFood.removeWhere((value) => value.product == null);
-          print("Last Seen Length ${lastSeenFood.length}");
+          lastSeenFood.removeWhere((value) => value.product == null);
+
           Provider.of<FoodMeterProvider>(context, listen: false).getDetailFoodMeter(context, lastSeenFood[i].product.id);
 
           // id0 = lastSeenFood[0].product.id;
