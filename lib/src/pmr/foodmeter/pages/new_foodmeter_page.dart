@@ -54,164 +54,30 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
 
   TextEditingController searchController = new TextEditingController();
   Future _futureLastScreen;
-  TextEditingController bbController = new TextEditingController();
-  TextEditingController tbController = new TextEditingController();
 
   final items = List<String>.generate(10, (i) => "Item $i");
 
-  FixedExtentScrollController tbSelectController;
-  FixedExtentScrollController bbSelectController;
+
 
   @override
   void initState() {
     Provider.of<TokenProvider>(context, listen: false).getApiToken();
-    _futureLastScreen = Provider.of<LastSeenFoodMeterProvider>(context, listen: false).getLastSeenFood(context);
-    Provider.of<LastSeenFoodMeterProvider>(context, listen: false).getLastSeenFood(context);
-    Provider.of<PatientCardProvider>(context, listen: false).getPatientCard(context);
-    Provider.of<FavouriteFoodMeterProvider>(context, listen: false).getFavouriteData(context);
     Provider.of<AccountProvider>(context, listen: false).getUserAccount(context);
-    WidgetsBinding.instance.addPostFrameCallback((_) => getBb());
-    print('$items');
-
-    tbSelectController = FixedExtentScrollController(initialItem: 0);
-    bbSelectController = FixedExtentScrollController(initialItem: 0);
-
-
+    _futureLastScreen = Provider.of<LastSeenFoodMeterProvider>(context, listen: false).getLastSeenFood(context);
+    WidgetsBinding.instance.addPostFrameCallback((_) => Provider.of<PatientCardProvider>(context, listen: false).getPatientCard(context));
     super.initState();
   }
+
 
 
   @override
   void dispose() {
     searchController.dispose();
-    tbSelectController.dispose();
-    bbSelectController.dispose();
     super.dispose();
   }
 
 
 
-  getBb(){
-    //dialogBbTb(context);
-    final pcard = Provider.of<PatientCardProvider>(context, listen: false);
-    print("TINGGI BAdaan ${pcard.tb} -- BeraT Badan ${pcard.bb}");
-    // if(pcard.bb == "0" || pcard.tb == "0"){
-    //   dialogBbTb(context);
-    // } else if(pcard.bb == null || pcard.tb == null){
-    //   dialogBbTb(context);
-    // } else {
-    //
-    // }
-  }
-
-  maning(){
-    showDialog(
-      context: context,
-      builder: (BuildContext ctx) {
-        return AlertDialog(
-          title: Text('Berat'),
-          content: Container(
-            height: 350,
-            width: 350.0,
-            child: Column(
-              children: <Widget>[
-                Text('Kilogram'),
-                Container(
-                  height: MediaQuery.of(context).size.height / 3.5,
-                  color: Colors.transparent,
-                  child: CupertinoPicker(
-                    backgroundColor: Colors.white,
-                    itemExtent: 30,
-                    magnification: 1,
-                    useMagnifier: true,
-                    diameterRatio: 1,
-                    scrollController: bbSelectController,
-                    children: List<Widget>.generate(131, (int index) {
-                      int i = index+20 ;
-                      return Center(
-                        child: Text("$i"),
-                      );
-                    }),
-                    onSelectedItemChanged: (i) {
-                      setState(() {
-                        _selectedValue = i+20;
-                      });
-                    },
-
-                  ),
-                ),
-                SizedBox(height: 50),
-                CupertinoButton(
-                  child: Text('OK'),
-                  onPressed: (){
-                    setState(() {
-                      bbController.text = _selectedValue.toString();
-                      print("VALUE ${bbController.text}");
-                      Navigator.of(ctx).pop();
-                    });
-                  },
-                )
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  tbDialog(){
-    showDialog(
-      context: context,
-      builder: (BuildContext ctx) {
-        return AlertDialog(
-          title: Text('Tinggi Badan'),
-          content: Container(
-            height: 350,
-            width: 350.0,
-            child: Column(
-              children: <Widget>[
-                Text('Centimeter'),
-                Container(
-                  height: MediaQuery.of(context).size.height / 3.5,
-                  color: Colors.transparent,
-                  child: CupertinoPicker(
-                    backgroundColor: Colors.white,
-                    itemExtent: 30,
-                    magnification: 1,
-                    useMagnifier: true,
-                    diameterRatio: 1,
-                    scrollController: tbSelectController,
-                    children: List<Widget>.generate(150, (int index) {
-                      int i = index+100 ;
-                      return Center(
-                        child: Text("$i"),
-                      );
-                    }),
-                      onSelectedItemChanged: (i) {
-                        setState(() {
-                          _selectedValueTb = i+100;
-                        });
-                      },
-                  ),
-                ),
-                SizedBox(height: 50),
-                CupertinoButton(
-                  child: Text('OK'),
-                  onPressed: (){
-                    setState(() {
-                      tbController.text = _selectedValueTb.toString();
-                      print("VALUE ${bbController.text}");
-                      Navigator.of(ctx).pop();
-                    });
-                  },
-                )
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
 
 
 
@@ -221,198 +87,6 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
   String karboDesc = "Karbohidrat adalah kumpulan senyawa yang menyediakan energi bagi tubuh kita dalam bentuk kalori. Fungsi karbohidrat adalah sebagai sumber energi utama dalam tubuh kita. Karbohidrat banyak ditemukan dalam bentuk gula, pati, buah dan sayur, susu, dan lain sebagainya. Jumlah asupan karbohidrat per hari seseorang berbeda-beda, ditentukan oleh jenis kelamin, usia, aktivitas, dan kondisi kesehatan.  Namun secara umum, menurut Angka Kecukupan Gizi (AKG) yang dibuat oleh Kementrian Kesehatan, batasan konsumsi harian karbohidrat adalah sekitar 60-75% dari jumlah asupan kalori per hari, yakni sekitar 350-390 gram untuk laki-laki, dan 300-320 gram untuk wanita. Ketika kekurangan karbohidrat dalam tubuh, seseorang dapat merasa lemah, pusing, mual, pandangan berkunang-kunang hingga sulit beraktivitas. Efek jangka panjang ketika seseorang kekurangan karbohidrat adalah malnutrisi, gangguan daya tahan tubuh, dan lainnya. Namun dewasa ini, hal yang lebih sering terjadi adalah kelebihan asupan karbohidrat sehari-hari. Hal ini dapat mengakibatkan resiko obesitas, penyakit kardiovaskuler, diabetes melitus tipe 2, dan penyakit tidak menular lainnya. ";
 
 
-  void dialogBbTb(BuildContext context){
-    showModalBottomSheet(
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        context: context,
-        isDismissible: false,
-        builder: (context) {
-          return BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-            child: StatefulBuilder(
-              builder: (BuildContext context, StateSetter setState){
-                return Container(
-                  height: MediaQuery.of(context).size.height / 2,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(24),
-                          topRight: Radius.circular(24))),
-                  child: Column(
-                    children: [
-                      SizedBox(height: 10),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 16.0, top: 24),
-                            child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text("Isi Berat dan Tinggi Kamu", style: TextStyle(
-                                    fontWeight: FontWeight.w500, fontSize: 18, fontFamily: "Roboto"))),
-                          ),
-
-                          Padding(
-                            padding: const EdgeInsets.only(left: 16.0, top: 10),
-                            child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text("Isilah berat dan tinggi kamu dengan benar untuk mendapatkan\nhasil rekomendasi pada food meter", style: TextStyle(
-                                    fontWeight: FontWeight.w300, fontSize: 12, fontFamily: "Roboto"))),
-                          ),
-
-                        ],
-                      ),
-
-                      SizedBox(height: 19),
-
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16.0, right: 16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width / 2.3,
-                              child: TextFormField(
-                                style: TextStyle(
-                                  color: MyColors.dnaBlack,
-                                ),
-                                controller: bbController,
-                                readOnly: true,
-                                onTap: (){
-                                  //_showBBPicker(context);
-                                  maning();
-                                },
-                                decoration: InputDecoration(
-                                    suffixIcon: Icon(Icons.arrow_drop_down_sharp, color: Colors.grey),
-                                    labelText: "Berat",
-                                    labelStyle: TextStyle(color: Colors.grey),
-                                    alignLabelWithHint: true,
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: MyColors.dnaGreen, width: 1.5),
-                                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Colors.grey, width: 1.5),
-                                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide:
-                                      BorderSide(color: Colors.red[300], width: 1.5),
-                                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide:
-                                      BorderSide(color: Colors.red[300], width: 1.5),
-                                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                                    ),
-                                    disabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Colors.transparent, width: 1.5),
-                                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                                    ),
-                                    focusColor: MyColors.dnaGreen,
-                                    hintText: "",
-                                    hintStyle:
-                                    TextStyle(color: Colors.white54, fontSize: 12)),
-
-                              ),
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width / 2.3,
-                              child: TextFormField(
-                                style: TextStyle(
-                                  color: MyColors.dnaBlack,
-                                ),
-                                onTap: (){
-                                  tbDialog();
-                                },
-                                readOnly: true,
-                                controller: tbController,
-                                decoration: InputDecoration(
-                                    suffixIcon: Icon(Icons.arrow_drop_down_sharp, color: Colors.grey),
-                                    labelText: "Tinggi",
-                                    labelStyle: TextStyle(color: Colors.grey),
-                                    alignLabelWithHint: true,
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: MyColors.dnaGreen, width: 1.5),
-                                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Colors.grey, width: 1.5),
-                                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide:
-                                      BorderSide(color: Colors.red[300], width: 1.5),
-                                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide:
-                                      BorderSide(color: Colors.red[300], width: 1.5),
-                                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                                    ),
-                                    disabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Colors.transparent, width: 1.5),
-                                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                                    ),
-                                    focusColor: MyColors.dnaGreen,
-                                    hintText: "",
-                                    hintStyle:
-                                    TextStyle(color: Colors.white54, fontSize: 12)),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      SizedBox(height: 70),
-
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Material(
-                          color: MyColors.dnaGreen,
-                          borderRadius: BorderRadius.circular(10),
-                          child: InkWell(
-                            onTap: (){
-                              Provider.of<PatientCardProvider>(context, listen: false).updateBeratBadan(context, tbController.text, bbController.text);
-                            },
-                            splashColor: Colors.white,
-                            child: Ink(
-                              width: MediaQuery.of(context).size.width,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: MyColors.dnaGreen
-
-                              ),
-                              child: Center(
-                                child: Text(
-                                  "Simpan",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          );
-        }
-    );
-    }
 
   @override
   Widget build(BuildContext context) {
@@ -602,7 +276,7 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
                                   ),
                                   SizedBox(height: 8),
                                   Text(
-                                    "Restaurant",
+                                    "Restoran",
                                     style: TextStyle(
                                         fontSize: 12,
                                         fontFamily: "Roboto",
@@ -810,24 +484,7 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
     );
   }
 
-  SingleChildScrollView buildSingleChildScrollViewLastSeenx() {
-    var lastSeen = Provider.of<LastSeenFoodMeterProvider>(context, listen: false);
-    var details = Provider.of<FoodMeterProvider>(context, listen: false);
 
-
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: [
-          LastSeenItem(food: lastSeen.lastSeenFood[0].product.productName, kal: details.kal0, kalSize: details.kalSize0, prot: details.prot0, protSize: details.protSize0),
-          LastSeenItem(food: lastSeen.lastSeenFood[1].product.productName, kal: details.kal1, kalSize: details.kalSize1, prot: details.prot1, protSize: details.protSize1),
-          LastSeenItem(food: lastSeen.lastSeenFood[2].product.productName, kal: details.kal2, kalSize: details.kalSize2, prot: details.prot2, protSize: details.protSize2),
-          LastSeenItem(food: lastSeen.lastSeenFood[3].product.productName, kal: details.kal3, kalSize: details.kalSize3, prot: details.prot3, protSize: details.protSize3),
-          LastSeenItem(food: lastSeen.lastSeenFood[4].product.productName, kal: details.kal4, kalSize: details.kalSize4, prot: details.prot4, protSize: details.protSize4)
-        ],
-      ),
-    );
-  }
 
   Widget buildListViewBuilderLastSeen() {
     var lastSeen = Provider.of<LastSeenFoodMeterProvider>(context, listen: false);
@@ -868,6 +525,9 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
                 return Container();
               } else {
                 return CustomShadowCardWidget(
+                  onTap: (){
+                    Provider.of<FoodMeterProvider>(context, listen: false).getSpecificFoodMeter(context, lastSeen.lastSeenFood[i].product.id);
+                  },
                 width: MediaQuery.of(context).size.width / 2,
                 margin: EdgeInsets.only(right: 16, bottom: 10),
                 child: Padding(
@@ -980,11 +640,11 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
-          FavouriteItems(food: fav.food0, kal: fav.kal0, kalSize: fav.kalSize0, prot: fav.prot0, protSize: fav.protSize0, lemak: fav.lemak0, lemakSize: fav.lemakSize0, karbo: fav.karbo0, karboSize: fav.kalSize0, kategori: fav.kategori0),
-          FavouriteItems(food: fav.food1, kal: fav.kal1, kalSize: fav.kalSize1, prot: fav.prot1, protSize: fav.protSize1, lemak: fav.lemak1, lemakSize: fav.lemakSize1, karbo: fav.karbo1, karboSize: fav.kalSize1, kategori: fav.kategori1),
-          FavouriteItems(food: fav.food2, kal: fav.kal2, kalSize: fav.kalSize2, prot: fav.prot2, protSize: fav.protSize2, lemak: fav.lemak2, lemakSize: fav.lemakSize2, karbo: fav.karbo2, karboSize: fav.kalSize2, kategori: fav.kategori2),
-          FavouriteItems(food: fav.food3, kal: fav.kal3, kalSize: fav.kalSize3, prot: fav.prot3, protSize: fav.protSize3, lemak: fav.lemak3, lemakSize: fav.lemakSize3, karbo: fav.karbo3, karboSize: fav.kalSize3, kategori: fav.kategori3),
-          FavouriteItems(food: fav.food4, kal: fav.kal4, kalSize: fav.kalSize4, prot: fav.prot4, protSize: fav.protSize4, lemak: fav.lemak4, lemakSize: fav.lemakSize4, karbo: fav.karbo4, karboSize: fav.kalSize4, kategori: fav.kategori4),
+          FavouriteItems(food: fav.food0, kal: fav.kal0, kalSize: fav.kalSize0, prot: fav.prot0, protSize: fav.protSize0, lemak: fav.lemak0, lemakSize: fav.lemakSize0, karbo: fav.karbo0, karboSize: fav.karboSize0, kategori: fav.kategori0, id: fav.id0),
+          FavouriteItems(food: fav.food1, kal: fav.kal1, kalSize: fav.kalSize1, prot: fav.prot1, protSize: fav.protSize1, lemak: fav.lemak1, lemakSize: fav.lemakSize1, karbo: fav.karbo1, karboSize: fav.karboSize1, kategori: fav.kategori1, id: fav.id1),
+          FavouriteItems(food: fav.food2, kal: fav.kal2, kalSize: fav.kalSize2, prot: fav.prot2, protSize: fav.protSize2, lemak: fav.lemak2, lemakSize: fav.lemakSize2, karbo: fav.karbo2, karboSize: fav.karboSize2, kategori: fav.kategori2, id: fav.id2),
+          FavouriteItems(food: fav.food3, kal: fav.kal3, kalSize: fav.kalSize3, prot: fav.prot3, protSize: fav.protSize3, lemak: fav.lemak3, lemakSize: fav.lemakSize3, karbo: fav.karbo3, karboSize: fav.karboSize3, kategori: fav.kategori3, id: fav.id3),
+          FavouriteItems(food: fav.food4, kal: fav.kal4, kalSize: fav.kalSize4, prot: fav.prot4, protSize: fav.protSize4, lemak: fav.lemak4, lemakSize: fav.lemakSize4, karbo: fav.karbo4, karboSize: fav.karboSize4, kategori: fav.kategori4, id: fav.id4),
 
         ],
       ),

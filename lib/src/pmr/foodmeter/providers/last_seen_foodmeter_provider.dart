@@ -77,7 +77,6 @@ class LastSeenFoodMeterProvider with ChangeNotifier {
 
       print("Last Seen Length ${lastSeenFood.length}");
 
-      print("Response api body last --> ${request.body}");
 
 
 
@@ -92,20 +91,7 @@ class LastSeenFoodMeterProvider with ChangeNotifier {
 
           Provider.of<FoodMeterProvider>(context, listen: false).getDetailFoodMeter(context, lastSeenFood[i].product.id);
 
-          // id0 = lastSeenFood[0].product.id;
-          // id1 = lastSeenFood[1].product.id;
-          // id2 = lastSeenFood[2].product.id;
-          // id3 = lastSeenFood[3].product.id;
-          // id4 = lastSeenFood[4].product.id;
 
-          // food0 = lastSeenFood[0].product.productName;
-          // food0 = lastSeenFood[1].product.productName;
-          // food0 = lastSeenFood[2].product.productName;
-          // food0 = lastSeenFood[3].product.productName;
-          // food0 = lastSeenFood[4].product.productName;
-
-
-          print("id --> $id0, $id1, $id2, $id3, $id4, ${lastSeenFood[i].product.productName}");
 
 
         } else {

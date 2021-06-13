@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/providers/food_meter_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:new_klikdna/widgets/custom_shadow_card_widget.dart';
+import 'package:provider/provider.dart';
 
 class FavouriteItems extends StatelessWidget {
   String food ;
@@ -13,13 +15,17 @@ class FavouriteItems extends StatelessWidget {
   String karbo ;
   String karboSize;
   String kategori;
+  int id ;
 
-  FavouriteItems({Key key, this.food, this.kal, this.kalSize, this.prot, this.protSize, this.lemak, this.lemakSize, this.karbo, this.karboSize, this.kategori}) : super(key: key);
+  FavouriteItems({Key key, this.food, this.kal, this.kalSize, this.prot, this.protSize, this.lemak, this.lemakSize, this.karbo, this.karboSize, this.kategori, this.id}) : super(key: key);
 
 
   @override
   Widget build(BuildContext context) {
     return CustomShadowCardWidget(
+      onTap: (){
+        Provider.of<FoodMeterProvider>(context, listen: false).getSpecificFoodMeter(context, id);
+      },
       margin: EdgeInsets.only(right: 16, bottom: 16),
       width: 280,
       child: Column(
@@ -44,7 +50,7 @@ class FavouriteItems extends StatelessWidget {
                       const EdgeInsets.all(6.0),
                       child: Center(
                           child: Image.asset(kategori == "1" ?
-                              "assets/icons/food_apple_icon.png" : "assets/icons/drinks_icon.png",
+                              "assets/icons/burger_icon.png" : "assets/icons/drinks_icon.png",
                               height: 16)),
                     )),
                 SizedBox(width: 13),

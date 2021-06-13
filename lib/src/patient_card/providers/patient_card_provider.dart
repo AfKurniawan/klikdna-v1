@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
+import 'dart:ui';
 import 'package:achievement_view/achievement_view.dart';
 import 'package:achievement_view/achievement_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,8 +15,11 @@ import 'package:new_klikdna/src/patient_card/providers/asuransi_provider.dart';
 import 'package:new_klikdna/src/patient_card/widgets/card_insurance_item.dart';
 import 'package:new_klikdna/src/patient_card/widgets/custom_dialog_confirm.dart';
 import 'package:new_klikdna/src/patient_card/widgets/dialog_error_patient_card.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/providers/favourite_food_meter_provider.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/providers/last_seen_foodmeter_provider.dart';
 import 'package:new_klikdna/src/profile/widgets/cupertino_dialog_widget.dart';
 import 'package:new_klikdna/src/token/providers/token_provider.dart';
+import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -106,12 +110,18 @@ class PatientCardProvider with ChangeNotifier {
       var detailArray = data['data']['detail'] as List;
       listAsuransi = detailArray.map<Asuransi>((j) => Asuransi.fromJson(j)).toList();
 
+      print("Respone berat badan --> ${response.data.weight} Response tinggi badan --> ${response.data.height}");
+
       slideCard = [
         CardInssuranceItem(),
         CardInssuranceItem()
       ];
 
+
+
       notifyListeners();
+
+      getBeratbadan(context);
 
       setParams();
 
@@ -125,6 +135,336 @@ class PatientCardProvider with ChangeNotifier {
     return null;
 
   }
+
+  getBeratbadan(BuildContext context){
+      print("TINGGI BAdaan $tb -- BeraT Badan $bb");
+
+      if(bb == "0" || tb == "0"){
+
+        dialogBbTb(context);
+
+      } else if(bb == null || tb == null){
+
+        dialogBbTb(context);
+
+      } else {
+
+        Provider.of<LastSeenFoodMeterProvider>(context, listen: false).getLastSeenFood(context);
+        Provider.of<FavouriteFoodMeterProvider>(context, listen: false).getFavouriteData(context);
+      }
+
+      notifyListeners();
+
+  }
+
+  FixedExtentScrollController tbSelectController;
+  FixedExtentScrollController bbSelectController;
+
+  TextEditingController bbController = new TextEditingController();
+  TextEditingController tbController = new TextEditingController();
+
+  int _selectedValue = 0;
+  int _selectedValueTb = 0;
+
+  void dialogBbTb(BuildContext context){
+    showModalBottomSheet(
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        context: context,
+        isDismissible: false,
+        builder: (context) {
+          return BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState){
+                return Container(
+                  height: MediaQuery.of(context).size.height / 2,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(24),
+                          topRight: Radius.circular(24))),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 10),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 16.0, top: 24),
+                            child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text("Isi Berat dan Tinggi Kamu", style: TextStyle(
+                                    fontWeight: FontWeight.w500, fontSize: 18, fontFamily: "Roboto"))),
+                          ),
+
+                          Padding(
+                            padding: const EdgeInsets.only(left: 16.0, top: 10),
+                            child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text("Isilah berat dan tinggi kamu dengan benar untuk mendapatkan\nhasil rekomendasi pada food meter", style: TextStyle(
+                                    fontWeight: FontWeight.w300, fontSize: 12, fontFamily: "Roboto"))),
+                          ),
+
+                        ],
+                      ),
+
+                      SizedBox(height: 19),
+
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16.0, right: 16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width / 2.3,
+                              child: TextFormField(
+                                style: TextStyle(
+                                  color: MyColors.dnaBlack,
+                                ),
+                                controller: bbController,
+                                readOnly: true,
+                                onTap: (){
+                                  _showBBPicker(context);
+                                },
+                                decoration: InputDecoration(
+                                    suffixIcon: Icon(Icons.arrow_drop_down_sharp, color: Colors.grey),
+                                    labelText: "Berat",
+                                    labelStyle: TextStyle(color: Colors.grey),
+                                    alignLabelWithHint: true,
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: MyColors.dnaGreen, width: 1.5),
+                                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.grey, width: 1.5),
+                                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide:
+                                      BorderSide(color: Colors.red[300], width: 1.5),
+                                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide:
+                                      BorderSide(color: Colors.red[300], width: 1.5),
+                                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    ),
+                                    disabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.transparent, width: 1.5),
+                                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    ),
+                                    focusColor: MyColors.dnaGreen,
+                                    hintText: "",
+                                    hintStyle:
+                                    TextStyle(color: Colors.white54, fontSize: 12)),
+
+                              ),
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width / 2.3,
+                              child: TextFormField(
+                                style: TextStyle(
+                                  color: MyColors.dnaBlack,
+                                ),
+                                onTap: (){
+                                  _showTbPicker(context);
+                                },
+                                readOnly: true,
+                                controller: tbController,
+                                decoration: InputDecoration(
+                                    suffixIcon: Icon(Icons.arrow_drop_down_sharp, color: Colors.grey),
+                                    labelText: "Tinggi",
+                                    labelStyle: TextStyle(color: Colors.grey),
+                                    alignLabelWithHint: true,
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: MyColors.dnaGreen, width: 1.5),
+                                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.grey, width: 1.5),
+                                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide:
+                                      BorderSide(color: Colors.red[300], width: 1.5),
+                                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide:
+                                      BorderSide(color: Colors.red[300], width: 1.5),
+                                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    ),
+                                    disabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.transparent, width: 1.5),
+                                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    ),
+                                    focusColor: MyColors.dnaGreen,
+                                    hintText: "",
+                                    hintStyle:
+                                    TextStyle(color: Colors.white54, fontSize: 12)),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      SizedBox(height: 70),
+
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Material(
+                          color: MyColors.dnaGreen,
+                          borderRadius: BorderRadius.circular(10),
+                          child: InkWell(
+                            onTap: (){
+                              updateBeratBadan(context, tbController.text, bbController.text);
+                            },
+                            splashColor: Colors.white,
+                            child: Ink(
+                              width: MediaQuery.of(context).size.width,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: MyColors.dnaGreen
+
+                              ),
+                              child: Center(
+                                child: Text(
+                                  "Simpan",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          );
+        }
+    );
+  }
+
+  _showBBPicker(BuildContext ctx){
+    showDialog(
+      context: ctx,
+      builder: (BuildContext ctx) {
+        return AlertDialog(
+          title: Text('Berat'),
+          content: Container(
+            height: 350,
+            width: 350.0,
+            child: Column(
+              children: <Widget>[
+                Text('Kilogram'),
+                Container(
+                  height: MediaQuery.of(ctx).size.height / 3.5,
+                  color: Colors.transparent,
+                  child: CupertinoPicker(
+                    backgroundColor: Colors.white,
+                    itemExtent: 30,
+                    magnification: 1,
+                    useMagnifier: true,
+                    diameterRatio: 1,
+                    scrollController: bbSelectController,
+                    children: List<Widget>.generate(131, (int index) {
+                      int i = index+20 ;
+                      return Center(
+                        child: Text("$i"),
+                      );
+                    }),
+                    onSelectedItemChanged: (i) {
+                        _selectedValue = i+20;
+
+                    },
+
+                  ),
+                ),
+                SizedBox(height: 50),
+                CupertinoButton(
+                  child: Text('OK'),
+                  onPressed: (){
+                      bbController.text = _selectedValue.toString();
+                      print("VALUE ${bbController.text}");
+                      Navigator.of(ctx).pop();
+                      notifyListeners();
+                  },
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  _showTbPicker(context){
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Tinggi Badan'),
+          content: Container(
+            height: 350,
+            width: 350.0,
+            child: Column(
+              children: <Widget>[
+                Text('Centimeter'),
+                Container(
+                  height: MediaQuery.of(context).size.height / 3.5,
+                  color: Colors.transparent,
+                  child: CupertinoPicker(
+                    backgroundColor: Colors.white,
+                    itemExtent: 30,
+                    magnification: 1,
+                    useMagnifier: true,
+                    diameterRatio: 1,
+                    scrollController: tbSelectController,
+                    children: List<Widget>.generate(150, (int index) {
+                      int i = index+100 ;
+                      return Center(
+                        child: Text("$i"),
+                      );
+                    }),
+                    onSelectedItemChanged: (i) {
+                        _selectedValueTb = i+100;
+                      notifyListeners();
+                    },
+                  ),
+                ),
+                SizedBox(height: 50),
+                CupertinoButton(
+                  child: Text('OK'),
+                  onPressed: (){
+
+                      tbController.text = _selectedValueTb.toString();
+                      print("VALUE ${bbController.text}");
+                      Navigator.of(context).pop();
+                      notifyListeners();
+                  },
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+
 
   Future<void> showDialogError(BuildContext context) async {
     return showDialog<void>(

@@ -65,24 +65,20 @@ class ReportProvider extends ChangeNotifier {
       var responseJson = json.decode(response.body);
 
       dataArray = responseJson['data'] as List;
-      print("DATA ARRAY --> ${dataArray.length}");
+
 
 
       if(dataArray.length > 1){
         for(int i = 1 ; i < dataArray.length; i++) {
           var detail1Array = dataArray[0]['detail'] as List;
           var detail2Array = dataArray[i]['detail'] as List;
-          print("DETAIL ARRAY $i --> $detail2Array");
           var combined = detail1Array..addAll(detail2Array);
           listDetail2 = combined.map<Detail>((j) => Detail.fromJson(j)).toList();
           notifyListeners();
         }
       } else {
         for(int i = 0 ; i < dataArray.length; i++) {
-          //var detail1Array = dataArray[0]['detail'] as List;
           var detail2Array = dataArray[i]['detail'] as List;
-          print("DETAIL ARRAY $i --> $detail2Array");
-          //var combined = detail1Array..addAll(detail2Array);
           listDetail2 = detail2Array.map<Detail>((j) => Detail.fromJson(j)).toList();
           notifyListeners();
         }
@@ -142,14 +138,14 @@ class ReportProvider extends ChangeNotifier {
       var responseJson = json.decode(response.body);
 
       dataArray = responseJson['data'] as List;
-      print("DATA ARRAY --> ${dataArray.length}");
+
 
 
       if(dataArray.length > 1){
         for(int i = 1 ; i < dataArray.length; i++) {
           var detail1Array = dataArray[0]['detail'] as List;
           var detail2Array = dataArray[i]['detail'] as List;
-          print("DETAIL ARRAY $i --> $detail2Array");
+
           var combined = detail1Array..addAll(detail2Array);
           listDetail2 = combined.map<Detail>((j) => Detail.fromJson(j)).toList();
           notifyListeners();

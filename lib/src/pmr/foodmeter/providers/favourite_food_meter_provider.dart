@@ -138,58 +138,12 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
   List dataPageList ;
   String nextPage = "" ;
 
-  Future<List> getMoreDataMakanan(BuildContext context, String nextUrl)  async {
-    try {
 
-      final prov = Provider.of<TokenProvider>(context, listen: false);
-
-      print("GET MORE DATA == > $nextUrl");
-      String accessToken = prov.accessToken;
-
-      Map<String, String> ndas = {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer $accessToken"
-      };
-
-
-      final response = await http.get(nextUrl, headers: ndas);
-
-      if (response.statusCode == 200) {
-
-        var jsonResponse = jsonDecode(response.body);
-          List newItems = jsonResponse['data']['data']['data'];
-          if (dataMakanan == null) {
-            listMakanan = newItems.map<Data3>((j) => Data3.fromJson(j)).toList();
-          } else {
-            dataMakanan.addAll(listMakanan);
-          }
-
-          //lastItemId = data.last['id'].toString();
-          isLoadingFood = false;
-
-        print("Data Makanan ----- >>  ${dataMakanan.toString()}");
-        print("lastItemId --> $lastItemId");
-        return dataMakanan;
-
-      } else {
-        print("Request failed with status: ${response.statusCode}.");
-      }
-    } on Exception catch (error) {
-      debugPrint(error.toString());
-    }
-  }
-
-
-
-
-  int perPage = 1020 ;
-  int present = 0 ;
 
   Future<ListFoodModel> getListFood(BuildContext context, String url) async {
 
     final prov = Provider.of<TokenProvider>(context, listen: false);
 
-    print("LIST FOOD");
     String accessToken = prov.accessToken;
     isLoadingFood = true ;
 
@@ -229,8 +183,6 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
   List<Data3> listMinuman = [];
   Future<ListFoodModel> getListMinuman(BuildContext context, String filter) async {
 
-
-    print("LIST FOOD Minuman");
     final prov = Provider.of<TokenProvider>(context, listen: false);
 
     String accessToken = prov.accessToken;
@@ -422,7 +374,7 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
       var nutritionArray = response0['data']['mobile_nutritions'] as List;
       newMobilenutritionMapList0 = nutritionArray.map<MobileNutritions>((j) => MobileNutritions.fromJson(j)).toList();
       newMobilenutritionList0 = newMobilenutritionMapList0.where((i) => ("${i.productId}" == "$id0")).toList();
-      print("NUT Fav Array ${nutritionArray.length}");
+
 
       if(nutritionArray.length == 0){
         kalSize0 = '0';
@@ -436,14 +388,13 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
             kaloriList0.add(item);
             kalSize0 = kaloriList0.first.nutritionSize.substring(0, kaloriList0.first.nutritionSize.indexOf('.'));
             kal0 = kaloriList0.first.nutritionName;
-            print("ID 4 KALORI $kal0, $kalSize0");
           }
         });
 
         newMobilenutritionList0.forEach((item) {
           if (item.nutritionName.contains("Protein")) {
             proteinList0.add(item);
-            protSize0 = proteinList0.first.nutritionSize.substring(0, 3);
+            protSize0 = proteinList0.first.nutritionSize.substring(0, proteinList0.first.nutritionSize.indexOf('.'));
             prot0 = proteinList0.first.nutritionName;
           }
         });
@@ -451,7 +402,7 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
         newMobilenutritionList0.forEach((item) {
           if (item.nutritionName.contains("Karbo")) {
             karboList0.add(item);
-            karboSize0 = karboList0.first.nutritionSize.substring(0, 3);
+            karboSize0 = karboList0.first.nutritionSize.substring(0, karboList0.first.nutritionSize.indexOf('.'));
             karbo0 = proteinList0.first.nutritionName;
           }
         });
@@ -459,7 +410,7 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
         newMobilenutritionList0.forEach((item) {
           if (item.nutritionName.contains("Lemak")) {
             lemakList0.add(item);
-            lemakSize0 = lemakList0.first.nutritionSize.substring(0, 3);
+            lemakSize0 = lemakList0.first.nutritionSize.substring(0, lemakList0.first.nutritionSize.indexOf('.'));
             lemak0 = lemakList0.first.nutritionName;
           }
         });
@@ -490,7 +441,7 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
         newMobilenutritionList1.forEach((item) {
           if (item.nutritionName.contains("Protein")) {
             proteinList1.add(item);
-            protSize1 = proteinList1.first.nutritionSize.substring(0, 3);
+            protSize1 = proteinList1.first.nutritionSize.substring(0, proteinList1.first.nutritionSize.indexOf('.'));
             prot1 = proteinList1.first.nutritionName;
           }
         });
@@ -498,7 +449,7 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
         newMobilenutritionList1.forEach((item) {
           if (item.nutritionName.contains("Karbo")) {
             karboList1.add(item);
-            karboSize1 = karboList1.first.nutritionSize.substring(0, 3);
+            karboSize1 = karboList1.first.nutritionSize.substring(0, karboList1.first.nutritionSize.indexOf('.'));
             karbo1 = proteinList1.first.nutritionName;
           }
         });
@@ -506,7 +457,7 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
         newMobilenutritionList1.forEach((item) {
           if (item.nutritionName.contains("Lemak")) {
             lemakList1.add(item);
-            lemakSize1 = lemakList1.first.nutritionSize.substring(0, 3);
+            lemakSize1 = lemakList1.first.nutritionSize.substring(0, lemakList1.first.nutritionSize.indexOf('.'));
             lemak1 = lemakList1.first.nutritionName;
           }
         });
@@ -536,7 +487,7 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
         newMobilenutritionList2.forEach((item) {
           if (item.nutritionName.contains("Protein")) {
             proteinList2.add(item);
-            protSize2 = proteinList2.first.nutritionSize.substring(0, 3);
+            protSize2 = proteinList2.first.nutritionSize.substring(0, proteinList2.first.nutritionSize.indexOf('.'));
             prot2 = proteinList2.first.nutritionName;
           }
         });
@@ -544,7 +495,7 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
         newMobilenutritionList2.forEach((item) {
           if (item.nutritionName.contains("Karbo")) {
             karboList2.add(item);
-            karboSize2 = karboList2.first.nutritionSize.substring(0, 3);
+            karboSize2 = karboList2.first.nutritionSize.substring(0, karboList2.first.nutritionSize.indexOf('.'));
             karbo2 = proteinList2.first.nutritionName;
           }
         });
@@ -552,7 +503,7 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
         newMobilenutritionList2.forEach((item) {
           if (item.nutritionName.contains("Lemak")) {
             lemakList2.add(item);
-            lemakSize2 = lemakList2.first.nutritionSize.substring(0, 3);
+            lemakSize2 = lemakList2.first.nutritionSize.substring(0, lemakList2.first.nutritionSize.indexOf('.'));
             lemak2 = lemakList2.first.nutritionName;
           }
         });
@@ -572,7 +523,7 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
         newMobilenutritionList3.forEach((item) {
           if (item.nutritionName.contains("Kalori")) {
             kaloriList3.add(item);
-            kalSize3 = kaloriList3.first.nutritionSize.substring(0, 3);
+            kalSize3 = kaloriList3.first.nutritionSize.substring(0, kaloriList3.first.nutritionSize.indexOf('.'));
             kal3 = kaloriList3.first.nutritionName;
           }
         });
@@ -580,7 +531,7 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
         newMobilenutritionList3.forEach((item) {
           if (item.nutritionName.contains("Protein")) {
             proteinList3.add(item);
-            protSize3 = proteinList3.first.nutritionSize.substring(0, 3);
+            protSize3 = proteinList3.first.nutritionSize.substring(0, proteinList3.first.nutritionSize.indexOf('.'));
             prot3 = proteinList3.first.nutritionName;
           }
         });
@@ -588,7 +539,7 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
         newMobilenutritionList3.forEach((item) {
           if (item.nutritionName.contains("Karbo")) {
             karboList3.add(item);
-            karboSize3 = karboList3.first.nutritionSize.substring(0, 3);
+            karboSize3 = karboList3.first.nutritionSize.substring(0, karboList3.first.nutritionSize.indexOf('.'));
             karbo3 = proteinList3.first.nutritionName;
           }
         });
@@ -596,7 +547,7 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
         newMobilenutritionList3.forEach((item) {
           if (item.nutritionName.contains("Lemak")) {
             lemakList3.add(item);
-            lemakSize3 = lemakList3.first.nutritionSize.substring(0, 3);
+            lemakSize3 = lemakList3.first.nutritionSize.substring(0, lemakList3.first.nutritionSize.indexOf('.'));
             lemak3 = lemakList3.first.nutritionName;
           }
         });
@@ -627,7 +578,7 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
         newMobilenutritionList4.forEach((item) {
           if (item.nutritionName.contains("Protein")) {
             proteinList4.add(item);
-            protSize4 = proteinList4.first.nutritionSize.substring(0, 3);
+            protSize4 = proteinList4.first.nutritionSize.substring(0, proteinList4.first.nutritionSize.indexOf('.'));
             prot4 = proteinList4.first.nutritionName;
           }
         });
@@ -635,7 +586,7 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
         newMobilenutritionList4.forEach((item) {
           if (item.nutritionName.contains("Karbo")) {
             karboList4.add(item);
-            karboSize4 = karboList4.first.nutritionSize.substring(0, 3);
+            karboSize4 = karboList4.first.nutritionSize.substring(0, karboList4.first.nutritionSize.indexOf('.'));
             karbo4 = proteinList4.first.nutritionName;
           }
         });
@@ -643,7 +594,7 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
         newMobilenutritionList4.forEach((item) {
           if (item.nutritionName.contains("Lemak")) {
             lemakList4.add(item);
-            lemakSize4 = lemakList4.first.nutritionSize.substring(0, 3);
+            lemakSize4 = lemakList4.first.nutritionSize.substring(0, lemakList4.first.nutritionSize.indexOf('.'));
             lemak4 = lemakList4.first.nutritionName;
           }
         });

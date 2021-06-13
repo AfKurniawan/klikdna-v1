@@ -45,7 +45,6 @@ class AccountProvider with ChangeNotifier {
     notifyListeners();
     int id = Provider.of<MitraProvider>(context, listen: false).vuserid;
 
-    print("GET USER ID USING LOGIN ID --> $id");
     String token = prov.accessToken;
     var url = AppConstants.GET_ACCOUNT_URL + id.toString();
 
@@ -57,8 +56,6 @@ class AccountProvider with ChangeNotifier {
     final request = await http.get(url, headers: ndas);
     final accountResponse = AccountModel.fromJson(json.decode(request.body));
 
-   // print("AKUN RESPONSE BODY --> ${request.body}");
-
     if(accountResponse.success == true){
 
       isLoading = false ;
@@ -67,10 +64,8 @@ class AccountProvider with ChangeNotifier {
       var detailArray = data['data']['patient_card'] as List;
        listPatentCard = detailArray.map<PatientCard>((j) => PatientCard.fromJson(j)).toList();
 
-
       for(int i = 0 ; i < listPatentCard.length ; i++) {
         lastID = listPatentCard.last.id.toString();
-       // print("LAST ID ==> $lastID");
         noKtp = prefs.getString("nik");
         notifyListeners();
       }
