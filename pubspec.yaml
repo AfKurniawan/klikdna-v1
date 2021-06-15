@@ -58,6 +58,9 @@ dependencies:
   autocomplete_textfield: ^1.7.3
   keyboard_actions:
   flutter_paginator: ^0.0.6
+  #speech_to_text: ^2.3.0
+  highlight_text: ^0.7.2
+  avatar_glow: ^1.2.0
 
 
 

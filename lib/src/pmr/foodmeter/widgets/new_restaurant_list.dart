@@ -56,7 +56,6 @@ class NewRestaurantListState extends State<NewRestaurantList> {
       String url = AppConstants.LIST_FOOD_URL + '3/0/0/0?page=$page';
       print('$url');
       http.Response response = await http.get(url);
-      print('body ${response.body}');
       ModelDataResto md = modelDataFromJson(response.body);
       return md;
     } catch (e) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/models/detail_food_meter_model.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/models/pagination_model_data.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/pages/detail_food_meter_page.dart';
@@ -28,10 +29,57 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
   TextEditingController serachController = new TextEditingController();
   bool isExpanded = false;
 
+  /*
+  var bersepeda = cal / (0.13 * weight)
+  var senam = cal / (0.11 * weight)
+  var berlari = cal / (0.13 * weight)
+  var berjalan = cal / (0.08 * weight)
+  var yoga = cal / (0.04 * weight)
+  var berenang = cal / (0.17 * weight)
+  var membersikanRumah = cal / (0.05 * weight)
+  var berbelanja = cal / (0.04 * weight)
+
+  *note:
+  cal == calories
+  weight == berat badan yang diambil dari patient card*/
+  String bb = "0";
+  double cal = 0.0;
+  double berjalan = 0.0;
+  double berlari = 0.0;
+  double bersepeda = 0.0;
+  double senam = 0.0;
+  double yoga = 0.0;
+  double bersih2 = 0.0;
+  double belanja = 0.0;
+  double renang = 0.0;
+
+
   @override
   void initState() {
     isExpanded = false;
+    bb = Provider.of<PatientCardProvider>(context, listen: false).bb;
+    print("Berat Badan Detail Page $bb");
+    hitungRumus();
     super.initState();
+  }
+
+  hitungRumus(){
+    List<MobileNutritions> kalori =
+    Provider.of<FoodMeterProvider>(context, listen: false)
+        .newMobilenutritionListz
+        .where((e) => (e.nutritionName.contains("Kalori")))
+        .toList();
+    String cal = kalori.isEmpty ? "0.0" : kalori[0].nutritionSize;
+    berjalan = double.parse(cal) / (0.08 * double.parse(bb));
+    print("Berjalan ${berjalan.round()}");
+    berlari = double.parse(cal) / (0.13 * double.parse(bb));
+    bersepeda = double.parse(cal) / (0.13 * double.parse(bb));
+    senam = double.parse(cal) / (0.11 * double.parse(bb));
+    yoga = double.parse(cal) / (0.04 * double.parse(bb));
+    bersih2 = double.parse(cal) / (0.05 * double.parse(bb));
+    belanja = double.parse(cal) / (0.04 * double.parse(bb));
+    renang = double.parse(cal) / (0.17 * double.parse(bb));
+
   }
 
   @override
@@ -39,6 +87,15 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
     //
     final prov = Provider.of<FoodMeterProvider>(context);
 
+    List splittedBerjalan = berjalan.round().toString().split(".");
+    List splittedBerlari = berlari.round().toString().split(".");
+    List splittedBerenang = renang.round().toString().split(".");
+    List splittedBersepeda = bersepeda.round().toString().split(".");
+    List splittedSenam = senam.round().toString().split(".");
+    List splittedYoga = yoga.round().toString().split(".");
+    List splittedBelanja = belanja.round().toString().split(".");
+    List splittedBersih = bersih2.round().toString().split(".");
+    String berjalanVal = splittedBerjalan[0];
     List splittedSize = prov.sizeProduk.toString().split(".");
 
     return Scaffold(
@@ -182,7 +239,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                         child: Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(left: 24.0),
+                              padding: const EdgeInsets.only(left: 18.0),
                               child: Image.asset(
                                   "assets/icons/berjalan_icon.png",
                                   height: 32),
@@ -193,7 +250,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                                 children: [
                                   Row(
                                     children: [
-                                      Text("0",
+                                      Text("$berjalanVal",
                                           style: TextStyle(
                                               fontFamily: "Montserrat",
                                               fontSize: 24,
@@ -223,7 +280,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                         child: Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(left: 24.0),
+                              padding: const EdgeInsets.only(left: 18.0),
                               child: Image.asset(
                                   "assets/icons/berlari_icon.png",
                                   height: 32),
@@ -234,7 +291,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                                 children: [
                                   Row(
                                     children: [
-                                      Text("0",
+                                      Text("${splittedBerlari[0]}",
                                           style: TextStyle(
                                               fontFamily: "Montserrat",
                                               fontSize: 24,
@@ -273,7 +330,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                         child: Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(left: 24.0),
+                              padding: const EdgeInsets.only(left: 18.0),
                               child: Image.asset(
                                   "assets/icons/bersepeda_icon.png",
                                   height: 32),
@@ -284,7 +341,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                                 children: [
                                   Row(
                                     children: [
-                                      Text("0",
+                                      Text("${splittedBersepeda[0]}",
                                           style: TextStyle(
                                               fontFamily: "Montserrat",
                                               fontSize: 24,
@@ -314,7 +371,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                         child: Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(left: 24.0),
+                              padding: const EdgeInsets.only(left: 18.0),
                               child: Image.asset(
                                   "assets/icons/berenang_icon.png",
                                   height: 32),
@@ -325,7 +382,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                                 children: [
                                   Row(
                                     children: [
-                                      Text("0",
+                                      Text("${splittedBerenang[0]}",
                                           style: TextStyle(
                                               fontFamily: "Montserrat",
                                               fontSize: 24,
@@ -364,7 +421,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                         child: Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(left: 24.0),
+                              padding: const EdgeInsets.only(left: 18.0),
                               child: Image.asset("assets/icons/yoga_icon.png",
                                   height: 32),
                             ),
@@ -374,7 +431,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                                 children: [
                                   Row(
                                     children: [
-                                      Text("0",
+                                      Text("${splittedYoga[0]}",
                                           style: TextStyle(
                                               fontFamily: "Montserrat",
                                               fontSize: 24,
@@ -404,7 +461,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                         child: Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(left: 24.0),
+                              padding: const EdgeInsets.only(left: 18.0),
                               child: Image.asset("assets/icons/senam_icon.png",
                                   height: 32),
                             ),
@@ -414,7 +471,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                                 children: [
                                   Row(
                                     children: [
-                                      Text("0",
+                                      Text("${splittedSenam[0]}",
                                           style: TextStyle(
                                               fontFamily: "Montserrat",
                                               fontSize: 24,
@@ -463,7 +520,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                         child: Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(left: 24.0),
+                              padding: const EdgeInsets.only(left: 18.0),
                               child: Image.asset(
                                   "assets/icons/bebersih_icon.png",
                                   height: 32),
@@ -474,7 +531,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                                 children: [
                                   Row(
                                     children: [
-                                      Text("0",
+                                      Text("${splittedBersih[0]}",
                                           style: TextStyle(
                                               fontFamily: "Montserrat",
                                               fontSize: 24,
@@ -504,7 +561,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                         child: Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(left: 24.0),
+                              padding: const EdgeInsets.only(left: 18.0),
                               child: Image.asset(
                                   "assets/icons/belanja_icon.png",
                                   height: 32),
@@ -515,7 +572,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                                 children: [
                                   Row(
                                     children: [
-                                      Text("0",
+                                      Text("${splittedBelanja[0]}",
                                           style: TextStyle(
                                               fontFamily: "Montserrat",
                                               fontSize: 24,
@@ -622,8 +679,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
             .where((e) => (e.nutritionName.contains("Kalori")))
             .toList();
 
-    List kaloriSize =
-        kalori.isEmpty ? "0.0".split(".") : kalori[0].nutritionSize.split(".");
+    List kaloriSize = kalori.isEmpty ? "0.0".split(".") : kalori[0].nutritionSize.split(".");
 
     return Row(
       children: [

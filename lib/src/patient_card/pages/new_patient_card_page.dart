@@ -320,11 +320,6 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                                             fontSize: 14
                                                           )),
                                                       btnAction: () {
-                                                        // Provider.of<AsuransiProvider>(
-                                                        //         context,
-                                                        //         listen: false)
-                                                        //     .showModalAddInsuranceCard(
-                                                        //         context);
                                                         Navigator.pushNamed(context, "add_asuransi_page");
                                                       },
                                                       outlineTextColor:

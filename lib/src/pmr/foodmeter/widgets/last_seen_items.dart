@@ -11,12 +11,11 @@ class LastSeenItem extends StatelessWidget {
   LastSeenItem({Key key, this.food, this.kal, this.kalSize, this.prot, this.protSize}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-
     return CustomShadowCardWidget(
       width: MediaQuery.of(context).size.width / 2.5,
       margin: EdgeInsets.only(right: 16, bottom: 10),
       child: Padding(
-        padding: const EdgeInsets.only(left: 12, top: 0, right: 12),
+        padding: const EdgeInsets.only(left: 12, top: 12, right: 12, bottom: 12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -57,7 +56,7 @@ class LastSeenItem extends StatelessWidget {
                                     fontWeight: FontWeight.w300)),
                           ],
                         ),
-                        Text("$kalSize kkal",
+                        Text("${kalSize[0]} kkal",
                             style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400,

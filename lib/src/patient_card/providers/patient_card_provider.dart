@@ -7,6 +7,7 @@ import 'package:achievement_view/achievement_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:new_klikdna/src/account/providers/account_provider.dart';
@@ -26,7 +27,6 @@ import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
 class PatientCardProvider with ChangeNotifier {
-
   int id;
   int accountId;
   String noKtp;
@@ -41,23 +41,21 @@ class PatientCardProvider with ChangeNotifier {
   String createdAt;
   String updatedAt;
   String deletedAt;
-  String photo = "" ;
+  String photo = "";
   String bb = "0";
   String tb = "0";
   bool sukses;
 
-
-
-  bool isMuter ;
+  bool isMuter;
   List<Asuransi> listAsuransi = [];
 
   List<Widget> slideCard = [];
 
-
   String patienCardId = "";
   int mitraId = 0;
-  Future<PatientCardModel>getPatientCard(BuildContext context) async {
 
+  Future<PatientCardModel> getPatientCard(BuildContext context) async {
+    print("GET PASIEN CARD IS CALLING");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     isMuter = true;
     final prov = Provider.of<TokenProvider>(context, listen: false);
@@ -68,7 +66,6 @@ class PatientCardProvider with ChangeNotifier {
     patienCardId = getId.lastID;
 
     print("PatienCard ID --> $patienCardId");
-
 
     String accessToken = prov.accessToken;
     Map<String, String> ndas = {
@@ -81,9 +78,7 @@ class PatientCardProvider with ChangeNotifier {
 
     final request = await http.get(url, headers: ndas);
 
-
-    if(request.statusCode == 200){
-
+    if (request.statusCode == 200) {
       final response = PatientCardModel.fromJson(json.decode(request.body));
 
       isMuter = false;
@@ -108,21 +103,23 @@ class PatientCardProvider with ChangeNotifier {
       var data = json.decode(request.body);
 
       var detailArray = data['data']['detail'] as List;
-      listAsuransi = detailArray.map<Asuransi>((j) => Asuransi.fromJson(j)).toList();
+      listAsuransi =
+          detailArray.map<Asuransi>((j) => Asuransi.fromJson(j)).toList();
 
-      print("Respone berat badan --> ${response.data.weight} Response tinggi badan --> ${response.data.height}");
+      print(
+          "Respone berat badan --> ${response.data.weight} Response tinggi badan --> ${response.data.height}");
 
-      slideCard = [
-        CardInssuranceItem(),
-        CardInssuranceItem()
-      ];
+      slideCard = [CardInssuranceItem(), CardInssuranceItem()];
 
-
+      _selectedValue = 0;
+      _selectedValueTb = 0;
+      tbController.text = "" ;
+      bbController.text = "";
+      isEnabled = false ;
 
       notifyListeners();
 
-      getBeratbadan(context);
-
+      //checkPatientCard(context);
       setParams();
 
     } else {
@@ -133,28 +130,32 @@ class PatientCardProvider with ChangeNotifier {
 
     notifyListeners();
     return null;
-
   }
 
-  getBeratbadan(BuildContext context){
-      print("TINGGI BAdaan $tb -- BeraT Badan $bb");
+  checkPatientCard(BuildContext context){
+    final acc = Provider.of<AccountProvider>(context, listen: false);
+    if(acc.success == false || patienCardId == null) {
+      showDialogError(context);
+    } else {
+      getBeratbadan(context);
+    }
+  }
 
-      if(bb == "0" || tb == "0"){
+  getBeratbadan(BuildContext context) {
+    print("TINGGI BAdaan $tb -- BeraT Badan $bb");
 
-        dialogBbTb(context);
+    if (bb == "0" || tb == "0") {
+      dialogBbTb(context);
+    } else if (bb == null || tb == null) {
+      dialogBbTb(context);
+    } else {
+      Provider.of<LastSeenFoodMeterProvider>(context, listen: false)
+          .getLastSeenFood(context);
+      Provider.of<FavouriteFoodMeterProvider>(context, listen: false)
+          .getFavouriteData(context);
+    }
 
-      } else if(bb == null || tb == null){
-
-        dialogBbTb(context);
-
-      } else {
-
-        Provider.of<LastSeenFoodMeterProvider>(context, listen: false).getLastSeenFood(context);
-        Provider.of<FavouriteFoodMeterProvider>(context, listen: false).getFavouriteData(context);
-      }
-
-      notifyListeners();
-
+    notifyListeners();
   }
 
   FixedExtentScrollController tbSelectController;
@@ -163,20 +164,25 @@ class PatientCardProvider with ChangeNotifier {
   TextEditingController bbController = new TextEditingController();
   TextEditingController tbController = new TextEditingController();
 
-  int _selectedValue = 0;
-  int _selectedValueTb = 0;
+  int _selectedValue = 20;
+  int _selectedValueTb = 100;
+  bool isEnabled = false;
 
-  void dialogBbTb(BuildContext context){
+  final _formKey = GlobalKey<FormState>();
+
+  void dialogBbTb(BuildContext context) {
+    final bbValidator = RequiredValidator(errorText: "Harap isi Berat");
+    final tbValidator = RequiredValidator(errorText: "Harap isi Tinggi");
     showModalBottomSheet(
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
         context: context,
-        isDismissible: false,
+        //isDismissible: false,
         builder: (context) {
           return BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
             child: StatefulBuilder(
-              builder: (BuildContext context, StateSetter setState){
+              builder: (BuildContext context, StateSetter setState) {
                 return Container(
                   height: MediaQuery.of(context).size.height / 2,
                   decoration: BoxDecoration(
@@ -194,147 +200,168 @@ class PatientCardProvider with ChangeNotifier {
                             padding: const EdgeInsets.only(left: 16.0, top: 24),
                             child: Align(
                                 alignment: Alignment.centerLeft,
-                                child: Text("Isi Berat dan Tinggi Kamu", style: TextStyle(
-                                    fontWeight: FontWeight.w500, fontSize: 18, fontFamily: "Roboto"))),
+                                child: Text("Isi Berat dan Tinggi Kamu",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 18,
+                                        fontFamily: "Roboto"))),
                           ),
-
                           Padding(
                             padding: const EdgeInsets.only(left: 16.0, top: 10),
                             child: Align(
                                 alignment: Alignment.centerLeft,
-                                child: Text("Isilah berat dan tinggi kamu dengan benar untuk mendapatkan\nhasil rekomendasi pada food meter", style: TextStyle(
-                                    fontWeight: FontWeight.w300, fontSize: 12, fontFamily: "Roboto"))),
+                                child: Text(
+                                    "Isilah berat dan tinggi kamu dengan benar untuk mendapatkan\nhasil rekomendasi pada food meter",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w300,
+                                        fontSize: 12,
+                                        fontFamily: "Roboto"))),
                           ),
-
                         ],
                       ),
-
                       SizedBox(height: 19),
-
                       Padding(
                         padding: const EdgeInsets.only(left: 16.0, right: 16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width / 2.3,
-                              child: TextFormField(
-                                style: TextStyle(
-                                  color: MyColors.dnaBlack,
+                        child: Form(
+                          key: _formKey,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width / 2.3,
+                                child: TextFormField(
+                                  validator: bbValidator,
+                                  style: TextStyle(
+                                    color: MyColors.dnaBlack,
+                                  ),
+                                  controller: bbController,
+                                  readOnly: true,
+                                  onTap: () {
+                                    _showBBPicker(context);
+                                  },
+                                  decoration: InputDecoration(
+                                      suffixIcon: Icon(
+                                          Icons.arrow_drop_down_sharp,
+                                          color: Colors.grey),
+                                      labelText: "Berat",
+                                      labelStyle: TextStyle(color: Colors.grey),
+                                      alignLabelWithHint: true,
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: MyColors.dnaGreen, width: 1.5),
+                                        borderRadius:
+                                            BorderRadius.all(Radius.circular(8)),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.grey, width: 1.5),
+                                        borderRadius:
+                                            BorderRadius.all(Radius.circular(8)),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.red[300], width: 1.5),
+                                        borderRadius:
+                                            BorderRadius.all(Radius.circular(8)),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.red[300], width: 1.5),
+                                        borderRadius:
+                                            BorderRadius.all(Radius.circular(8)),
+                                      ),
+                                      disabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                            width: 1.5),
+                                        borderRadius:
+                                            BorderRadius.all(Radius.circular(8)),
+                                      ),
+                                      focusColor: MyColors.dnaGreen,
+                                      hintText: "",
+                                      hintStyle: TextStyle(
+                                          color: Colors.white54, fontSize: 12)),
                                 ),
-                                controller: bbController,
-                                readOnly: true,
-                                onTap: (){
-                                  _showBBPicker(context);
-                                },
-                                decoration: InputDecoration(
-                                    suffixIcon: Icon(Icons.arrow_drop_down_sharp, color: Colors.grey),
-                                    labelText: "Berat",
-                                    labelStyle: TextStyle(color: Colors.grey),
-                                    alignLabelWithHint: true,
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: MyColors.dnaGreen, width: 1.5),
-                                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Colors.grey, width: 1.5),
-                                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide:
-                                      BorderSide(color: Colors.red[300], width: 1.5),
-                                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide:
-                                      BorderSide(color: Colors.red[300], width: 1.5),
-                                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                                    ),
-                                    disabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Colors.transparent, width: 1.5),
-                                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                                    ),
-                                    focusColor: MyColors.dnaGreen,
-                                    hintText: "",
-                                    hintStyle:
-                                    TextStyle(color: Colors.white54, fontSize: 12)),
-
                               ),
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width / 2.3,
-                              child: TextFormField(
-                                style: TextStyle(
-                                  color: MyColors.dnaBlack,
+                              Container(
+                                width: MediaQuery.of(context).size.width / 2.3,
+                                child: TextFormField(
+                                  style: TextStyle(
+                                    color: MyColors.dnaBlack,
+                                  ),
+                                  onTap: () {
+                                    FocusScope.of(context).requestFocus(new FocusNode());
+                                    _showTbPicker(context);
+                                  },
+                                  readOnly: true,
+                                  validator: tbValidator,
+                                  controller: tbController,
+                                  decoration: InputDecoration(
+                                      suffixIcon: Icon(
+                                          Icons.arrow_drop_down_sharp,
+                                          color: Colors.grey),
+                                      labelText: "Tinggi",
+                                      labelStyle: TextStyle(color: Colors.grey),
+                                      alignLabelWithHint: true,
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: MyColors.dnaGreen, width: 1.5),
+                                        borderRadius:
+                                            BorderRadius.all(Radius.circular(8)),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.grey, width: 1.5),
+                                        borderRadius:
+                                            BorderRadius.all(Radius.circular(8)),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.red[300], width: 1.5),
+                                        borderRadius:
+                                            BorderRadius.all(Radius.circular(8)),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.red[300], width: 1.5),
+                                        borderRadius:
+                                            BorderRadius.all(Radius.circular(8)),
+                                      ),
+                                      disabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                            width: 1.5),
+                                        borderRadius:
+                                            BorderRadius.all(Radius.circular(8)),
+                                      ),
+                                      focusColor: MyColors.dnaGreen,
+                                      hintText: "",
+                                      hintStyle: TextStyle(
+                                          color: Colors.white54, fontSize: 12)),
                                 ),
-                                onTap: (){
-                                  _showTbPicker(context);
-                                },
-                                readOnly: true,
-                                controller: tbController,
-                                decoration: InputDecoration(
-                                    suffixIcon: Icon(Icons.arrow_drop_down_sharp, color: Colors.grey),
-                                    labelText: "Tinggi",
-                                    labelStyle: TextStyle(color: Colors.grey),
-                                    alignLabelWithHint: true,
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: MyColors.dnaGreen, width: 1.5),
-                                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Colors.grey, width: 1.5),
-                                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide:
-                                      BorderSide(color: Colors.red[300], width: 1.5),
-                                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide:
-                                      BorderSide(color: Colors.red[300], width: 1.5),
-                                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                                    ),
-                                    disabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Colors.transparent, width: 1.5),
-                                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                                    ),
-                                    focusColor: MyColors.dnaGreen,
-                                    hintText: "",
-                                    hintStyle:
-                                    TextStyle(color: Colors.white54, fontSize: 12)),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-
-                      SizedBox(height: 70),
-
+                      SizedBox(height: 90),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Material(
                           color: MyColors.dnaGreen,
                           borderRadius: BorderRadius.circular(10),
-                          child: InkWell(
-                            onTap: (){
-                              updateBeratBadan(context, tbController.text, bbController.text);
+                          child: isEnabled == false
+                                ? InkWell(
+                            onTap: () {
+
                             },
                             splashColor: Colors.white,
                             child: Ink(
                               width: MediaQuery.of(context).size.width,
                               height: 50,
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: MyColors.dnaGreen
-
-                              ),
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.grey[200]),
                               child: Center(
                                 child: Text(
                                   "Simpan",
@@ -345,7 +372,33 @@ class PatientCardProvider with ChangeNotifier {
                                 ),
                               ),
                             ),
-                          ),
+                          )
+                                : InkWell(
+                                  onTap: () {
+                                    if (_formKey.currentState.validate()) {
+                                      updateBeratBadan(context, tbController.text,
+                                          bbController.text);
+                                    }
+
+                                  },
+                                  splashColor: Colors.white,
+                                  child: Ink(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: MyColors.dnaGreen),
+                                    child: Center(
+                                      child: Text(
+                                        "Simpan",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ),
+                                )
                         ),
                       ),
                     ],
@@ -354,11 +407,10 @@ class PatientCardProvider with ChangeNotifier {
               },
             ),
           );
-        }
-    );
+        });
   }
 
-  _showBBPicker(BuildContext ctx){
+  _showBBPicker(BuildContext ctx) {
     showDialog(
       context: ctx,
       builder: (BuildContext ctx) {
@@ -371,7 +423,7 @@ class PatientCardProvider with ChangeNotifier {
               children: <Widget>[
                 Text('Kilogram'),
                 Container(
-                  height: MediaQuery.of(ctx).size.height / 3.5,
+                  height: MediaQuery.of(ctx).size.height / 4,
                   color: Colors.transparent,
                   child: CupertinoPicker(
                     backgroundColor: Colors.white,
@@ -381,26 +433,26 @@ class PatientCardProvider with ChangeNotifier {
                     diameterRatio: 1,
                     scrollController: bbSelectController,
                     children: List<Widget>.generate(131, (int index) {
-                      int i = index+20 ;
+                      int i = index + 20;
                       return Center(
                         child: Text("$i"),
                       );
                     }),
                     onSelectedItemChanged: (i) {
-                        _selectedValue = i+20;
-
+                      _selectedValue = i + 20;
+                      isEnabled = true ;
                     },
-
                   ),
                 ),
-                SizedBox(height: 50),
+                SizedBox(height: 40),
                 CupertinoButton(
                   child: Text('OK'),
-                  onPressed: (){
-                      bbController.text = _selectedValue.toString();
-                      print("VALUE ${bbController.text}");
-                      Navigator.of(ctx).pop();
-                      notifyListeners();
+                  onPressed: () {
+                    bbController.text = _selectedValue.toString();
+                    print("VALUE ${bbController.text}");
+                    isEnabled = true ;
+                    Navigator.of(ctx).pop();
+                    notifyListeners();
                   },
                 )
               ],
@@ -411,20 +463,20 @@ class PatientCardProvider with ChangeNotifier {
     );
   }
 
-  _showTbPicker(context){
+  _showTbPicker(context) {
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Tinggi Badan'),
+          title: Text('Tinggi'),
           content: Container(
-            height: 350,
+            height: 380,
             width: 350.0,
             child: Column(
               children: <Widget>[
                 Text('Centimeter'),
                 Container(
-                  height: MediaQuery.of(context).size.height / 3.5,
+                  height: MediaQuery.of(context).size.height / 4,
                   color: Colors.transparent,
                   child: CupertinoPicker(
                     backgroundColor: Colors.white,
@@ -434,13 +486,14 @@ class PatientCardProvider with ChangeNotifier {
                     diameterRatio: 1,
                     scrollController: tbSelectController,
                     children: List<Widget>.generate(150, (int index) {
-                      int i = index+100 ;
+                      int i = index + 100;
                       return Center(
                         child: Text("$i"),
                       );
                     }),
                     onSelectedItemChanged: (i) {
-                        _selectedValueTb = i+100;
+                      _selectedValueTb = i + 100;
+                      isEnabled = true ;
                       notifyListeners();
                     },
                   ),
@@ -448,12 +501,12 @@ class PatientCardProvider with ChangeNotifier {
                 SizedBox(height: 50),
                 CupertinoButton(
                   child: Text('OK'),
-                  onPressed: (){
-
-                      tbController.text = _selectedValueTb.toString();
-                      print("VALUE ${bbController.text}");
-                      Navigator.of(context).pop();
-                      notifyListeners();
+                  onPressed: () {
+                    tbController.text = _selectedValueTb.toString();
+                    print("VALUE ${bbController.text}");
+                    isEnabled = true ;
+                    Navigator.of(context).pop();
+                    notifyListeners();
                   },
                 )
               ],
@@ -464,20 +517,19 @@ class PatientCardProvider with ChangeNotifier {
     );
   }
 
-
-
   Future<void> showDialogError(BuildContext context) async {
     return showDialog<void>(
         context: context,
         barrierDismissible: false, // user must tap button!
         builder: (BuildContext context) => DialogErrorKartuPasien(
-          title: "Belum ada Kartu Pasien tersimpan",
-          description: "",
-          filledButtonText: "Oke",
-          filledButtonaction: (){
-            Navigator.of(context).pushReplacementNamed('main_page', arguments: 1);
-          },
-        ));
+              title: "Belum ada Kartu Pasien tersimpan",
+              description: "",
+              filledButtonText: "Oke",
+              filledButtonaction: () {
+                Navigator.of(context)
+                    .pushReplacementNamed('main_page', arguments: 1);
+              },
+            ));
   }
 
   Future<void> showDialogKonfirmasiHapus(BuildContext context) async {
@@ -485,18 +537,19 @@ class PatientCardProvider with ChangeNotifier {
         context: context,
         barrierDismissible: false, // user must tap button!
         builder: (BuildContext context) => CustomDialogKonfirmasiWidget(
-          title: "Kartu Asuransi ini akan dihapus",
-          description: "Apakah kamu yakin akan menghapus Kartu Asuransi ini?",
-          filledButtonText: "Batal",
-          outlineButtonText: "Hapus",
-          filledButtonaction: (){
-            Navigator.of(context).pop();
-
-          },
-          outlineButtonAction: (){
-            Provider.of<AsuransiProvider>(context, listen: false).deleteAsuransi(context, id);
-          },
-        ));
+              title: "Kartu Asuransi ini akan dihapus",
+              description:
+                  "Apakah kamu yakin akan menghapus Kartu Asuransi ini?",
+              filledButtonText: "Batal",
+              outlineButtonText: "Hapus",
+              filledButtonaction: () {
+                Navigator.of(context).pop();
+              },
+              outlineButtonAction: () {
+                Provider.of<AsuransiProvider>(context, listen: false)
+                    .deleteAsuransi(context, id);
+              },
+            ));
   }
 
   void callKontakDarurat(BuildContext context, String phone) {
@@ -506,7 +559,7 @@ class PatientCardProvider with ChangeNotifier {
         return CupertinoDialogWidget(
           title: "Menghubungi via Telepon",
           message:
-          'Apakah anda yakin akan menghubungi Kontak Darurat melalui Telepon ?',
+              'Apakah anda yakin akan menghubungi Kontak Darurat melalui Telepon ?',
           action: () {
             Navigator.of(context).pop();
             if (Platform.isIOS) {
@@ -520,25 +573,19 @@ class PatientCardProvider with ChangeNotifier {
     );
   }
 
-
-
-
-
-
-
   TextEditingController namaController = new TextEditingController();
   TextEditingController noKtpController = new TextEditingController();
   TextEditingController insuranceCardController = new TextEditingController();
   TextEditingController bloodTypeController = new TextEditingController();
   TextEditingController medicalProfController = new TextEditingController();
-  TextEditingController emergencyContactController = new TextEditingController();
+  TextEditingController emergencyContactController =
+      new TextEditingController();
   TextEditingController comorbidityController = new TextEditingController();
   TextEditingController dobController = new TextEditingController();
 
+  Uint8List photoView;
 
-  Uint8List photoView ;
-
-  setParams(){
+  setParams() {
     namaController.text = nama;
     noKtpController.text = noKtp;
     insuranceCardController.text = inssuranceCode;
@@ -549,28 +596,29 @@ class PatientCardProvider with ChangeNotifier {
     dobController.text = dob;
 
     notifyListeners();
-
   }
 
   final picker = ImagePicker();
   String photo64Encode = "";
-  Uint8List image64Decode ;
-
+  Uint8List image64Decode;
 
   Future getImageV2(BuildContext context) async {
     final photo = await picker.getImage(source: ImageSource.camera);
     File image = await FlutterNativeImage.compressImage(photo.path,
         quality: 50, targetWidth: 100, targetHeight: 100);
     List<int> imageBytes = image.readAsBytesSync();
-    photo64Encode = base64Encode(imageBytes); ///INI DIKIRIM KE BACKEND
-    image64Decode = Base64Decoder().convert(photo64Encode);  ///UNTUK DITAMPILKAN
+    photo64Encode = base64Encode(imageBytes);
 
-    if(photo64Encode == ""){
+    ///INI DIKIRIM KE BACKEND
+    image64Decode = Base64Decoder().convert(photo64Encode);
+
+    ///UNTUK DITAMPILKAN
+
+    if (photo64Encode == "") {
       return image64Decode == photoView;
     }
     updatePhoto(context);
     notifyListeners();
-
   }
 
   Future<void> updatePhoto(BuildContext context) async {
@@ -582,7 +630,7 @@ class PatientCardProvider with ChangeNotifier {
     notifyListeners();
 
     int accountid = prefs.getInt("userid");
-    var url = AppConstants.UPDATE_PATIENT_CARD_URL + "$patienCardId" ;
+    var url = AppConstants.UPDATE_PATIENT_CARD_URL + "$patienCardId";
 
     var body = {
       "account_id": accountid,
@@ -604,17 +652,13 @@ class PatientCardProvider with ChangeNotifier {
 
     final request = await http.put(url, headers: ndas, body: json.encode(body));
 
-
-    if(sukses == true){
+    if (sukses == true) {
       showToastUpdatePhoto(context, "Berhasil", "Data berhasil diupdate");
-
-    } else {
-
-    }
-
+    } else {}
   }
 
-  void showToastUpdatePhoto(BuildContext ctx, String title, String subtitle) async {
+  void showToastUpdatePhoto(
+      BuildContext ctx, String title, String subtitle) async {
     bool isCircle = true;
     AchievementView(
       ctx,
@@ -624,13 +668,9 @@ class PatientCardProvider with ChangeNotifier {
       subTitle: "$subtitle",
       isCircle: isCircle,
       duration: Duration(milliseconds: 1000),
-      listener: (status) {
-      },
+      listener: (status) {},
     )..show();
-
   }
-
-
 
   Future<void> updatePatientCard(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -643,7 +683,7 @@ class PatientCardProvider with ChangeNotifier {
     print("PASI ID ==> $patienCardId");
 
     int accountid = prefs.getInt("userid");
-    var url = AppConstants.UPDATE_PATIENT_CARD_URL + '$patienCardId' ;
+    var url = AppConstants.UPDATE_PATIENT_CARD_URL + '$patienCardId';
 
     var body = {
       "account_id": accountid,
@@ -663,20 +703,18 @@ class PatientCardProvider with ChangeNotifier {
       "Authorization": "Bearer $accessToken"
     };
 
-    final request = await http.put(url, headers: header, body: json.encode(body));
+    final request =
+        await http.put(url, headers: header, body: json.encode(body));
 
     print("Status ==> ${request.statusCode}");
 
-
-    if(sukses == true){
+    if (sukses == true) {
       showToast(context, "Berhasil", "Data berhasil diupdate");
-
-    } else {
-    }
-
+    } else {}
   }
 
-  Future<void> updateBeratBadan(BuildContext context, String height, String weight) async {
+  Future<void> updateBeratBadan(
+      BuildContext context, String height, String weight) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final prov = Provider.of<TokenProvider>(context, listen: false);
     prov.getApiToken();
@@ -686,8 +724,9 @@ class PatientCardProvider with ChangeNotifier {
     print("PASI ID ==> $patienCardId");
 
     int accountid = prefs.getInt("userid");
-    print("account id untuk update patientcard $patienCardId, $accountId, $height, $weight");
-    var url = AppConstants.UPDATE_PATIENT_CARD_URL + '$patienCardId' ;
+    print(
+        "account id untuk update patientcard $patienCardId, $accountId, $height, $weight");
+    var url = AppConstants.UPDATE_PATIENT_CARD_URL + '$patienCardId';
 
     var body = {
       // "account_id": 14,
@@ -696,7 +735,6 @@ class PatientCardProvider with ChangeNotifier {
       "account_id": accountid,
       "height": height,
       "weight": weight
-
     };
 
     Map<String, String> header = {
@@ -704,25 +742,21 @@ class PatientCardProvider with ChangeNotifier {
       "Authorization": "Bearer $accessToken"
     };
 
-    final response = await http.put(url, headers: header, body: json.encode(body));
+    final response =
+        await http.put(url, headers: header, body: json.encode(body));
 
     print("Status ==> ${response.body}");
 
-
-    if(response.statusCode == 200){
+    if (response.statusCode == 200) {
       showToast(context, "Berhasil", "Data berhasil diupdate");
-
-    } else {
-    }
-
+    } else {}
   }
 
-  void setRhesus(BuildContext context, String rhesus){
+  void setRhesus(BuildContext context, String rhesus) {
     bloodTypeController.text = rhesus;
     updatePatientCard(context);
     notifyListeners();
   }
-
 
   void showToast(BuildContext ctx, String title, String subtitle) async {
     bool isCircle = true;
@@ -735,11 +769,10 @@ class PatientCardProvider with ChangeNotifier {
       isCircle: isCircle,
       duration: Duration(milliseconds: 1000),
       listener: (status) {
-        if(status == AchievementState.opening){
+        if (status == AchievementState.opening) {
           Navigator.of(ctx).pop();
         }
       },
     )..show();
-
   }
 }

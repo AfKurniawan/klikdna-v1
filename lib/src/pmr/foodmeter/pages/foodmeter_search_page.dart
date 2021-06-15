@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/providers/food_meter_provider.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/widgets/food_meter_search_item.dart';
 import 'package:new_klikdna/src/report/widgets/button_icon_widget.dart';
@@ -11,6 +13,7 @@ import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:new_klikdna/widgets/button_and_icon_widget.dart';
 import 'package:new_klikdna/widgets/button_widget.dart';
 import 'package:new_klikdna/widgets/custom_shadow_card_widget.dart';
+import 'package:new_klikdna/widgets/dialogs/custom_dialog_box.dart';
 import 'package:new_klikdna/widgets/form_widget.dart';
 import 'package:new_klikdna/widgets/outline_button_widget.dart';
 import 'package:provider/provider.dart';
@@ -43,6 +46,7 @@ class _FoodMeterSearchPageState extends State<FoodMeterSearchPage> {
 
 
 
+
   bool visible = true;
   void toggle() {
     setState(() {
@@ -70,7 +74,7 @@ class _FoodMeterSearchPageState extends State<FoodMeterSearchPage> {
         onError: errorListener,
         onStatus: statusListener,
         debugLogging: true,
-        finalTimeout: Duration(milliseconds: 0));
+        );
     if (hasSpeech) {
       _localeNames = await speech.locales();
       var systemLocale = await speech.systemLocale();
@@ -84,6 +88,8 @@ class _FoodMeterSearchPageState extends State<FoodMeterSearchPage> {
     });
   }
 
+
+
   void startListening() {
     searchController.text = '';
     lastError = '';
@@ -96,14 +102,18 @@ class _FoodMeterSearchPageState extends State<FoodMeterSearchPage> {
         onSoundLevelChange: soundLevelListener,
         cancelOnError: true,
         listenMode: ListenMode.confirmation);
-    setState(() {});
+    setState(() {
+      //showDialogError(context);
+    });
   }
 
   void stopListening() {
     speech.stop();
     setState(() {
       level = 0.0;
+      Navigator.of(context).pop();
     });
+
   }
 
   void cancelListening() {
@@ -111,11 +121,12 @@ class _FoodMeterSearchPageState extends State<FoodMeterSearchPage> {
     setState(() {
       level = 0.0;
     });
+
   }
 
   void resultListener(SpeechRecognitionResult result) {
     ++resultListened;
-    print('Result listener $resultListened');
+    print('Result listener ${result.recognizedWords}');
     setState(() {
       searchController.text = '${result.recognizedWords}';
     });
@@ -124,26 +135,28 @@ class _FoodMeterSearchPageState extends State<FoodMeterSearchPage> {
   void soundLevelListener(double level) {
     minSoundLevel = min(minSoundLevel, level);
     maxSoundLevel = max(maxSoundLevel, level);
-    // print("sound level $level: $minSoundLevel - $maxSoundLevel ");
     setState(() {
       this.level = level;
     });
+
   }
 
   void errorListener(SpeechRecognitionError error) {
-    // print("Received error status: $error, listening: ${speech.isListening}");
     setState(() {
       lastError = '${error.errorMsg} - ${error.permanent}';
     });
   }
 
   void statusListener(String status) {
-    // print(
-    // 'Received listener status: $status, listening: ${speech.isListening}');
     setState(() {
       lastStatus = '$status';
     });
   }
+
+
+  bool _isListening = false;
+  String _text = 'Press the button and start speaking';
+  double _confidence = 1.0;
 
 
   @override
@@ -211,11 +224,11 @@ class _FoodMeterSearchPageState extends State<FoodMeterSearchPage> {
                         // },
                       btnAction: (){
 
-                        !_hasSpeech || speech.isListening
-                            ? null
-                            : startListening();
+                        if(!_hasSpeech || speech.isListening ){
+                        } else {
+                          startListening();
+                        }
 
-                        print("$startListen");
                       },
                         height: 40,
                         outlineColor: MyColors.dnaGreen,
@@ -231,7 +244,12 @@ class _FoodMeterSearchPageState extends State<FoodMeterSearchPage> {
                         )),
                     ButtonAndIconWidget(
                         btnAction: (){
-                          Navigator.pushNamed(context, "dummy_tts_page");
+
+                          print("$startListen");
+                          !_hasSpeech || speech.isListening ? null
+                              : startListening();
+
+
                         },
                         height: 40,
                         widht: MediaQuery.of(context).size.width / 2.3,
@@ -300,7 +318,107 @@ class _FoodMeterSearchPageState extends State<FoodMeterSearchPage> {
           ),
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: AvatarGlow(
+        animate: _hasSpeech,
+        glowColor: Theme.of(context).primaryColor,
+        endRadius: 75.0,
+        duration: const Duration(milliseconds: 2000),
+        repeatPauseDuration: const Duration(milliseconds: 100),
+        repeat: true,
+        child: FloatingActionButton(
+          onPressed: (){
+             startListening();
+          },
+          child: Icon(!_hasSpeech ? Icons.mic : Icons.mic_none),
+        ),
+      ),
     );
+  }
+
+  showDialogError(BuildContext context) {
+    return showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) => Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppConstants.padding),
+          ),
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          child: Stack(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.only(left: AppConstants.padding,top: AppConstants.avatarRadius
+                    + AppConstants.padding, right: AppConstants.padding,bottom: AppConstants.padding
+                ),
+                margin: EdgeInsets.only(top: AppConstants.avatarRadius),
+                decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(AppConstants.padding),
+                    boxShadow: [
+                      BoxShadow(color: Colors.black26,offset: Offset(0,10),
+                          blurRadius: 10
+                      ),
+                    ]
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+
+                    Text("${searchController.text}",style: TextStyle(fontSize: 14),textAlign: TextAlign.center,),
+                    SizedBox(height: 22,),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: FlatButton(
+                          onPressed: (){
+                            Navigator.of(context).pop();
+                          },
+                          child: Text("Oke",style: TextStyle(fontSize: 18),)),
+                    ),
+                  ],
+                ),
+              ),
+              Positioned.fill(
+                top: 15,
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                            blurRadius: .26,
+                            spreadRadius: this.level * 1.5,
+                            color: Colors.black)
+                      ],
+                      color: Colors.white,
+                      borderRadius:
+                      BorderRadius.all(Radius.circular(50)),
+                    ),
+                    child: AvatarGlow(
+                      animate: _hasSpeech,
+                      glowColor: Theme.of(context).primaryColor,
+                      endRadius: 75.0,
+                      duration: const Duration(milliseconds: 2000),
+                      repeatPauseDuration: const Duration(milliseconds: 100),
+                      repeat: true,
+                      child: FloatingActionButton(
+                        onPressed: null,
+                        child: Icon(_isListening ? Icons.mic : Icons.mic_none),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        )
+
+        );
   }
 }
 

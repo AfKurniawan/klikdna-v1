@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:new_klikdna/src/mitra/providers/mitra_provider.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/models/detail_food_meter_model.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/models/food_meter_last_seen_model.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/providers/favourite_food_meter_provider.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/providers/food_meter_provider.dart';
 import 'package:new_klikdna/src/token/providers/token_provider.dart';
 import 'package:provider/provider.dart';
@@ -15,33 +17,6 @@ class LastSeenFoodMeterProvider with ChangeNotifier {
   List<DataArray> dataArray ;
   var myArray = [];
   List<DataArray> lastSeenFood = [];
-
-  String kal0 = "" ;
-  String kal1 = "" ;
-  String kal2 = "" ;
-  String kal3 = "" ;
-  String kal4 = "" ;
-
-  int id0 = 0 ;
-  int id1 = 0 ;
-  int id2 = 0 ;
-  int id3 = 0 ;
-  int id4 = 0 ;
-  int id5 = 0 ;
-
-  String food0 = "" ;
-  String food1 = "" ;
-  String food2 = "" ;
-  String food3 = "" ;
-  String food4 = "" ;
-
-  String kalori0 = "" ;
-  String kalori1 = "" ;
-  String kalori2 = "" ;
-  String kalori3 = "" ;
-  String kalori4 = "" ;
-
-
 
   Future<FoodMeterLastSeenModel> getLastSeenFood(BuildContext context) async {
 
@@ -69,17 +44,10 @@ class LastSeenFoodMeterProvider with ChangeNotifier {
 
       myArray = responseJson['data']['data'] as List;
 
-
-
-      var array2 = myArray[0]['data'];
       dataArray = myArray.map<DataArray>((j) => DataArray.fromJson(j)).toList();
       isLoadingLastSeen = false;
 
-      print("Last Seen Length ${lastSeenFood.length}");
-
-
-
-
+      print("Last Seen data ${request.body}");
 
 
       for(int i = 0 ; i < myArray.length; i++){
@@ -90,7 +58,6 @@ class LastSeenFoodMeterProvider with ChangeNotifier {
           lastSeenFood.removeWhere((value) => value.product == null);
 
           Provider.of<FoodMeterProvider>(context, listen: false).getDetailFoodMeter(context, lastSeenFood[i].product.id);
-
 
 
 
@@ -111,8 +78,6 @@ class LastSeenFoodMeterProvider with ChangeNotifier {
     return null ;
 
   }
-
-
 
 
 }

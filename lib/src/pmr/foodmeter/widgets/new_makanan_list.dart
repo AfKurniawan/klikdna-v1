@@ -56,7 +56,6 @@ class NewMakananListState extends State<NewMakananList> {
       String url = AppConstants.LIST_FOOD_URL + '1/0/0/0?page=$page';
       print("$url");
       http.Response response = await http.get(url);
-      print('body ${response.body}');
       ModelData md = modelDataFromJson(response.body);
       return md;
     } catch (e) {

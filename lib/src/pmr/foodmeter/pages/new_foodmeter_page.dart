@@ -2,8 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 import 'package:new_klikdna/src/account/providers/account_provider.dart';
 import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/models/detail_food_meter_model.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/models/dummy_nutrisi_desc.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/providers/favourite_food_meter_provider.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/providers/food_meter_provider.dart';
@@ -42,8 +44,8 @@ class NewFoodMeterPage extends StatefulWidget {
 
 class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
   bool visible = true;
-  int _selectedValue = 0;
-  int _selectedValueTb = 0;
+  int _selectedValue = 20;
+  int _selectedValueTb = 100;
 
 
   void toggle() {
@@ -64,7 +66,11 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
     Provider.of<TokenProvider>(context, listen: false).getApiToken();
     Provider.of<AccountProvider>(context, listen: false).getUserAccount(context);
     _futureLastScreen = Provider.of<LastSeenFoodMeterProvider>(context, listen: false).getLastSeenFood(context);
-    WidgetsBinding.instance.addPostFrameCallback((_) => Provider.of<PatientCardProvider>(context, listen: false).getPatientCard(context));
+    Provider.of<PatientCardProvider>(context, listen: false).getPatientCard(context);
+    WidgetsBinding.instance.addPostFrameCallback((_) => Provider.of<PatientCardProvider>(context, listen: false).getBeratbadan(context));
+    //getBeratbadan(context);
+    tbController.text = "" ;
+    bbController.text = "" ;
     super.initState();
   }
 
@@ -73,7 +79,365 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
   @override
   void dispose() {
     searchController.dispose();
+    tbController.dispose();
+    bbController.dispose();
     super.dispose();
+  }
+
+  getBeratbadan(BuildContext context) {
+
+    final prov = Provider.of<PatientCardProvider>(context, listen: false);
+    print("TINGGI BAdaan ${prov.tb} -- BeraT Badan ${prov.bb}");
+
+    if (prov.bb == "0" || prov.tb == "0") {
+      dialogBbTb(context);
+    } else if (prov.bb == null || prov.tb == null) {
+      dialogBbTb(context);
+    } else {
+      Provider.of<LastSeenFoodMeterProvider>(context, listen: false)
+          .getLastSeenFood(context);
+      Provider.of<FavouriteFoodMeterProvider>(context, listen: false)
+          .getFavouriteData(context);
+    }
+
+  }
+
+  FixedExtentScrollController tbSelectController;
+  FixedExtentScrollController bbSelectController;
+
+  TextEditingController bbController = new TextEditingController();
+  TextEditingController tbController = new TextEditingController();
+
+
+
+  final _formKey = GlobalKey<FormState>();
+  bool isEnabled ;
+
+  void dialogBbTb(BuildContext context) {
+    showModalBottomSheet(
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        context: context,
+        isDismissible: false,
+        builder: (context) {
+          return BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState) {
+                bool isEnabled ;
+                final bbValidator = RequiredValidator(errorText: "Harap isi Berat");
+                final tbValidator = RequiredValidator(errorText: "Harap isi Tinggi");
+                return Container(
+                  height: MediaQuery.of(context).size.height / 2,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(24),
+                          topRight: Radius.circular(24))),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 10),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 16.0, top: 24),
+                            child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text("Isi Berat dan Tinggi Kamu",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 18,
+                                        fontFamily: "Roboto"))),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 16.0, top: 10),
+                            child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                    "Isilah berat dan tinggi kamu dengan benar untuk mendapatkan\nhasil rekomendasi pada food meter",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w300,
+                                        fontSize: 12,
+                                        fontFamily: "Roboto"))),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 19),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16.0, right: 16),
+                        child: Form(
+                          key: _formKey,
+                          onChanged: (){
+                            print("HELLO $isEnabled");
+                            isEnabled = true ;
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width / 2.3,
+                                child: TextFormField(
+                                  validator: bbValidator,
+                                  readOnly: true,
+                                  style: TextStyle(
+                                    color: MyColors.dnaBlack,
+                                  ),
+                                  controller: bbController,
+                                  onTap: () {
+                                    _showBBPicker(context);
+                                  },
+                                  onChanged: (text){
+                                    print("WKKWWKWK");
+                                  },
+                                  decoration: InputDecoration(
+                                      suffixIcon: Icon(
+                                          Icons.arrow_drop_down_sharp,
+                                          color: Colors.grey),
+                                      labelText: "Berat",
+                                      labelStyle: TextStyle(color: Colors.grey),
+                                      alignLabelWithHint: true,
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: MyColors.dnaGreen, width: 1.5),
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(8)),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.grey, width: 1.5),
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(8)),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.red[300], width: 1.5),
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(8)),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.red[300], width: 1.5),
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(8)),
+                                      ),
+                                      disabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                            width: 1.5),
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(8)),
+                                      ),
+                                      focusColor: MyColors.dnaGreen,
+                                      hintText: "",
+                                      hintStyle: TextStyle(
+                                          color: Colors.white54, fontSize: 12)),
+                                ),
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width / 2.3,
+                                child: TextFormField(
+                                  readOnly: true,
+                                  validator: tbValidator,
+                                  onChanged: (text){
+                                    print("Test");
+                                  },
+                                  onTap: () {
+                                    _showTbPicker(context);
+                                    print("TESTT");
+                                  },
+                                  style: TextStyle(
+                                    color: MyColors.dnaBlack,
+                                  ),
+                                  controller: tbController,
+                                  decoration: InputDecoration(
+                                      suffixIcon: Icon(
+                                          Icons.arrow_drop_down_sharp,
+                                          color: Colors.grey),
+                                      labelText: "Tinggi",
+                                      labelStyle: TextStyle(color: Colors.grey),
+                                      alignLabelWithHint: true,
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: MyColors.dnaGreen, width: 1.5),
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(8)),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.grey, width: 1.5),
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(8)),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.red[300], width: 1.5),
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(8)),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.red[300], width: 1.5),
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(8)),
+                                      ),
+                                      disabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                            width: 1.5),
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(8)),
+                                      ),
+                                      focusColor: MyColors.dnaGreen,
+                                      hintText: "",
+                                      hintStyle: TextStyle(
+                                          color: Colors.white54, fontSize: 12)),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 90),
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Material(
+                            color: MyColors.dnaGreen,
+                            borderRadius: BorderRadius.circular(10),
+                            child: InkWell(
+                              onTap: () {
+                                if (_formKey.currentState.validate()) {
+                                  context.read<PatientCardProvider>().updateBeratBadan(context, tbController.text, bbController.text);
+                                }
+                              },
+                              splashColor: Colors.white,
+                              child: Ink(
+                                width: MediaQuery.of(context).size.width,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: MyColors.dnaGreen),
+                                child: Center(
+                                  child: Text(
+                                    "Simpan",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ),
+                            )
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          );
+        });
+  }
+
+  _showBBPicker(BuildContext ctx) {
+    showDialog(
+      context: ctx,
+      builder: (BuildContext ctx) {
+        return AlertDialog(
+          title: Text('Berat'),
+          content: Container(
+            height: 350,
+            width: 350.0,
+            child: Column(
+              children: <Widget>[
+                Text('Kilogram'),
+                Container(
+                  height: MediaQuery.of(ctx).size.height / 4,
+                  color: Colors.transparent,
+                  child: CupertinoPicker(
+                    backgroundColor: Colors.white,
+                    itemExtent: 30,
+                    magnification: 1,
+                    useMagnifier: true,
+                    diameterRatio: 1,
+                    scrollController: bbSelectController,
+                    children: List<Widget>.generate(131, (int index) {
+                      return Center(
+                        child: Text("${index+20}"),
+                      );
+                    }),
+                    onSelectedItemChanged: (i) {
+                      _selectedValue = i+20 ;
+                    },
+                  ),
+                ),
+                SizedBox(height: 40),
+                CupertinoButton(
+                  child: Text('OK'),
+                  onPressed: () {
+                    bbController.text = _selectedValue.toString();
+                    Navigator.of(ctx).pop();
+
+                  },
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  _showTbPicker(context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Tinggi'),
+          content: Container(
+            height: 380,
+            width: 350.0,
+            child: Column(
+              children: <Widget>[
+                Text('Centimeter'),
+                Container(
+                  height: MediaQuery.of(context).size.height / 4,
+                  color: Colors.transparent,
+                  child: CupertinoPicker(
+                    backgroundColor: Colors.white,
+                    itemExtent: 30,
+                    magnification: 1,
+                    useMagnifier: true,
+                    diameterRatio: 1,
+                    scrollController: tbSelectController,
+                    children: List<Widget>.generate(150, (int index) {
+                      return Center(
+                        child: Text("${index+100}"),
+                      );
+                    }),
+                    onSelectedItemChanged: (index) {
+                      setState(() {
+                        _selectedValueTb = index+100;
+                      });
+
+                    },
+                  ),
+                ),
+                SizedBox(height: 50),
+                CupertinoButton(
+                  child: Text('OK'),
+                  onPressed: () {
+                    tbController.text = _selectedValueTb.toString();
+                    Navigator.of(context).pop();
+                    isEnabled = true;
+                  },
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
 
@@ -129,8 +493,7 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
               child: Focus(
                 onFocusChange: (isFocus) {
                   if (isFocus) {
-                    Navigator.pushReplacementNamed(
-                        context, "food_meter_search_page");
+                    Navigator.pushReplacementNamed(context, "food_meter_search_page");
                   }
                 },
                 child: FormWidget(
@@ -519,8 +882,8 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
             itemCount: lastSeen.lastSeenFood.length,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, i){
-              List splittedSize = details.kaloriList[i].nutritionSize.toString().split(".");
-              List splittedProteinSize = details.proteinList[i].nutritionSize.toString().split(".");
+              // splittedSize = lastSeen.lastSeenFood.length < 1 ? [0.0] : details.kaloriList[0].nutritionSize.toString().split(".");
+              // splittedProteinSize = lastSeen.lastSeenFood.length < 5 ? [0.0] : details.proteinList[i].nutritionSize.toString().split(".");
               if (lastSeen.lastSeenFood[i].product == null || lastSeen.lastSeenFood.length == 0 ) {
                 return Container();
               } else {
@@ -572,7 +935,7 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
                                               fontWeight: FontWeight.w300)),
                                     ],
                                   ),
-                                  Text("${splittedSize[0]} kkal",
+                                  Text("${details.kaloriList[i].nutritionSize.split(".")[0]} kkal",
                                       style: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400,
@@ -601,7 +964,7 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
                                           ))
                                     ],
                                   ),
-                                  Text("${splittedProteinSize[0]} g",
+                                  Text("${details.proteinList[i].nutritionSize.split(".")[0]} g",
                                       style: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400,
@@ -618,23 +981,14 @@ class _NewFoodMeterPageState extends State<NewFoodMeterPage> {
               );
               }
             },
-            // child: Row(
-            //   children: [
-            //     LastSeenItem(food: lastSeen.food0, kal: details.kal0, kalSize: details.kalSize0, prot: details.prot0, protSize: details.protSize0),
-            //     LastSeenItem(food: lastSeen.food1, kal: details.kal1, kalSize: details.kalSize1, prot: details.prot1, protSize: details.protSize1),
-            //     LastSeenItem(food: lastSeen.food2, kal: details.kal2, kalSize: details.kalSize2, prot: details.prot2, protSize: details.protSize2),
-            //     LastSeenItem(food: lastSeen.food3, kal: details.kal3, kalSize: details.kalSize3, prot: details.prot3, protSize: details.protSize3),
-            //     LastSeenItem(food: lastSeen.food4, kal: details.kal4, kalSize: details.kalSize4, prot: details.prot4, protSize: details.protSize4)
-            //
-            //   ],
-            // ),
           ),
         ),
       ],
     );
   }
 
-  SingleChildScrollView buildSingleChildScrollViewFavourite() {
+
+  Widget buildSingleChildScrollViewFavourite() {
     var fav = Provider.of<FavouriteFoodMeterProvider>(context, listen: false);
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,

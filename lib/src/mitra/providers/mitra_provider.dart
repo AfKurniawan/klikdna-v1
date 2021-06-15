@@ -117,11 +117,14 @@ class MitraProvider with ChangeNotifier {
   int current = 0;
 
 
+
   Future<LoginModel> refreshMitraData() async {
     print("Refresh Mitra Data Started");
     prefs = await SharedPreferences.getInstance();
     isLoading = true;
     notifyListeners();
+
+    print("Mitra Email => ${prefs.getString('email')}");
 
     var url = AppConstants.LOGIN_URL;
     var body = json.encode({
@@ -150,7 +153,7 @@ class MitraProvider with ChangeNotifier {
 
       /// USER
        vuserid = responseJson.user.id;
-       print("USER ID $vuserid");
+       print("USER ID from Mitra Provider ${responseJson.user.id}");
        prefs.setInt("mitraID", responseJson.user.id);
        vnik = responseJson.user.agent.nik;
 
@@ -234,7 +237,7 @@ class MitraProvider with ChangeNotifier {
 
       // print("VPAR == $vpar");
       // print("HIGESTRANK == $vhighestrank");
-      // print("TYPE == $vtype");
+       print("EXPIRED == ${responseJson.user.member.expired}");
 
 
       vallAddress = "$vaddress, $vkelurahan, $vsubdistrict, $vcity, $vprovince" ;
@@ -251,11 +254,9 @@ class MitraProvider with ChangeNotifier {
               expParsedDate = "-" ;
               parsedTanggalExpired = "-" ;
           } else {
-              expParsedDate = DateTime.parse(prefs.getString("expired")).toLocal();
+              expParsedDate = DateTime.parse(responseJson.user.member.expired).toLocal();
               parsedTanggalExpired = ('${formatTgl.format(expParsedDate).substring(0, 11)}');
           }
-
-
 
 
       notifyListeners();

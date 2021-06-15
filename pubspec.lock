@@ -50,6 +50,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.3"
+  avatar_glow:
+    dependency: "direct main"
+    description:
+      name: avatar_glow
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.0"
   basic_utils:
     dependency: "direct main"
     description:
@@ -315,6 +322,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  highlight_text:
+    dependency: "direct main"
+    description:
+      name: highlight_text
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.7.2"
   html:
     dependency: "direct main"
     description:

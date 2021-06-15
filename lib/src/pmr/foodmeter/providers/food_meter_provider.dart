@@ -141,7 +141,6 @@ class FoodMeterProvider extends ChangeNotifier {
     isLoadingDetail = true;
 
     final prov = Provider.of<TokenProvider>(context, listen: false);
-    final lastFood = Provider.of<LastSeenFoodMeterProvider>(context, listen: false);
     String accessToken = prov.accessToken;
 
     Map<String, String> ndas = {
@@ -149,9 +148,9 @@ class FoodMeterProvider extends ChangeNotifier {
       "Authorization": "Bearer $accessToken"
     };
 
+    print("YOUR ID ==> $id");
+
     var url = AppConstants.GET_DETAIL_FOOD_METER_URL + "$id" ;
-
-
 
     var r =  await http.get(url, headers: ndas);
 
@@ -164,38 +163,25 @@ class FoodMeterProvider extends ChangeNotifier {
 
       var nutritionArray = response['data']['mobile_nutritions'] as List;
 
-      newMobilenutritionMapList = nutritionArray.map<MobileNutritions>((j) => MobileNutritions.fromJson(j)).toList();
-
+        newMobilenutritionMapList = nutritionArray.map<MobileNutritions>((j) => MobileNutritions.fromJson(j)).toList();
 
         newMobilenutritionList = newMobilenutritionMapList.where((i) => ("${i.productId}" == "$id")).toList();
 
-      newMobilenutritionListx = newMobilenutritionMapList.where((i) => ("${i.productId}" == "$id")).toList();
+        newMobilenutritionListx = newMobilenutritionMapList.where((i) => ("${i.productId}" == "$id")).toList();
+
+        newMobilenutritionList.forEach((item) {
+          if (item.nutritionName.contains("Kalori")) {
+            kaloriList.add(item);
+          }
+        });
+
+        newMobilenutritionList.forEach((item) {
+          if (item.nutritionName.contains("Protein")) {
+            proteinList.add(item);
+          }
+        });
 
 
-        for(int i = 0 ; i < nutritionArray.length; i++) {
-          newMobilenutritionList.forEach((item) {
-            if (item.nutritionName.contains("Kalori")) {
-              kaloriList.add(item);
-              kalSize = kaloriList[i].nutritionSize.substring(0, kaloriList[i].nutritionSize.indexOf('.'));
-              //print("Kalori Size ==> $kalSize");
-              kal = kaloriList.first.nutritionName;
-            }
-          });
-
-          newMobilenutritionList.forEach((item) {
-            if (item.nutritionName.contains("Protein")) {
-              proteinList.add(item);
-              protSize = proteinList[i].nutritionSize.substring(0, 3);
-              prot = proteinList.first.nutritionName;
-              //print("Protein $prot, $protSize");
-            }
-          });
-        }
-
-
-      if(proteinList.length != null){
-        isLoadingDetail = false ;
-      }
 
 
     } else {
@@ -252,6 +238,7 @@ class FoodMeterProvider extends ChangeNotifier {
 
       newMobilenutritionMapListz = nutritionArray.map<MobileNutritions>((j) => MobileNutritions.fromJson(j)).toList();
       newMobilenutritionListz = newMobilenutritionMapListz.where((i) => ("${i.productId}" == "$id")).toList();
+
 
       Navigator.of(context).pushNamed("new_detail_food_meter_page");
 

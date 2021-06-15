@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/models/food_meter_model.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/providers/food_meter_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
+import 'package:provider/provider.dart';
 
 class FoodItemSearchWidget extends StatefulWidget {
   final Food model;
@@ -32,7 +34,7 @@ class _FoodItemSearchWidgetState extends State<FoodItemSearchWidget> {
         ),
       ),
       onTap: (){
-        Navigator.of(context).pushNamed("detail_food_meter_page", arguments: widget.model);
+        Provider.of<FoodMeterProvider>(context, listen: false).getSpecificFoodMeter(context, widget.model.id);
       },
     );
   }

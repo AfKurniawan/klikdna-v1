@@ -50,4 +50,8 @@ class AppConstants {
   static const String GET_HOME_ARTIKEL = BASE_URL_CMS + "apiArticles";
   static const String CMS_TOKEN_URL = BASE_URL_CMS + "auth/login";
 
+
+  static const double padding =20;
+  static const double avatarRadius =45;
+
 }

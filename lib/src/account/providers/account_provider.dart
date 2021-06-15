@@ -35,6 +35,7 @@ class AccountProvider with ChangeNotifier {
   TextEditingController rhesusController = new TextEditingController();
 
 
+  bool success ;
 
   Future<AccountModel> getUserAccount(BuildContext context) async {
     print("USER ACCONT CALL");
@@ -42,9 +43,7 @@ class AccountProvider with ChangeNotifier {
     var getSample = Provider.of<ReportProvider>(context, listen: false);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     isLoading = true;
-    notifyListeners();
     int id = Provider.of<MitraProvider>(context, listen: false).vuserid;
-
     String token = prov.accessToken;
     var url = AppConstants.GET_ACCOUNT_URL + id.toString();
 
@@ -56,16 +55,24 @@ class AccountProvider with ChangeNotifier {
     final request = await http.get(url, headers: ndas);
     final accountResponse = AccountModel.fromJson(json.decode(request.body));
 
+    print("response account ${request.body}");
+
+    success = accountResponse.success ;
+
+    print("AKUN RESPONSE AKUN PROV ==> $success");
+
     if(accountResponse.success == true){
 
       isLoading = false ;
       isError = false ;
       var data = json.decode(request.body);
       var detailArray = data['data']['patient_card'] as List;
-       listPatentCard = detailArray.map<PatientCard>((j) => PatientCard.fromJson(j)).toList();
 
+       listPatentCard = detailArray.map<PatientCard>((j) => PatientCard.fromJson(j)).toList();
+       print("List Patien Card lenght ==> ${listPatentCard.length}");
       for(int i = 0 ; i < listPatentCard.length ; i++) {
         lastID = listPatentCard.last.id.toString();
+        print("LAST ID ACCOUNT PROVIDER $lastID");
         noKtp = prefs.getString("nik");
         notifyListeners();
       }
@@ -77,6 +84,7 @@ class AccountProvider with ChangeNotifier {
       accountgender = accountResponse.data.gender;
       kdmAccountId = accountResponse.data.kdmAccountId;
       userId = accountResponse.data.userId;
+      print("UserID ==> ${accountResponse.data.userId}");
       nameController.text = accountResponse.data.name;
       verifyAccessReport = accountResponse.data.verifykdmAccessReport;
       notifyListeners();

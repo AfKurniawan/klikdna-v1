@@ -21,6 +21,7 @@ import 'package:new_klikdna/src/patient_card/pages/new_patient_card_page.dart';
 import 'package:new_klikdna/src/patient_card/pages/patient_card_page.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/pages/detail_food_meter_page.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/pages/detail_nutrition_page.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/pages/dummy/dummy_tts_page.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/pages/food_meter_by_kategori_page.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/pages/food_meter_page.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/pages/foodmeter_search_page.dart';
@@ -241,6 +242,11 @@ class Routing {
 
       case "all_event_by_category":
         return PageTransition(child: AllEventByCategoriesPage(model: settings.arguments), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
+        break;
+
+
+      case "dummy_tts_page":
+        return PageTransition(child: DummyTTSPage(), type: PageTransitionType.fade, duration: Duration(milliseconds: 350));
         break;
 
 
