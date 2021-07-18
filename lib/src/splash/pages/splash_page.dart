@@ -14,7 +14,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     context.read<SplashProvider>().getPrefs(context);
-    Provider.of<TokenProvider>(context, listen: false).getApiToken();
+    //Provider.of<TokenProvider>(context, listen: false).getApiToken(context);
     super.initState();
   }
   @override

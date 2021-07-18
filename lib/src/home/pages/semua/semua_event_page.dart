@@ -187,7 +187,6 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
                                       icon: Icon(Icons.share_outlined, color: Colors.black38),
                                       splashColor: MyColors.dnaGreen,
                                       onPressed: (){
-                                        print("SHAREXXX");
                                         prov.shareImageAndText('${prov.trainingEventArray[index].imageUrl}','${prov.allEventArray[index].data.title}\n$text');
                                       },
                                     ),
@@ -329,7 +328,6 @@ class _SemuaEventPageState extends State<SemuaEventPage> {
                                       icon: Icon(Icons.share_outlined, color: Colors.black38),
                                       splashColor: MyColors.dnaGreen,
                                       onPressed: (){
-                                        print("SHAREXXX");
                                         prov.shareImageAndText('${prov.healthEventArray[index].imageUrl}','${prov.healthEventArray[index].data.title}\n$text');
                                       },
                                     ),

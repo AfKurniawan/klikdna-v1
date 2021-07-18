@@ -56,7 +56,7 @@ class _LihatProfilePageState extends State<LihatProfilePage> {
   void initState() {
     getPrefs();
 
-    Provider.of<TokenProvider>(context, listen: false).getApiToken();
+    //Provider.of<TokenProvider>(context, listen: false).getApiToken();
     //Provider.of<PatientCardProvider>(context, listen: false).getPatientCard(context);
     super.initState();
   }

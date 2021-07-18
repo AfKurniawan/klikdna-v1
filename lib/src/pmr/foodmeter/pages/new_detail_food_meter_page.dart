@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:new_klikdna/src/patient_card/providers/new_patient_card_provider.dart';
 import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/models/detail_food_meter_model.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/models/pagination_model_data.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/pages/detail_food_meter_page.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/providers/food_meter_provider.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/providers/last_seen_foodmeter_provider.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/widgets/custom_appbar.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/widgets/my_expansion_tile.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:new_klikdna/widgets/button_and_icon_widget.dart';
 import 'package:new_klikdna/widgets/custom_shadow_card_widget.dart';
+import 'package:new_klikdna/widgets/form_filled_widget.dart';
 import 'package:new_klikdna/widgets/form_widget.dart';
+import 'package:new_klikdna/widgets/loading_widget.dart';
 import 'package:new_klikdna/widgets/outline_and_icon_button_widget.dart';
 import 'package:new_klikdna/widgets/outline_button_widget.dart';
 import 'package:provider/provider.dart';
 
 class NewDetailFoodMeterPage extends StatefulWidget {
   final MobileNutritions nutritions;
-  final Datum food;
+  final int id;
 
-  NewDetailFoodMeterPage({Key key, this.nutritions, this.food})
+  NewDetailFoodMeterPage({Key key, this.nutritions, this.id})
       : super(key: key);
 
   @override
@@ -56,17 +60,16 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
 
   @override
   void initState() {
+    Provider.of<FoodMeterProvider>(context, listen: false).getSpecificFoodMeter(context, widget.id);
     isExpanded = false;
-    bb = Provider.of<PatientCardProvider>(context, listen: false).bb;
-    print("Berat Badan Detail Page $bb");
+    bb = Provider.of<NewPatientCardProvider>(context, listen: false).bb;
+    print("[DETAIL PAGE] Berat Badan $bb");
     hitungRumus();
     super.initState();
   }
 
   hitungRumus(){
-    List<MobileNutritions> kalori =
-    Provider.of<FoodMeterProvider>(context, listen: false)
-        .newMobilenutritionListz
+    List<MobileNutritions> kalori = Provider.of<FoodMeterProvider>(context, listen: false).newMobilenutritionListz
         .where((e) => (e.nutritionName.contains("Kalori")))
         .toList();
     String cal = kalori.isEmpty ? "0.0" : kalori[0].nutritionSize;
@@ -107,7 +110,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
               size: 20,
             ),
             onPressed: () {
-              Navigator.of(context).pop();
+              Navigator.pushReplacementNamed(context, "new_food_meter_page").then((value) => Provider.of<LastSeenFoodMeterProvider>(context,listen: false).getLastSeenFood(context));
             }),
         backgroundColor: Colors.white,
         elevation: 0,
@@ -127,7 +130,9 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
           )
         ],
       ),
-      body: SingleChildScrollView(
+      body: prov.isLoadingDetail == true
+          ? LoadingWidget()
+          : SingleChildScrollView(
         child: Container(
           width: double.infinity,
           color: Colors.white,
@@ -139,14 +144,25 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(right: 16.0),
-                  child: FormWidget(
-                    readonly: false,
-                    autofocus: false,
-                    textEditingController: serachController,
-                    hint: "Cari makanan, minuman atau restoran",
-                    obscure: false,
-                    labelText: "Cari makanan, minuman atau restoran",
-                    prefixIcon: Icon(Icons.search),
+                  child: Focus(
+                    onFocusChange: (isFocus) {
+                      if (isFocus) {
+                        Navigator.pushReplacementNamed(context, "food_meter_search_page", arguments: false);
+                      }
+                    },
+                    child: FormFilledWidget(
+                      textEditingController: serachController,
+                      hint: "Cari makanan, minuman atau restoran",
+                      obscure: false,
+                      filled: true,
+                      fillColor: MyColors.formFillColor,
+                      labelText: "Cari makanan, minuman atau restoran",
+                      labelStyle: TextStyle(color: Colors.grey[600], fontSize: 14),
+                      prefixIcon: Icon(Icons.search),
+                      onTap: (){
+
+                      },
+                    ),
                   ),
                 ),
                 SizedBox(height: 12),
@@ -155,8 +171,10 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      OutlineButtonWidget(
-                          btnAction: () {},
+                      OutlineAndIconButtonWidget(
+                          btnAction: () {
+                            Navigator.pushReplacementNamed(context, "food_meter_search_page", arguments: true);
+                          },
                           height: 40,
                           outlineColor: MyColors.dnaGreen,
                           btnTextColor: MyColors.dnaGreen,
@@ -169,7 +187,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                           )),
                       ButtonAndIconWidget(
                           btnAction: () {
-                            Navigator.pushNamed(context, "dummy_tts_page");
+                            Provider.of<FoodMeterProvider>(context, listen: false).unavailableFeature(context);
                           },
                           height: 40,
                           widht: MediaQuery.of(context).size.width / 2.3,
@@ -219,7 +237,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                     : Container(),
                 SizedBox(height: 24),
                 Container(
-                  child: Text("Rekomendasi Olah Raga",
+                  child: Text("Rekomendasi Olahraga",
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
@@ -267,6 +285,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                                       style: TextStyle(
                                           fontFamily: "Montserrat",
                                           fontWeight: FontWeight.w500,
+                                          color: Colors.grey,
                                           fontSize: 11))
                                 ],
                               ),
@@ -308,6 +327,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                                       style: TextStyle(
                                           fontFamily: "Montserrat",
                                           fontWeight: FontWeight.w500,
+                                          color: Colors.grey,
                                           fontSize: 11))
                                 ],
                               ),
@@ -358,6 +378,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                                       style: TextStyle(
                                           fontFamily: "Montserrat",
                                           fontWeight: FontWeight.w500,
+                                          color: Colors.grey,
                                           fontSize: 11))
                                 ],
                               ),
@@ -399,6 +420,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                                       style: TextStyle(
                                           fontFamily: "Montserrat",
                                           fontWeight: FontWeight.w500,
+                                          color: Colors.grey,
                                           fontSize: 11))
                                 ],
                               ),
@@ -448,6 +470,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                                       style: TextStyle(
                                           fontFamily: "Montserrat",
                                           fontWeight: FontWeight.w500,
+                                          color: Colors.grey,
                                           fontSize: 11))
                                 ],
                               ),
@@ -488,6 +511,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                                       style: TextStyle(
                                           fontFamily: "Montserrat",
                                           fontWeight: FontWeight.w500,
+                                          color: Colors.grey,
                                           fontSize: 11))
                                 ],
                               ),
@@ -547,6 +571,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                                   Text("Bersih Rumah",
                                       style: TextStyle(
                                           fontFamily: "Montserrat",
+                                          color: Colors.grey,
                                           fontWeight: FontWeight.w500,
                                           fontSize: 11))
                                 ],
@@ -589,6 +614,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                                       style: TextStyle(
                                           fontFamily: "Montserrat",
                                           fontWeight: FontWeight.w500,
+                                          color: Colors.grey,
                                           fontSize: 11))
                                 ],
                               ),
@@ -889,7 +915,7 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
           itemBuilder: (context, index) {
             List splitSize = prov.newMobilenutritionListx[index].nutritionSize
                 .toString()
-                .split(".");
+                .split(".0");
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -905,6 +931,8 @@ class _NewDetailFoodMeterPageState extends State<NewDetailFoodMeterPage> {
                         children: [
                           Text("${splitSize[0]}",
                               style: TextStyle(fontSize: 14)),
+                          // Text("${prov.newMobilenutritionListx[index].nutritionSize.substring(0, 6)}",
+                          //     style: TextStyle(fontSize: 14)),
                           SizedBox(width: 5),
                           Text(
                               "${prov.newMobilenutritionListx[index].nutritionUom}",

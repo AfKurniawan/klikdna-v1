@@ -29,7 +29,7 @@ class _DetailReportPageState extends State<DetailReportPage> {
   @override
   void initState() {
     name = Provider.of<DetailReportProvider>(context, listen: false).name;
-    Provider.of<TokenProvider>(context, listen: false).getApiToken();
+    //Provider.of<TokenProvider>(context, listen: false).getApiToken();
     Provider.of<DetailReportProvider>(context, listen: false)
         .getDetailReport(context, widget.model.reportId);
     super.initState();

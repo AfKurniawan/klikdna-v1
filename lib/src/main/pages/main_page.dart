@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:new_klikdna/src/home/pages/home_page.dart';
 import 'package:new_klikdna/src/main/providers/main_provider.dart';
+import 'package:new_klikdna/src/patient_card/providers/new_patient_card_provider.dart';
 import 'package:new_klikdna/src/token/providers/token_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:provider/provider.dart';
@@ -28,11 +29,13 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     Provider.of<MainProvider>(context, listen: false).getPrefs();
-    Provider.of<TokenProvider>(context, listen: false).getApiToken();
+    Provider.of<TokenProvider>(context, listen: false).getApiToken(context);
     context.read<MainProvider>().selectTab(context, widget.currentTab);
+    WidgetsBinding.instance.addPostFrameCallback((_) => Provider.of<NewPatientCardProvider>(context, listen: false).getAllPatientCard(context));
     super.initState();
 
   }
+
 
   @override
   void didUpdateWidget(MainPage oldWidget){

@@ -3,6 +3,7 @@ import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/models/food_brand_model.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/providers/favourite_food_meter_provider.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/providers/food_brands_provider.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/providers/food_meter_provider.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/widgets/custom_appbar.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/widgets/filtered_makanan_list.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/widgets/filtered_minuman_list.dart';
@@ -47,7 +48,6 @@ class _RestoranDetailPageState extends State<RestoranDetailPage> with SingleTick
     _tabController = TabController(length: listTab.length, vsync: this);
     _scrollController = ScrollController();
     _selectedIndex = 0;
-    print("ID TAB ${widget.id}");
     //_futureMakanan = Provider.of<FoodBrandsProvider>(context, listen: false).getRestoDetailzz(context, widget.id);
     //Provider.of<FoodBrandsProvider>(context, listen: false).getRestoDetailzz(context, widget.id);
     super.initState();
@@ -89,7 +89,7 @@ class _RestoranDetailPageState extends State<RestoranDetailPage> with SingleTick
                 onFocusChange: (isFocus) {
                   if (isFocus) {
                     Navigator.pushReplacementNamed(
-                        context, "food_meter_search_page");
+                        context, "food_meter_search_page", arguments: false);
                   }
                 },
                 child: FormWidget(
@@ -109,7 +109,9 @@ class _RestoranDetailPageState extends State<RestoranDetailPage> with SingleTick
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   OutlineAndIconButtonWidget(
-                      btnAction: () {},
+                      btnAction: () {
+                        Navigator.pushReplacementNamed(context, "food_meter_search_page", arguments: true);
+                      },
                       height: 40,
                       outlineColor: MyColors.dnaGreen,
                       btnTextColor: MyColors.dnaGreen,
@@ -124,7 +126,9 @@ class _RestoranDetailPageState extends State<RestoranDetailPage> with SingleTick
                         style: TextStyle(color: MyColors.dnaGreen),
                       )),
                   ButtonAndIconWidget(
-                      btnAction: () {},
+                      btnAction: () {
+                        Provider.of<FoodMeterProvider>(context, listen: false).unavailableFeature(context);
+                      },
                       height: 40,
                       widht: MediaQuery
                           .of(context)
@@ -161,7 +165,6 @@ class _RestoranDetailPageState extends State<RestoranDetailPage> with SingleTick
                 onTap: (tabIndex) {
                   setState(() {
                     _selectedIndex = tabIndex;
-                    print("$tabIndex");
                   });
                 },
 

@@ -92,7 +92,7 @@ class _EventWidgetState extends State<EventWidget> {
                                   child: CachedNetworkImage(
                                     imageUrl: "${prov.allEventArray[index].imageUrl}",
                                     width: MediaQuery.of(context).size.width - 32,
-                                    height: 192,
+                                    height: 190,
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -130,7 +130,7 @@ class _EventWidgetState extends State<EventWidget> {
                                           SizedBox(height: 9),
                                           Text(
                                             "$text",
-                                            maxLines: 3,
+                                            maxLines: 2,
                                             overflow:
                                             TextOverflow.ellipsis,
                                             style: TextStyle(

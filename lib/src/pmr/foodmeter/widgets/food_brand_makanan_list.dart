@@ -96,8 +96,9 @@ class _FoodBrandMakananListState extends State<FoodBrandMakananList> {
                       InkWell(
                         onTap: (){
                           print("xxx");
-                          //Navigator.of(context).pushNamed("new_detail_food_meter_page", arguments: item);
-                          // Provider.of<FoodMeterProvider>(context, listen: false).getSpecificFoodMeter(context, item.id);
+                          //Navigator.of(context).pushNamed("new_detail_food_meter_page", arguments: prov.makananList[i]);
+                          //Provider.of<FoodMeterProvider>(context, listen: false).getSpecificFoodMeter(context, prov.makananList[i].id);
+                          Navigator.of(context).pushNamed("new_detail_food_meter_page", arguments: prov.makananList[i].id);
                         },
                         splashColor: Colors.white,
                         child: Container(

@@ -5,6 +5,7 @@ import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:new_klikdna/src/account/models/account_model.dart';
 import 'package:new_klikdna/src/login/providers/login_provider.dart';
 import 'package:new_klikdna/src/mitra/providers/mitra_provider.dart';
+import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
 import 'package:new_klikdna/src/report/providers/report_provider.dart';
 import 'package:new_klikdna/src/token/providers/token_provider.dart';
 import 'package:provider/provider.dart';
@@ -38,7 +39,6 @@ class AccountProvider with ChangeNotifier {
   bool success ;
 
   Future<AccountModel> getUserAccount(BuildContext context) async {
-    print("USER ACCONT CALL");
     final prov = Provider.of<TokenProvider>(context, listen: false);
     var getSample = Provider.of<ReportProvider>(context, listen: false);
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -52,39 +52,43 @@ class AccountProvider with ChangeNotifier {
       "Authorization": "Bearer $token"
     };
 
-    final request = await http.get(url, headers: ndas);
-    final accountResponse = AccountModel.fromJson(json.decode(request.body));
-
-    print("response account ${request.body}");
+    final response = await http.get(url, headers: ndas);
+    final accountResponse = AccountModel.fromJson(json.decode(response.body));
 
     success = accountResponse.success ;
 
-    print("AKUN RESPONSE AKUN PROV ==> $success");
-
-    if(accountResponse.success == true){
+    if(response.statusCode == 200){
 
       isLoading = false ;
       isError = false ;
-      var data = json.decode(request.body);
+      var data = json.decode(response.body);
       var detailArray = data['data']['patient_card'] as List;
-
        listPatentCard = detailArray.map<PatientCard>((j) => PatientCard.fromJson(j)).toList();
-       print("List Patien Card lenght ==> ${listPatentCard.length}");
+      lastID = Provider.of<PatientCardProvider>(context, listen: false).patienCardId;
+      print("The last id is ???? ---> $lastID");
+
+
+
       for(int i = 0 ; i < listPatentCard.length ; i++) {
-        lastID = listPatentCard.last.id.toString();
-        print("LAST ID ACCOUNT PROVIDER $lastID");
-        noKtp = prefs.getString("nik");
+        // if(listPatentCard.last.id.toString() == ""){
+        //   lastID = Provider.of<PatientCardProvider>(context, listen: false).patienCardId;
+        //   print("The last id is ???? ---> $lastID");
+        // } else {
+        //   lastID = listPatentCard.last.id.toString();
+        //   print("LAST ID ACCOUNT PROVIDER $lastID");
+        //   noKtp = prefs.getString("nik");
+        //   notifyListeners();
+        // }
+
         notifyListeners();
       }
 
       name = accountResponse.data.name;
       phone = accountResponse.data.phone;
-
       accountdob = accountResponse.data.dob;
       accountgender = accountResponse.data.gender;
       kdmAccountId = accountResponse.data.kdmAccountId;
       userId = accountResponse.data.userId;
-      print("UserID ==> ${accountResponse.data.userId}");
       nameController.text = accountResponse.data.name;
       verifyAccessReport = accountResponse.data.verifykdmAccessReport;
       notifyListeners();
@@ -98,5 +102,11 @@ class AccountProvider with ChangeNotifier {
     }
      return null;
 
+  }
+
+  clearLastID(){
+    lastID = "" ;
+    notifyListeners();
+    print("last ID cleared: ==> $lastID");
   }
 }

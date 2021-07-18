@@ -122,7 +122,7 @@ class Routing {
 
       case "food_meter_search_page" :
         return PageTransition(
-            child: FoodMeterSearchPage(),
+            child: FoodMeterSearchPage(callback: settings.arguments),
             type: PageTransitionType.fade,
             duration: Duration(
                 milliseconds: 350
@@ -141,7 +141,7 @@ class Routing {
 
       case "new_detail_food_meter_page" :
         return PageTransition(
-            child: NewDetailFoodMeterPage(),
+            child: NewDetailFoodMeterPage(id: settings.arguments),
             type: PageTransitionType.fade,
             duration: Duration(
                 milliseconds: 350

@@ -24,7 +24,8 @@ class FavouriteItems extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomShadowCardWidget(
       onTap: (){
-        Provider.of<FoodMeterProvider>(context, listen: false).getSpecificFoodMeter(context, id);
+        //Provider.of<FoodMeterProvider>(context, listen: false).getSpecificFoodMeter(context, id);
+        Navigator.of(context).pushNamed("new_detail_food_meter_page", arguments: id);
       },
       margin: EdgeInsets.only(right: 16, bottom: 16),
       width: 280,
@@ -66,7 +67,7 @@ class FavouriteItems extends StatelessWidget {
                           fontWeight:
                           FontWeight.w400),
                     ),
-                    Text("1 Serving $kalSize Kalori",
+                    Text("1 Porsi $kalSize Kkal",
                         style: TextStyle(
                             fontFamily: "Roboto",
                             fontSize: 12,

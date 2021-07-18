@@ -26,7 +26,6 @@ class MemberProvider with ChangeNotifier {
     personId = Provider.of<AccountProvider>(context, listen: false).userId;
 
     var url = AppConstants.GET_MEMBER_URL + "$personId";
-    print("PERSON PARAMS --> $person");
 
     Map<String, String> ndas = {
       "Accept": "application/json",
@@ -38,12 +37,10 @@ class MemberProvider with ChangeNotifier {
 
     if(request.statusCode == 200) {
       isLoading = false;
-      print("STATUS BODY MEMBER ==> ${request.body}");
       var data = json.decode(request.body);
       var personArray = data['data'] as List;
       listMember = personArray.map<Member>((j) => Member.fromJson(j)).toList();
 
-      print("LIST MEMEBR LENGHT ==> ${listMember.length}");
       notifyListeners();
     } else {
       isLoading = false;
@@ -61,7 +58,6 @@ class MemberProvider with ChangeNotifier {
   }
 
   resetMember(){
-    print("Reset member executed");
     newMemberName = "" ;
     notifyListeners();
   }
@@ -69,7 +65,6 @@ class MemberProvider with ChangeNotifier {
   String member = "" ;
   getMemberId(BuildContext context, String memberId) {
     member = memberId;
-    print("MEMBER ==> $member");
     Provider.of<ReportProvider>(context, listen: false).getMemberSample(context, memberId);
     notifyListeners();
 

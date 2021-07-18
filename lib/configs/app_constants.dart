@@ -10,6 +10,8 @@ class AppConstants {
   static const BASE_URL_CMS = "https://cms.klikdna.com/api/v1/" ;
 
 
+
+
   //DNAKU
   static const String IMAGE_ARTIKEL_URL = "https://dnaku.id/files/images/page/article/";
 
@@ -53,5 +55,13 @@ class AppConstants {
 
   static const double padding =20;
   static const double avatarRadius =45;
+
+
+
+  ///NEW API LOGIN
+  static const NEW_API_BASE_URL = "https://mobileapi.klikdna.com/api/v1/";
+
+
+  static const String NEW_API_LOGIN_URL = NEW_API_BASE_URL + "auth/login" ;
 
 }

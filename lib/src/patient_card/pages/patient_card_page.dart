@@ -43,7 +43,6 @@ class _PatientCardPageState extends State<PatientCardPage> {
       gender = prefs.getString("gender");
     });
 
-    debugPrint("GENDER >>>>>>>>>>>> $gender");
 
   }
 

@@ -140,7 +140,6 @@ class _AsuransiPageState extends State<AsuransiPage> {
             btnText: "Tambah Kartu Asuransi",
             color: MyColors.dnaGreen,
             btnAction: (){
-              Provider.of<TokenProvider>(context, listen: false).getApiToken();
               //Provider.of<AsuransiProvider>(context, listen: false).showModalAddInsuranceCard(context);
               Navigator.pushReplacementNamed(context, "add_asuransi_page");
             },

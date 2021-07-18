@@ -14,62 +14,60 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class LastSeenFoodMeterProvider with ChangeNotifier {
   bool isLoadingLastSeen ;
-  List<DataArray> dataArray ;
-  var myArray = [];
+  List<DataArray> dataArray = [] ;
   List<DataArray> lastSeenFood = [];
 
   Future<FoodMeterLastSeenModel> getLastSeenFood(BuildContext context) async {
-
-    final prov = Provider.of<TokenProvider>(context, listen: false);
-    var id = Provider.of<MitraProvider>(context, listen: false).vuserid;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    final detail = Provider.of<FoodMeterProvider>(context, listen: false);
+    final prov = Provider.of<TokenProvider>(context, listen: false);
 
     String accessToken = prov.accessToken;
-
     isLoadingLastSeen = true ;
-    var url = AppConstants.LAST_SEEN_FOOD_URL + "$id" ;
+
+    var url = AppConstants.LAST_SEEN_FOOD_URL + "${prefs.getInt('userid')}" ;
     Map<String, String> ndas = {
       "Content-Type": "application/json",
       "Authorization": "Bearer $accessToken"
     };
 
-    final request = await http.get(url, headers: ndas);
-    final response = FoodMeterLastSeenModel.fromJson(json.decode(request.body));
+    final response = await http.get(url, headers: ndas);
+    final responseJson = FoodMeterLastSeenModel.fromJson(json.decode(response.body));
 
-    if(response.success == true){
+    print("[LAST SEEN PROVIDER] getLastSeenFood Response Body ==> ${response.body}");
+    print("[LAST SEEN PROVIDER] getLastSeenFood Response Status Code ==> ${response.statusCode}");
 
-      var responseJson = json.decode(request.body);
+    if(response.statusCode == 200){
 
-      myArray = responseJson['data']['data'] as List;
-
+      var responseJson = json.decode(response.body);
+      var myArray = responseJson['data']['data'] as List;
       dataArray = myArray.map<DataArray>((j) => DataArray.fromJson(j)).toList();
       isLoadingLastSeen = false;
 
-      print("Last Seen data ${request.body}");
+      lastSeenFood = myArray.map<DataArray>((j) => DataArray.fromJson(j)).toList();
+      lastSeenFood.removeWhere((value) => value.product == null);
+
+      print("[LAST SEEN PROVIDER] getLastSeenFood productlist length ==> ${lastSeenFood.length}");
 
 
-      for(int i = 0 ; i < myArray.length; i++){
+      for(int i = 0 ; i < lastSeenFood.length; i++){
 
-        if(responseJson['data']['data'][i]['product'] != null){
+        var productArray =  responseJson['data']['data'][i]['product'] ;
 
-          lastSeenFood = myArray.map<DataArray>((j) => DataArray.fromJson(j)).toList();
-          lastSeenFood.removeWhere((value) => value.product == null);
+        if(lastSeenFood.length == 0){
 
-          Provider.of<FoodMeterProvider>(context, listen: false).getDetailFoodMeter(context, lastSeenFood[i].product.id);
-
-
+           print('[LAST SEEN PROVIDER] getLastSeenFood productArray $productArray');
 
         } else {
 
-        }
+          Provider.of<FoodMeterProvider>(context, listen: false).getSpecificFoodMeter(context, lastSeenFood[i].product.id);
 
+        }
       }
 
 
 
     } else {
+
       print("Error receiving data");
     }
 
@@ -77,6 +75,12 @@ class LastSeenFoodMeterProvider with ChangeNotifier {
 
     return null ;
 
+  }
+
+
+  void clearLastSeen(){
+    lastSeenFood.clear();
+    notifyListeners();
   }
 
 

@@ -11,6 +11,7 @@ import 'package:new_klikdna/src/pmr/foodmeter/widgets/new_restaurant_list.dart';
 import 'package:new_klikdna/src/report/providers/detail_report_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:new_klikdna/widgets/button_and_icon_widget.dart';
+import 'package:new_klikdna/widgets/form_filled_widget.dart';
 import 'package:new_klikdna/widgets/form_widget.dart';
 import 'package:new_klikdna/widgets/loading_widget.dart';
 import 'package:new_klikdna/widgets/outline_and_icon_button_widget.dart';
@@ -41,11 +42,10 @@ class _FoodMeterByKategoryPageState extends State<FoodMeterByKategoryPage> with 
     _tabController = TabController(length: listTab.length, vsync: this);
     _scrollController = ScrollController();
     _selectedIndex = widget.currentTab;
-    print("CURRENT TAB $_selectedIndex");
     getData(widget.currentTab);
     _futureResto = Provider.of<FavouriteFoodMeterProvider>(context, listen: false).getListRestaurant(context, '3/1/0/0');
     _futureMinuman = Provider.of<FavouriteFoodMeterProvider>(context, listen: false).getListMinuman(context, '2/1/0/0');
-    _futureMakanan = Provider.of<FavouriteFoodMeterProvider>(context, listen: false).getListFood(context, AppConstants.LIST_FOOD_URL + '1/1/0/0');
+    _futureMakanan = Provider.of<FavouriteFoodMeterProvider>(context, listen: false).getListFood(context, '1/0/0/0');
     super.initState();
   }
 
@@ -97,16 +97,18 @@ class _FoodMeterByKategoryPageState extends State<FoodMeterByKategoryPage> with 
             child: Focus(
               onFocusChange: (isFocus) {
                 if (isFocus) {
-                  Navigator.pushReplacementNamed(
-                      context, "food_meter_search_page");
+                  Navigator.pushReplacementNamed(context, "food_meter_search_page", arguments: false);
                 }
               },
-              child: FormWidget(
+              child: FormFilledWidget(
                 readonly: true,
+                filled: true,
+                fillColor: MyColors.formFillColor,
                 textEditingController: searchController,
-                hint: "Cari makanan, minuman atau restauran",
+                hint: "Cari makanan, minuman atau restoran",
                 obscure: false,
-                labelText: "Cari makanan, minuman atau restauran",
+                labelText: "Cari makanan, minuman atau restoran",
+                labelStyle: TextStyle(color: Colors.grey[600], fontSize: 14),
                 prefixIcon: Icon(Icons.search),
               ),
             ),
@@ -118,7 +120,9 @@ class _FoodMeterByKategoryPageState extends State<FoodMeterByKategoryPage> with 
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 OutlineAndIconButtonWidget(
-                    btnAction: () {},
+                    btnAction: () {
+                      Navigator.pushReplacementNamed(context, "food_meter_search_page", arguments: true);
+                    },
                     height: 40,
                     outlineColor: MyColors.dnaGreen,
                     btnTextColor: MyColors.dnaGreen,
@@ -164,7 +168,6 @@ class _FoodMeterByKategoryPageState extends State<FoodMeterByKategoryPage> with 
                   setState(() {
                     getData(tabIndex);
                     _selectedIndex = tabIndex;
-                    print("$tabIndex");
                   });
 
                 },
@@ -303,7 +306,6 @@ class _FoodMeterByKategoryPageState extends State<FoodMeterByKategoryPage> with 
                                   onChanged: (bool val) {
                                     state(() {
                                       onCheckedValue(data.id, data.checked);
-                                      print("CHECKED ${data.id}");
                                       Navigator.of(context).pop();
                                     });
                                   },
@@ -329,12 +331,10 @@ class _FoodMeterByKategoryPageState extends State<FoodMeterByKategoryPage> with 
     if (text == '1') {
       setState(() {
        isFiltered = false ;
-       print("Filter status = $isFiltered");
       });
     }  else if (text == "2") {
       setState(() {
         isFiltered = true ;
-        print("Filter status = $isFiltered");
       });
     } else {
       print("do nothing");

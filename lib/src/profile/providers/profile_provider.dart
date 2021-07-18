@@ -2,7 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
+import 'package:new_klikdna/src/account/providers/account_provider.dart';
 import 'package:new_klikdna/src/member/providers/member_provider.dart';
+import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/providers/last_seen_foodmeter_provider.dart';
 import 'package:new_klikdna/src/profile/widgets/cupertino_dialog_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,8 +21,13 @@ class ProfileProvider with ChangeNotifier {
     await prefs.clear();
     Navigator.pushReplacementNamed(context, "/");
     Provider.of<MemberProvider>(context, listen: false).resetMember();
+    Provider.of<PatientCardProvider>(context, listen: false).clearPatientCard();
+    Provider.of<AccountProvider>(context, listen: false).clearLastID();
+    Provider.of<LastSeenFoodMeterProvider>(context, listen: false).clearLastSeen();
     notifyListeners();
   }
+
+
 
   void makeCallPhone(BuildContext context) {
     showCupertinoModalPopup(

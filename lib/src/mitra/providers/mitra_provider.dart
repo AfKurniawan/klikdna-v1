@@ -119,12 +119,10 @@ class MitraProvider with ChangeNotifier {
 
 
   Future<LoginModel> refreshMitraData() async {
-    print("Refresh Mitra Data Started");
     prefs = await SharedPreferences.getInstance();
     isLoading = true;
     notifyListeners();
 
-    print("Mitra Email => ${prefs.getString('email')}");
 
     var url = AppConstants.LOGIN_URL;
     var body = json.encode({
@@ -154,7 +152,6 @@ class MitraProvider with ChangeNotifier {
       /// USER
        vuserid = responseJson.user.id;
        print("USER ID from Mitra Provider ${responseJson.user.id}");
-       prefs.setInt("mitraID", responseJson.user.id);
        vnik = responseJson.user.agent.nik;
 
        ///
@@ -180,10 +177,8 @@ class MitraProvider with ChangeNotifier {
 
       if(responseJson.user.member.commission == null) {
         vcommission = responseJson.user.member.commission.toString();
-        print("KOMISI WHEN NULL --> $vcommission");
       } else {
         vcommission = formattedCommission.format(responseJson.user.member.commission);
-        print("KOMISI WHEN NOT NULL --> $vcommission");
       }
 
 
@@ -234,10 +229,6 @@ class MitraProvider with ChangeNotifier {
       vdatefrom = responseJson.user.jsonData.referrals.params.datefrom;
 
       vdateto = responseJson.user.jsonData.referrals.params.dateto;
-
-      // print("VPAR == $vpar");
-      // print("HIGESTRANK == $vhighestrank");
-       print("EXPIRED == ${responseJson.user.member.expired}");
 
 
       vallAddress = "$vaddress, $vkelurahan, $vsubdistrict, $vcity, $vprovince" ;

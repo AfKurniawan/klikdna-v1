@@ -140,7 +140,7 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
 
 
 
-  Future<ListFoodModel> getListFood(BuildContext context, String url) async {
+  Future<ListFoodModel> getListFood(BuildContext context, String filter) async {
 
     final prov = Provider.of<TokenProvider>(context, listen: false);
 
@@ -153,6 +153,7 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
       "Authorization": "Bearer $accessToken"
     };
 
+    var url = AppConstants.LIST_FOOD_URL + '$filter' ;
 
     final request = await http.get(url, headers: ndas);
 
@@ -162,9 +163,6 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
 
       listMakanan = detailArray.map<Data3>((j) => Data3.fromJson(j)).toList();
 
-
-
-      print("ini data New Item $newItems");
       isLoadingFood = false;
 
       notifyListeners();
@@ -218,12 +216,8 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
 
   List<Datum> listRestaurant = [];
   Future<ModelDataResto> getListRestaurant(BuildContext context, String filter) async {
-
-    print("LIST FORESTOD");
     final prov = Provider.of<TokenProvider>(context, listen: false);
-
     String accessToken = prov.accessToken;
-
     isLoadingFood = true ;
     var url = AppConstants.LIST_FOOD_URL + '$filter' ;
 
@@ -265,13 +259,13 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
 
     isLoadingFood = true ;
     var url = AppConstants.IS_FAVOURITE_FOOD_URL ;
-    Map<String, String> ndas = {
+    Map<String, String> headers = {
       "Content-Type": "application/json",
       "Authorization": "Bearer $accessToken"
     };
 
 
-    final request = await http.get(url, headers: ndas);
+    final request = await http.get(url, headers: headers);
     final response = FavouriteFoodModel.fromJson(json.decode(request.body));
 
     if(request.statusCode == 200){
@@ -283,27 +277,25 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
 
 
       id0 = json.decode(request.body)['drink_food']['data'][0]['id'];
-      // print("ID 0 => $id0");
+
       id1 = json.decode(request.body)['drink_food']['data'][1]['id'];
-      // print("ID 1 => $id1");
       id2 = json.decode(request.body)['drink_food']['data'][2]['id'];
-      // print("ID 2 => $id2");
+
       id3 = json.decode(request.body)['drink_food']['data'][3]['id'];
-     //  print("ID 3 => $id3");
+
       id4 = json.decode(request.body)['drink_food']['data'][4]['id'];
-      // print("ID 4 => $id4");
+
 
       // Prod
       food0 = json.decode(request.body)['drink_food']['data'][0]['product_name'];
-     // print("Food 0 => $food0");
+
       food1 = json.decode(request.body)['drink_food']['data'][1]['product_name'];
-     // print("Food 1 => $food1");
+
       food2 = json.decode(request.body)['drink_food']['data'][2]['product_name'];
-     // print("Food 2 => $food2");
+
       food3 = json.decode(request.body)['drink_food']['data'][3]['product_name'];
-     // print("Food 3 => $food3");
+
       food4 = json.decode(request.body)['drink_food']['data'][4]['product_name'];
-     // print("Food 4 => $food4");
 
 
       getDetailFavouriteFood(context);
@@ -324,8 +316,6 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
 
   Future<List> getDetailFavouriteFood(BuildContext context) async {
     isLoadingDetail = true;
-    print("get fav running");
-    var value = <Map<String, dynamic>>[];
     final prov = Provider.of<TokenProvider>(context, listen: false);
     final favourite = Provider.of<FavouriteFoodMeterProvider>(context, listen: false);
     String accessToken = prov.accessToken;
@@ -358,15 +348,15 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
     if(r4.statusCode == 200){
 
       kategori0 = response0['data']['category_id'];
-      //print("Kategory $kategori0");
+
       kategori1 = response1['data']['category_id'];
-      //print("Kategory $kategori1");
+
       kategori2 = response2['data']['category_id'];
-      //print("Kategory $kategori2");
+
       kategori3 = response3['data']['category_id'];
-      //print("Kategory $kategori3");
+
       kategori4 = response4['data']['category_id'];
-      //print("Kategory $kategori4");
+
 
 
 
@@ -571,7 +561,7 @@ class FavouriteFoodMeterProvider extends ChangeNotifier {
             kaloriList4.add(item);
             kalSize4 = kaloriList4.first.nutritionSize.substring(0, kaloriList4.first.nutritionSize.indexOf('.'));
             kal4 = kaloriList4.first.nutritionName;
-            print("ID 4 KALORI $kal4, $kalSize4");
+
           }
         });
 

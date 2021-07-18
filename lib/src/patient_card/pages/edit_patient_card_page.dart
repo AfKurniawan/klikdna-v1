@@ -38,7 +38,7 @@ class _EditPatientCardPageState extends State<EditPatientCardPage> {
   @override
   void initState() {
     _radioValue = Provider.of<PatientCardProvider>(context, listen: false).gender;
-    Provider.of<TokenProvider>(context, listen: false).getApiToken();
+    Provider.of<TokenProvider>(context, listen: false).getApiToken(context);
     Provider.of<PatientCardProvider>(context, listen: false).getPatientCard(context);
     super.initState();
   }

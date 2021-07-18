@@ -23,7 +23,7 @@ class FoodBrandsProvider extends ChangeNotifier {
 
   Future<List> getRestoDetailzz(BuildContext context, int id) async {
 
-    print("Start get Specific Food");
+
 
     isLoading = true ;
 
@@ -46,7 +46,6 @@ class FoodBrandsProvider extends ChangeNotifier {
 
     if(r.statusCode == 200){
 
-      print("Specific BRANDS ===>> ${r.body}");
       isLoading = false;
 
       var brandFoodArray = response['data']['mobile_products'] as List;

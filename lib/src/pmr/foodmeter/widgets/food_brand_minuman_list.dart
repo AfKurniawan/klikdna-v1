@@ -98,6 +98,7 @@ class _FoodBrandMinumanListState extends State<FoodBrandMinumanList> {
                           print("xxx");
                           //Navigator.of(context).pushNamed("new_detail_food_meter_page", arguments: item);
                           // Provider.of<FoodMeterProvider>(context, listen: false).getSpecificFoodMeter(context, item.id);
+                          Navigator.of(context).pushNamed("new_detail_food_meter_page", arguments: prov.minumanList[i].id);
                         },
                         splashColor: Colors.white,
                         child: Container(

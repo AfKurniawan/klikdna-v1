@@ -90,7 +90,6 @@ class _DetailPromoPageState extends State<DetailPromoPage> {
                         children: [
                           InkWell(
                             onTap: (){
-                              print("SHAREEEEE");
                               prov.shareContents(context, '${widget.model.image}', '${widget.model.title}\n$text');
                               //NativeShare.share({'title':'${widget.model.desc}','url': "", 'image':'https://cdn.pixabay.com/photo/2016/11/29/05/45/astronomy-1867616__340.jpg'});
                             },
@@ -104,7 +103,6 @@ class _DetailPromoPageState extends State<DetailPromoPage> {
                           SizedBox(width: 20),
                           GestureDetector(
                             onTap: (){
-                              print("COPY");
                               prov.copyText("${widget.model.title}\n${widget.model.desc}");
                             },
                             child: Image.asset("assets/icons/copy_icon.png", height: 25),
@@ -128,7 +126,6 @@ class _DetailPromoPageState extends State<DetailPromoPage> {
                         child: HtmlWidget("${widget.model.desc}",
                           textStyle: TextStyle(fontSize: 14),
                           onTapUrl: (url){
-                            print("URL: $url");
                             prov.handleUrl(url);
                           },
                         ),

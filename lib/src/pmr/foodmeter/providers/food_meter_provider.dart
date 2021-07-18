@@ -5,6 +5,7 @@ import 'package:new_klikdna/src/pmr/foodmeter/models/detail_food_meter_model.dar
 import 'package:new_klikdna/src/pmr/foodmeter/models/food_meter_model.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/models/pagination_model_data.dart';
 import 'package:new_klikdna/src/pmr/foodmeter/providers/last_seen_foodmeter_provider.dart';
+import 'package:new_klikdna/src/pmr/foodmeter/widgets/dialog_unavailable_feature.dart';
 import 'package:new_klikdna/src/token/providers/token_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
@@ -42,7 +43,6 @@ class FoodMeterProvider extends ChangeNotifier {
 
     if(response.success == true){
       dashboardVisible = false ;
-      print("${request.body}");
       var data = json.decode(request.body);
 
       var detailArray = data['data'] as List;
@@ -148,7 +148,6 @@ class FoodMeterProvider extends ChangeNotifier {
       "Authorization": "Bearer $accessToken"
     };
 
-    print("YOUR ID ==> $id");
 
     var url = AppConstants.GET_DETAIL_FOOD_METER_URL + "$id" ;
 
@@ -158,9 +157,11 @@ class FoodMeterProvider extends ChangeNotifier {
     var response = json.decode(r.body);
 
 
+
+
     if(r.statusCode == 200){
 
-
+      isLoadingDetail = false;
       var nutritionArray = response['data']['mobile_nutritions'] as List;
 
         newMobilenutritionMapList = nutritionArray.map<MobileNutritions>((j) => MobileNutritions.fromJson(j)).toList();
@@ -168,6 +169,8 @@ class FoodMeterProvider extends ChangeNotifier {
         newMobilenutritionList = newMobilenutritionMapList.where((i) => ("${i.productId}" == "$id")).toList();
 
         newMobilenutritionListx = newMobilenutritionMapList.where((i) => ("${i.productId}" == "$id")).toList();
+
+
 
         newMobilenutritionList.forEach((item) {
           if (item.nutritionName.contains("Kalori")) {
@@ -186,6 +189,7 @@ class FoodMeterProvider extends ChangeNotifier {
 
     } else {
 
+      isLoadingDetail = false;
       print("Something wrong");
 
     }
@@ -199,10 +203,8 @@ class FoodMeterProvider extends ChangeNotifier {
   String prodUom = "" ;
 
   Future<List> getSpecificFoodMeter(BuildContext context, int id) async {
+
     isLoadingDetail = true;
-
-    print("Start get Specific Food");
-
     final prov = Provider.of<TokenProvider>(context, listen: false);
     String accessToken = prov.accessToken;
 
@@ -213,21 +215,20 @@ class FoodMeterProvider extends ChangeNotifier {
 
     var url = AppConstants.GET_DETAIL_FOOD_METER_URL + "$id" ;
 
-
     var r =  await http.get(url, headers: ndas);
-
 
     var response = json.decode(r.body);
 
+    print("[FOOD METER PROVIDER] Response Staus Code ${r.statusCode}");
 
     if(r.statusCode == 200){
+
+      isLoadingDetail = false ;
 
       var nutritionArray = response['data']['mobile_nutritions'] as List;
       var foodData = response['data'];
 
       final foodResponse = DetailFood.fromJson(foodData);
-
-
 
       namaProduk = foodResponse.productName;
       sizeProduk = foodResponse.productSize;
@@ -240,13 +241,33 @@ class FoodMeterProvider extends ChangeNotifier {
       newMobilenutritionListz = newMobilenutritionMapListz.where((i) => ("${i.productId}" == "$id")).toList();
 
 
-      Navigator.of(context).pushNamed("new_detail_food_meter_page");
+      //Navigator.of(context).pushNamed("new_detail_food_meter_page");
+
+      isLoadingDetail = false;
+
+      newMobilenutritionMapList = nutritionArray.map<MobileNutritions>((j) => MobileNutritions.fromJson(j)).toList();
+
+      newMobilenutritionList = newMobilenutritionMapList.where((i) => ("${i.productId}" == "$id")).toList();
+
+
+      newMobilenutritionList.forEach((item) {
+        if (item.nutritionName.contains("Kalori")) {
+          kaloriList.add(item);
+        }
+      });
+
+      newMobilenutritionList.forEach((item) {
+        if (item.nutritionName.contains("Protein")) {
+          proteinList.add(item);
+        }
+      });
 
 
 
 
     } else {
 
+      isLoadingDetail = false ;
       print("Something wrong");
 
     }
@@ -266,6 +287,17 @@ class FoodMeterProvider extends ChangeNotifier {
       if (item.productName.contains(text) || item.productName.contains(text)) searchListResult.add(item);
     });
     notifyListeners();
+  }
+
+  void unavailableFeature (BuildContext context) {
+    showModalBottomSheet(
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        context: context,
+        isDismissible: true,
+        builder: (context) {
+          return BottomSheetUnavailableFeature();
+        });
   }
 
 

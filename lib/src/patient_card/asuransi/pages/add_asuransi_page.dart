@@ -32,11 +32,9 @@ class _AddAsuransiPageState extends State<AddAsuransiPage> {
     switch (tipeValue) {
       case "Jiwa":
         result = "Jiwa";
-        print("RESULT $result");
         break;
       case "Kesehatan":
         result = "Kesehatan";
-        print("RESULT $result");
         break;
     }
   }

@@ -131,7 +131,6 @@ class AsuransiProvider extends ChangeNotifier {
 
 
   Future<void> checkLastId(BuildContext context){
-    print("cek Last ID is Running");
 
     final getId = Provider.of<AccountProvider>(context, listen: false);
     getId.getUserAccount(context);
@@ -200,7 +199,6 @@ class AsuransiProvider extends ChangeNotifier {
     };
 
     final request = await http.post(url, headers: ndas, body: json.encode(body));
-    print("ADD ASURANSI ${request.statusCode}");
 
     if(request.statusCode == 200){
       showToast(context, "Berhasil", "Kartu Asuransi berhasil diupdate");

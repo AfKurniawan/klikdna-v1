@@ -14,7 +14,9 @@ import 'package:new_klikdna/widgets/button_and_icon_widget.dart';
 import 'package:new_klikdna/widgets/button_widget.dart';
 import 'package:new_klikdna/widgets/custom_shadow_card_widget.dart';
 import 'package:new_klikdna/widgets/dialogs/custom_dialog_box.dart';
+import 'package:new_klikdna/widgets/dialogs/speech_dialog_widget.dart';
 import 'package:new_klikdna/widgets/form_widget.dart';
+import 'package:new_klikdna/widgets/outline_and_icon_button_widget.dart';
 import 'package:new_klikdna/widgets/outline_button_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +25,9 @@ import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
 class FoodMeterSearchPage extends StatefulWidget {
+  bool callback;
+  FoodMeterSearchPage({Key key, this.callback}) : super (key: key);
+
   @override
   _FoodMeterSearchPageState createState() => _FoodMeterSearchPageState();
 }
@@ -47,6 +52,7 @@ class _FoodMeterSearchPageState extends State<FoodMeterSearchPage> {
 
 
 
+
   bool visible = true;
   void toggle() {
     setState(() {
@@ -56,12 +62,20 @@ class _FoodMeterSearchPageState extends State<FoodMeterSearchPage> {
 
   TextEditingController searchController = new TextEditingController();
 
+  bool _isAvailable = false;
+  bool _isListening = false;
+
+  String resultText = "";
+
+
   @override
   void initState() {
     _hasSpeech ? null : initSpeechState();
-    Provider.of<TokenProvider>(context, listen: false).getApiToken();
+    Provider.of<TokenProvider>(context, listen: false).getApiToken(context);
     super.initState();
   }
+
+
 
   @override
   void dispose() {
@@ -74,7 +88,7 @@ class _FoodMeterSearchPageState extends State<FoodMeterSearchPage> {
         onError: errorListener,
         onStatus: statusListener,
         debugLogging: true,
-        );
+        finalTimeout: Duration(milliseconds: 10));
     if (hasSpeech) {
       _localeNames = await speech.locales();
       var systemLocale = await speech.systemLocale();
@@ -85,17 +99,19 @@ class _FoodMeterSearchPageState extends State<FoodMeterSearchPage> {
 
     setState(() {
       _hasSpeech = hasSpeech;
+      if(widget.callback == true){
+        startListening();
+      }
     });
   }
 
-
-
   void startListening() {
+    final prov = Provider.of<FoodMeterProvider>(context, listen: false);
     searchController.text = '';
     lastError = '';
     speech.listen(
         onResult: resultListener,
-        listenFor: Duration(seconds: 5),
+        listenFor: Duration(seconds: 10),
         pauseFor: Duration(seconds: 5),
         partialResults: false,
         localeId: _currentLocaleId,
@@ -103,15 +119,24 @@ class _FoodMeterSearchPageState extends State<FoodMeterSearchPage> {
         cancelOnError: true,
         listenMode: ListenMode.confirmation);
     setState(() {
-      //showDialogError(context);
+      startListen = true ;
+      prov.listFood.clear();
     });
+    if(startListen == true){
+      showDialogListen(context);
+    }
+
   }
 
   void stopListening() {
     speech.stop();
     setState(() {
       level = 0.0;
-      Navigator.of(context).pop();
+      startListen = false ;
+      print("Stop listening");
+      if(startListen == false){
+        Navigator.of(context).pop();
+      }
     });
 
   }
@@ -120,15 +145,25 @@ class _FoodMeterSearchPageState extends State<FoodMeterSearchPage> {
     speech.cancel();
     setState(() {
       level = 0.0;
+      print("Cancel listening");
+      startListen = false;
+      if(startListen == false){
+        Navigator.of(context).pop();
+      }
     });
 
   }
 
   void resultListener(SpeechRecognitionResult result) {
+    final prov = Provider.of<FoodMeterProvider>(context, listen: false);
     ++resultListened;
     print('Result listener ${result.recognizedWords}');
     setState(() {
       searchController.text = '${result.recognizedWords}';
+      prov.getFoodsData(context, "${result.recognizedWords}");
+      if(result.recognizedWords.isNotEmpty){
+        Navigator.of(context).pop();
+      }
     });
   }
 
@@ -144,19 +179,20 @@ class _FoodMeterSearchPageState extends State<FoodMeterSearchPage> {
   void errorListener(SpeechRecognitionError error) {
     setState(() {
       lastError = '${error.errorMsg} - ${error.permanent}';
+      print("$lastError Error listening");
+      startListen = false ;
     });
+    if(lastError.isNotEmpty){
+      Navigator.of(context).pop();
+    }
   }
 
   void statusListener(String status) {
     setState(() {
       lastStatus = '$status';
+      print("$lastStatus status listening");
     });
   }
-
-
-  bool _isListening = false;
-  String _text = 'Press the button and start speaking';
-  double _confidence = 1.0;
 
 
   @override
@@ -171,7 +207,7 @@ class _FoodMeterSearchPageState extends State<FoodMeterSearchPage> {
               size: 20,
             ),
             onPressed: () {
-              Navigator.of(context).pop();
+              Navigator.pushReplacementNamed(context, 'new_food_meter_page');
             }),
         backgroundColor: Colors.white,
         elevation: 0,
@@ -202,13 +238,13 @@ class _FoodMeterSearchPageState extends State<FoodMeterSearchPage> {
                 child: FormWidget(
                   readonly: false,
                   autofocus: true,
-                  textEditingController: searchController,
-                  onsubmit: (value){
-                    prov.getFoodsData(context, searchController.text);
+                  onchange: (text){
+                    prov.getFoodsData(context, "$text");
                   },
+                  textEditingController: searchController,
                   hint: "Cari makanan, minuman atau restauran",
                   obscure: false,
-                  labelText: "Cari makanan, minuman atau restauran",
+                  labelText: "Cari makanan, minuman atau restoran",
                   prefixIcon: Icon(Icons.search),
                 ),
               ),
@@ -218,18 +254,13 @@ class _FoodMeterSearchPageState extends State<FoodMeterSearchPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    OutlineButtonWidget(
-                        // btnAction: (){
-                        //   Navigator.pushNamed(context, "dummy_tts_page");
-                        // },
-                      btnAction: (){
-
-                        if(!_hasSpeech || speech.isListening ){
-                        } else {
-                          startListening();
-                        }
-
-                      },
+                    OutlineAndIconButtonWidget(
+                        btnAction: () {
+                          if(!_hasSpeech || speech.isListening ){
+                          } else {
+                            startListening();
+                          }
+                        },
                         height: 40,
                         outlineColor: MyColors.dnaGreen,
                         btnTextColor: MyColors.dnaGreen,
@@ -238,19 +269,17 @@ class _FoodMeterSearchPageState extends State<FoodMeterSearchPage> {
                         iconColor: MyColors.dnaGreen,
                         btnText: Text(
                           "Voice Search",
-                          style: TextStyle(
-                            color: MyColors.dnaGreen
-                          ),
+                          style: TextStyle(color: MyColors.dnaGreen),
                         )),
+
                     ButtonAndIconWidget(
                         btnAction: (){
-
-                          print("$startListen");
-                          !_hasSpeech || speech.isListening ? null
-                              : startListening();
-
-
+                          if(!_hasSpeech || speech.isListening ){
+                          } else {
+                            Provider.of<FoodMeterProvider>(context, listen: false).unavailableFeature(context);
+                          }
                         },
+
                         height: 40,
                         widht: MediaQuery.of(context).size.width / 2.3,
                         color: MyColors.dnaGreen,
@@ -318,107 +347,30 @@ class _FoodMeterSearchPageState extends State<FoodMeterSearchPage> {
           ),
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: AvatarGlow(
-        animate: _hasSpeech,
-        glowColor: Theme.of(context).primaryColor,
-        endRadius: 75.0,
-        duration: const Duration(milliseconds: 2000),
-        repeatPauseDuration: const Duration(milliseconds: 100),
-        repeat: true,
-        child: FloatingActionButton(
-          onPressed: (){
-             startListening();
-          },
-          child: Icon(!_hasSpeech ? Icons.mic : Icons.mic_none),
-        ),
-      ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      // floatingActionButton: AvatarGlow(
+      //   animate: startListen,
+      //   glowColor: Theme.of(context).primaryColor,
+      //   endRadius: 75.0,
+      //   duration: const Duration(milliseconds: 2000),
+      //   repeatPauseDuration: const Duration(milliseconds: 100),
+      //   repeat: true,
+      //   child: FloatingActionButton(
+      //     onPressed: (){
+      //        startListening();
+      //     },
+      //     child: Icon(!_hasSpeech ? Icons.mic : Icons.mic_none),
+      //   ),
+      // ),
     );
   }
 
-  showDialogError(BuildContext context) {
-    return showDialog<void>(
+  showDialogListen(BuildContext context) {
+    return showDialog(
         context: context,
-        barrierDismissible: false, // user must tap button!
-        builder: (BuildContext context) => Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppConstants.padding),
-          ),
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          child: Stack(
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.only(left: AppConstants.padding,top: AppConstants.avatarRadius
-                    + AppConstants.padding, right: AppConstants.padding,bottom: AppConstants.padding
-                ),
-                margin: EdgeInsets.only(top: AppConstants.avatarRadius),
-                decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(AppConstants.padding),
-                    boxShadow: [
-                      BoxShadow(color: Colors.black26,offset: Offset(0,10),
-                          blurRadius: 10
-                      ),
-                    ]
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-
-                    Text("${searchController.text}",style: TextStyle(fontSize: 14),textAlign: TextAlign.center,),
-                    SizedBox(height: 22,),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: FlatButton(
-                          onPressed: (){
-                            Navigator.of(context).pop();
-                          },
-                          child: Text("Oke",style: TextStyle(fontSize: 18),)),
-                    ),
-                  ],
-                ),
-              ),
-              Positioned.fill(
-                top: 15,
-                child: Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                    width: 50,
-                    height: 50,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                            blurRadius: .26,
-                            spreadRadius: this.level * 1.5,
-                            color: Colors.black)
-                      ],
-                      color: Colors.white,
-                      borderRadius:
-                      BorderRadius.all(Radius.circular(50)),
-                    ),
-                    child: AvatarGlow(
-                      animate: _hasSpeech,
-                      glowColor: Theme.of(context).primaryColor,
-                      endRadius: 75.0,
-                      duration: const Duration(milliseconds: 2000),
-                      repeatPauseDuration: const Duration(milliseconds: 100),
-                      repeat: true,
-                      child: FloatingActionButton(
-                        onPressed: null,
-                        child: Icon(_isListening ? Icons.mic : Icons.mic_none),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        )
-
-        );
+        barrierDismissible: true, // user must tap button!
+        builder: (BuildContext context) => SpeechDialogWidget()
+    );
   }
 }
 

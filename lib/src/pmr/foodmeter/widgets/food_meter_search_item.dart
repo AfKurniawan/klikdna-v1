@@ -24,17 +24,23 @@ class _FoodItemSearchWidgetState extends State<FoodItemSearchWidget> {
           children: [
             Icon(Icons.search, color: MyColors.iconArrowColor, size: 20),
             SizedBox(width: 20),
-            Text("${widget.model.productName}",
-                style: TextStyle(
-                  fontWeight: FontWeight.w300,
-                  fontSize: 14,
-                  fontFamily: "Roboto"
-                )),
+            Container(
+              width: MediaQuery.of(context).size.width - 150,
+              child: Text("${widget.model.productName}",
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w300,
+                    fontSize: 14,
+                    fontFamily: "Roboto"
+                  )),
+            ),
           ],
         ),
       ),
       onTap: (){
-        Provider.of<FoodMeterProvider>(context, listen: false).getSpecificFoodMeter(context, widget.model.id);
+        //Provider.of<FoodMeterProvider>(context, listen: false).getSpecificFoodMeter(context, widget.model.id);
+        Navigator.of(context).pushNamed("new_detail_food_meter_page", arguments: widget.model.id);
       },
     );
   }

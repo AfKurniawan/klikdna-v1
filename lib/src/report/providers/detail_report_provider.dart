@@ -46,7 +46,7 @@ class DetailReportProvider extends ChangeNotifier {
 
     var url = AppConstants.GET_REPORT_DETAIL_URL;
     final prov = Provider.of<TokenProvider>(context, listen: false);
-    prov.getApiToken();
+    prov.getApiToken(context);
 
     String accessToken = prov.accessToken;
     String id = Provider.of<AccountProvider>(context, listen: false).userId;
@@ -138,7 +138,7 @@ class DetailReportProvider extends ChangeNotifier {
 
     var url = AppConstants.GET_REPORT_DETAIL_URL;
     final prov = Provider.of<TokenProvider>(context, listen: false);
-    prov.getApiToken();
+    prov.getApiToken(context);
 
     String accessToken = prov.accessToken;
     String id = Provider.of<AccountProvider>(context, listen: false).userId;

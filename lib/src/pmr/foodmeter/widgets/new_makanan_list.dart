@@ -74,9 +74,9 @@ class NewMakananListState extends State<NewMakananList> {
     pagesData.data.data.data.forEach((value) {
       list.add(value);
     });
-    list.sort((a, b) {
-      return b.productName.compareTo(a.productName.toLowerCase());
-    });
+    // list.sort((a, b) {
+    //   return b.productName.compareTo(a.productName.toLowerCase());
+    // });
     return list;
   }
 
@@ -154,7 +154,8 @@ class NewMakananListState extends State<NewMakananList> {
                     onTap: (){
                       print("${item.id}");
                       //Navigator.of(context).pushNamed("new_detail_food_meter_page", arguments: item);
-                      Provider.of<FoodMeterProvider>(context, listen: false).getSpecificFoodMeter(context, item.id);
+                      //Provider.of<FoodMeterProvider>(context, listen: false).getSpecificFoodMeter(context, item.id);
+                      Navigator.of(context).pushNamed("new_detail_food_meter_page", arguments: item.id);
                     },
                     splashColor: Colors.white,
                     child: Container(

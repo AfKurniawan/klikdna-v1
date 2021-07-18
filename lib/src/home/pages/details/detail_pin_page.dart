@@ -107,7 +107,6 @@ class _DetailPinPageState extends State<DetailPinPage> {
                           SizedBox(width: 20),
                           GestureDetector(
                             onTap: (){
-                              print("COPY");
                               prov.copyText("$text");
                             },
                             child: Image.asset("assets/icons/copy_icon.png", height: 25),

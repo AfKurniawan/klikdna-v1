@@ -111,6 +111,8 @@ class MyColors {
 
   static const iconArrowColor = Color(0xff666666);
 
+  static const formFillColor = Color(0xffF3F3F3);
+
   //static const primaryBlack = Color(0xff433F3F);
 
 

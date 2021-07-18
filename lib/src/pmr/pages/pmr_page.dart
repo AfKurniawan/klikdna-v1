@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:new_klikdna/src/mitra/providers/mitra_provider.dart';
+import 'package:new_klikdna/src/patient_card/providers/new_patient_card_provider.dart';
 import 'package:new_klikdna/src/pmr/providers/pmr_provider.dart';
 import 'package:new_klikdna/styles/my_colors.dart';
 import 'package:provider/provider.dart';
@@ -97,6 +98,7 @@ class _PMRPageState extends State<PMRPage> {
                               children: [
                                 InkWell(
                                   onTap:(){
+                                    Provider.of<NewPatientCardProvider>(context, listen: false).getPatientCardById(context);
                                     Navigator.of(context).pushNamed("new_patient_card_page");
                                   },
                                   child: Container(

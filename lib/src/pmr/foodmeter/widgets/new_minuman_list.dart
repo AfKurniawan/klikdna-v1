@@ -135,7 +135,7 @@ class NewMinumanListState extends State<NewMinumanList> {
                         SizedBox(height: 5),
                         Container(
                           width: 110,
-                          child: Text("${splittedSize[0]} ${item.productUom} serving",
+                          child: Text("1 Porsi ${splittedSize[0]} ${item.productUom}",
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
                               style: TextStyle(
@@ -148,7 +148,8 @@ class NewMinumanListState extends State<NewMinumanList> {
                   SizedBox(width: 20),
                   InkWell(
                     onTap: (){
-                      Provider.of<FoodMeterProvider>(context, listen: false).getSpecificFoodMeter(context, item.id);
+                      Navigator.of(context).pushNamed("new_detail_food_meter_page", arguments: item.id);
+                      //Provider.of<FoodMeterProvider>(context, listen: false).getSpecificFoodMeter(context, item.id);
                     },
                     splashColor: Colors.white,
                     child: Container(

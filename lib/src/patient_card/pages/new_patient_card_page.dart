@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:new_klikdna/src/account/providers/account_provider.dart';
 import 'package:new_klikdna/src/mitra/providers/mitra_provider.dart';
 import 'package:new_klikdna/src/patient_card/providers/asuransi_provider.dart';
+import 'package:new_klikdna/src/patient_card/providers/new_patient_card_provider.dart';
 import 'package:new_klikdna/src/patient_card/providers/patient_card_provider.dart';
 import 'package:new_klikdna/src/patient_card/widgets/card_insurance_item.dart';
 import 'package:new_klikdna/src/token/providers/token_provider.dart';
@@ -32,7 +33,6 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
     Provider.of<AccountProvider>(context, listen: false).getUserAccount(context);
     Provider.of<PatientCardProvider>(context, listen: false).getPatientCard(context);
     Provider.of<MitraProvider>(context, listen: false).refreshMitraData();
-    Provider.of<AsuransiProvider>(context, listen: false).checkLastId(context);
     super.initState();
   }
 
@@ -417,7 +417,7 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                                   Provider.of<TokenProvider>(
                                                           context,
                                                           listen: false)
-                                                      .getApiToken();
+                                                      .getApiToken(context);
                                                 },
                                               )
                                             ],
@@ -555,8 +555,7 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                           onPressed: () {
                                             showModalEditing(
                                                 context,
-                                                pcard
-                                                    .emergencyContactController,
+                                                pcard.emergencyContactController,
                                                 "Kontak Darurat",
                                                 "Kontak Darurat",
                                                 "Maks. 13 Karakter",
@@ -590,7 +589,7 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                           padding: const EdgeInsets.all(18.0),
                                           child: GestureDetector(
                                             child: Center(
-                                                child: pcard.emergencyContactController.text == null || pcard.emergencyContact == null ?
+                                                child: pcard.emergencyContactController.text == null ?
                                                 Text("Tambahkan disini..", style: TextStyle(
                                                   color: Colors.black38
                                                 ))
@@ -677,10 +676,7 @@ class _NewPatientCardPageState extends State<NewPatientCardPage> {
                                         child: Padding(
                                           padding: const EdgeInsets.all(18.0),
                                           child: Center(
-                                              child: Text(pcard
-                                                          .comorbidityController
-                                                          .text ==
-                                                      null
+                                              child: Text(pcard.comorbidityController.text.isEmpty
                                                   ? "Tambahkan disini.."
                                                   : "${pcard.comorbidityController.text}")),
                                         )),

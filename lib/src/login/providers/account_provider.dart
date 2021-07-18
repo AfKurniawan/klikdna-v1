@@ -38,7 +38,7 @@ class AccountProviderLogin with ChangeNotifier {
     isLoading = true ;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final prov = Provider.of<TokenProvider>(context, listen: false);
-    prov.getApiToken();
+    prov.getApiToken(context);
     String accessToken = prov.accessToken;
 
     int kdmId = prefs.getInt("userid");

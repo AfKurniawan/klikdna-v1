@@ -55,8 +55,6 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
       isLoading = true;
     });
 
-    print("LOADING $isLoading");
-
     var url = AppConstants.GET_WALLET_URL;
     var body = json.encode({"accesskey": prefs.getString("accesskey")});
 
@@ -92,8 +90,6 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
             .reduce((value, element) => value + element);
       }
 
-      print("Sum : $sum");
-
       totalsum = totalFormattedCommision.format(sum);
 
     } else {
@@ -114,9 +110,6 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
       isLoading = true;
     });
 
-    print("TYPE RESSSSS--> $result");
-
-    print("LIST WALLET DATA --> ${listWalletData.length}");
 
     var url = AppConstants.GET_WALLET_URL;
     var body = json.encode({
@@ -146,8 +139,6 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
         isLoading = false;
         isFiltered = true ;
 
-        print(
-            "LIST WALLET DATA AFTER FILTERING >>>>>>>>>>> ${listWalletData.length} AND STATUS FILTERED >> $isFiltered");
 
         if (listWalletData.length == 0) {
           sum = 0;
@@ -157,12 +148,9 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
               .reduce((value, element) => value + element);
         }
 
-        print("Sum : $sum");
 
         totalsum = totalFormattedCommision.format(sum);
 
-
-        print("SUM FILTER $totalsum");
 
 
         if(datefromController.text.isNotEmpty || datetoController.text.isNotEmpty){
@@ -429,7 +417,6 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                                   onChanged: (String value) {
                                     setState(() {
                                       _handleRadioValueChange(context, value);
-                                      print("VALUEEEE $value");
                                     });
                                   },
                                 ),
@@ -451,7 +438,6 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
                             onTap: () {
                               filterWalletDataxx(context, "$result");
                               Navigator.of(context).pop();
-                              print("VALUEEEE $result");
                             },
                             splashColor: Colors.white,
                             child: Ink(
@@ -502,43 +488,38 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
         result = "0";
         clearFilter();
         filterWalletDataxx(context, "0");
-        print("RESULT $result");
+
         break;
       case "Komisi Referral":
         result = "1";
         totalsum = "...";
         filterWalletDataxx(context, "$result");
-        print("RESULT $result");
+
         break;
       case "Komisi Tim":
         result = "2";
         totalsum = "...";
         filterWalletDataxx(context, "$result");
-        print("RESULT $result");
         break;
       case "Komisi Royalti":
         result = "3";
         totalsum = "...";
         filterWalletDataxx(context, "$result");
-        print("RESULT $result");
         break;
       case "National Sharing":
         result = "4";
         totalsum = "...";
         filterWalletDataxx(context, "$result");
-        print("RESULT $result");
         break;
       case "Withdraw":
         result = "5";
         totalsum = "...";
         filterWalletDataxx(context, "$result");
-        print("RESULT $result");
         break;
     }
   }
 
   void loadMore() async {
-    print("LOAD MORE");
     setState(() {
       if (listWalletData.length < (present + perPage)) {
         items.addAll(listWalletData.getRange(present, perPage));
@@ -586,9 +567,6 @@ class _NewWalletTabViewFixState extends State<NewWalletTabViewFix> {
   }
 
   Widget buildFutureBuilder() {
-    print("ITEM LENGHT --> ${items.length}");
-    print("PRESENT LENGHT --> $present");
-    print("PER PAGE LENGHT --> $perPage");
     var mediaQuery = MediaQuery.of(context);
     WalletReferralProvider wallet;
     return FutureBuilder(

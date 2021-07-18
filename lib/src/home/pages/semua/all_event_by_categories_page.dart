@@ -21,7 +21,6 @@ class _AllEventByCategoriesPageState extends State<AllEventByCategoriesPage> {
 
   @override
   Widget build(BuildContext context) {
-    print("LEMPAR DATA --> ${widget.model}");
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -116,7 +115,6 @@ class _AllEventByCategoriesPageState extends State<AllEventByCategoriesPage> {
                             padding: const EdgeInsets.only(left:8.0, top: 8),
                             child: InkWell(
                               onTap: (){
-                                print("SHAREEEEE");
                                 prov.shareContents(context,
                                     '${prov.filterArray[index].imageUrl}',
                                     '${prov.filterArray[index].data.title}\n$text');

@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:new_klikdna/src/patient_card/providers/new_patient_card_provider.dart';
 import 'dart:convert';
 
 import 'package:new_klikdna/src/token/models/token_model.dart';
+import 'package:provider/provider.dart';
 
 
 class TokenProvider with ChangeNotifier {
@@ -11,7 +13,7 @@ class TokenProvider with ChangeNotifier {
   String accessToken= "" ;
 
 
-  getApiToken() async {
+  getApiToken(BuildContext context) async {
     print("START GET TOKEN");
     var url = AppConstants.API_TOKEN_URL;
     var body = {
@@ -24,7 +26,7 @@ class TokenProvider with ChangeNotifier {
     if(request.statusCode == 200){
 
        print("GET TOKEN ${apiTokenResponse.accessToken}");
-      accessToken = apiTokenResponse.accessToken;
+       accessToken = apiTokenResponse.accessToken;
 
       notifyListeners();
 

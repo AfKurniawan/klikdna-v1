@@ -32,8 +32,8 @@ class CustomShadowCardWidget extends StatelessWidget {
             boxShadow: [
               BoxShadow(
                 offset: Offset(0, 3),
-                blurRadius: 5,
-                color: Colors.grey[500].withOpacity(0.2),
+                blurRadius: 7,
+                color: Colors.grey[700].withOpacity(0.2),
               ),
             ],
           ),
