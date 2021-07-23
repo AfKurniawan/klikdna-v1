@@ -61,7 +61,7 @@ class AppConstants {
   ///NEW API LOGIN
   static const NEW_API_BASE_URL = "https://mobileapi.klikdna.com/api/v1/";
 
-
   static const String NEW_API_LOGIN_URL = NEW_API_BASE_URL + "auth/login" ;
+  static const String NEW_API_DASHBOARD_URL = NEW_API_BASE_URL + "kdm/dashboard";
 
 }

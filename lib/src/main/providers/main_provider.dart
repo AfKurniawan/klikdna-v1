@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:new_klikdna/configs/app_constants.dart';
 import 'package:new_klikdna/src/account/providers/account_provider.dart';
 import 'package:new_klikdna/src/home/pages/home_page.dart';
+import 'package:new_klikdna/src/login/models/new_dashboard_user_model.dart';
 import 'package:new_klikdna/src/mitra/pages/mitra_page.dart';
 import 'package:new_klikdna/src/mitra/providers/mitra_provider.dart';
 import 'package:new_klikdna/src/patient_card/providers/new_patient_card_provider.dart';
@@ -12,6 +16,7 @@ import 'package:new_klikdna/src/token/providers/cms_token_provider.dart';
 import 'package:new_klikdna/src/token/providers/token_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class MainProvider with ChangeNotifier {
 
@@ -31,6 +36,9 @@ class MainProvider with ChangeNotifier {
     notifyListeners();
   }
 
+
+
+
   void selectTab(BuildContext context, int tabItem){
       currentTab = tabItem;
 
@@ -38,50 +46,31 @@ class MainProvider with ChangeNotifier {
         case 0 :
           currentTitle = "Beranda";
           currenPage = HomePage();
-          Provider.of<TokenProvider>(context, listen: false).getApiToken(context);
-          Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken(context);
-          Provider.of<AccountProvider>(context, listen: false).getUserAccount(context);
-          context.read<MitraProvider>().refreshMitraData();
+
 
           break;
 
         case 1 :
           currentTitle = "PMR";
           currenPage = PMRPage();
-          Provider.of<TokenProvider>(context, listen: false).getApiToken(context);
-          Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken(context);
-          Provider.of<AccountProvider>(context, listen: false).getUserAccount(context);
-          //context.read<PatientCardProvider>().getPatientCard(context);
-          context.read<NewPatientCardProvider>().getAllPatientCard(context);
-          context.read<MitraProvider>().refreshMitraData();
+
 
           break;
 
         case 2 :
           currentTitle = "Mitra";
           currenPage = MitraPage();
-          Provider.of<TokenProvider>(context, listen: false).getApiToken(context);
-          Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken(context);
-          context.read<MitraProvider>().refreshMitraData();
-          Provider.of<AccountProvider>(context, listen: false).getUserAccount(context);
           break;
 
         case 3 :
           currentTitle = "Report";
           currenPage = NewMainReportPage();
-          Provider.of<TokenProvider>(context, listen: false).getApiToken(context);
-          Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken(context);
-          Provider.of<AccountProvider>(context, listen: false).getUserAccount(context);
-          context.read<MitraProvider>().refreshMitraData();
+
           break;
 
         case 4 :
           currentTitle = "Profil";
           currenPage = MainProfilePage();
-          Provider.of<TokenProvider>(context, listen: false).getApiToken(context);
-          Provider.of<CmsTokenProvider>(context, listen: false).getCmsToken(context);
-          Provider.of<MitraProvider>(context, listen: false).refreshMitraData();
-          Provider.of<AccountProvider>(context, listen: false).getUserAccount(context);
           break;
       }
 

@@ -64,10 +64,7 @@ class AccountProvider with ChangeNotifier {
       var data = json.decode(response.body);
       var detailArray = data['data']['patient_card'] as List;
        listPatentCard = detailArray.map<PatientCard>((j) => PatientCard.fromJson(j)).toList();
-      lastID = Provider.of<PatientCardProvider>(context, listen: false).patienCardId;
-      print("The last id is ???? ---> $lastID");
-
-
+      int lastID = prefs.getInt('pasien_card_id');
 
       for(int i = 0 ; i < listPatentCard.length ; i++) {
         // if(listPatentCard.last.id.toString() == ""){

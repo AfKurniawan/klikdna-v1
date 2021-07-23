@@ -29,9 +29,6 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     Provider.of<MainProvider>(context, listen: false).getPrefs();
-    Provider.of<TokenProvider>(context, listen: false).getApiToken(context);
-    context.read<MainProvider>().selectTab(context, widget.currentTab);
-    WidgetsBinding.instance.addPostFrameCallback((_) => Provider.of<NewPatientCardProvider>(context, listen: false).getAllPatientCard(context));
     super.initState();
 
   }
