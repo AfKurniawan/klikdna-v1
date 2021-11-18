@@ -1,17 +1,17 @@
 class AppConstants {
-  static const EMAIL_TOKEN = "klikdnamobil@klikdna.com";
-  static const PASSWORD_TOKEN = "dnaku1213";
+  static const EMAIL_TOKEN = "mailtoken@email.com";
+  static const PASSWORD_TOKEN = "thepassword";
 
-  static const CMS_EMAIL_TOKEN = "miranty@gmail.com";
-  static const CMS_PASSWORD_TOKEN = "gis2020!";
+  static const CMS_EMAIL_TOKEN = "example@mail.com";
+  static const CMS_PASSWORD_TOKEN = "password";
 
-  static const BASE_URL_DNAKU = "https://apiku.dnaku.id/api/v1/" ;
-  static const BASE_URL_KLIKDNA = "https://staging.klikdna.com/" ;
-  static const BASE_URL_CMS = "https://cms.klikdna.com/api/v1/" ;
+  static const BASE_URL_DNAKU = "<API_URL_DNAKU>" ;
+  static const BASE_URL_KLIKDNA = "<API_URL_KLIKDNA>" ;
+  static const BASE_URL_CMS = "<API_URL_CMS>" ;
 
 
   //DNAKU
-  static const String IMAGE_ARTIKEL_URL = "https://dnaku.id/files/images/page/article/";
+  static const String IMAGE_ARTIKEL_URL = "<ARTICLES_IMG_URL>";
 
   //APIKU
   static const String API_TOKEN_URL = BASE_URL_DNAKU +"auth/login";
